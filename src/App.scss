@@ -1,20 +1,39 @@
-.App {
-  text-align: center;
-}
+$header-height: 48px;
+$app-max-width: 1280px;
+$bg-color: #dddddd;
 
-.App-header {
+header {
   background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  position: fixed;
+  height: $header-height;
+  width: 100%;
+  top: 0;
+  left: 0;
   color: white;
+  .contents {
+    background-color: #b4b4b4;
+    height: $header-height;
+    max-width: $app-max-width;
+    margin-left: auto;
+    margin-right: auto;
+    & img {
+      height: 38px;
+    }
+  }
 }
-
-.App-link {
-  color: #61dafb;
+body {
+  background-color: $bg-color;
+}
+section {
+  background-color: #b4b4b4;
+  max-width: $app-max-width;
+  min-height: calc(100vh - 48px);
+  border: 1px solid #121722;
+  border-radius: 12px;
+  margin-top: 16px + $header-height;
+  margin-bottom: 16px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 button {

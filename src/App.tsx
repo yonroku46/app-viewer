@@ -13,23 +13,22 @@ axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} alt="logo" />
-        <p>
-          This is
-        </p>
-        <body>
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Main/>}/>
-              <Route path="/mypage" element={<MyPage/>}/>
-              <Route path='/*' element={<Empty/>}/>
-            </Routes>
-          </BrowserRouter>
-        </body>
+    <>
+      <header>
+        <div className='contents'>
+        <img src={logo} alt="logo"/>
+        </div>
       </header>
-    </div>
+        <section>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Main/>}/>
+            <Route path="/mypage" element={<MyPage/>}/>
+            <Route path='/*' element={<Empty/>}/>
+          </Routes>
+        </BrowserRouter>
+        </section>
+    </>
   );
 }
  
