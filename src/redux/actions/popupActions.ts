@@ -12,28 +12,21 @@ export function hidePopup(): PopupAction {
   };
 }
 
-export function setPopupTitle(title: String): PopupAction {
+export function showTopPopup(contents: string): PopupAction {
   return {
-    type: PopupActionTypes.SET_TITLE,
-    value: title
+    type: PopupActionTypes.SHOW_TOP_POPUP,
+    value: {
+      contents: contents
+    }
   };
 }
 
-export function setPopupContents(contents: String): PopupAction {
+export function showCenterPopup(title: string, contents: string): PopupAction {
   return {
-    type: PopupActionTypes.SET_CONTENTS,
-    value: contents
-  };
-}
-
-export function setPopupTop(): PopupAction {
-  return {
-    type: PopupActionTypes.SET_TOP,
-  };
-}
-
-export function setPopupCenter(): PopupAction {
-  return {
-    type: PopupActionTypes.SET_CENTER,
+    type: PopupActionTypes.SHOW_CENTER_POPUP,
+    value: {
+      title: title,
+      contents: contents
+    }
   };
 }

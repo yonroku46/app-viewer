@@ -1,7 +1,7 @@
 import { PopupState, PopupAction, PopupActionTypes } from "../ReducersTypes";
 
 const initialState: PopupState = {
-  isVisible: false,
+  isShow: false,
   title: 'Title',
   contents: 'Contents',
   isCenter: false,
@@ -13,17 +13,13 @@ export default function popupReducer(
 ): PopupState {
   switch (action.type) {
     case PopupActionTypes.SHOW_POPUP:
-      return { ...state, isVisible: true };
+      return { ...state, isShow: true };
     case PopupActionTypes.HIDE_POPUP:
-      return { ...state, isVisible: false };
-    case PopupActionTypes.SET_TITLE:
-      return { ...state, title: action.value };
-    case PopupActionTypes.SET_CONTENTS:
-      return { ...state, contents: action.value };
-    case PopupActionTypes.SET_TOP:
-      return { ...state, isCenter: false };
-    case PopupActionTypes.SET_CENTER:
-      return { ...state, isCenter: true };
+      return { ...state, isShow: false };
+    case PopupActionTypes.SHOW_TOP_POPUP:
+      return { ...state, isShow: true,  isCenter: false, contents: action.value.contents };
+    case PopupActionTypes.SHOW_CENTER_POPUP:
+      return { ...state, isShow: true,  isCenter: true, title: action.value.title, contents: action.value.contents };
     default:
       return state;
   }

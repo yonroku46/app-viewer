@@ -22,10 +22,12 @@ function App() {
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
-    if (popup.isVisible) {
+    // ポップアップ表示ロジック
+    if (popup.isShow) {
       if (popup.isCenter) {
         dispatch(showPopup());
       } else {
+        // 上段ポップアップの場合2秒位表示
         dispatch(showPopup());
         const timer = setTimeout(() => {
           dispatch(hidePopup());
@@ -33,7 +35,7 @@ function App() {
         return () => clearTimeout(timer);
       }
     }
-  }, [popup.isVisible]);
+  }, [popup.isShow, popup.isCenter]);
 
   return (
     <>

@@ -57,12 +57,17 @@ img {
 .backdrop {
   z-index: 9998;
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.35);
-  transition: background-color 0.3s ease-in-out;
+  &.show {
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.35);
+    transition: background-color 0.3s ease-in-out;
+  }
+  &.hide {
+    all: unset;
+  }
 }
 .popup {
   z-index: 9999;
@@ -81,25 +86,30 @@ img {
   &:hover {
     cursor: pointer;
   }
-  &.visible {
+  &.show {
     top: 0;
     box-shadow: 0px 0px 6px white;
     transition: top 0.3s ease-out, margin-top 0.3s ease-out, box-shadow 0.6s ease-out;
   }
-  &.hidden {
+  &.hide {
     top: -8px -$header-height;
     margin-top: unset;
     box-shadow: unset;
+    pointer-events: none;
     transition: top 0.3s ease-out, margin-top 0.3s ease-out;
+  }
+  &.none {
+    opacity: 0;
+    pointer-events: none;
   }
   .icon {
     position: fixed;
     left: 16px;
+    animation: shake 0.8s ease-in-out forwards;
   }
 }
 .popup-center {
   z-index: 9999;
-  display: inline-table;
   position: fixed;
   left: 50%;
   transform: translateX(-50%);
@@ -109,17 +119,22 @@ img {
   padding: 24px 30px;
   border-radius: 12px;
   width: 320px;
-  &.visible {
+  &.show {
     top: 42%;
     opacity: 1;
     box-shadow: 0px 0px 6px white;
     transition: top 0.3s ease-out, opacity 0.3s ease-out, box-shadow 0.6s ease-out;
   }
-  &.hidden {
+  &.hide {
     top: 41%;
     opacity: 0;
     box-shadow: unset;
+    pointer-events: none;
     transition: top 0.15s ease-out, opacity 0.15s ease-out;
+  }
+  &.none {
+    opacity: 0;
+    pointer-events: none;
   }
   .popup-title {
     font-weight: bold;
@@ -145,6 +160,27 @@ img {
   }
   .popup-center {
     padding: 12px 15px;
+  }
+}
+
+@keyframes shake {
+  0% {
+    transform: rotate(0);
+  }
+  20% {
+    transform: rotate(8deg);
+  }
+  40% {
+    transform: rotate(-8deg);
+  }
+  60% {
+    transform: rotate(8deg);
+  }
+  80% {
+    transform: rotate(-8deg);
+  }
+  100% {
+    transform: rotate(0);
   }
 }
 
