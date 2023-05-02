@@ -1,4 +1,4 @@
-import { PopupState, PopupAction, PopupActionTypes } from "../ReducersTypes";
+import { PopupState, PopupAction, PopupActionTypes } from "../actions/types/PopupActionTypes";
 
 const initialState: PopupState = {
   isShow: false,

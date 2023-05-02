@@ -3,13 +3,9 @@ import { Link, Route, Routes, useNavigate } from "react-router-dom";
 import { RootState } from "../../redux/reducers";
 import { hidePopup } from "../../redux/actions/popupActions";
 import { VscWorkspaceTrusted, VscPass } from "react-icons/vsc";
+import './Authenticator.scss';
 
-type AuthenticatorProps = {
-  title?: string;
-  contents?: string;
-}
-
-export default function Authenticator({ title = '', contents}: AuthenticatorProps) {
+export default function Authenticator() {
 
   const [code, setCode] = useState<string>("1234");
   const [inputCode, setInputCode] = useState<string>("");
@@ -72,7 +68,7 @@ export default function Authenticator({ title = '', contents}: AuthenticatorProp
         />
       ))}
       <div>
-        <button className='ok-button' onClick={() => codeCheck()}>OK</button>
+        <button className={'ok-button' + (inputCode.length == 4 ? '' : ' disable')} onClick={() => codeCheck()}>OK</button>
       </div>
     </div>
     </>

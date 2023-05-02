@@ -1,13 +1,13 @@
 import React, { useEffect, useReducer, useRef } from 'react';
-import { Link, Route, Routes, BrowserRouter } from "react-router-dom";
+import { Link, Route, Routes } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "./redux/reducers";
 import { showPopup, hidePopup } from "./redux/actions/popupActions";
 import logo from "./assets/icon/app-icon.png";
 import Popup from './components/share/Popup';
-import Main from './components/Main';
-import Empty from './components/Empty';
-import MyPage from './components/MyPage';
+import Home from './components/app/Home';
+import Empty from './components/app/Empty';
+import MyPage from './components/app/mypage/MyPage';
 import axios from 'axios';
 import './App.scss';
 
@@ -19,7 +19,6 @@ function App() {
 
   const popup = useSelector((state: RootState) => state.popup);
   const dispatch = useDispatch();
-  const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     // ポップアップ表示ロジック
@@ -40,19 +39,17 @@ function App() {
   return (
     <>
       <header>
-        <div className='contents'>
-        <img src={logo} alt="logo" className='invert'/>
+        <div className='header-main'>
+          <Link to="/"><img src={logo} className='logo invert'/></Link>
         </div>
       </header>
       <section>
         <Popup title={popup.title} contents={popup.contents} center={popup.isCenter}/>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Main/>}/>
-            <Route path="/mypage" element={<MyPage/>}/>
-            <Route path='/*' element={<Empty/>}/>
-          </Routes>
-        </BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home/>}/>
+          <Route path="/mypage" element={<MyPage/>}/>
+          <Route path='/*' element={<Empty/>}/>
+        </Routes>
       </section>
     </>
   );

@@ -1,0 +1,122 @@
+$header-height: 48px;
+
+.backdrop {
+  z-index: 9998;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.35);
+}
+.popup {
+  z-index: 9999;
+  display: flex;
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 8px + $header-height;
+  background-color: black;
+  color: white;
+  justify-content: center;
+  align-items: center;
+  padding: 16px 24px;
+  border-radius: 12px;
+  width: 200px;
+  &:hover {
+    cursor: pointer;
+  }
+  &.show {
+    top: 0;
+    box-shadow: 0px 0px 6px white;
+    transition: top 0.3s ease-out, margin-top 0.3s ease-out, box-shadow 0.6s ease-out;
+  }
+  &.hide {
+    top: -8px -$header-height;
+    margin-top: unset;
+    box-shadow: unset;
+    pointer-events: none;
+    transition: top 0.3s ease-out, margin-top 0.3s ease-out;
+  }
+  &.none {
+    opacity: 0;
+    pointer-events: none;
+  }
+  .icon {
+    position: fixed;
+    left: 16px;
+    animation: shake 0.8s ease-in-out forwards;
+  }
+}
+.popup-center {
+  z-index: 9999;
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: black;
+  color: white;
+  text-align: center;
+  padding: 24px 30px;
+  border-radius: 12px;
+  width: 320px;
+  &.show {
+    top: 42%;
+    opacity: 1;
+    box-shadow: 0px 0px 6px white;
+    transition: top 0.3s ease-out, opacity 0.3s ease-out, box-shadow 0.6s ease-out;
+  }
+  &.hide {
+    top: 41%;
+    opacity: 0;
+    box-shadow: unset;
+    pointer-events: none;
+    transition: top 0.15s ease-out, opacity 0.15s ease-out;
+  }
+  &.none {
+    opacity: 0;
+    pointer-events: none;
+  }
+  .popup-title {
+    font-weight: bold;
+    font-size: 28px;
+  }
+  .popup-contents {
+    margin-top: 4px;
+    margin-bottom: 24px;
+    font-size: 18px;
+  }
+  .popup-button {
+    border: 3px solid white;
+    background-color: black;
+  }
+}
+/* sp */
+@media only screen and (max-width: 767px){
+  .popup {
+    padding: 8px 12px;
+  }
+  .popup-center {
+    padding: 12px 15px;
+  }
+}
+/* animation */
+@keyframes shake {
+  0% {
+    transform: rotate(0);
+  }
+  20% {
+    transform: rotate(8deg);
+  }
+  40% {
+    transform: rotate(-8deg);
+  }
+  60% {
+    transform: rotate(8deg);
+  }
+  80% {
+    transform: rotate(-8deg);
+  }
+  100% {
+    transform: rotate(0);
+  }
+}

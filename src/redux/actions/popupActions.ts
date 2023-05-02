@@ -1,4 +1,4 @@
-import { PopupActionTypes, PopupAction } from "../ReducersTypes";
+import { PopupActionTypes, PopupAction } from "./types/PopupActionTypes";
 
 export function showPopup(): PopupAction {
   return {

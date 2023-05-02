@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/reducers";
 import { hidePopup } from "../../redux/actions/popupActions";
 import { VscBellDot, VscPass } from "react-icons/vsc";
+import './Popup.scss';
 
 type PopupProps = {
   title?: string;
