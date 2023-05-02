@@ -1,7 +1,8 @@
-import React, { useEffect, useReducer, useState } from 'react';
+import React, { useEffect, useReducer } from 'react';
 import { Link, Route, Routes, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { showPopup, showTopPopup, showCenterPopup } from "../redux/actions/popupActions";
+import Authenticator from "./share/Authenticator";
 
 export default function MyPage() {
 
@@ -23,6 +24,7 @@ export default function MyPage() {
     <br/>
     <button onClick={() => openTopPopup('top popup')}>topPop</button>
     <button onClick={() => openCenterPopup('title', 'center popup')}>topCenter</button>
+    <Authenticator/>
     </>
   )
 }

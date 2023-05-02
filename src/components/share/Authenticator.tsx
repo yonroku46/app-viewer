@@ -1,0 +1,80 @@
+import React, { useEffect, useState, useRef } from 'react';
+import { Link, Route, Routes, useNavigate } from "react-router-dom";
+import { RootState } from "../../redux/reducers";
+import { hidePopup } from "../../redux/actions/popupActions";
+import { VscWorkspaceTrusted, VscPass } from "react-icons/vsc";
+
+type AuthenticatorProps = {
+  title?: string;
+  contents?: string;
+}
+
+export default function Authenticator({ title = '', contents}: AuthenticatorProps) {
+
+  const [code, setCode] = useState<string>("1234");
+  const [inputCode, setInputCode] = useState<string>("");
+  const [isError, setIsError] = useState<boolean>(false);
+  const [isDone, setIsDone] = useState<boolean>(false);
+  const inputRefs = [useRef<HTMLInputElement>(null), useRef<HTMLInputElement>(null), useRef<HTMLInputElement>(null), useRef<HTMLInputElement>(null)];
+
+  function handleInputChange(index: number, event: React.ChangeEvent<HTMLInputElement>) {
+    const value = event.target.value;
+  
+    // 数字以外は無視
+    if (!/^\d*$/.test(value)) {
+      return;
+    }
+    // 入力するたびに次の入力欄へ移動
+    if (value.length > 0 && index < inputRefs.length - 1) {
+      inputRefs[index + 1].current?.focus();
+    }
+    // 入力値が1桁以上の場合コードアップデート
+    if (value.length <= 1) {
+      const newCode = inputCode.substring(0, index) + value + inputCode.substring(index + 1);
+      setInputCode(newCode);
+    }
+  }
+    
+  function handleInputKeyDown(index: number, event: React.KeyboardEvent<HTMLInputElement>) {
+    if (event.key === "Backspace" && index > 0) {
+      inputRefs[index - 1].current?.focus();
+      setIsError(false);
+    }
+    if (event.key === "ArrowRight" && index < inputRefs.length - 1) {
+      inputRefs[index + 1].current?.focus();
+    }
+    if (event.key === "ArrowLeft" && index > 0) {
+      inputRefs[index - 1].current?.focus();
+    }
+    if (event.key === "Enter") {
+      codeCheck();
+    }
+  }
+
+  function codeCheck() {
+    setIsError(code != inputCode);
+    setIsDone(code == inputCode);
+  }
+
+  return (
+    <>
+    {/* 認証コンポネント */}
+    <div className='authenticator' onClick={() => {}}>
+      <div>
+        <VscWorkspaceTrusted className='icon' size='64'/>
+        <p className='title'>認証</p>
+        <p className={'sub-title' + (isError ? ' err' : '')}>{ isError ? '正しくありません\nもう一度お確かめください' : isDone ? '少々お待ちください' : '送信された番号を入力してください' }</p>
+      </div>
+      {inputRefs.map((inputRef, index) => (
+        <input className={inputCode[index] ? 'entered' : 'not-entered'} key={index} type="text" maxLength={1} ref={inputRef} value={inputCode[index] || ""}
+          onChange={(event) => handleInputChange(index, event)}
+          onKeyDown={(event: React.KeyboardEvent<HTMLInputElement>) => handleInputKeyDown(index, event)}
+        />
+      ))}
+      <div>
+        <button className='ok-button' onClick={() => codeCheck()}>OK</button>
+      </div>
+    </div>
+    </>
+  )
+}

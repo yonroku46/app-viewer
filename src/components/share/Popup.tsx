@@ -17,7 +17,7 @@ export default function Popup({ title = '', contents, center, backdropClose = tr
   const show = useSelector((state: RootState) => state.popup.isShow);
   const dispatch = useDispatch();
 
-  const [iconShow, setIconShow] = useState(false);
+  const [iconShow, setIconShow] = useState<boolean>(false);
 
   useEffect(() => {
     if (show) {
@@ -41,8 +41,8 @@ export default function Popup({ title = '', contents, center, backdropClose = tr
   }, [center, iconShow]);
 
   function Backdrop({ onClick }: { onClick: () => void }) {
-    return (
-      <div className={"backdrop" + (center && show ? ' show' : ' hide')} onClick={onClick}></div>
+    return (center && show ?
+      <div className="backdrop" onClick={onClick}></div> : <></>
     );
   }
 
