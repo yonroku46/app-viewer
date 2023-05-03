@@ -3,6 +3,8 @@
 $header-height: 48px;
 $section-margin: 16px;
 $app-max-width: 1280px;
+$app-min-width: 280px;
+$app-sp-width: 767px;
 
 html {
   font-family: 'Noto Sans JP', sans-serif;
@@ -21,16 +23,21 @@ header {
   left: 0;
   color: white;
   .header-main {
+    max-width: $app-max-width;
+    min-width: $app-min-width;
     background-color: var(--main-color);
     height: $header-height;
-    max-width: $app-max-width;
     margin-left: auto;
     margin-right: auto;
   }
   .logo {
+    display: inline-block;
     height: 38px;
     margin: 5px 10px;
     cursor: pointer;
+    img {
+      height: 38px;
+    }
   }
 }
 body {
@@ -43,6 +50,7 @@ body {
 }
 section {
   max-width: $app-max-width;
+  min-width: $app-min-width;
   min-height: calc(100vh - 48px - 32px);
   border-radius: 12px;
   margin-top: $section-margin + $header-height;
@@ -61,10 +69,9 @@ img {
 }
 button {
   font-family: 'Noto Sans JP', sans-serif;
-  padding: 14px 40px;
+  padding: 12px 42px;
   border-radius: 12px;
   background-color: black;
-  font-size: 18px;
   color: white;
   font-weight: bold;
   &:hover {
@@ -81,6 +88,19 @@ button {
 .contents {
   background-color: var(--contents-color);
   border-radius: 12px;
+  padding: 8px;
+}
+
+.fullsize {
+  background-color: var(--contents-color);
+  border-radius: 12px;
+  padding: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  flex-direction: column;
+  height: calc(100vh - 48px - 32px);
 }
 
 .home {
@@ -88,28 +108,32 @@ button {
     margin: 12px;
     min-height: 300px;
     .title {
-      font-size: 24px;
       font-weight: bold;
     }
   }
 }
 
 .empty {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  flex-direction: column;
-  height: calc(100vh - 48px - 32px);
   img {
     width: 224px;
   }
   .message {
-    font-size: 18px;
     white-space: pre;
     margin-bottom: 0px;
   }
   .back-button {
     margin-top: 24px
+  }
+}
+
+/* sp */
+@media only screen and (max-width: $app-sp-width){
+  .home {
+    .contents {
+      margin: 6px;
+    }
+  }
+  .popup-center {
+    padding: 12px 15px;
   }
 }

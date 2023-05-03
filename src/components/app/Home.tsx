@@ -10,6 +10,7 @@ export default function Main() {
       <div className='contents'>
         <p className='title'>Title1</p>
         <button onClick={() => navigate('mypage')}>mypage</button>
+        <button onClick={() => navigate('login')}>login</button>
       </div>
       <div className='contents'>
         <p className='title'>Title2</p>

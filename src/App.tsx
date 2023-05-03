@@ -8,6 +8,7 @@ import Popup from './components/share/Popup';
 import Home from './components/app/Home';
 import Empty from './components/app/Empty';
 import MyPage from './components/app/mypage/MyPage';
+import Login from './components/app/login/Login';
 import axios from 'axios';
 import './App.scss';
 
@@ -40,13 +41,14 @@ function App() {
     <>
       <header>
         <div className='header-main'>
-          <Link to="/"><img src={logo} className='logo invert'/></Link>
+          <Link to="/" className='logo'><img src={logo} className='invert'/></Link>
         </div>
       </header>
       <section>
         <Popup title={popup.title} contents={popup.contents} center={popup.isCenter}/>
         <Routes>
           <Route path="/" element={<Home/>}/>
+          <Route path="/login" element={<Login/>}/>
           <Route path="/mypage" element={<MyPage/>}/>
           <Route path='/*' element={<Empty/>}/>
         </Routes>

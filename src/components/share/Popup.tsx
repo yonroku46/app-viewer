@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { Link, Route, Routes, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/reducers";
 import { hidePopup } from "../../redux/actions/popupActions";

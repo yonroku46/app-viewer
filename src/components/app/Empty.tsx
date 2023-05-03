@@ -7,7 +7,7 @@ export default function Empty() {
   const emptyMessage = 'ページが見つかりません\nURLをもう一度お確かめください';
 
   return(
-    <div className="empty contents">
+    <div className="empty fullsize">
       <p className="message">{ emptyMessage }</p>
       <img src={empty}/>
       <button className="back-button" onClick={() => navigate(-1)}>戻る</button>
