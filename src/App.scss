@@ -84,6 +84,11 @@ button {
     pointer-events: none;
   }
 }
+hr {
+  width: -webkit-fill-available;
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
 
 .contents {
   background-color: var(--contents-color);

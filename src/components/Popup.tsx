@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../redux/reducers";
-import { hidePopup } from "../../redux/actions/popupActions";
+import { RootState } from "../redux/reducers";
+import { hidePopup } from "../redux/actions/popupActions";
 import { VscBellDot, VscPass } from "react-icons/vsc";
 import './Popup.scss';
 
-type PopupProps = {
+interface PopupProps {
   title?: string;
   contents: string;
   center: boolean;

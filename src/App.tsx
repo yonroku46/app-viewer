@@ -1,14 +1,14 @@
-import React, { useEffect, useReducer, useRef } from 'react';
+import { useEffect } from 'react';
 import { Link, Route, Routes } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "./redux/reducers";
 import { showPopup, hidePopup } from "./redux/actions/popupActions";
 import logo from "./assets/icon/app-icon.png";
-import Popup from './components/share/Popup';
-import Home from './components/app/Home';
-import Empty from './components/app/Empty';
-import MyPage from './components/app/mypage/MyPage';
-import Login from './components/app/login/Login';
+import Popup from './components/Popup';
+import Home from './pages/home/Home';
+import Empty from './pages/empty/Empty';
+import MyPage from './pages/mypage/MyPage';
+import Login from './pages/login/Login';
 import axios from 'axios';
 import './App.scss';
 
@@ -16,8 +16,7 @@ axios.defaults.baseURL = process.env.REACT_APP_API_BASE;
 axios.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8';
 axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
 
-function App() {
-
+export default function App() {
   const popup = useSelector((state: RootState) => state.popup);
   const dispatch = useDispatch();
 
@@ -56,5 +55,3 @@ function App() {
     </>
   );
 }
- 
-export default App;

@@ -1,20 +1,17 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { Link, Route, Routes, useNavigate } from "react-router-dom";
-import { RootState } from "../../redux/reducers";
-import { hidePopup } from "../../redux/actions/popupActions";
-import { VscWorkspaceTrusted, VscPass } from "react-icons/vsc";
+import React, { useState, useRef } from 'react';
+import { VscWorkspaceTrusted } from "react-icons/vsc";
 import './Authenticator.scss';
 
 export default function Authenticator() {
 
-  const [code, setCode] = useState<string>("1234");
+  const code: string = "1234";
   const [inputCode, setInputCode] = useState<string>("");
   const [isError, setIsError] = useState<boolean>(false);
   const [isDone, setIsDone] = useState<boolean>(false);
   const inputRefs = [useRef<HTMLInputElement>(null), useRef<HTMLInputElement>(null), useRef<HTMLInputElement>(null), useRef<HTMLInputElement>(null)];
 
-  function handleInputChange(index: number, event: React.ChangeEvent<HTMLInputElement>) {
-    const value = event.target.value;
+  function handleInputChange(index: number, e: React.ChangeEvent<HTMLInputElement>) {
+    const value = e.target.value;
   
     // 数字以外は無視
     if (!/^\d*$/.test(value)) {
@@ -31,25 +28,25 @@ export default function Authenticator() {
     }
   }
     
-  function handleInputKeyDown(index: number, event: React.KeyboardEvent<HTMLInputElement>) {
-    if (event.key === "Backspace" && index > 0) {
+  function handleInputKeyDown(index: number, e: React.KeyboardEvent<HTMLInputElement>) {
+    if (e.key === "Backspace" && index > 0) {
       inputRefs[index - 1].current?.focus();
       setIsError(false);
     }
-    if (event.key === "ArrowRight" && index < inputRefs.length - 1) {
+    if (e.key === "ArrowRight" && index < inputRefs.length - 1) {
       inputRefs[index + 1].current?.focus();
     }
-    if (event.key === "ArrowLeft" && index > 0) {
+    if (e.key === "ArrowLeft" && index > 0) {
       inputRefs[index - 1].current?.focus();
     }
-    if (event.key === "Enter") {
+    if (e.key === "Enter") {
       codeCheck();
     }
   }
 
   function codeCheck() {
-    setIsError(code != inputCode);
-    setIsDone(code == inputCode);
+    setIsError(code !== inputCode);
+    setIsDone(code === inputCode);
   }
 
   return (
@@ -63,12 +60,12 @@ export default function Authenticator() {
       </div>
       {inputRefs.map((inputRef, index) => (
         <input className={inputCode[index] ? 'entered' : 'not-entered'} key={index} type="text" maxLength={1} ref={inputRef} value={inputCode[index] || ""}
-          onChange={(event) => handleInputChange(index, event)}
-          onKeyDown={(event: React.KeyboardEvent<HTMLInputElement>) => handleInputKeyDown(index, event)}
+          onChange={(e) => handleInputChange(index, e)}
+          onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => handleInputKeyDown(index, e)}
         />
       ))}
       <div>
-        <button className={'ok-button' + (inputCode.length == 4 ? '' : ' disable')} onClick={() => codeCheck()}>OK</button>
+        <button className={'ok-button' + (inputCode.length === 4 ? '' : ' disable')} onClick={() => codeCheck()}>OK</button>
       </div>
     </div>
     </>

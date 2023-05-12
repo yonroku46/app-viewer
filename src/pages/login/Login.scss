@@ -1,0 +1,72 @@
+.login {
+  .title {
+    font-weight: bold;
+    font-size: 30px;
+    text-align: left;
+    margin-bottom: 30px;
+  }
+  .login-form {
+    min-width: 340px;
+    label {
+      display: block;
+      text-align: left;
+      opacity: 0.75;
+      font-size: 12px;
+      margin-bottom: 4px;
+    }
+    input {
+      padding: 12px 20px;
+      width: -webkit-fill-available;
+      border-radius: 8px;
+      &.entered {
+        opacity: 1 !important;
+      }
+      &:not(:focus) {
+        opacity: 0.5;
+      }
+      &:focus {
+        opacity: 1;
+      }
+    }
+    .email, .password {
+      margin-top: 10px;
+      margin-bottom: 10px;
+      .visible {
+        cursor: pointer;
+        position: absolute;
+        padding: 10px 5px;
+        margin-left: -28px;
+        opacity: 0.75;
+      }
+    }
+    .recover {
+      cursor: pointer;
+      width: fit-content;
+      float: right;
+      text-align: right;
+      font-size: 12px;
+      margin-top: -8px;
+      opacity: 0.75;
+      &:hover {
+        opacity: 1;
+      }
+    }
+    .signin {
+      margin-top: 36px;
+      width: -webkit-fill-available;
+    }
+  }
+  .google-login {
+    background-color: white;
+    color: black;
+    width: -webkit-fill-available;
+    svg {
+      float: left;
+      margin-right: 10px;
+      margin-left: 40px;
+    }
+    div {
+      float: left;
+    }
+  }
+}
