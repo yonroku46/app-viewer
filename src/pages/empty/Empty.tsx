@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import empty from "../../assets/img/empty-img.jpg";
+import empty from "../../assets/img/empty.png";
 
 export default function Empty() {
 

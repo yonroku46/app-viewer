@@ -2,19 +2,22 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { MdOutlineVisibility, MdOutlineVisibilityOff } from "react-icons/md";
 import { FcGoogle } from "react-icons/fc";
-import LoginService from './LoginService';
+import AuthService from '../../shared/service/AuthService';
 import './Login.scss';
 
 export default function Login() {
 
+  const authService = new AuthService();
   const navigate = useNavigate();
 
   const [passwordType, setPasswordType] = useState<{type: string, visible: boolean}>({
     type: 'password',
     visible: false
   });
-  const [email, setEmail] = useState<string>("a@a.a");
-  const [password, setPassword] = useState<string>("a");
+  const [mail, setMail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
+  const [errMsg, setErrMsg] = useState<string>("");
 
   function passwordTypeHandler(e: React.MouseEvent<HTMLSpanElement, MouseEvent>) {
     setPasswordType(() => {
@@ -26,22 +29,36 @@ export default function Login() {
   }
 
   useEffect(() => {
+    const user = authService.getCurrentUser();
+    if (user) {
+      navigate(-1);
+    }
   }, []);
 
   async function onSubmitHandler(e: React.FormEvent<HTMLFormElement>) {
     // prevent page refresh
     e.preventDefault();
     
-    if (email === "" || password === "") {
+    if (mail === "" || password === "") {
       alert("Email or Password is Empty.");
       return;
     }
 
-    const data = await LoginService.login(email, password);
-    if (data) {
+    await login();
+  }
+
+  async function login() {
+    setLoading(true);
+    authService.login(mail, password).then(data => {
       console.log(data)
-      navigate(-1);
-    }
+      if (data) {
+        setLoading(false);
+        navigate(-1);
+      } else {
+        setErrMsg('');
+        setLoading(false);
+      }
+    });
   }
 
   return(
@@ -53,7 +70,7 @@ export default function Login() {
         </div>
         <div className='email'>
           <label>Email</label>
-          <input type='email' className={email.length > 0 ? 'entered' : ''} placeholder='Enter your email' value={email} onChange={(e) => setEmail(e.target.value)}/>
+          <input type='email' className={mail.length > 0 ? 'entered' : ''} placeholder='Enter your email' value={mail} onChange={(e) => setMail(e.target.value)}/>
         </div>
         <div className='password'>
           <label>Password</label>

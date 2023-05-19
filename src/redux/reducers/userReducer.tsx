@@ -1,26 +1,22 @@
 import { UserState, UserAction, UserActionTypes } from "../actions/types/UserActionTypes";
 
-interface User {
-  id: number;
-  name: string;
-  email: string;
-}
-
 const initialState: UserState = {
-  loading: false,
-  title: 'Title',
-  contents: 'Contents'
+  uid: undefined,
+  userName: undefined,
+  mail: undefined,
+  token: undefined,
+  refreshToken: undefined
 }
 
-export default function popupReducer(
+export default function userReducer(
   state = initialState,
   action: UserAction
 ): UserState {
   switch (action.type) {
-    case UserActionTypes.SHOW_POPUP:
-      return { ...state, loading: true };
-    case UserActionTypes.HIDE_POPUP:
-      return { ...state, loading: false };
+    case UserActionTypes.USER_LOGIN:
+      return { ...state, uid: action.user.uid, userName: action.user.userName, mail: action.user.mail, token: action.user.token, refreshToken: action.user.refreshToken };
+    case UserActionTypes.USER_LOGIN:
+      return { ...state, uid: undefined, userName: undefined, mail: undefined, token: undefined, refreshToken: undefined };
     default:
       return state;
   }

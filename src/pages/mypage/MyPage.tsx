@@ -3,7 +3,7 @@ import { Link, Route, Routes, useNavigate } from "react-router-dom";
 import { useScroll, useWindowScroll } from 'react-use';
 import { useDispatch, useSelector } from "react-redux";
 import { showPopup, showTopPopup, showCenterPopup } from "../../redux/actions/popupActions";
-import Authenticator from "../../components/Authenticator";
+import Authenticator from "../../shared/components/Authenticator";
 import './MyPage.scss';
 
 export default function MyPage() {

@@ -1,20 +1,24 @@
 export interface UserState {
-    loading: boolean;
-    title?: string;
-    contents: string;
+    uid?: number;
+    userName?: string;
+    mail?: string;
+    token?: string;
+    refreshToken?: string;
 }
   
 export enum UserActionTypes {
-    SHOW_POPUP = "SHOW_POPUP",
-    HIDE_POPUP = "HIDE_POPUP"
+    USER_LOGIN = "USER_LOGIN",
+    USER_LOGOUT = "USER_LOGOUT",
+    USER_INFO = "USER_INFO"
 }
   
-interface ShowPopup {
-    type: UserActionTypes.SHOW_POPUP;
+interface UserLogin {
+    type: UserActionTypes.USER_LOGIN;
+    user: UserState;
 }
   
-interface HidePopup {
-    type: UserActionTypes.HIDE_POPUP;
+interface UserLogout {
+    type: UserActionTypes.USER_LOGOUT;
 }
   
-export type UserAction = ShowPopup | HidePopup;
+export type UserAction = UserLogin | UserLogout;

@@ -1,10 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@200;400;700&display=swap');
 
 $header-height: 48px;
-$section-margin: 16px;
 $app-max-width: 1280px;
 $app-min-width: 280px;
 $app-sp-width: 767px;
+$main-margin: 16px;
+$nav-width: 180px;
+$nav-sp-width: 20px;
+$section-width: $app-max-width - $nav-width;
 
 html {
   font-family: 'Noto Sans JP', sans-serif;
@@ -31,12 +34,38 @@ header {
     margin-right: auto;
   }
   .logo {
-    display: inline-block;
-    height: 38px;
-    margin: 5px 10px;
+    float: left;
+    height: 30px;
+    margin: 9px 10px;
     cursor: pointer;
     img {
-      height: 38px;
+      height: 30px;
+    }
+    .labo {
+      color: white;
+      transform: rotate(316deg);
+      margin-left: -12px;
+      margin-top: -12px;
+      margin-bottom: 12px;
+    }
+  }
+  .side {
+    float: right;
+    height: 30px;
+    margin: 9px 10px;
+    .login, .logout {
+      cursor: pointer;
+      margin-bottom: -50px;
+      :hover {
+        opacity: 0.8;
+      }
+      span {
+        float: right;
+        &.text {
+          font-size: 17px;
+          margin-right: 8px;
+        }
+      }
     }
   }
 }
@@ -47,16 +76,87 @@ body {
   --contents-color: #ffffff;
   --main-color: #1a63f5;
   --sub-color: #417ffb;
+  --menu-active-color: #1a63f523;
 }
-section {
+main {
+  position: relative;
   max-width: $app-max-width;
   min-width: $app-min-width;
   min-height: calc(100vh - 48px - 32px);
   border-radius: 12px;
-  margin-top: $section-margin + $header-height;
-  margin-bottom: $section-margin;
+  margin-top: $main-margin + $header-height;
+  margin-bottom: $main-margin;
   margin-left: auto;
   margin-right: auto;
+}
+nav {
+  float: left;
+  position: absolute;
+  background-color: var(--contents-color);
+  border-radius: 12px;
+  padding: 8px;
+  width: $nav-width;
+  height: calc(100% - 16px);
+  .category {
+    margin-top: 6px;
+    margin-bottom: 6px;
+    font-size: 12px;
+    .title {
+      margin-bottom: 6px;
+      border-bottom: 1px solid black;
+      margin: 5px;
+      padding-bottom: 6px;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      font-size: 14px;
+    }
+    li {
+      padding: 8px 10px;
+      transition: all 0.25s;
+      &:hover {
+        cursor: pointer;
+        opacity: 0.8;
+      }
+      &.active {
+        font-weight: bold;
+        background-color: var(--menu-active-color);
+        border-radius: 4px;
+        &::after {
+          content: "";
+          background: var(--main-color);
+          border-radius: 6px;
+          height: 20px;
+          left: -8px;
+          position: absolute;
+          width: 4px;
+        }
+      }
+      svg {
+        margin-right: 6px;
+      }
+    }
+  }
+}
+section {
+  &.nav-on {
+    margin-left: $nav-width + $main-margin;
+    width: $section-width - $main-margin;
+  }
+}
+footer {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: $app-max-width;
+  font-size: 10px;
+  opacity: 0.15;
+  height: 20px;
+  div {
+    float: right;
+  }
 }
 img {
   -webkit-user-drag: none;
@@ -105,12 +205,12 @@ hr {
   align-items: center;
   text-align: center;
   flex-direction: column;
-  height: calc(100vh - 48px - 32px);
+  height: calc(100vh - 96px);
 }
 
 .home {
   .contents {
-    margin: 12px;
+    margin: 8px;
     min-height: 300px;
     .title {
       font-weight: bold;
@@ -124,7 +224,6 @@ hr {
   }
   .message {
     white-space: pre;
-    margin-bottom: 0px;
   }
   .back-button {
     margin-top: 24px
@@ -133,12 +232,30 @@ hr {
 
 /* sp */
 @media only screen and (max-width: $app-sp-width){
-  .home {
-    .contents {
-      margin: 6px;
-    }
-  }
   .popup-center {
     padding: 12px 15px;
+  }
+  nav {
+    width: $nav-sp-width;
+    .category {
+      .title {
+        padding-bottom: 0;
+        svg{
+          margin-left: -7px
+        }
+      }
+      li {
+        svg {
+          margin-right: 0 !important;
+          margin-left: -7px
+        }
+      }
+    }
+  }
+  section {
+    &.nav-on {
+      margin-left: $nav-sp-width + $main-margin;
+      width: unset;
+    }
   }
 }
