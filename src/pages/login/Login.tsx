@@ -35,30 +35,32 @@ export default function Login() {
     }
   }, []);
 
-  async function onSubmitHandler(e: React.FormEvent<HTMLFormElement>) {
-    // prevent page refresh
+  function onSubmitHandler(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    
+    errReset();
     if (mail === "" || password === "") {
-      alert("Email or Password is Empty.");
+      setErrMsg("メールとパスワードを入力してください");
       return;
     }
-
-    await login();
+    login();
   }
 
   async function login() {
     setLoading(true);
-    authService.login(mail, password).then(data => {
-      console.log(data)
-      if (data) {
+    await authService.login(mail, password).then(data => {
+      if (data.responseData) {
         setLoading(false);
+        errReset();
         navigate(-1);
       } else {
-        setErrMsg('');
+        setErrMsg('ログイン情報をもう一度ご確認ください');
         setLoading(false);
       }
     });
+  }
+
+  function errReset() {
+    setErrMsg('');
   }
 
   return(
@@ -70,11 +72,11 @@ export default function Login() {
         </div>
         <div className='email'>
           <label>Email</label>
-          <input type='email' className={mail.length > 0 ? 'entered' : ''} placeholder='Enter your email' value={mail} onChange={(e) => setMail(e.target.value)}/>
+          <input type='email' className={mail.length > 0 ? 'entered' : ''} placeholder='Enter your email' value={mail} onChange={(e) => {setMail(e.target.value); errReset();}}/>
         </div>
         <div className='password'>
           <label>Password</label>
-          <input type={passwordType.type} className={password.length > 0 ? 'entered' : ''} placeholder='Enter your password' value={password} onChange={(e) => setPassword(e.target.value)}/>
+          <input type={passwordType.type} className={password.length > 0 ? 'entered' : ''} placeholder='Enter your password' value={password} onChange={(e) => {setPassword(e.target.value); errReset();}}/>
           <span className='visible' onClick={passwordTypeHandler}>
             { passwordType.visible ? <MdOutlineVisibility/> : <MdOutlineVisibilityOff/> }
           </span>
@@ -82,6 +84,7 @@ export default function Login() {
         <div className='recover'>
           Recovery password
         </div>
+        {errMsg && <p className='errmsg'>{errMsg}</p>}
         <button type='submit' className='signin'>Sign in</button>
         <hr/>
         <button type='button' className='google-login'>

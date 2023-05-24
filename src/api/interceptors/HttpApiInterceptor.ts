@@ -1,4 +1,5 @@
-import axios, { AxiosError, InternalAxiosRequestConfig, AxiosResponse } from 'axios';
+import { useEffect, useRef } from 'react';
+import axios, { AxiosError, AxiosRequestConfig, AxiosHeaders, AxiosResponse } from 'axios';
 import { Observable, BehaviorSubject, throwError, from } from 'rxjs';
 import { filter, switchMap, take } from 'rxjs/operators';
 import { useNavigate } from "react-router-dom";
@@ -6,50 +7,61 @@ import { useDispatch } from "react-redux";
 import { userLogin } from "../../redux/actions/userActions";
 import AuthService from '../../shared/service/AuthService';
 
-export class HttpApiInterceptor {
+interface InternalAxiosRequestConfig extends AxiosRequestConfig {
+  headers: AxiosHeaders;
+}
 
-  private navigate = useNavigate();
-  private dispatch = useDispatch();
-  private isRefreshing = false;
-  private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
-  private authenticationService = new AuthService();
-  private requestInterceptorId: number;
-  private responseInterceptorId: number;
+export function HttpApiInterceptor() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const isRefreshing = useRef(false);
+  const refreshTokenSubject = useRef(new BehaviorSubject<any>(null));
+  const authenticationService = new AuthService();
+  const requestInterceptorId = useRef<number>();
+  const responseInterceptorId = useRef<number>();
 
-  constructor() {
-    this.interceptRequest = this.interceptRequest.bind(this);
-    this.interceptResponse = this.interceptResponse.bind(this);
-    this.interceptError = this.interceptError.bind(this);
-    this.handle401Error = this.handle401Error.bind(this);
-    this.handle403Error = this.handle403Error.bind(this);
-    this.handle409Error = this.handle409Error.bind(this);
-    this.addToken = this.addToken.bind(this);
+  useEffect(() => {
+    axios.defaults.baseURL = process.env.REACT_APP_API_BASE;
+    axios.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8';
+    axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
 
-    this.requestInterceptorId = axios.interceptors.request.use(this.interceptRequest);
-    this.responseInterceptorId = axios.interceptors.response.use(this.interceptResponse, this.interceptError);  
-  }
+    const interceptor = axios.interceptors.request.use(interceptRequest, interceptError);
+    requestInterceptorId.current = interceptor;
+    const responseInterceptor = axios.interceptors.response.use(interceptResponse, interceptError);
+    responseInterceptorId.current = responseInterceptor;
 
-  interceptRequest(config: InternalAxiosRequestConfig): InternalAxiosRequestConfig {
-    const currentUser = this.authenticationService.getCurrentUser();
+    return () => {
+      if (requestInterceptorId.current !== undefined) {
+        axios.interceptors.request.eject(requestInterceptorId.current);
+      }
+      if (responseInterceptorId.current !== undefined) {
+        axios.interceptors.response.eject(responseInterceptorId.current);
+      }
+    };
+  }, []);
+
+  function interceptRequest(config: AxiosRequestConfig): InternalAxiosRequestConfig {
+    const currentUser = authenticationService.getCurrentUser();
+    config.headers = config.headers || {} as AxiosHeaders;
     config.headers.Authorization = `Bearer ${currentUser ? currentUser.token : ''}`;
     config.headers.RefreshToken = `Bearer ${currentUser ? currentUser.refreshToken : ''}`;
-    return config;
-  };
+    return config as InternalAxiosRequestConfig;
+  }
   
-  interceptResponse(response: AxiosResponse): AxiosResponse {
+  function interceptResponse(response: AxiosResponse): AxiosResponse {
     return response;
   }
 
-  interceptError(error: AxiosError): Observable<AxiosResponse<any, any>> {
+  function interceptError(error: AxiosError): Observable<AxiosResponse<any, any>> {
     if (error.response) {
       switch (error.response.status) {
         case 401:
-          return this.handle401Error(error);
+          return handle401Error(error);
         case 403:
-          this.handle403Error();
+          handle403Error();
           break;
         case 409:
-          this.handle409Error();
+          handle409Error();
           break;
         default:
           break;
@@ -58,60 +70,66 @@ export class HttpApiInterceptor {
     return throwError(error);
   }
 
-  releaseInterceptors() {
-    axios.interceptors.request.eject(this.requestInterceptorId);
-    axios.interceptors.response.eject(this.responseInterceptorId);
-  }
+  function handle401Error(error: AxiosError): Observable<AxiosResponse<any, any>> {
+    if (!isRefreshing.current) {
+      isRefreshing.current = true;
+      refreshTokenSubject.current.next(null);
 
-  private handle401Error(error: AxiosError): Observable<AxiosResponse<any, any>> {
-    if (!this.isRefreshing) {
-      this.isRefreshing = true;
-      this.refreshTokenSubject.next(null);
-
-      return from(this.authenticationService.refreshToken()).pipe(
+      return from(authenticationService.refreshToken()).pipe(
         switchMap((response: AxiosResponse) => {
-          this.isRefreshing = false;
+          isRefreshing.current = false;
           if (response && !response.data.hasErrors) {
             localStorage.setItem('currentUser', JSON.stringify(response.data.responseData));
-            this.dispatch(userLogin(response.data.responseData));
-            this.refreshTokenSubject.next(response.data.responseData.token);
-            return axios(this.addToken(error.config));
+            dispatch(userLogin(response.data.responseData));
+            refreshTokenSubject.current.next(response.data.responseData.token);
+            return axios(addToken(error.config));
           } else {
-            this.authenticationService.logout(false);
-            this.navigate('login');
+            authenticationService.logout(false);
+            navigate('login');
             return throwError(response);
           }
         })
       );
     } else {
-      return this.refreshTokenSubject.pipe(
-        filter(token => token != null),
+      return refreshTokenSubject.current.pipe(
+        filter(token => token !== null),
         take(1),
         switchMap(() => {
-          return axios(this.addToken(error.config));
+          return axios(addToken(error.config));
         })
       );
     }
   }
 
-  private handle403Error(): void {
-    this.navigate('');
+  function handle403Error(): void {
+    navigate('');
   }
 
-  private handle409Error(): void {
-    this.authenticationService.logout(false);
-    this.navigate('login');
+  function handle409Error(): void {
+    authenticationService.logout(false);
+    navigate('login');
   }
 
-  private addToken(config: InternalAxiosRequestConfig | undefined): InternalAxiosRequestConfig | {} {
+  function addToken(config: AxiosRequestConfig | undefined): InternalAxiosRequestConfig | {} {
     if (config) {
-      const currentUser = this.authenticationService.getCurrentUser();
+      const currentUser = authenticationService.getCurrentUser();
+      config.headers = config.headers || {}; 
       config.headers.Authorization = `Bearer ${currentUser ? currentUser.token : ''}`;
       config.headers.RefreshToken = `Bearer ${currentUser ? currentUser.refreshToken : ''}`;
-      return config;
+      return config as InternalAxiosRequestConfig;
     } else {
       return {};
     }
+  }
+
+  return {
+    releaseInterceptors: () => {
+      if (requestInterceptorId.current !== undefined) {
+        axios.interceptors.request.eject(requestInterceptorId.current);
+      }
+      if (responseInterceptorId.current !== undefined) {
+        axios.interceptors.response.eject(responseInterceptorId.current);
+      }
+    }
   };
-  
 }

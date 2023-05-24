@@ -5,7 +5,7 @@ $app-max-width: 1280px;
 $app-min-width: 280px;
 $app-sp-width: 767px;
 $main-margin: 16px;
-$nav-width: 180px;
+$nav-width: 164px;
 $nav-sp-width: 20px;
 $section-width: $app-max-width - $nav-width;
 
@@ -15,6 +15,9 @@ html {
   -moz-user-select: none;
   -ms-use-select: none;
   user-select: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 header {
   z-index: 9000;
@@ -52,19 +55,34 @@ header {
   .side {
     float: right;
     height: 30px;
-    margin: 9px 10px;
-    .login, .logout {
-      cursor: pointer;
-      margin-bottom: -50px;
-      :hover {
-        opacity: 0.8;
-      }
-      span {
+    margin-top: 7px;
+    margin-right: 9px;
+    .login {
+      border: 2px solid white;
+      padding: 6px 18px;
+      color: white;
+      .text {
         float: right;
-        &.text {
-          font-size: 17px;
-          margin-right: 8px;
-        }
+        font-size: 15px;
+        margin-top: -4px;
+      }
+    }
+    .logout {
+      border: none;
+      padding: 3px 0px;
+      color: white;
+    }
+    .username {
+      font-size: 15px;
+      margin-top: 4px;
+      margin-right: 10px;
+    }
+    .login, .logout, .username {
+      float: right;
+      cursor: pointer;
+      transition: opacity 0.25s;
+      &:hover {
+        opacity: 0.8;
       }
     }
   }
@@ -91,12 +109,13 @@ main {
 }
 nav {
   float: left;
-  position: absolute;
+  position: sticky;
+  top: 64px;
   background-color: var(--contents-color);
   border-radius: 12px;
   padding: 8px;
   width: $nav-width;
-  height: calc(100% - 16px);
+  height: calc(100vh - 98px);
   .category {
     margin-top: 6px;
     margin-bottom: 6px;
@@ -139,23 +158,36 @@ nav {
       }
     }
   }
+  .toggle {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    opacity: 0.25;
+    transition: opacity 0.25s;
+    &:hover {
+      cursor: pointer;
+      opacity: 0.5;
+    }
+  }
 }
 section {
   &.nav-on {
     margin-left: $nav-width + $main-margin;
-    width: $section-width - $main-margin;
+    max-width: $section-width - $main-margin;
   }
 }
 footer {
   display: block;
+  height: 16px;
   margin-left: auto;
   margin-right: auto;
+  margin-top: -16px;
   max-width: $app-max-width;
   font-size: 10px;
   opacity: 0.15;
-  height: 20px;
   div {
     float: right;
+    margin-right: 6px;
   }
 }
 img {
@@ -167,12 +199,15 @@ img {
     filter: invert(1);
   }
 }
+a {
+  text-decoration: none;
+}
 button {
   font-family: 'Noto Sans JP', sans-serif;
-  padding: 12px 42px;
+  padding: 6px 18px;
   border-radius: 12px;
-  background-color: black;
-  color: white;
+  border: 1px solid black;
+  background-color: rgba(0, 0, 0, 0);
   font-weight: bold;
   &:hover {
     cursor: pointer;
@@ -255,7 +290,20 @@ hr {
   section {
     &.nav-on {
       margin-left: $nav-sp-width + $main-margin;
-      width: unset;
+      max-width: unset;
     }
+  }
+}
+
+/* animation */
+@keyframes upAndDown {
+  0% {
+    transform: translate(0, 0);
+  }
+  50% {
+      transform: translate(1px, -1px);
+  }
+  100% {
+      transform: translate(-3px, 3px);
   }
 }

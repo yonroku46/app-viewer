@@ -1,20 +1,29 @@
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 import { useDispatch } from "react-redux";
 import { UserState } from "../../redux/actions/types/UserActionTypes";
 import { userLogin, userLogout } from "../../redux/actions/userActions";
-import Api, { ApiResponse, ApiMapping } from '../../api/Api';
+import { ApiResponse, ApiMapping } from '../../api/Api';
+import { apiUrl } from "../../shared/utils/Utils";
 
 export default class AuthService {
 
   dispatch = useDispatch();
 
+  getCurrentUser(): UserState | undefined {
+    const currentUser = localStorage.getItem('currentUser');
+    if (currentUser) {
+      return JSON.parse(currentUser);
+    } else {
+      return undefined;
+    }
+  }
+
   async login(mail: string, password: string): Promise<any> {
-    await axios.post<ApiResponse>(
-      Api.getUrl(ApiMapping.LOGIN), {
+    return axios.post<ApiResponse>(
+      apiUrl(ApiMapping.LOGIN), {
       mail,
       password,
     }).then(response => {
-      console.log(response)
       if (response && !response.data.hasErrors) {
         const current = new Date();
         const userInfo = response.data.responseData;
@@ -32,29 +41,37 @@ export default class AuthService {
     });
   }
 
-  async logout(isSendReq: boolean) {
+  async logout(isSendReq: boolean): Promise<any> {
     if (isSendReq) {
-      await axios.post<Response>(
-        Api.getUrl(ApiMapping.LOGOUT), {
-      });
-    }
-    localStorage.removeItem('jwtInfo');
-    localStorage.removeItem('currentUser');
-    this.dispatch(userLogout());
+      return axios.post<ApiResponse>(
+        apiUrl(ApiMapping.LOGOUT), {
+        }).then(response => {
+          localStorage.removeItem('jwtInfo');
+          localStorage.removeItem('currentUser');
+          this.dispatch(userLogout());
+          if (response) {
+            return response.data;
+          }
+        }).catch(err => {
+          localStorage.removeItem('jwtInfo');
+          localStorage.removeItem('currentUser');
+          this.dispatch(userLogout());
+          return null;
+        });
+      }
   }
 
-  getCurrentUser(): UserState | undefined {
-    const currentUser = localStorage.getItem('currentUser');
-    if (currentUser) {
-      return JSON.parse(currentUser);
-    } else {
-      return undefined;
-    }
-  }
-
-  refreshToken(): Promise<AxiosResponse<ApiResponse, any>> {
+  async refreshToken(): Promise<any> {
     return axios.get<ApiResponse>(
-      Api.getUrl(ApiMapping.REFRESH_TOKEN), {
+      apiUrl(ApiMapping.REFRESH_TOKEN), {
+    });
+  }
+
+  async healthCheck(): Promise<any> {
+    return axios.get<ApiResponse>(
+      apiUrl(ApiMapping.API_CHECK)
+    ).then(response => {
+      return response.data;
     });
   }
 }

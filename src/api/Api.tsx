@@ -7,16 +7,12 @@ export interface ApiResponse {
 }
 
 export enum ApiMapping {
+  // public
+  API_CHECK = "/",
   // auth
-  LOGIN = "auth/login",
-  LOGOUT = "auth/logout",
-  REFRESH_TOKEN = "auth/refreshToken",
+  LOGIN = "/auth/login",
+  LOGOUT = "/auth/logout",
+  REFRESH_TOKEN = "/auth/refreshToken",
   // user
-  USER_INFO = "user/info",
-}
-
-export default class Api {
-  public static getUrl(path: ApiMapping): string {
-    return `${process.env.REACT_APP_API_ROOT}${path}`;
-  }
+  USER_INFO = "/user/info",
 }
