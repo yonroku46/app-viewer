@@ -46,7 +46,7 @@ export default function Popup({ title = '', contents, center, backdropClose = tr
     );
   }
 
-  return (
+  return(
     <>
     <Backdrop onClick={() => backdropClose && dispatch(hidePopup())}/>
     {/* 上段ポップアップ */}

@@ -44,7 +44,7 @@ export default function MyPage() {
 
   return(
     <>
-    <div className='mypage contents' style={myPageStyle}>
+    <section className='mypage contents' style={myPageStyle}>
       mypage
       <button onClick={() => navigate(-1)}>back</button>
       <br/>
@@ -52,7 +52,7 @@ export default function MyPage() {
       <button className='center' onClick={() => openCenterPopup('title', 'center popup')}>topCenter</button>
       <Authenticator/>
       { isExtendedWait ? 'extended...' : ''}
-    </div>
+    </section>
     </>
   )
 }

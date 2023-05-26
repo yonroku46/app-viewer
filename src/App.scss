@@ -5,9 +5,10 @@ $app-max-width: 1280px;
 $app-min-width: 280px;
 $app-sp-width: 767px;
 $main-margin: 16px;
-$nav-width: 164px;
-$nav-sp-width: 20px;
-$section-width: $app-max-width - $nav-width;
+$search-nav-width: 164px;
+$search-nav-sp-width: 20px;
+$nav-width: 180px;
+$section-width: $app-max-width - $search-nav-width;
 
 html {
   font-family: 'Noto Sans JP', sans-serif;
@@ -21,28 +22,31 @@ html {
 }
 header {
   z-index: 9000;
-  background-color: var(--main-color);
+  background-color: white;
   position: fixed;
   height: $header-height;
   width: 100%;
   top: 0;
   left: 0;
   color: white;
+  box-shadow: 0 0px 4px 1px var(--main-shadow-color);
   .header-main {
     max-width: $app-max-width;
     min-width: $app-min-width;
-    background-color: var(--main-color);
+    background-color: white;
     height: $header-height;
     margin-left: auto;
     margin-right: auto;
   }
   .logo {
+    cursor: pointer;
     float: left;
     height: 30px;
     margin: 9px 10px;
-    cursor: pointer;
+    filter: grayscale(1) brightness(0);
     img {
       height: 30px;
+      margin-top: -1px;
     }
     .labo {
       color: white;
@@ -54,37 +58,8 @@ header {
   }
   .side {
     float: right;
-    height: 30px;
-    margin-top: 7px;
-    margin-right: 9px;
-    .login {
-      border: 2px solid white;
-      padding: 6px 18px;
-      color: white;
-      .text {
-        float: right;
-        font-size: 15px;
-        margin-top: -4px;
-      }
-    }
-    .logout {
-      border: none;
-      padding: 3px 0px;
-      color: white;
-    }
-    .username {
-      font-size: 15px;
-      margin-top: 4px;
-      margin-right: 10px;
-    }
-    .login, .logout, .username {
-      float: right;
-      cursor: pointer;
-      transition: opacity 0.25s;
-      &:hover {
-        opacity: 0.8;
-      }
-    }
+    height: $header-height;
+    margin-right: 8px;
   }
 }
 body {
@@ -94,6 +69,7 @@ body {
   --contents-color: #ffffff;
   --main-color: #1a63f5;
   --sub-color: #417ffb;
+  --main-shadow-color: #dddddd;
   --menu-active-color: #1a63f523;
 }
 main {
@@ -101,79 +77,19 @@ main {
   max-width: $app-max-width;
   min-width: $app-min-width;
   min-height: calc(100vh - 48px - 32px);
-  border-radius: 12px;
+  border-radius: 8px;
   margin-top: $main-margin + $header-height;
   margin-bottom: $main-margin;
   margin-left: auto;
   margin-right: auto;
 }
-nav {
-  float: left;
-  position: sticky;
-  top: 64px;
-  background-color: var(--contents-color);
-  border-radius: 12px;
-  padding: 8px;
-  width: $nav-width;
-  height: calc(100vh - 98px);
-  .category {
-    margin-top: 6px;
-    margin-bottom: 6px;
-    font-size: 12px;
-    .title {
-      margin-bottom: 6px;
-      border-bottom: 1px solid black;
-      margin: 5px;
-      padding-bottom: 6px;
-    }
-    ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      font-size: 14px;
-    }
-    li {
-      padding: 8px 10px;
-      transition: all 0.25s;
-      &:hover {
-        cursor: pointer;
-        opacity: 0.8;
-      }
-      &.active {
-        font-weight: bold;
-        background-color: var(--menu-active-color);
-        border-radius: 4px;
-        &::after {
-          content: "";
-          background: var(--main-color);
-          border-radius: 6px;
-          height: 20px;
-          left: -8px;
-          position: absolute;
-          width: 4px;
-        }
-      }
-      svg {
-        margin-right: 6px;
-      }
-    }
-  }
-  .toggle {
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-    opacity: 0.25;
-    transition: opacity 0.25s;
-    &:hover {
-      cursor: pointer;
-      opacity: 0.5;
-    }
-  }
-}
 section {
-  &.nav-on {
-    margin-left: $nav-width + $main-margin;
+  &.with-nav {
+    margin-left: $search-nav-width + $main-margin;
     max-width: $section-width - $main-margin;
+    &.sp {
+      margin-left: $search-nav-sp-width + $main-margin;
+    }
   }
 }
 footer {
@@ -205,10 +121,11 @@ a {
 button {
   font-family: 'Noto Sans JP', sans-serif;
   padding: 6px 18px;
-  border-radius: 12px;
+  border-radius: 8px;
   border: 1px solid black;
   background-color: rgba(0, 0, 0, 0);
   font-weight: bold;
+  color: black;
   &:hover {
     cursor: pointer;
     opacity: 0.9;
@@ -224,16 +141,23 @@ hr {
   margin-top: 16px;
   margin-bottom: 16px;
 }
-
+.backdrop {
+  z-index: 9998;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.15);
+}
 .contents {
   background-color: var(--contents-color);
-  border-radius: 12px;
+  border-radius: 8px;
   padding: 8px;
 }
-
 .fullsize {
   background-color: var(--contents-color);
-  border-radius: 12px;
+  border-radius: 8px;
   padding: 8px;
   display: flex;
   justify-content: center;
@@ -243,53 +167,11 @@ hr {
   height: calc(100vh - 96px);
 }
 
-.home {
-  .contents {
-    margin: 8px;
-    min-height: 300px;
-    .title {
-      font-weight: bold;
-    }
-  }
-}
-
-.empty {
-  img {
-    width: 224px;
-  }
-  .message {
-    white-space: pre;
-  }
-  .back-button {
-    margin-top: 24px
-  }
-}
-
 /* sp */
 @media only screen and (max-width: $app-sp-width){
-  .popup-center {
-    padding: 12px 15px;
-  }
-  nav {
-    width: $nav-sp-width;
-    .category {
-      .title {
-        padding-bottom: 0;
-        svg{
-          margin-left: -7px
-        }
-      }
-      li {
-        svg {
-          margin-right: 0 !important;
-          margin-left: -7px
-        }
-      }
-    }
-  }
   section {
     &.nav-on {
-      margin-left: $nav-sp-width + $main-margin;
+      margin-left: $nav-width + $main-margin;
       max-width: unset;
     }
   }

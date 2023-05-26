@@ -65,7 +65,7 @@ export default function Login() {
 
   return(
     <>
-    <div className='login fullsize'>
+    <section className='login fullsize'>
       <form className='login-form' onSubmit={onSubmitHandler}>
         <div className='title'>
           Login
@@ -77,12 +77,14 @@ export default function Login() {
         <div className='password'>
           <label>Password</label>
           <input type={passwordType.type} className={password.length > 0 ? 'entered' : ''} placeholder='Enter your password' value={password} onChange={(e) => {setPassword(e.target.value); errReset();}}/>
-          <span className='visible' onClick={passwordTypeHandler}>
-            { passwordType.visible ? <MdOutlineVisibility/> : <MdOutlineVisibilityOff/> }
-          </span>
+          {password.length > 0 &&
+            <span className='visible' onClick={passwordTypeHandler}>
+              { passwordType.visible ? <MdOutlineVisibility/> : <MdOutlineVisibilityOff/> }
+            </span>
+          }
         </div>
         <div className='recover'>
-          Recovery password
+          パスワード再発行
         </div>
         {errMsg && <p className='errmsg'>{errMsg}</p>}
         <button type='submit' className='signin'>Sign in</button>
@@ -92,7 +94,7 @@ export default function Login() {
           <div>Sign in with Google</div>
         </button>
       </form>
-    </div>
+    </section>
     </>
   )
 }

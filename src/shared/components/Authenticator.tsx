@@ -49,7 +49,7 @@ export default function Authenticator() {
     setIsDone(code === inputCode);
   }
 
-  return (
+  return(
     <>
     {/* 認証コンポネント */}
     <div className='authenticator' onClick={() => {}}>
