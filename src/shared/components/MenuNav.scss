@@ -1,0 +1,296 @@
+$header-height: 48px;
+$app-max-width: 1280px;
+$app-min-width: 280px;
+$app-sp-width: 767px;
+$main-margin: 16px;
+$search-nav-width: 164px;
+$search-nav-sp-width: 20px;
+$nav-width: 180px;
+$section-width: $app-max-width - $search-nav-width;
+
+.menu-btn {
+  cursor: pointer;
+  position: relative;
+  z-index: 10000;
+  width: 40px;
+  height: 45px;
+  margin-top: 2px;
+  margin-bottom: 2px;
+  margin-right: 0;
+  margin-left: auto;
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  transform: rotate(0deg);
+  -webkit-transition: .5s ease-in-out;
+  -moz-transition: .5s ease-in-out;
+  -o-transition: .5s ease-in-out;
+  transition: .5s ease-in-out;
+  span {
+    display: block;
+    position: absolute;
+    height: 4px;
+    width: 100%;
+    background: black;
+    border-radius: 4px;
+    opacity: 1;
+    left: 0;
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+    -webkit-transition: .25s ease-in-out;
+    -moz-transition: .25s ease-in-out;
+    -o-transition: .25s ease-in-out;
+    transition: .25s ease-in-out;
+    &:nth-child(1) {
+      top: 10px;
+    }
+    &:nth-child(2),&:nth-child(3) {
+      top: 19px;
+    }
+    &:nth-child(4) {
+      top: 28px;
+    }
+  }
+  &.open span {
+    height: 3px;
+  }
+  &.open span:nth-child(1) {
+    top: 19px;
+    width: 0%;
+    left: 50%;
+  }
+  &.open span:nth-child(2) {
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    transform: rotate(45deg);
+    width: 50%;
+    left: 6px;
+  }
+  &.open span:nth-child(3) {
+    -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    -o-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+    width: 50%;
+    left: 18px;
+  }
+  &.open span:nth-child(4) {
+    top: 19px;
+    width: 0%;
+    left: 50%;
+  }
+}
+
+.login-btn, .logout-btn {
+  cursor: pointer;
+  float: right;
+  border: 2px solid black;
+  padding: 6px 18px;
+  margin-right: 56px;
+  margin-top: 7px;
+  transition: all 0.25s;
+  .text {
+    float: right;
+    font-size: 15px;
+    margin-top: -4px;
+  }
+  .icon {
+    float: right;
+    margin-right: -12px;
+    margin-left: 3px;
+  }
+  &.sp {
+    padding: 6px;
+    .icon {
+      margin: 0;
+    }
+  }
+  &:hover {
+    background-color: black;
+    color: white;
+  }
+}
+
+.menu-nav {
+  float: right;
+  .menu {
+    display: flex;
+    position: absolute;
+    max-height: 80vh;
+    overflow-y: auto;
+    z-index: 9999;
+    width: 100vw;
+    max-width: $app-max-width;
+    margin-top: -88px;
+    padding: 36px 0px;
+    padding-top: 134px;
+    background: white;
+    color: black;
+    border: 1px solid black;
+    border-radius: 8px;
+    list-style-type: none;
+    -webkit-font-smoothing: antialiased;
+    transform-origin: 0% 0%;
+    left: 50%;
+    transform: translate(-50%, -100%);
+    transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0);
+    &.open {
+      transform: translate(-50%, 0%);
+    }
+    .menu-sp {
+      margin-top: 6px;
+      margin-bottom: 6px;
+      padding: 0px 16px;
+      font-size: 12px;
+      .title {
+        margin-bottom: 6px;
+        border-bottom: 1px solid black;
+        margin: 5px;
+        padding-bottom: 6px;
+      }
+      ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        font-size: 14px;
+      }
+      li {
+        padding: 8px 10px;
+        transition: all 0.25s;
+        &:hover {
+          cursor: pointer;
+          opacity: 0.8;
+        }
+        &.active {
+          font-weight: bold;
+          background-color: var(--menu-active-color);
+          border-radius: 4px;
+        }
+        svg {
+          margin-right: 8px;
+        }
+      }
+    }
+    
+    .menu-left {
+      flex-grow: 1;
+      height: 160px;
+      border-right: 1px solid black;
+      margin-left: 32px;
+      .category {
+        cursor: pointer;
+        padding: 0px 16px;
+        font-size: 16px;
+        .title {
+          margin-bottom: 6px;
+          width: fit-content;
+          &.active {
+            font-weight: bold;
+          }
+          &:hover {
+            opacity: 0.8;
+          }
+        }
+      }
+    }
+    .menu-right {
+      flex-grow: 0;
+      flex-basis: 60%;
+      height: 160px;
+      margin-left: 32px;
+      ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        font-size: 14px;
+      }
+      li {
+        display: inline-block;
+        padding: 8px 10px;
+        transition: all 0.25s;
+        margin-right: 22px;
+        width: 40%;
+        &:hover {
+          cursor: pointer;
+          background-color: var(--menu-active-color);
+          border-radius: 4px;
+          opacity: 0.8;
+        }
+        &.active {
+          font-weight: bold;
+          background-color: var(--menu-active-color);
+          border-radius: 4px;
+        }
+        svg {
+          margin-right: 8px;
+        }
+      }
+    }
+    .category-img {
+      flex-grow: 0;
+      flex-basis: 132px;
+      height: 160px;
+      margin-left: 32px;
+      margin-right: 32px;
+      img {
+        width: 132px;
+        height: 160px;
+        border-radius: 8px;
+      }
+    }
+
+    .userinfo {
+      width: calc(100% - 64px);
+      position: inherit;
+      height: 56px;
+      margin-top: -82px;
+      margin-left: 32px;
+      margin-right: 32px;
+      .profile {
+        width: 50px;
+        border-radius: 50%;
+        border: 2px solid black;
+      }
+      .info {
+        margin-top: -50px;
+        margin-left: 68px;
+        .name {
+          font-size: 15px;
+          width: fit-content;
+          color: black;
+        }
+        .mail {
+          font-size: 13px;
+          opacity: 0.5;
+          width: fit-content;
+          margin-top: -4px;
+          margin-left: 2px;
+        }
+      }
+      .profile, .name {
+        cursor: pointer;
+        transition: opacity 0.25s;
+        &:hover {
+          opacity: 0.8;
+        }
+      }
+    }
+  }
+}
+
+/* sp */
+@media only screen and (max-width: $app-sp-width){
+  .menu-nav {
+    .menu {
+      display: block;
+      .userinfo {
+        width: calc(100% - 32px);
+        margin-left: 16px;
+        margin-right: 16px;
+      }
+    }
+  }
+}

@@ -35,8 +35,13 @@
         cursor: pointer;
         position: absolute;
         padding: 10px 5px;
-        margin-left: -28px;
+        margin-left: -30px;
         opacity: 0.75;
+      }
+    }
+    .password {
+      input {
+        padding-right: 30px;
       }
     }
     .recover {
@@ -44,29 +49,62 @@
       width: fit-content;
       float: right;
       text-align: right;
-      font-size: 12px;
+      font-size: 11px;
       margin-top: -8px;
-      opacity: 0.75;
+      opacity: 0.55;
       &:hover {
-        opacity: 1;
+        opacity: 0.8;
       }
     }
+    .errmsg {
+      color: red;
+      font-size: 12px;
+      text-align: center;
+      margin-bottom: -36px;
+      margin-top: 30px;
+      animation: shake 0.3s;
+    }
     .signin {
+      background-color: black;
+      color: white;
       margin-top: 36px;
+      padding: 12px 42px;
       width: -webkit-fill-available;
     }
   }
   .google-login {
     background-color: white;
     color: black;
+    padding: 12px 42px;
     width: -webkit-fill-available;
     svg {
       float: left;
       margin-right: 10px;
-      margin-left: 40px;
+      margin-left: 24px;
     }
     div {
       float: left;
+    }
+  }
+
+  @keyframes shake {
+    0% {
+      transform: translateX(0);
+    }
+    20% {
+      transform: translateX(1px);
+    }
+    40% {
+      transform: translateX(-1px);
+    }
+    60% {
+      transform: translateX(1px);
+    }
+    80% {
+      transform: translateX(-1px);
+    }
+    100% {
+      transform: translateX(0);
     }
   }
 }
