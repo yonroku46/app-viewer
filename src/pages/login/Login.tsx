@@ -59,6 +59,11 @@ export default function Login() {
     });
   }
 
+  function googleLogin() {
+    alert('まだ対応しておりません');
+    setErrMsg('');
+  }
+
   function errReset() {
     setErrMsg('');
   }
@@ -71,12 +76,12 @@ export default function Login() {
           Login
         </div>
         <div className='email'>
-          <label>Email</label>
-          <input type='email' className={mail.length > 0 ? 'entered' : ''} placeholder='Enter your email' value={mail} onChange={(e) => {setMail(e.target.value); errReset();}}/>
+          <label>メールアドレス</label>
+          <input type='email' className={mail.length > 0 ? 'entered' : ''} placeholder='メールアドレスを入力' value={mail} onChange={(e) => {setMail(e.target.value); errReset();}}/>
         </div>
         <div className='password'>
-          <label>Password</label>
-          <input type={passwordType.type} className={password.length > 0 ? 'entered' : ''} placeholder='Enter your password' value={password} onChange={(e) => {setPassword(e.target.value); errReset();}}/>
+          <label>パスワード</label>
+          <input type={passwordType.type} className={password.length > 0 ? 'entered' : ''} placeholder='パスワードを入力' value={password} onChange={(e) => {setPassword(e.target.value); errReset();}}/>
           {password.length > 0 &&
             <span className='visible' onClick={passwordTypeHandler}>
               { passwordType.visible ? <MdOutlineVisibility/> : <MdOutlineVisibilityOff/> }
@@ -87,11 +92,11 @@ export default function Login() {
           パスワード再発行
         </div>
         {errMsg && <p className='errmsg'>{errMsg}</p>}
-        <button type='submit' className='signin'>Sign in</button>
+        <button type='submit' className='signin'>ログイン</button>
         <hr/>
-        <button type='button' className='google-login'>
+        <button type='button' className='google-login' onClick={() => googleLogin()}>
           <FcGoogle size={22}/>
-          <div>Sign in with Google</div>
+          <div>Googleアカウントでログイン</div>
         </button>
       </form>
     </section>

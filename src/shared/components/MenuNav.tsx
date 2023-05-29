@@ -1,13 +1,16 @@
 import { useState, ReactElement } from 'react';
 import { useNavigate } from "react-router-dom";
 import { useMediaQuery } from 'react-responsive';
+import logo from "../../assets/icon/logo.svg";
 import AuthService from '../../shared/service/AuthService';
 import { imgSrc, handleImgError } from "../../shared/utils/Utils";
 import { RiArrowDropRightLine } from "react-icons/ri";
+import { RiUserReceivedFill, RiUserSharedFill } from "react-icons/ri";
 import './MenuNav.scss';
 
 export interface MenuItem {
   category: string;
+  categoryImg: string;
   items: {
     id: number,
     url: string,
@@ -46,10 +49,27 @@ export default function MenuNav({ menuItem, currentPath, userName, mail }: { men
     <>
     <Backdrop onClick={() => setOpen(false)}/>
     {/* 共通メニューコンポネント */}
-    {!userName && currentPath !== 'login' &&
-      <button className='login-btn' onClick={() => link('login')}>
+    {userName ?
+      <button className={isSp ? 'logout-btn sp' : 'logout-btn'} onClick={() => logout()}>
+        {isSp ?
+          <RiUserSharedFill className='icon sp' size='16'/>
+        :
+        <>
+          <RiArrowDropRightLine className='icon' size='16'/>
+          <span className='text'>ログアウト</span>
+        </>
+        }
+      </button>
+    : currentPath !== 'login' &&
+      <button className={isSp ? 'login-btn sp' : 'login-btn'} onClick={() => link('login')}>
+        {isSp ?
+        <RiUserReceivedFill className='icon sp' size='16'/>
+      :
+      <>
         <RiArrowDropRightLine className='icon' size='16'/>
-        <span className='text'>Login</span>
+        <span className='text'>ログイン / 会員登録</span>
+      </>
+      }
       </button>
     }
     <div className={open ? 'menu-btn open' : 'menu-btn'} onClick={() => setOpen(!open)}>
@@ -60,12 +80,8 @@ export default function MenuNav({ menuItem, currentPath, userName, mail }: { men
     </div>
     <nav className='menu-nav' role='navigation'>
       <div className={open ? 'menu open' : 'menu'}>
-        {userName && 
+        {userName ?
           <div className='userinfo'>
-            <button className='logout-btn' onClick={() => logout()}>
-              <RiArrowDropRightLine className='icon' size='16'/>
-              <span className='text'>Logout</span>
-            </button>
             <img className='profile' src={imgSrc('/tmp/dummy.jpg')} onError={handleImgError} onClick={() => link('mypage')}/>
             <div className='info'>
               <div className='name' onClick={() => link('mypage')}>
@@ -76,10 +92,14 @@ export default function MenuNav({ menuItem, currentPath, userName, mail }: { men
               </div>
             </div>
           </div>
+          :
+          <div className='userinfo'>
+            <img className='logo' src={logo} onClick={() => link('')}/>
+          </div>
         }
         {isSp ?
         menuItem.map((menus) => (
-          <div className='category-sp'>
+          <div className='menu-sp'>
             <div className='title'>
               {menus.category}
             </div>
@@ -94,16 +114,16 @@ export default function MenuNav({ menuItem, currentPath, userName, mail }: { men
         ))
         :
         <>
-        <div className='left-conents'>
+        <div className='menu-left'>
           {menuItem.map((menus) => (
           <div className='category'>
-            <div className={activeCategory === menus.category ? 'title active' : 'title'} onMouseEnter={() => setActiveCategory(menus.category)}>
+            <div className={activeCategory === menus.category ? 'title active' : 'title'} onClick={() => setActiveCategory(menus.category)}>
               {menus.category}
             </div>
           </div>
           ))}
         </div>
-        <div className='right-conents'>
+        <div className='menu-right'>
           {menuItem.map((menus) => (
             activeCategory === menus.category && (
               <ul>
@@ -115,6 +135,9 @@ export default function MenuNav({ menuItem, currentPath, userName, mail }: { men
               </ul>
             )
           ))}
+        </div>
+        <div className='category-img'>
+          <img src={menuItem.filter((menu) => menu.category === activeCategory)[0].categoryImg} />
         </div>
         </>
         }

@@ -7,6 +7,8 @@ import { UserState } from "./redux/actions/types/UserActionTypes";
 import { HttpApiInterceptor } from './api/interceptors/HttpApiInterceptor';
 import AuthService from './shared/service/AuthService';
 import logo from "./assets/icon/logo.svg";
+import category1 from "./assets/img/category1.avif";
+import category2 from "./assets/img/category2.avif";
 import Popup from './shared/components/Popup';
 import MenuNav, { MenuItem } from './shared/components/MenuNav';
 import Home from './pages/home/Home';
@@ -14,6 +16,7 @@ import Search from './pages/search/Search';
 import Empty from './pages/empty/Empty';
 import MyPage from './pages/mypage/MyPage';
 import Login from './pages/login/Login';
+import Labo from './pages/labo/Labo';
 import { IoRocketSharp } from "react-icons/io5";
 import './App.scss';
 
@@ -30,18 +33,19 @@ export default function App() {
   
   const menuItem: MenuItem[] = [
     {
-      category: 'Category1',
+      category: 'カテゴリー1',
+      categoryImg: category1,
       items: [
-        { id: 0, url: 'search', icon: <IoRocketSharp className='labo' size='15'/>, title: 'Search'},
-        { id: 1, url: 'menu1', icon: <IoRocketSharp className='labo' size='15'/>, title: 'Menu1'},
-        { id: 2, url: 'menu2', icon: <IoRocketSharp className='labo' size='15'/>, title: 'Menu2'},
+        { id: 0, url: 'search', icon: <IoRocketSharp className='labo' size='15'/>, title: '検索'},
+        { id: 1, url: 'menu1', icon: <IoRocketSharp className='labo' size='15'/>, title: 'メニュー1'},
+        { id: 2, url: 'menu2', icon: <IoRocketSharp className='labo' size='15'/>, title: 'メニュー2'},
       ]
     },
     {
-      category: 'Category2',
+      category: '開発モード',
+      categoryImg: category2,
       items: [
-        { id: 3, url: 'menu3', icon: <IoRocketSharp className='labo' size='15'/>, title: 'Menu3'},
-        { id: 4, url: 'menu4', icon: <IoRocketSharp className='labo' size='15'/>, title: 'Menu4'},
+        { id: 99, url: 'labo', icon: <IoRocketSharp className='labo' size='15'/>, title: 'ラボ'},
       ]
     },
   ]
@@ -95,6 +99,7 @@ export default function App() {
           <Route path="/login" element={<Login/>}/>
           <Route path="/mypage" element={<MyPage/>}/>
           <Route path="/search" element={<Search/>}/>
+          <Route path="/labo" element={<Labo/>}/>
           <Route path='/*' element={<Empty/>}/>
         </Routes>
       </main>
