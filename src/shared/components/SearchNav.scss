@@ -21,6 +21,34 @@ $section-width: $app-max-width - $search-nav-width;
     height: calc(100vh - 98px);
     transition: width 0.25s;
     box-shadow: 0 0px 4px 1px var(--main-shadow-color);
+    .filter {
+      margin-top: 12px;
+      label {
+        display: block;
+        font-size: 12px;
+        margin-bottom: 6px;
+        margin: 5px;
+      }
+      input {
+        margin-left: 2px;
+        margin-right: 2px;
+        margin-bottom: 20px;
+        padding: 8px 22px 8px 10px;
+        border-radius: 8px;
+        border: none;
+        background-color: var(--bg-color);
+        width: -webkit-fill-available;
+        &:focus  {
+          outline: 1px solid black;
+        }
+      }
+      .icon {
+        cursor: pointer;
+        position: absolute;
+        margin-top: 8px;
+        right: 15px;
+      }
+    }
     &.sp {
       width: $search-nav-sp-width;
     }
@@ -38,7 +66,7 @@ $section-width: $app-max-width - $search-nav-width;
         list-style: none;
         padding: 0;
         margin: 0;
-        font-size: 14px;
+        font-size: 12px;
       }
       li {
         padding: 8px 10px;

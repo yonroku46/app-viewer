@@ -75,7 +75,7 @@ $section-width: $app-max-width - $search-nav-width;
     -o-transform: rotate(-45deg);
     transform: rotate(-45deg);
     width: 50%;
-    left: 18px;
+    left: 19px;
   }
   &.open span:nth-child(4) {
     top: 19px;
@@ -127,7 +127,7 @@ $section-width: $app-max-width - $search-nav-width;
     margin-top: -88px;
     padding: 36px 0px;
     padding-top: 134px;
-    background: white;
+    background-color: white;
     color: black;
     border: 1px solid black;
     border-radius: 8px;
@@ -155,7 +155,7 @@ $section-width: $app-max-width - $search-nav-width;
         list-style: none;
         padding: 0;
         margin: 0;
-        font-size: 14px;
+        font-size: 12px;
       }
       li {
         padding: 8px 10px;
@@ -177,15 +177,15 @@ $section-width: $app-max-width - $search-nav-width;
     
     .menu-left {
       flex-grow: 1;
+      min-width: 160px;
       height: 160px;
       border-right: 1px solid black;
       margin-left: 32px;
       .category {
         cursor: pointer;
-        padding: 0px 16px;
-        font-size: 16px;
+        padding: 4px 16px;
+        font-size: 13px;
         .title {
-          margin-bottom: 6px;
           width: fit-content;
           &.active {
             font-weight: bold;
@@ -205,14 +205,15 @@ $section-width: $app-max-width - $search-nav-width;
         list-style: none;
         padding: 0;
         margin: 0;
-        font-size: 14px;
+        font-size: 13px;
       }
       li {
         display: inline-block;
         padding: 8px 10px;
         transition: all 0.25s;
         margin-right: 22px;
-        width: 40%;
+        margin-bottom: 4px;
+        width: 25%;
         &:hover {
           cursor: pointer;
           background-color: var(--menu-active-color);

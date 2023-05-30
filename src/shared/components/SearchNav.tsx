@@ -1,4 +1,5 @@
 import { useState, ReactElement } from 'react';
+import { BiReset } from "react-icons/bi";
 import './SearchNav.scss';
 
 export interface SearchMenuItem {
@@ -14,27 +15,35 @@ export interface SearchMenuItem {
 export default function SearchNav({ menuItem, isSp }: { menuItem: SearchMenuItem[], isSp: boolean }) {
 
   const [activeMenu, setActiveMenu] = useState<string>();
+  const [search, setSearch] = useState<string>();
 
   return(
     <>
     {/* 検索サポートコンポネント */}
     <nav className='search-nav'>
-        <div className={isSp ? 'side-menu sp' : 'side-menu'}>
+      <div className={isSp ? 'side-menu sp' : 'side-menu'}>
+        {!isSp && 
+          <div className='filter'>
+            <label>検索</label>
+            <input type='text' value={search} onChange={(e) => setSearch(e.target.value)}/>
+            {search && <BiReset className='icon' onClick={() => setSearch('')}/>}
+          </div>
+        }
         {menuItem.map((menus) => (
-            <div className='category'>
-            <div className='title'>
-                {!isSp && menus.category}
-            </div>
-            <ul>
-                {menus.items.map((menu) => (
-                <li className={activeMenu === menu.value ? 'active' : ''} onClick={() => setActiveMenu(menu.value)} key={menu.id}>
-                    {menu.icon}{!isSp && menu.title}
-                </li>
-                ))}
-            </ul>
-            </div>
+          <div className='category'>
+          <div className='title'>
+            {!isSp && menus.category}
+          </div>
+          <ul>
+            {menus.items.map((menu) => (
+            <li className={activeMenu === menu.value ? 'active' : ''} onClick={() => setActiveMenu(menu.value)} key={menu.id}>
+                {menu.icon}{!isSp && menu.title}
+            </li>
+            ))}
+          </ul>
+          </div>
         ))}
-        </div>
+      </div>
     </nav>
     </>
   )

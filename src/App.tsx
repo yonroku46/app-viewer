@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "./redux/reducers";
 import { showPopup, hidePopup } from "./redux/actions/popupActions";
 import { UserState } from "./redux/actions/types/UserActionTypes";
-import { HttpApiInterceptor } from './api/interceptors/HttpApiInterceptor';
 import AuthService from './shared/service/AuthService';
 import logo from "./assets/icon/logo.svg";
 import category1 from "./assets/img/category1.avif";
@@ -23,13 +22,21 @@ import './App.scss';
 export default function App() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const authService = new AuthService();
   
   const popup = useSelector((state: RootState) => state.popup);
-  const interceptor = HttpApiInterceptor();
   
-  const authService = new AuthService();
   const [currentPath, setCurrentPath] = useState<string>();
   const [user, setUser] = useState<UserState>();
+
+  // インターセプト設定
+  // const interceptor = new HttpApiInterceptor();
+  // useEffect(() => {
+  //   interceptor.initializeInterceptors();
+  //   return () => {
+  //     interceptor.releaseInterceptors();
+  //   };
+  // }, []);
   
   const menuItem: MenuItem[] = [
     {
@@ -50,19 +57,13 @@ export default function App() {
     },
   ]
 
+
+  // ポップアップ表示ロジック、上段ポップアップの場合2秒位表示
   useEffect(() => {
-    return () => {
-      interceptor.releaseInterceptors();
-    };
-  });
-  
-  useEffect(() => {
-    // ポップアップ表示ロジック
     if (popup.isShow) {
       if (popup.isCenter) {
         dispatch(showPopup());
       } else {
-        // 上段ポップアップの場合2秒位表示
         dispatch(showPopup());
         const timer = setTimeout(() => {
           dispatch(hidePopup());
@@ -83,7 +84,7 @@ export default function App() {
     <>
       <header>
         <div className='header-main'>
-          <div className='logo' onClick={() => navigate('')}>
+          <div className='logo' onClick={() => navigate('/')}>
             <img src={logo} alt=''/>
             <IoRocketSharp className='labo' size='15'/>
           </div>

@@ -28,7 +28,6 @@ header {
   width: 100%;
   top: 0;
   left: 0;
-  color: white;
   box-shadow: 0 0px 4px 1px var(--main-shadow-color);
   .header-main {
     max-width: $app-max-width;
@@ -49,7 +48,6 @@ header {
       margin-top: -1px;
     }
     .labo {
-      color: white;
       transform: rotate(316deg);
       margin-left: -12px;
       margin-top: -12px;

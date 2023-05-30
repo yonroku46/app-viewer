@@ -6,13 +6,17 @@ export interface ApiResponse {
   resultCode: number
 }
 
-export enum ApiMapping {
+export module ApiMap {
+  const root = process.env.REACT_APP_API_ROOT;
+
   // public
-  API_CHECK = "/",
+  export const HEALTH_CHECK = root + "/";
+
   // auth
-  LOGIN = "/auth/login",
-  LOGOUT = "/auth/logout",
-  REFRESH_TOKEN = "/auth/refreshToken",
+  export const LOGIN = root + "/auth/login";
+  export const LOGOUT = root + "/auth/logout";
+  export const REFRESH_TOKEN = root + "/auth/refreshToken";
+  
   // user
-  USER_INFO = "/user/info",
+  export const USER_INFO = root + "/user/info";
 }

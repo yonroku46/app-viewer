@@ -61,7 +61,7 @@ export default function MenuNav({ menuItem, currentPath, userName, mail }: { men
         }
       </button>
     : currentPath !== 'login' &&
-      <button className={isSp ? 'login-btn sp' : 'login-btn'} onClick={() => link('login')}>
+      <button className={isSp ? 'login-btn sp' : 'login-btn'} onClick={() => link('/login')}>
         {isSp ?
         <RiUserReceivedFill className='icon sp' size='16'/>
       :
@@ -82,9 +82,9 @@ export default function MenuNav({ menuItem, currentPath, userName, mail }: { men
       <div className={open ? 'menu open' : 'menu'}>
         {userName ?
           <div className='userinfo'>
-            <img className='profile' src={imgSrc('/tmp/dummy.jpg')} onError={handleImgError} onClick={() => link('mypage')}/>
+            <img className='profile' src={imgSrc('/tmp/dummy.jpg')} onError={handleImgError} onClick={() => link('/mypage')}/>
             <div className='info'>
-              <div className='name' onClick={() => link('mypage')}>
+              <div className='name' onClick={() => link('/mypage')}>
                 { userName }
               </div>
               <div className='mail'>
@@ -94,7 +94,7 @@ export default function MenuNav({ menuItem, currentPath, userName, mail }: { men
           </div>
           :
           <div className='userinfo'>
-            <img className='logo' src={logo} onClick={() => link('')}/>
+            <img className='logo' src={logo} onClick={() => link('/')}/>
           </div>
         }
         {isSp ?

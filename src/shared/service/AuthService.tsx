@@ -1,12 +1,10 @@
-import axios from 'axios';
 import { useDispatch } from "react-redux";
 import { UserState } from "../../redux/actions/types/UserActionTypes";
 import { userLogin, userLogout } from "../../redux/actions/userActions";
-import { ApiResponse, ApiMapping } from '../../api/Api';
-import { apiUrl } from "../../shared/utils/Utils";
+import { ApiResponse, ApiMap } from '../../api/Api';
+import { axiosClient } from "../../api/interceptors/AxiosClientProvider";
 
 export default class AuthService {
-
   dispatch = useDispatch();
 
   getCurrentUser(): UserState | undefined {
@@ -19,8 +17,7 @@ export default class AuthService {
   }
 
   async login(mail: string, password: string): Promise<any> {
-    return axios.post<ApiResponse>(
-      apiUrl(ApiMapping.LOGIN), {
+    return axiosClient.post<ApiResponse>(ApiMap.LOGIN, {
       mail,
       password,
     }).then(response => {
@@ -43,35 +40,34 @@ export default class AuthService {
 
   async logout(isSendReq: boolean): Promise<any> {
     if (isSendReq) {
-      return axios.post<ApiResponse>(
-        apiUrl(ApiMapping.LOGOUT), {
-        }).then(response => {
-          localStorage.removeItem('jwtInfo');
-          localStorage.removeItem('currentUser');
-          this.dispatch(userLogout());
+      return axiosClient.post<ApiResponse>(ApiMap.LOGOUT)
+      .then(response => {
+          this.storageClear();
           if (response) {
             return response.data;
           }
         }).catch(err => {
-          localStorage.removeItem('jwtInfo');
-          localStorage.removeItem('currentUser');
-          this.dispatch(userLogout());
+          this.storageClear();
           return null;
         });
       }
+    this.storageClear();
   }
 
   async refreshToken(): Promise<any> {
-    return axios.get<ApiResponse>(
-      apiUrl(ApiMapping.REFRESH_TOKEN), {
-    });
+    return axiosClient.get<ApiResponse>(ApiMap.REFRESH_TOKEN);
   }
 
   async healthCheck(): Promise<any> {
-    return axios.get<ApiResponse>(
-      apiUrl(ApiMapping.API_CHECK)
-    ).then(response => {
+    return axiosClient.get<ApiResponse>(ApiMap.HEALTH_CHECK)
+    .then(response => {
       return response.data;
     });
+  }
+
+  storageClear(): void {
+    localStorage.removeItem('jwtInfo');
+    localStorage.removeItem('currentUser');
+    this.dispatch(userLogout());
   }
 }
