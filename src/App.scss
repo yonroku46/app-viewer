@@ -5,7 +5,7 @@ $app-max-width: 1280px;
 $app-min-width: 280px;
 $app-sp-width: 767px;
 $main-margin: 16px;
-$search-nav-width: 164px;
+$search-nav-width: 188px;
 $search-nav-sp-width: 20px;
 $nav-width: 180px;
 $section-width: $app-max-width - $search-nav-width;
@@ -22,17 +22,17 @@ html {
 }
 header {
   z-index: 9000;
-  background-color: white;
+  background-color: rgba(244, 244, 244, 0.65);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
   position: fixed;
   height: $header-height;
   width: 100%;
   top: 0;
   left: 0;
-  box-shadow: 0 0px 4px 1px var(--main-shadow-color);
   .header-main {
     max-width: $app-max-width;
     min-width: $app-min-width;
-    background-color: white;
     height: $header-height;
     margin-left: auto;
     margin-right: auto;
@@ -52,6 +52,7 @@ header {
       margin-left: -12px;
       margin-top: -12px;
       margin-bottom: 12px;
+      font-size: 16px;
     }
   }
   .side {
@@ -63,12 +64,20 @@ header {
 body {
   background-color: var(--bg-color);
   margin: 0px;
-  --bg-color: #f4f4f4;
-  --contents-color: #ffffff;
-  --main-color: #1a63f5;
-  --sub-color: #417ffb;
-  --main-shadow-color: #dddddd;
-  --menu-active-color: #1a63f523;
+  --bg-color: rgb(244, 244, 244);
+  --contents-color: rgb(255, 255, 255);
+  --main-color: rgb(25, 98, 245);
+  --sub-color: rgb(65, 127, 251);
+  --success-color: rgb(154, 205, 50);
+  --warring-color: rgb(255, 165, 0);
+  --main-shadow-color: rgb(221, 221, 221);
+  --menu-active-color: rgba(26, 99, 245, 0.08);
+  --menu-active-dark-color: rgba(26, 99, 245, 0.3);
+  --sns-twitter-color: rgb(29, 161, 242);
+  --sns-facebook-color: rgb(66, 103, 178);
+  --sns-instagram-color: rgb(255, 48, 108);
+  --sns-youtube-color: rgb(229, 9, 20);
+  --sns-tiktok-color: rgb(0, 0, 0);
 }
 main {
   position: relative;
@@ -138,15 +147,6 @@ hr {
   width: -webkit-fill-available;
   margin-top: 16px;
   margin-bottom: 16px;
-}
-.backdrop {
-  z-index: 9998;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.15);
 }
 .contents {
   background-color: var(--contents-color);

@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { Link, Route, Routes, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import AuthService from '../../shared/service/AuthService';
-import UserService, { UserInfo } from '../../shared/service/UserService';
-import { GrInstagram, GrFacebook, GrTwitter, GrYoutube } from "react-icons/gr";
-import './MyPage.scss';
+import Backdrop from 'components/backdrop/Backdrop';
+import AuthService from 'api/service/AuthService';
+import UserService, { UserInfo } from 'api/service/UserService';
+import YouTubeIcon from '@mui/icons-material/YouTube';
+import './Mypage.scss';
 
-export default function MyPage() {
+export default function Mypage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const userService = new UserService();
   const authService = new AuthService();
 
   const [loading, setLoading] = useState<boolean>(false);
-  const [userInfo, setUserInfo] = useState<UserInfo>();
+  const [userInfo, setUserInfo] = useState<UserInfo|undefined>(undefined);
 
   useEffect(() => {
     const user = authService.getCurrentUser();
@@ -25,17 +26,14 @@ export default function MyPage() {
   }, []);
 
   async function getUserInfo() {
-    setLoading(true);
     await userService.userInfo().then(data => {
-      if (data.responseData) {
-        setLoading(false);
-        setUserInfo(data.responseData);
-      }
+      setUserInfo(data?.responseData);
     });
   }
   
   return(
     <>
+    <Backdrop open={loading} loading={loading}/>
     <section className='mypage contents'>
       <h3>basic profile</h3>
       <div>{userInfo?.userName}</div>
@@ -43,10 +41,7 @@ export default function MyPage() {
     </section>
     <section className='mypage contents'>
       <h3>sns data</h3>
-      <GrInstagram/>
-      <GrFacebook/>
-      <GrYoutube/>
-      <GrTwitter/>
+      <YouTubeIcon/>
     </section>
     <section className='mypage contents'>
       <h3>casting data</h3>

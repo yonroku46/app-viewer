@@ -1,24 +1,31 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../redux/reducers";
-import { hidePopup } from "../../redux/actions/popupActions";
-import { VscBellDot, VscPass, VscWorkspaceUntrusted } from "react-icons/vsc";
+import { useNavigate } from "react-router-dom";
+import { RootState } from "redux/reducers";
+import { hidePopup } from "redux/actions/popupActions";
+import Backdrop from 'components/backdrop/Backdrop'
 import './Popup.scss';
+
+import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import OfflineBoltIcon from '@mui/icons-material/OfflineBolt';
 
 interface PopupProps {
   title?: string;
   contents: string;
   center: boolean;
+  link?: string;
   backdropClose?: boolean;
 }
 
-export default function Popup({ title = '', contents, center, backdropClose = true }: PopupProps) {
+export default function Popup({ title = '', contents, link, center, backdropClose = true }: PopupProps) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const show = useSelector((state: RootState) => state.popup.isShow);
   const [iconShow, setIconShow] = useState<boolean>(false);
   const [errFlg, setErrFlg] = useState<boolean>(false);
-  const errKeyword = ['error','エラー'];
+  const errKeyword = ['error','エラー','権限'];
 
   useEffect(() => {
     if (show) {
@@ -50,18 +57,19 @@ export default function Popup({ title = '', contents, center, backdropClose = tr
     }
   }, [center, iconShow]);
 
-  function Backdrop({ onClick }: { onClick: () => void }) {
-    return (center && show ?
-      <div className="backdrop" onClick={onClick}></div> : <></>
-    );
+  function popupClose() {
+    dispatch(hidePopup());
+    if (link) {
+      navigate(link);
+    }
   }
 
   return(
     <>
-    <Backdrop onClick={() => backdropClose && dispatch(hidePopup())}/>
+    <Backdrop open={center && show} onClick={() => backdropClose && popupClose()}/>
     {/* 上段ポップアップ */}
-    <div className={'popup' + (show ? ' show' : ' hide') + (center ? ' none' : '')} onClick={() => dispatch(hidePopup())}>
-      {iconShow && <VscBellDot className='icon' size='24'/>}
+    <div className={'popup' + (show ? ' show' : ' hide') + (center ? ' none' : '')} onClick={() => popupClose()}>
+      {iconShow && <NotificationsActiveIcon className='icon'/>}
       <div>
         { contents }
       </div>
@@ -69,9 +77,9 @@ export default function Popup({ title = '', contents, center, backdropClose = tr
     {/* 中央ポップアップ */}
     <div className={'popup-center' + (show ? ' show' : ' hide') + (center ? '' : ' none')}>
       {errFlg ? 
-        <VscWorkspaceUntrusted className='icon' color='orange' size='42'/>
+        <OfflineBoltIcon className='icon error' sx={{ fontSize: 35 }}/>
         :
-        <VscPass className='icon' color='greenyellow' size='42'/>
+        <CheckCircleIcon className='icon' sx={{ fontSize: 35 }}/>
       }
       <div className='popup-title'>
         { title }
@@ -79,7 +87,7 @@ export default function Popup({ title = '', contents, center, backdropClose = tr
       <div className='popup-contents'>
         { contents }
       </div>
-      <button className='popup-button' onClick={() => dispatch(hidePopup())}>OK</button>
+      <button className='popup-button' onClick={() => popupClose()}>OK</button>
     </div>
     </>
   )

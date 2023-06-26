@@ -1,4 +1,4 @@
-import { PopupActionTypes, PopupAction } from "./types/PopupActionTypes";
+import { PopupActionTypes, PopupAction } from "../types/PopupActionTypes";
 
 export function showPopup(): PopupAction {
   return {
@@ -27,6 +27,17 @@ export function showCenterPopup(title: string, contents: string): PopupAction {
     value: {
       title: title,
       contents: contents
+    }
+  };
+}
+
+export function showCenterLinkPopup(title: string, contents: string, link: string): PopupAction {
+  return {
+    type: PopupActionTypes.SHOW_CENTER_LINK_POPUP,
+    value: {
+      title: title,
+      contents: contents,
+      link: link
     }
   };
 }

@@ -1,14 +1,19 @@
-import React, { useState, useRef } from 'react';
-import { VscWorkspaceTrusted } from "react-icons/vsc";
+import React, { useEffect, useState, useRef } from 'react';
 import './Authenticator.scss';
 
 export default function Authenticator() {
 
-  const code: string = "1234";
+  const code: string = "12345";
   const [inputCode, setInputCode] = useState<string>("");
   const [isError, setIsError] = useState<boolean>(false);
-  const [isDone, setIsDone] = useState<boolean>(false);
-  const inputRefs = [useRef<HTMLInputElement>(null), useRef<HTMLInputElement>(null), useRef<HTMLInputElement>(null), useRef<HTMLInputElement>(null)];
+  const [isComplete, setIsComplete] = useState<boolean>(false);
+  const inputRefs = [useRef<HTMLInputElement>(null), useRef<HTMLInputElement>(null), useRef<HTMLInputElement>(null), useRef<HTMLInputElement>(null), useRef<HTMLInputElement>(null)];
+
+  useEffect(() => {
+    if (inputCode.length === 5) {
+      codeCheck()
+    }
+  }, [inputCode]);
 
   function handleInputChange(index: number, e: React.ChangeEvent<HTMLInputElement>) {
     const value = e.target.value;
@@ -46,26 +51,23 @@ export default function Authenticator() {
 
   function codeCheck() {
     setIsError(code !== inputCode);
-    setIsDone(code === inputCode);
+    setIsComplete(code === inputCode);
   }
 
   return(
     <>
     {/* 認証コンポネント */}
     <div className='authenticator' onClick={() => {}}>
-      <div>
-        <VscWorkspaceTrusted className='icon' size='64'/>
-        <p className='title'>認証</p>
-        <p className={'sub-title' + (isError ? ' err' : '')}>{ isError ? '正しくありません\nもう一度お確かめください' : isDone ? '少々お待ちください' : '送信された番号を入力してください' }</p>
-      </div>
+      <div className='code-area'>
       {inputRefs.map((inputRef, index) => (
         <input className={inputCode[index] ? 'entered' : 'not-entered'} key={index} type="text" maxLength={1} ref={inputRef} value={inputCode[index] || ""}
-          onChange={(e) => handleInputChange(index, e)}
-          onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => handleInputKeyDown(index, e)}
+        onChange={(e) => handleInputChange(index, e)}
+        onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => handleInputKeyDown(index, e)}
         />
-      ))}
+        ))}
+      </div>
       <div>
-        <button className={'ok-button' + (inputCode.length === 4 ? '' : ' disable')} onClick={() => codeCheck()}>OK</button>
+        <p className={'description' + (isError ? ' err' : '')}>{ isError ? '正しくありません\nもう一度お確かめください' : isComplete ? '確認中' : 'メールに送信された番号を\n入力してください' }</p>
       </div>
     </div>
     </>

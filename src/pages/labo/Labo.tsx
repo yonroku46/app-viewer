@@ -2,10 +2,9 @@ import React, { useEffect, useState, useMemo } from 'react';
 import { Link, Route, Routes, useNavigate } from "react-router-dom";
 import { useScroll, useWindowScroll } from 'react-use';
 import { useDispatch, useSelector } from "react-redux";
-import { imgSrc, handleImgError } from "../../shared/utils/Utils";
+import { imgSrc, handleImgError } from "common/utils/imgUtils";
 import { format } from 'date-fns';
-import { showPopup, showTopPopup, showCenterPopup } from "../../redux/actions/popupActions";
-import Authenticator from "../../shared/components/Authenticator";
+import { showTopPopup, showCenterPopup } from "redux/actions/popupActions";
 import './Labo.scss';
 
 export default function Labo() {
@@ -52,13 +51,9 @@ export default function Labo() {
     dispatch(showCenterPopup(title, contents));
   }
 
-  const myPageStyle = {
-    height: isExtendedWait ? 'calc(100% + 200px)' : '100%'
-  };
-
   return(
     <>
-    <section className='labo-page contents' style={myPageStyle}>
+    <section className='labo-page contents'>
       <img src={useMemo(() => imgSrc('/tmp/dummy.jpg'), [])} onError={handleImgError} width='100px'/>
       <img src={useMemo(() => imgSrc('/tmp/dummy.png'), [])} onError={handleImgError} width='100px'/>
       <div>{format(currentTime, 'yyyy-MM-dd')}</div>
@@ -67,7 +62,6 @@ export default function Labo() {
       <br/>
       <button className='top' onClick={() => openTopPopup('top popup')}>topPop</button>
       <button className='center' onClick={() => openCenterPopup('title', 'center popup')}>topCenter</button>
-      <Authenticator/>
       { isExtendedWait ? 'extended...' : ''}
     </section>
     </>

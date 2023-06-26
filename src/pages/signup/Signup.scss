@@ -1,13 +1,23 @@
-.login {
+.signup {
   .title {
     font-weight: bold;
     font-size: 30px;
     text-align: left;
     margin-bottom: 30px;
   }
-  .login-form {
-    min-width: 360px;
-    max-width: 400px;
+  .sub-title {
+    font-weight: bold;
+    font-size: 18px;
+    text-align: left;
+    margin-bottom: -6px;
+  }
+  .stepper {
+    position: absolute;
+    top: 42px;
+    max-width: 600px;
+  }
+  .signup-form {
+    min-width: 340px;
     label {
       display: block;
       text-align: left;
@@ -15,23 +25,23 @@
       font-size: 12px;
       margin-bottom: 4px;
     }
-    input {
-      padding: 12px 20px;
-      width: -webkit-fill-available;
-      border-radius: 8px;
-      &.entered {
-        opacity: 1 !important;
-      }
-      &:not(:focus) {
-        opacity: 0.5;
-      }
-      &:focus {
-        opacity: 1;
-      }
-    }
-    .email, .password {
+    .name, .email, .password {
       margin-top: 10px;
       margin-bottom: 10px;
+      input {
+        padding: 12px 20px;
+        width: -webkit-fill-available;
+        border-radius: 8px;
+        &.entered {
+          opacity: 1 !important;
+        }
+        &:not(:focus) {
+          opacity: 0.5;
+        }
+        &:focus {
+          opacity: 1;
+        }
+      }
       .visible {
         cursor: pointer;
         position: absolute;
@@ -71,62 +81,51 @@
         margin: 0;
       }
     }
-    .signin {
+    .submit {
       background-color: black;
       color: white;
       margin-top: 12px;
       padding: 12px 42px;
       width: -webkit-fill-available;
-    }
-  }
-  .google-signin {
-    display: flex;
-    background-color: white;
-    color: black;
-    padding: 12px 42px;
-    width: -webkit-fill-available;
-    img {
-      display: inherit;
-      margin-left: auto;
-      margin-right: 10px;
-    }
-    div {
-      display: inherit;
-      margin-right: auto;
-    }
-  }
-  .signup {
-    color: gray;
-    font-size: 13px;
-    width: -webkit-fill-available;
-    span {
-      cursor: pointer;
-      color: var(--main-color);
-      margin: 0 4px;
-      &:hover {
-        opacity: 0.8;
+      &.disabled {
+        cursor: unset;
+        pointer-events: none;
+        opacity: 0.5;
       }
     }
   }
-
-  @keyframes shake {
-    0% {
-      transform: translateX(0);
+  .complete {
+    .title {
+      text-align: center;
+      margin-bottom: 0;
     }
-    20% {
-      transform: translateX(1px);
+    .sub-title {
+      text-align: center;
+      font-weight: normal;
+      margin-top: 10px;
+      white-space: pre;
     }
-    40% {
-      transform: translateX(-1px);
+    .icon {
+      color: var(--success-color);
     }
-    60% {
-      transform: translateX(1px);
+    .next {
+      background-color: black;
+      color: white;
+      margin-top: 42px;
+      padding: 12px 42px;
+      width: -webkit-fill-available;
     }
-    80% {
-      transform: translateX(-1px);
-    }
-    100% {
-      transform: translateX(0);
+  }
+  .terms-check {
+    text-align: left;
+    margin-left: -9px;
+    .terms {
+      cursor: pointer;
+      color: var(--main-color);
+      line-height: 42px;
+      &:hover {
+        opacity: 0.8;
+      }
     }
   }
 }

@@ -3,7 +3,7 @@ $app-max-width: 1280px;
 $app-min-width: 280px;
 $app-sp-width: 767px;
 $main-margin: 16px;
-$search-nav-width: 164px;
+$search-nav-width: 188px;
 $search-nav-sp-width: 20px;
 $nav-width: 180px;
 $section-width: $app-max-width - $search-nav-width;
@@ -18,35 +18,42 @@ $section-width: $app-max-width - $search-nav-width;
     border-radius: 8px;
     padding: 8px;
     width: $search-nav-width;
-    height: calc(100vh - 98px);
+    height: calc(100vh - 96px);
     transition: width 0.25s;
     box-shadow: 0 0px 4px 1px var(--main-shadow-color);
-    .filter {
-      margin-top: 12px;
-      label {
-        display: block;
-        font-size: 12px;
-        margin-bottom: 6px;
-        margin: 5px;
+    .sns-area {
+      display: block;
+      text-align: center;
+      margin: 16px 0;
+      .Mui-selected {
+        color: white;
+        &.twitter {
+          background-color: var(--sns-twitter-color);
+        }
+        &.instagram {
+          background-color: var(--sns-instagram-color);
+        }
+        &.tiktok {
+          background-color: var(--sns-tiktok-color);
+        }
+        &.youtube {
+          background-color: var(--sns-youtube-color);
+        }
       }
-      input {
-        margin-left: 2px;
-        margin-right: 2px;
-        margin-bottom: 20px;
-        padding: 8px 22px 8px 10px;
-        border-radius: 8px;
-        border: none;
-        background-color: var(--bg-color);
-        width: -webkit-fill-available;
-        &:focus  {
-          outline: 1px solid black;
+    }
+    .search-area {
+      margin-top: 12px;
+      .filter {
+        margin-bottom: 14px;
+        & input {
+          padding-left: 30px;
         }
       }
       .icon {
         cursor: pointer;
         position: absolute;
-        margin-top: 8px;
-        right: 15px;
+        margin-top: 9px;
+        left: 16px;
       }
     }
     &.sp {
@@ -55,7 +62,7 @@ $section-width: $app-max-width - $search-nav-width;
     .category {
       margin-top: 6px;
       margin-bottom: 6px;
-      font-size: 12px;
+      font-size: 14px;
       .title {
         margin-bottom: 6px;
         border-bottom: 1px solid black;
@@ -66,7 +73,7 @@ $section-width: $app-max-width - $search-nav-width;
         list-style: none;
         padding: 0;
         margin: 0;
-        font-size: 12px;
+        font-size: 14px;
       }
       li {
         padding: 8px 10px;
@@ -74,6 +81,9 @@ $section-width: $app-max-width - $search-nav-width;
         &:hover {
           cursor: pointer;
           opacity: 0.8;
+        }
+        & svg {
+          font-size: 14px;
         }
         &.active {
           font-weight: bold;

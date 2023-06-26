@@ -9,7 +9,6 @@ export interface UserState {
 export enum UserActionTypes {
     USER_LOGIN = "USER_LOGIN",
     USER_LOGOUT = "USER_LOGOUT",
-    USER_INFO = "USER_INFO"
 }
   
 interface UserLogin {

@@ -1,4 +1,4 @@
-import { UserState, UserActionTypes, UserAction } from "./types/UserActionTypes";
+import { UserState, UserActionTypes, UserAction } from "../types/UserActionTypes";
 
 export function userLogin(user: UserState): UserAction {
   return {

@@ -1,8 +1,8 @@
 import { useDispatch } from "react-redux";
-import { UserState } from "../../redux/actions/types/UserActionTypes";
-import { userLogin, userLogout } from "../../redux/actions/userActions";
-import { ApiResponse, ApiMap } from '../../api/Api';
-import { axiosClient } from "../../api/interceptors/AxiosClientProvider";
+import { UserState } from "redux/types/UserActionTypes";
+import { userLogin, userLogout } from "redux/actions/userActions";
+import { ApiResponse, ApiRoutes } from 'api/Api';
+import axios from 'axios';
 
 export default class AuthService {
   dispatch = useDispatch();
@@ -17,11 +17,11 @@ export default class AuthService {
   }
 
   async login(mail: string, password: string): Promise<any> {
-    return axiosClient.post<ApiResponse>(ApiMap.LOGIN, {
+    return axios.post<ApiResponse>(ApiRoutes.LOGIN, {
       mail,
       password,
     }).then(response => {
-      if (response && !response.data.hasErrors) {
+      if (response && !response.data?.hasErrors) {
         const current = new Date();
         const userInfo = response.data.responseData;
         var jwtInfo = {
@@ -40,10 +40,10 @@ export default class AuthService {
 
   async logout(isSendReq: boolean): Promise<any> {
     if (isSendReq) {
-      return axiosClient.post<ApiResponse>(ApiMap.LOGOUT)
+      return axios.post<ApiResponse>(ApiRoutes.LOGOUT)
       .then(response => {
           this.storageClear();
-          if (response) {
+          if (response && !response.data?.hasErrors) {
             return response.data;
           }
         }).catch(err => {
@@ -54,12 +54,26 @@ export default class AuthService {
     this.storageClear();
   }
 
+  async submit(name: string, mail: string, password: string): Promise<any> {
+    return axios.post<ApiResponse>(ApiRoutes.SUBMIT, {
+      name,
+      mail,
+      password,
+    })
+    .then(response => {
+      return response.data;
+    });
+  }
+
   async refreshToken(): Promise<any> {
-    return axiosClient.get<ApiResponse>(ApiMap.REFRESH_TOKEN);
+    return axios.get<ApiResponse>(ApiRoutes.REFRESH_TOKEN)
+    .then(response => {
+      return response.data;
+    });
   }
 
   async healthCheck(): Promise<any> {
-    return axiosClient.get<ApiResponse>(ApiMap.HEALTH_CHECK)
+    return axios.get<ApiResponse>(ApiRoutes.HEALTH_CHECK)
     .then(response => {
       return response.data;
     });
