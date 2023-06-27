@@ -10,19 +10,22 @@ import category1 from "assets/img/category1.avif";
 import category2 from "assets/img/category2.avif";
 import Popup from 'components/popup/Popup';
 import MenuNav, { MenuItem } from 'components/nav/MenuNav';
+import { showCenterLinkPopup } from "redux/actions/popupActions";
 import Home from 'pages/home/Home';
 import Search from 'pages/search/Search';
 import Empty from 'pages/empty/Empty';
-import Mypage from 'pages/mypage/Mypage';
+import MyPage from 'pages/mypage/MyPage';
+import AuthPage from 'pages/auth/AuthPage';
 import Login from 'pages/login/Login';
 import Signup from 'pages/signup/Signup';
 import Labo from 'pages/labo/Labo';
+import './App.scss';
+
 import RocketLaunchIcon from '@mui/icons-material/RocketLaunch';
 import PsychologyTwoToneIcon from '@mui/icons-material/PsychologyTwoTone';
 import FindInPageTwoToneIcon from '@mui/icons-material/FindInPageTwoTone';
 import WidgetsTwoToneIcon from '@mui/icons-material/WidgetsTwoTone';
 import SummarizeTwoToneIcon from '@mui/icons-material/SummarizeTwoTone';
-import './App.scss';
 
 export default function App() {
   const navigate = useNavigate();
@@ -69,10 +72,19 @@ export default function App() {
   }, [popup.isShow, popup.isCenter]);
   
   useEffect(() => {
-    setUser(authService.getCurrentUser());
-    const currentPath = location.pathname;
-    const path = currentPath.split('/')[1];
-    setCurrentPath(path);
+    const user = authService.getCurrentUser();
+    if (user) {
+      setUser(user);
+      const currentPath = location.pathname;
+      const path = currentPath.split('/')[1];
+      setCurrentPath(path);
+      if (!user.mailAuth) {
+        dispatch(showCenterLinkPopup('権限なし', '権限取得のため\nメールでの認証が必要です', '/'));
+        authService.logout(true).then(data => {
+          setUser(undefined);
+        });
+      }
+    }
   }, [location.pathname]);
 
   function Header() {
@@ -108,9 +120,10 @@ export default function App() {
           <Route path="/" element={<Home/>}/>
           <Route path="/login" element={<Login/>}/>
           <Route path="/signup" element={<Signup/>}/>
-          <Route path="/mypage" element={<Mypage/>}/>
+          <Route path="/mypage" element={<MyPage/>}/>
           <Route path="/search" element={<Search/>}/>
           <Route path="/labo" element={<Labo/>}/>
+          <Route path="/auth" element={<AuthPage/>}/>
           <Route path='/*' element={<Empty/>}/>
         </Routes>
       </main>

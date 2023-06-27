@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Link, Route, Routes, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 import Backdrop from 'components/backdrop/Backdrop';
 import AuthService from 'api/service/AuthService';
 import UserService, { UserInfo } from 'api/service/UserService';
-import YouTubeIcon from '@mui/icons-material/YouTube';
-import './Mypage.scss';
+import './MyPage.scss';
 
-export default function Mypage() {
+export default function MyPage() {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const userService = new UserService();
   const authService = new AuthService();
 
@@ -41,7 +38,6 @@ export default function Mypage() {
     </section>
     <section className='mypage contents'>
       <h3>sns data</h3>
-      <YouTubeIcon/>
     </section>
     <section className='mypage contents'>
       <h3>casting data</h3>

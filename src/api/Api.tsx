@@ -17,6 +17,7 @@ export module ApiRoutes {
   export const LOGIN = `${authRoot}/login`;
   export const LOGOUT = `${authRoot}/logout`;
   export const SUBMIT = `${authRoot}/submit`;
+  export const KEY_CHECK = `${authRoot}/check`;
   export const REFRESH_TOKEN = `${authRoot}/refreshToken`;
   
   // user

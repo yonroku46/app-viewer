@@ -65,6 +65,16 @@ export default class AuthService {
     });
   }
 
+  async keyCheck(mail: string, mailKey: string): Promise<any> {
+    return axios.post<ApiResponse>(ApiRoutes.KEY_CHECK, {
+      mail,
+      mailKey,
+    })
+    .then(response => {
+      return response.data;
+    });
+  }
+
   async refreshToken(): Promise<any> {
     return axios.get<ApiResponse>(ApiRoutes.REFRESH_TOKEN)
     .then(response => {

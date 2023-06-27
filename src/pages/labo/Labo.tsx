@@ -8,7 +8,6 @@ import { showTopPopup, showCenterPopup } from "redux/actions/popupActions";
 import './Labo.scss';
 
 export default function Labo() {
-
   const navigate = useNavigate();
   const dispatch = useDispatch();
 

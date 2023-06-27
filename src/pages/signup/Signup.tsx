@@ -6,7 +6,7 @@ import './Signup.scss';
 
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import MarkEmailReadIcon from '@mui/icons-material/MarkEmailRead';
+import ForwardToInboxIcon from '@mui/icons-material/ForwardToInbox';
 import Checkbox from '@mui/material/Checkbox';
 
 export default function Signup() {
@@ -55,6 +55,9 @@ export default function Signup() {
     } else if (password.length < 8) {
       setErrMsg("パスワードが短過ぎます");
       return;
+    } else if (password.length > 50) {
+      setErrMsg("パスワードが長過ぎます");
+      return;
     }
     submit();
   }
@@ -79,12 +82,12 @@ export default function Signup() {
   function Complete() {
     return(
       <div className='complete'>
-        <MarkEmailReadIcon className='icon' sx={{ fontSize: 80 }}/>
+        <ForwardToInboxIcon className='icon' sx={{ fontSize: 80 }}/>
         <p className='title'>
           認証メールを送信しました
         </p>
         <p className='sub-title'>
-          {'登録を完了させるために、\nメールのご確認が必要です。'}
+          {'登録を完了させるために、\nメールでの確認が必要です。'}
         </p>
         <button type='button' className='next' onClick={() => navigate('/login')}>ログイン</button>
       </div>
@@ -123,7 +126,7 @@ export default function Signup() {
             }
           </div>
           <div className='terms-check'>
-            <Checkbox onChange={checkHandler}/>
+            <Checkbox value={termsCheck} onChange={checkHandler}/>
             <span className='terms' onClick={() => window.open('/terms', '_blank')}>利用規約</span>に同意する
           </div>
           <div className='err-area'> 

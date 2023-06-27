@@ -4,6 +4,7 @@ export interface UserState {
     mail?: string;
     token?: string;
     refreshToken?: string;
+    mailAuth?: boolean;
 }
   
 export enum UserActionTypes {
