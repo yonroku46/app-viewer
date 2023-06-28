@@ -1,4 +1,4 @@
-import { useState, ReactElement } from 'react';
+import { useEffect, useState, ReactElement } from 'react';
 import { useNavigate } from "react-router-dom";
 import { useMediaQuery } from 'react-responsive';
 import logo from "assets/icon/logo.svg";
@@ -9,7 +9,6 @@ import './MenuNav.scss';
 
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import Badge from '@mui/material/Badge';
-import LoginIcon from '@mui/icons-material/Login';
 import LogoutIcon from '@mui/icons-material/Logout';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import Settings from '@mui/icons-material/Settings';
@@ -37,6 +36,11 @@ export default function MenuNav({ menuItem, currentPath, userName, mail }: { men
 
   const [open, setOpen] = useState<boolean>(false);
   const [activeCategory, setActiveCategory] = useState<string>(menuItem[0].category);
+  const [categoryImg, setCategoryImg] = useState<string>(menuItem[0].categoryImg);
+
+  useEffect(() => {
+    setCategoryImg(menuItem.filter((menu) => menu.category === activeCategory)[0].categoryImg);
+  }, [activeCategory]);
 
   async function logout() {
     await authService.logout(true).then(data => {
@@ -71,16 +75,18 @@ export default function MenuNav({ menuItem, currentPath, userName, mail }: { men
       },
     },
   }
+
   function handleClick(event: React.MouseEvent<HTMLElement>) {
     if (openEl) {
       setAnchorEl(null);
     } else {
       setAnchorEl(event.currentTarget);
     }
-  };
+  }
+
   function handleClose() {
     setAnchorEl(null);
-  };
+  }
   
   return(
     <>
@@ -119,13 +125,7 @@ export default function MenuNav({ menuItem, currentPath, userName, mail }: { men
       </div>
     : (currentPath !== 'login' && currentPath !== 'signup') &&
       <button className={isSp ? 'login-btn sp' : 'login-btn'} onClick={() => link('/login')}>
-        {isSp ?
-        <LoginIcon className='icon sp' sx={{ fontSize: 15 }}/>
-      :
-      <>
         <span className='text'>ログイン / 会員登録</span>
-      </>
-      }
       </button>
     }
     <div className={open ? 'menu-btn open' : 'menu-btn'} onClick={() => setOpen(!open)}>
@@ -193,8 +193,8 @@ export default function MenuNav({ menuItem, currentPath, userName, mail }: { men
             )
           ))}
         </div>
-        <div className='category-img'>
-          <img src={menuItem.filter((menu) => menu.category === activeCategory)[0].categoryImg} alt='category img'/>
+        <div className='menu-img'>
+          <img className='thumbnail' src={categoryImg} alt='thumbnail'/>
         </div>
         </>
       }

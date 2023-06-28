@@ -168,9 +168,7 @@ $section-width: $app-max-width - $search-nav-width;
       margin-bottom: 6px;
       padding: 0px 16px;
       .title {
-        margin-bottom: 6px;
         border-bottom: 1px solid black;
-        margin: 5px;
         padding-bottom: 6px;
       }
       ul {
@@ -180,7 +178,7 @@ $section-width: $app-max-width - $search-nav-width;
       }
       li {
         display: flex;
-        padding: 8px 10px;
+        padding: 6px 4px;
         transition: all 0.25s;
         &:hover {
           cursor: pointer;
@@ -212,12 +210,14 @@ $section-width: $app-max-width - $search-nav-width;
           margin: 5px 0px;
           border-top-left-radius: 8px;
           border-bottom-left-radius: 8px;
+          transition: all 0.25s;
           &.active {
             font-weight: bold;
             background-color: var(--menu-active-color);
           }
           &:hover {
             opacity: 0.8;
+            background-color: var(--menu-active-color);
           }
           span {
             margin: 0;
@@ -258,14 +258,12 @@ $section-width: $app-max-width - $search-nav-width;
         &:hover {
           cursor: pointer;
           background-color: var(--menu-active-color);
-          border-radius: 4px;
           opacity: 0.8;
         }
         &.active {
           font-weight: bold;
           background-color: var(--menu-active-color);
-          border: 1px solid black;
-          border-radius: 4px;
+          box-shadow: 0 0 0 1px gray inset;
         }
         svg {
           font-size: 30px;
@@ -273,13 +271,13 @@ $section-width: $app-max-width - $search-nav-width;
         }
       }
     }
-    .category-img {
+    .menu-img {
       flex-grow: 0;
       flex-basis: 142px;
       height: 180px;
       margin-left: 32px;
       margin-right: 32px;
-      img {
+      .thumbnail {
         width: 142px;
         height: 180px;
         border-radius: 8px;

@@ -72,13 +72,14 @@ export default function App() {
   }, [popup.isShow, popup.isCenter]);
   
   useEffect(() => {
+    const currentPath = location.pathname;
+    const path = currentPath.split('/')[1];
+    setCurrentPath(path);
     const user = authService.getCurrentUser();
     if (user) {
-      setUser(user);
-      const currentPath = location.pathname;
-      const path = currentPath.split('/')[1];
-      setCurrentPath(path);
-      if (!user.mailAuth) {
+      if (user.mailAuth) {
+        setUser(user);
+      } else {
         dispatch(showCenterLinkPopup('権限なし', '権限取得のため\nメールでの認証が必要です', '/'));
         authService.logout(true).then(data => {
           setUser(undefined);
@@ -96,7 +97,7 @@ export default function App() {
             <RocketLaunchIcon className='labo'/>
           </div>
           <div className='side'>
-            <MenuNav menuItem={menuItem} currentPath={currentPath} userName={user?.userName} mail={user?.mail} />
+            <MenuNav menuItem={menuItem} currentPath={currentPath} userName={user?.userName} mail={user?.mail}/>
           </div>
         </div>
       </header>

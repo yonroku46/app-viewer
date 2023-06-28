@@ -1,5 +1,4 @@
-import { useEffect } from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Backdrop from 'components/backdrop/Backdrop';
 import AuthService from 'api/service/AuthService';
@@ -22,8 +21,8 @@ export default function AuthPage() {
   const message: string = '登録が完了しました';
   
   useEffect(() => {
-    const mail = query.get('m');
     const key = query.get('k');
+    const mail = query.get('m');
     if (mail && key) {
       keyCheck(mail, key);
     }
@@ -37,7 +36,7 @@ export default function AuthPage() {
         setAuth(true)
         dispatch(showTopPopup('認証完了'));
       } else {
-        dispatch(showCenterLinkPopup('認証済み', 'または存在しないコードです', '/'));
+        dispatch(showCenterLinkPopup('失敗', '権限がないか\n存在しないコードです', '/'));
       }
     });
   }
