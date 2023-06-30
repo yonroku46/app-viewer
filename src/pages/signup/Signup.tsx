@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import Backdrop from 'components/backdrop/Backdrop';
+import Complete from 'components/auth/Complete';
 import AuthService from 'api/service/AuthService';
 import './Signup.scss';
 
@@ -10,9 +11,9 @@ import ForwardToInboxIcon from '@mui/icons-material/ForwardToInbox';
 import Checkbox from '@mui/material/Checkbox';
 
 export default function Signup() {
+  const navigate = useNavigate();
 
   const authService = new AuthService();
-  const navigate = useNavigate();
 
   const [passwordType, setPasswordType] = useState<{type: string, visible: boolean}>({
     type: 'password',
@@ -79,27 +80,12 @@ export default function Signup() {
     setErrMsg('');
   }
 
-  function Complete() {
-    return(
-      <div className='complete'>
-        <ForwardToInboxIcon className='icon' sx={{ fontSize: 80 }}/>
-        <p className='title'>
-          認証メールを送信しました
-        </p>
-        <p className='sub-title'>
-          {'登録を完了させるために、\nメールでの確認が必要です。'}
-        </p>
-        <button type='button' className='next' onClick={() => navigate('/login')}>ログイン</button>
-      </div>
-    )
-  }
-
   return(
     <>
     <Backdrop open={loading} loading={loading}/>
     <section className='signup fullsize'>
       {isComplete ? 
-        <Complete/>
+        <Complete icon={<ForwardToInboxIcon className='icon' sx={{ fontSize: 80 }}/>} title={'メールを送信しました'} subTitle={'完了させるためには\nメールでの認証が必要です'} path={'login'}/>
         :  
         <form className='signup-form' onSubmit={onSubmitHandler}>
           <div className='sub-title'>

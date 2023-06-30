@@ -1,0 +1,24 @@
+.css-yiavyu-MuiBackdrop-root-MuiDialog-backdrop {
+    display: none !important;
+    pointer-events: none !important;
+}
+.modal {
+    z-index: 9999 !important;
+    .css-bdhsul-MuiTypography-root-MuiDialogTitle-root {
+        padding: 12px;
+        min-width: 320px;
+        font-family: 'Noto Sans JP', sans-serif !important;
+    }
+    .MuiDialogTitle-root+.css-ypiqx9-MuiDialogContent-root {
+        padding: 12px 24px;
+    }
+    .css-1t1j96h-MuiPaper-root-MuiDialog-paper {
+        border-radius: 8px;
+    }
+    .css-hlj6pa-MuiDialogActions-root {
+        padding: 12px;
+    }
+    .save {
+        padding: 6px 32px;
+    }
+}

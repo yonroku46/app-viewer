@@ -7,15 +7,6 @@ import axios from 'axios';
 export default class AuthService {
   dispatch = useDispatch();
 
-  getCurrentUser(): UserState | undefined {
-    const currentUser = localStorage.getItem('currentUser');
-    if (currentUser) {
-      return JSON.parse(currentUser);
-    } else {
-      return undefined;
-    }
-  }
-
   async login(mail: string, password: string): Promise<any> {
     return axios.post<ApiResponse>(ApiRoutes.LOGIN, {
       mail,
@@ -42,21 +33,40 @@ export default class AuthService {
     if (isSendReq) {
       return axios.post<ApiResponse>(ApiRoutes.LOGOUT)
       .then(response => {
-          this.storageClear();
-          if (response && !response.data?.hasErrors) {
-            return response.data;
-          }
-        }).catch(err => {
-          this.storageClear();
-          return null;
-        });
-      }
+        this.storageClear();
+        if (response && !response.data?.hasErrors) {
+          return response.data;
+        }
+      }).catch(err => {
+        this.storageClear();
+        return null;
+      });
+    }
     this.storageClear();
   }
 
   async submit(name: string, mail: string, password: string): Promise<any> {
     return axios.post<ApiResponse>(ApiRoutes.SUBMIT, {
       name,
+      mail,
+      password,
+    })
+    .then(response => {
+      return response.data;
+    });
+  }
+
+  async recoverMail(mail: string): Promise<any> {
+    return axios.post<ApiResponse>(ApiRoutes.RECOVER, {
+      mail,
+    })
+    .then(response => {
+      return response.data;
+    });
+  }
+
+  async recover(mail: string, password: string): Promise<any> {
+    return axios.patch<ApiResponse>(ApiRoutes.RECOVER, {
       mail,
       password,
     })
@@ -87,6 +97,15 @@ export default class AuthService {
     .then(response => {
       return response.data;
     });
+  }
+
+  getCurrentUser(): UserState | undefined {
+    const currentUser = localStorage.getItem('currentUser');
+    if (currentUser) {
+      return JSON.parse(currentUser);
+    } else {
+      return undefined;
+    }
   }
 
   storageClear(): void {

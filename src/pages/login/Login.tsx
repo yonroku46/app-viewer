@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState, useRef } from 'react';
+import { useNavigate, useLocation } from "react-router-dom";
 import Backdrop from 'components/backdrop/Backdrop';
 import AuthService from 'api/service/AuthService';
 import './Login.scss';
@@ -8,10 +8,11 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 export default function Login() {
-
-  const authService = new AuthService();
   const navigate = useNavigate();
-
+  const location = useLocation();
+  
+  const authService = new AuthService();
+  
   const [passwordType, setPasswordType] = useState<{type: string, visible: boolean}>({
     type: 'password',
     visible: false
@@ -53,7 +54,11 @@ export default function Login() {
       setLoading(false);
       if (data.responseData) {
         errReset();
-        navigate(-1);
+        if (location.state?.pathname) {
+          navigate(location.state?.pathname);
+        } else {
+          navigate('/', { replace: true });
+        }
       } else {
         setErrMsg('ログイン情報をもう一度ご確認ください');
       }
@@ -74,8 +79,11 @@ export default function Login() {
     <Backdrop open={loading} loading={loading}/>
     <section className='login fullsize'>
       <form className='login-form' onSubmit={onSubmitHandler}>
-        <div className='title'>
+        <div className='sub-title'>
           Login
+        </div>
+        <div className='title'>
+          ログイン
         </div>
         <div className='email'>
           <label>メールアドレス</label>
@@ -91,7 +99,9 @@ export default function Login() {
           }
         </div>
         <div className='recover'>
-          パスワード再発行
+          <span className='text' onClick={() => navigate('/recover')}>
+            パスワード再発行
+          </span>
         </div>
         <div className='err-area'>
           {errMsg && <p className='errmsg'>{errMsg}</p>}     

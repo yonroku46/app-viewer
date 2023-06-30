@@ -16,7 +16,9 @@ import Search from 'pages/search/Search';
 import Empty from 'pages/empty/Empty';
 import MyPage from 'pages/mypage/MyPage';
 import AuthPage from 'pages/auth/AuthPage';
+import AuthRecover from 'pages/auth/AuthRecover';
 import Login from 'pages/login/Login';
+import Recover from 'pages/recover/Recover';
 import Signup from 'pages/signup/Signup';
 import Labo from 'pages/labo/Labo';
 import './App.scss';
@@ -71,14 +73,15 @@ export default function App() {
     }
   }, [popup.isShow, popup.isCenter]);
   
+  // URL変更による処理
   useEffect(() => {
     const currentPath = location.pathname;
     const path = currentPath.split('/')[1];
     setCurrentPath(path);
-    const user = authService.getCurrentUser();
-    if (user) {
-      if (user.mailAuth) {
-        setUser(user);
+    const currentUser = authService.getCurrentUser();
+    if (currentUser) {
+      if (currentUser.mailAuth) {
+        setUser(currentUser);
       } else {
         dispatch(showCenterLinkPopup('権限なし', '権限取得のため\nメールでの認証が必要です', '/'));
         authService.logout(true).then(data => {
@@ -120,11 +123,13 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home/>}/>
           <Route path="/login" element={<Login/>}/>
+          <Route path="/recover" element={<Recover/>}/>
           <Route path="/signup" element={<Signup/>}/>
           <Route path="/mypage" element={<MyPage/>}/>
           <Route path="/search" element={<Search/>}/>
           <Route path="/labo" element={<Labo/>}/>
           <Route path="/auth" element={<AuthPage/>}/>
+            <Route path="/auth/recover" element={<AuthRecover/>}/>
           <Route path='/*' element={<Empty/>}/>
         </Routes>
       </main>

@@ -14,8 +14,10 @@ interface InternalAxiosRequestConfig extends AxiosRequestConfig {
 
 export function AxiosClientProvider({ children }: { children: React.ReactNode }): JSX.Element {
   const dispatch = useDispatch()
-  const isRefreshing = useRef<boolean>(false);
+
   const authService = new AuthService();
+  
+  const isRefreshing = useRef<boolean>(false);
   let refreshTokenSubject = new BehaviorSubject<any>(null);
 
   // クリーンアップ

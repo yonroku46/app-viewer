@@ -36,12 +36,13 @@ header {
     height: $header-height;
     margin-left: auto;
     margin-right: auto;
+    display: flex;
+    align-items: center;
   }
   .logo {
     cursor: pointer;
-    float: left;
     height: 30px;
-    margin: 9px 10px;
+    margin: 10px;
     filter: grayscale(1) brightness(0);
     img {
       height: 30px;
@@ -56,15 +57,19 @@ header {
     }
   }
   .side {
-    float: right;
+    display: flex;
+    align-items: center;
     height: $header-height;
-    margin-right: 8px;
+    margin-right: 10px;
+    margin-left: auto;
   }
 }
 body {
-  background-color: var(--bg-color);
   margin: 0px;
+  background-color: var(--bg-color);
   --bg-color: rgb(244, 244, 244);
+  --load-color: rgb(255, 255, 255);
+  --load-off-color: rgba(255, 255, 255, 0.2);
   --contents-color: rgb(255, 255, 255);
   --main-color: rgb(25, 98, 245);
   --sub-color: rgb(65, 127, 251);
@@ -109,7 +114,7 @@ footer {
   font-size: 10px;
   opacity: 0.15;
   div {
-    float: right;
+    text-align: right;
     margin-right: 6px;
   }
 }
@@ -133,10 +138,11 @@ button {
   background-color: rgba(0, 0, 0, 0);
   font-weight: bold;
   color: black;
+  transition: opacity 0.15s ease-in-out, color 0.15s ease-in-out, background-color 0.15s ease-in-out;
   &:hover {
     cursor: pointer;
-    opacity: 0.9;
-    transition: opacity 0.3s ease-in;
+    background-color: black;
+    color: white;
   }
   &.disable {
     opacity: 0.5;
@@ -166,7 +172,7 @@ hr {
 }
 
 /* sp */
-@media only screen and (max-width: $app-sp-width){
+@media only screen and (max-width: $app-sp-width) {
   section {
     &.nav-on {
       margin-left: $nav-width + $main-margin;
@@ -185,5 +191,50 @@ hr {
   }
   100% {
       transform: translate(-3px, 3px);
+  }
+}
+@keyframes pulse {	
+  50% { 
+    background: var(--load-color);
+  } 
+}
+@keyframes shake {
+  0% {
+    transform: rotate(0);
+  }
+  20% {
+    transform: rotate(8deg);
+  }
+  40% {
+    transform: rotate(-8deg);
+  }
+  60% {
+    transform: rotate(8deg);
+  }
+  80% {
+    transform: rotate(-8deg);
+  }
+  100% {
+    transform: rotate(0);
+  }
+}
+@keyframes shake {
+  0% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(1px);
+  }
+  40% {
+    transform: translateX(-1px);
+  }
+  60% {
+    transform: translateX(1px);
+  }
+  80% {
+    transform: translateX(-1px);
+  }
+  100% {
+    transform: translateX(0);
   }
 }

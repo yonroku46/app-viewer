@@ -9,7 +9,7 @@
     font-weight: bold;
     font-size: 18px;
     text-align: left;
-    margin-bottom: -6px;
+    margin-bottom: -8px;
   }
   .stepper {
     position: absolute;
@@ -55,18 +55,6 @@
         padding-right: 30px;
       }
     }
-    .recover {
-      cursor: pointer;
-      width: fit-content;
-      float: right;
-      text-align: right;
-      font-size: 11px;
-      margin-top: -8px;
-      opacity: 0.55;
-      &:hover {
-        opacity: 0.8;
-      }
-    }
     .err-area {
       display: flex;
       width: 100%;
@@ -92,28 +80,6 @@
         pointer-events: none;
         opacity: 0.5;
       }
-    }
-  }
-  .complete {
-    .title {
-      text-align: center;
-      margin-bottom: 0;
-    }
-    .sub-title {
-      text-align: center;
-      font-weight: normal;
-      margin-top: 10px;
-      white-space: pre;
-    }
-    .icon {
-      color: var(--success-color);
-    }
-    .next {
-      background-color: black;
-      color: white;
-      margin-top: 42px;
-      padding: 12px 42px;
-      width: -webkit-fill-available;
     }
   }
   .terms-check {

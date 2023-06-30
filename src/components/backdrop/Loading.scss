@@ -1,20 +1,12 @@
 $base-line-height: 56px;
-$color: rgb(255, 255, 255);
-$off-color: rgba($color, 0.2);
 $pulse-duration: 750ms;
-
-@keyframes pulse {	
-  50% { 
-    background: $color;
-  } 
-}
 
 .loading-pulse {
   z-index: 9999;
   position: fixed;
   width: ($base-line-height / 5);
   height: $base-line-height;
-  background: $off-color;
+  background: var(--load-off-color);
   animation: pulse $pulse-duration infinite;
   animation-delay: ($pulse-duration / 3);
   top: calc(50% - 46px);
@@ -25,7 +17,7 @@ $pulse-duration: 750ms;
     display: block;
     height: ($base-line-height / 1.5);
     width: ($base-line-height / 5);
-    background: $off-color;
+    background: var(--load-off-color);
     top: 50%;
     transform: translateY(-50%);
     animation: pulse $pulse-duration infinite;

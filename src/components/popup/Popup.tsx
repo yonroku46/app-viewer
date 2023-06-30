@@ -70,7 +70,7 @@ export default function Popup({ title = '', contents, link, center, backdropClos
     {/* 上段ポップアップ */}
     <div className={'popup' + (show ? ' show' : ' hide') + (center ? ' none' : '')} onClick={() => popupClose()}>
       {iconShow && <NotificationsActiveIcon className='icon'/>}
-      <div>
+      <div className='text'>
         { contents }
       </div>
     </div>

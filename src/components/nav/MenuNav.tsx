@@ -1,10 +1,11 @@
 import { useEffect, useState, ReactElement } from 'react';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useMediaQuery } from 'react-responsive';
 import logo from "assets/icon/logo.svg";
 import AuthService from 'api/service/AuthService';
 import { imgSrc, handleImgError } from "common/utils/imgUtils";
 import Backdrop from 'components/backdrop/Backdrop'
+import Modal from 'components/modal/Modal';
 import './MenuNav.scss';
 
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
@@ -16,7 +17,6 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Divider from '@mui/material/Divider';
-
 
 export interface MenuItem {
   category: string;
@@ -31,10 +31,12 @@ export interface MenuItem {
 export default function MenuNav({ menuItem, currentPath, userName, mail }: { menuItem: MenuItem[], currentPath: string | undefined, userName: string | undefined, mail: string | undefined }) {
   const isSp = useMediaQuery({ maxWidth: 767 });
   const navigate = useNavigate();
+  const location = useLocation();
 
   const authService = new AuthService();
 
   const [open, setOpen] = useState<boolean>(false);
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [activeCategory, setActiveCategory] = useState<string>(menuItem[0].category);
   const [categoryImg, setCategoryImg] = useState<string>(menuItem[0].categoryImg);
 
@@ -50,7 +52,7 @@ export default function MenuNav({ menuItem, currentPath, userName, mail }: { men
   
   function link(path: string) {
     setOpen(false);
-    navigate(path);
+    navigate(path, { state: location });
   }
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -87,13 +89,18 @@ export default function MenuNav({ menuItem, currentPath, userName, mail }: { men
   function handleClose() {
     setAnchorEl(null);
   }
+
+  function handleModalClose() {
+    setModalOpen(false);
+  };
   
   return(
     <>
     <Backdrop open={open} onClick={() => setOpen(false)}/>
+    <Modal open={modalOpen} onClose={handleModalClose}/>
     {/* 共通メニューコンポネント */}
-    {userName ?
-      <div className='userinfo' onClick={handleClick} onMouseEnter={handleClick} onMouseLeave={handleClose}>
+    {(currentPath !== 'login') && userName ?
+      <div className='user-badge' onClick={handleClick} onMouseEnter={handleClick} onMouseLeave={handleClose}>
         <Menu anchorEl={anchorEl} open={openEl} PaperProps={accountMenuProps}
          transformOrigin={{ horizontal: 'right', vertical: 'top' }} anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}>
           <div onMouseLeave={handleClose}>
@@ -105,7 +112,7 @@ export default function MenuNav({ menuItem, currentPath, userName, mail }: { men
             <Badge className='badge' color="primary" badgeContent={100} max={99}/>
           </MenuItem>
           <Divider/>
-          <MenuItem className='account-menu' onClick={() => link('/mypage')}>
+          <MenuItem className='account-menu' onClick={() => setModalOpen(true)}>
             <ListItemIcon>
               <Settings fontSize="small"/>
             </ListItemIcon>
@@ -123,9 +130,9 @@ export default function MenuNav({ menuItem, currentPath, userName, mail }: { men
           <img className='profile' src={imgSrc('/tmp/dummy.jpg')} onError={handleImgError} onClick={() => {}} alt='profile'/>
         </Badge>
       </div>
-    : (currentPath !== 'login' && currentPath !== 'signup') &&
-      <button className={isSp ? 'login-btn sp' : 'login-btn'} onClick={() => link('/login')}>
-        <span className='text'>ログイン / 会員登録</span>
+    : (currentPath !== 'login') &&
+      <button className='login-btn' onClick={() => link('/login')}>
+        <span className='text'>ログイン</span>
       </button>
     }
     <div className={open ? 'menu-btn open' : 'menu-btn'} onClick={() => setOpen(!open)}>

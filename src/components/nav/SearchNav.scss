@@ -11,7 +11,6 @@ $section-width: $app-max-width - $search-nav-width;
 .search-nav {
   position: fixed;
   .side-menu {
-    float: left;
     position: sticky;
     top: 64px;
     background-color: var(--contents-color);
@@ -88,11 +87,11 @@ $section-width: $app-max-width - $search-nav-width;
         &.active {
           font-weight: bold;
           background-color: var(--menu-active-color);
-          border-radius: 4px;
+          border-radius: 8px;
           &::after {
             content: "";
             background: var(--main-color);
-            border-radius: 6px;
+            border-radius: 8px;
             height: 20px;
             left: -8px;
             position: absolute;
@@ -108,7 +107,7 @@ $section-width: $app-max-width - $search-nav-width;
 }
 
 /* sp */
-@media only screen and (max-width: $app-sp-width){
+@media only screen and (max-width: $app-sp-width) {
   .search-nav {
     .category {
       .title {

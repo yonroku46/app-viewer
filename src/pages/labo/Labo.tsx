@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { Link, Route, Routes, useNavigate } from "react-router-dom";
 import { useScroll, useWindowScroll } from 'react-use';
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { imgSrc, handleImgError } from "common/utils/imgUtils";
 import { format } from 'date-fns';
 import { showTopPopup, showCenterPopup } from "redux/actions/popupActions";
@@ -57,7 +57,6 @@ export default function Labo() {
       <img src={useMemo(() => imgSrc('/tmp/dummy.png'), [])} onError={handleImgError} width='100px'/>
       <div>{format(currentTime, 'yyyy-MM-dd')}</div>
       <div>{format(currentTime, 'HH:mm:ss')}</div>
-      <button onClick={() => navigate(-1)}>back</button>
       <br/>
       <button className='top' onClick={() => openTopPopup('top popup')}>topPop</button>
       <button className='center' onClick={() => openCenterPopup('title', 'center popup')}>topCenter</button>

@@ -11,7 +11,7 @@ $section-width: $app-max-width - $search-nav-width;
 .home {
   .contents {
     margin: 8px;
-    min-height: 300px;
+    min-height: 800px;
     box-shadow: 0 0px 4px 1px var(--main-shadow-color);
     &.main {
       background-color: unset;
@@ -22,8 +22,9 @@ $section-width: $app-max-width - $search-nav-width;
       align-items: center;
       grid-template-columns: 50% 50%;
       h1 {
-        font-size: 46px;
         width: max-content;
+        font-size: 46px;
+        line-height: 56px;
         span {
           color: var(--main-color);
         }
@@ -35,8 +36,7 @@ $section-width: $app-max-width - $search-nav-width;
       }
       .sign-btn {
         font-size: 20px;
-        margin-top: 20px;
-        margin-left: 6px;
+        margin-top: 60px;
         padding: 10px 30px;
         color: white;
         background-color: var(--main-color);
@@ -44,24 +44,25 @@ $section-width: $app-max-width - $search-nav-width;
       }
       .left {
         z-index: 1;
-        padding-left: 32px;
       }
       .right {
+        display: flex;
+        justify-content: flex-end;
         z-index: 0;
-        .banner-img {
-          float: right;
-        }
       }
     }
   }
 }
 
 /* sp */
-@media only screen and (max-width: $app-sp-width){
+@media only screen and (max-width: $app-sp-width) {
   .home {
     .contents {
       &.main {
-        grid-template-columns: 1fr;
+        grid-template-columns: 100%;
+        .sign-btn {
+          margin-top: 30px;
+        }
         .right {
           .banner-img {
             width: 100%;

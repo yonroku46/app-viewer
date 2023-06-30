@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Link, Route, Routes, useNavigate } from "react-router-dom";
+import { useEffect, useState } from 'react';
+import { useNavigate } from "react-router-dom";
 import Backdrop from 'components/backdrop/Backdrop';
 import AuthService from 'api/service/AuthService';
 import UserService, { UserInfo } from 'api/service/UserService';
@@ -7,6 +7,7 @@ import './MyPage.scss';
 
 export default function MyPage() {
   const navigate = useNavigate();
+
   const userService = new UserService();
   const authService = new AuthService();
 

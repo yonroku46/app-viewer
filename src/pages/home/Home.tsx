@@ -1,10 +1,12 @@
 import React, { useEffect, useState, useMemo } from 'react';
-import { Link, Route, Routes, useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import mainBanner from "assets/img/main-banner.webp";
 import './Home.scss';
 
 export default function Home() {
   const navigate = useNavigate();
+  const location = useLocation();
+
   function HomeMain() {
     return(
       <>
@@ -19,7 +21,7 @@ export default function Home() {
         <button className='sign-btn' onClick={() => navigate('/login')}>無料で始める</button>
       </div>
       <div className='right'>
-        <img className='banner-img' src={mainBanner} alt='main'/>
+        <img className='banner-img' src={mainBanner} alt='banner'/>
       </div>
       </>
     )

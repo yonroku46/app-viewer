@@ -1,0 +1,35 @@
+.complete {
+  .complete-title {
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 0;
+  }
+  .complete-sub-title {
+    text-align: center;
+    font-weight: normal;
+    margin-top: 10px;
+    margin-bottom: 32px;
+    white-space: pre;
+  }
+  .icon-area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 110px;
+    height: 110px;
+    background-color: var(--success-color);
+    border-radius: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    .icon {
+      color: white;
+    }
+  }
+  .next {
+    background-color: black;
+    color: white;
+    padding: 12px 42px;
+    width: -webkit-fill-available;
+  }
+}
