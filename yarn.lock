@@ -7593,6 +7593,10 @@ react-use@^17.4.0:
     ts-easing "^0.2.0"
     tslib "^2.1.0"
 
+react-virtuoso@^4.3.11:
+  version "4.3.11"
+  resolved "https://registry.yarnpkg.com/react-virtuoso/-/react-virtuoso-4.3.11.tgz#ab24e707287ef1b4bb5b52f3b14795ba896e9768"
+
 react@^18.2.0:
   version "18.2.0"
   resolved "https://registry.yarnpkg.com/react/-/react-18.2.0.tgz#555bd98592883255fa00de14f1151a917b5d77d5"

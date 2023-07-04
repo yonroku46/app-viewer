@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Backdrop from 'components/backdrop/Backdrop';
-import Complete from 'components/auth/Complete';
+import AuthComplete from 'components/auth/AuthComplete';
 import AuthService from 'api/service/AuthService';
 import './Recover.scss';
 
@@ -47,7 +47,7 @@ export default function Recover() {
     <Backdrop open={loading} loading={loading}/>
     <section className='recover fullsize'>
       {isComplete ?
-        <Complete icon={<ForwardToInboxIcon className='icon' sx={{ fontSize: 80 }}/>} title={'メールを送信しました'} subTitle={'完了させるためには\nメールでの認証が必要です'} path={'login'}/>
+        <AuthComplete icon={<ForwardToInboxIcon className='icon' sx={{ fontSize: 80 }}/>} title={'メールを送信しました'} subTitle={'完了させるためには\nメールでの認証が必要です'} path={'login'}/>
         :
         <form className='recover-form' onSubmit={onSubmitHandler}>
           <div className='sub-title'>

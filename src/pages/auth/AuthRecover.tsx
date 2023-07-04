@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useDispatch } from "react-redux";
 import Backdrop from 'components/backdrop/Backdrop';
-import Complete from 'components/auth/Complete';
+import AuthComplete from 'components/auth/AuthComplete';
 import AuthService from 'api/service/AuthService';
 import { showTopPopup, showCenterLinkPopup } from "redux/actions/popupActions";
 import './AuthRecover.scss';
@@ -114,7 +114,7 @@ export default function AuthRecover() {
     <section className='auth-recover fullsize'>
       {auth ?
        isComplete ?
-        <Complete icon={<PublishedWithChangesIcon className='icon' sx={{ fontSize: 80 }}/>} title={'パスワード変更完了'} subTitle={'新しいパスワードで\nログインしてください'} path={'login'}/>
+        <AuthComplete icon={<PublishedWithChangesIcon className='icon' sx={{ fontSize: 80 }}/>} title={'パスワード変更完了'} subTitle={'新しいパスワードで\nログインしてください'} path={'login'}/>
         :
         <form className='auth-recover-form' onSubmit={onSubmitHandler}>
           <div className='sub-title'>

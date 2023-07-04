@@ -6,7 +6,7 @@ $main-margin: 16px;
 $search-nav-width: 188px;
 $search-nav-sp-width: 20px;
 $nav-width: 180px;
-$nav-margin: 48px;
+$nav-margin: 38px;
 $nav-sp-margin: 16px;
 $section-width: $app-max-width - $search-nav-width;
 
@@ -97,9 +97,13 @@ $section-width: $app-max-width - $search-nav-width;
     cursor: pointer;
     width: 30px;
     border-radius: 12px;
-    border: 2px solid gray;
+    border: 2px solid black;
     margin-top: -2px;
     margin-right: -2px;
+    transition: opacity 0.25s;
+    &:hover {
+      opacity: 0.65;
+    }
   }
 }
 .login-btn {
@@ -164,7 +168,8 @@ $section-width: $app-max-width - $search-nav-width;
         }
         &.active {
           font-weight: bold;
-          background-color: var(--menu-active-color);
+          color: var(--menu-active-color);
+          background-color: var(--menu-active-bg-color);
           border-radius: 8px;
         }
         svg {
@@ -184,26 +189,27 @@ $section-width: $app-max-width - $search-nav-width;
         cursor: pointer;
         .title {
           display: flex;
-          padding: 8px 10px;
+          padding: 8px 8px 8px 16px;
           margin: 5px 0px;
           border-top-left-radius: 8px;
           border-bottom-left-radius: 8px;
           transition: all 0.25s;
           &.active {
             font-weight: bold;
-            background-color: var(--menu-active-color);
+            color: var(--menu-active-color);
+            background-color: var(--menu-active-bg-color);
           }
           &:hover {
             opacity: 0.8;
-            background-color: var(--menu-active-color);
+            background-color: var(--menu-active-bg-color);
           }
           span {
             margin: 0;
           }
           .icon {
-            color: var(--menu-active-dark-color);
+            color: var(--menu-active-color);
             margin-left: auto;
-            margin-right: -10px;
+            margin-right: -8px;
           }
         }
       }
@@ -212,7 +218,7 @@ $section-width: $app-max-width - $search-nav-width;
       flex-grow: 0;
       flex-basis: 60%;
       height: 180px;
-      margin-left: $nav-margin;
+      margin-left: $nav-margin / 2;
       ul {
         display: flex;
         flex-wrap: wrap;
@@ -226,7 +232,8 @@ $section-width: $app-max-width - $search-nav-width;
         justify-content: center;
         align-content: center;
         justify-items: center;
-        width: 64px;
+        font-size: 13px;
+        width: 80px;
         height: 64px;
         border-radius: 8px;
         padding: 8px 10px;
@@ -235,17 +242,17 @@ $section-width: $app-max-width - $search-nav-width;
         white-space: pre;
         &:hover {
           cursor: pointer;
-          background-color: var(--menu-active-color);
+          background-color: var(--menu-hover-color);
           opacity: 0.8;
         }
         &.active {
           font-weight: bold;
-          background-color: var(--menu-active-color);
-          box-shadow: 0 0 0 1px gray inset;
+          color: var(--menu-active-color);
+          box-shadow: 0 0 0 1px var(--menu-active-color) inset;
         }
         svg {
           font-size: 30px;
-          margin-bottom: 6px;
+          margin-bottom: 4px;
         }
       }
     }
@@ -272,7 +279,7 @@ $section-width: $app-max-width - $search-nav-width;
       .profile {
         width: 50px;
         border-radius: 12px;
-        border: 2px solid gray;
+        border: 2px solid black;
       }
       .info {
         margin-top: -50px;
@@ -294,7 +301,7 @@ $section-width: $app-max-width - $search-nav-width;
         cursor: pointer;
         transition: opacity 0.25s;
         &:hover {
-          opacity: 0.8;
+          opacity: 0.65;
         }
       }
     }

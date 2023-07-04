@@ -1,19 +1,19 @@
 import { ReactElement } from 'react';
 import { useNavigate } from "react-router-dom";
-import './Complete.scss';
+import './AuthComplete.scss';
 
-export interface CompleteItem {
+export interface AuthCompleteItem {
   icon: ReactElement<any, any>;
   title: string;
   subTitle: string;
   path: string;
 }
 
-export default function Complete({ icon, title, subTitle, path }: CompleteItem) {
+export default function AuthComplete({ icon, title, subTitle, path }: AuthCompleteItem) {
   const navigate = useNavigate();
 
   return(
-    <div className='complete'>
+    <div className='auth-complete'>
       <div className='icon-area'>
         { icon }
       </div>

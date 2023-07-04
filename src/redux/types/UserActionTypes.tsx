@@ -5,6 +5,7 @@ export interface UserState {
     token?: string;
     refreshToken?: string;
     mailAuth?: boolean;
+    roles?: number;
 }
   
 export enum UserActionTypes {

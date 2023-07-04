@@ -12,6 +12,11 @@ export module ApiRoutes {
   // public
   export const HEALTH_CHECK = `${root}/`;
 
+  // oauth2
+  const oauth2Root = `${root}/oauth2/login`;
+  export const GOOGLE_CODE = `${oauth2Root}/google/code`;
+  export const GOOGLE_ACCESS_TOKEN = `${oauth2Root}/google/access-token`;
+
   // auth
   const authRoot = `${root}/auth`;
   export const LOGIN = `${authRoot}/login`;
@@ -19,7 +24,7 @@ export module ApiRoutes {
   export const SUBMIT = `${authRoot}/submit`;
   export const RECOVER = `${authRoot}/recover`;
   export const KEY_CHECK = `${authRoot}/check`;
-  export const REFRESH_TOKEN = `${authRoot}/refreshToken`;
+  export const REFRESH_TOKEN = `${authRoot}/refresh-token`;
   
   // user
   const userRoot = `${root}/user`;

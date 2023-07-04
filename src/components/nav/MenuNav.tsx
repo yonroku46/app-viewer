@@ -9,6 +9,7 @@ import Modal from 'components/modal/Modal';
 import './MenuNav.scss';
 
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
+import LockPersonOutlinedIcon from '@mui/icons-material/LockPersonOutlined';
 import Badge from '@mui/material/Badge';
 import LogoutIcon from '@mui/icons-material/Logout';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
@@ -28,7 +29,7 @@ export interface MenuItem {
   }[];
 }
 
-export default function MenuNav({ menuItem, currentPath, userName, mail }: { menuItem: MenuItem[], currentPath: string | undefined, userName: string | undefined, mail: string | undefined }) {
+export default function MenuNav({ menuItem, currentPath, userName, mail, roles }: { menuItem: MenuItem[], currentPath: string | undefined, userName: string | undefined, mail: string | undefined, roles: number | undefined}) {
   const isSp = useMediaQuery({ maxWidth: 767 });
   const navigate = useNavigate();
   const location = useLocation();
@@ -39,6 +40,13 @@ export default function MenuNav({ menuItem, currentPath, userName, mail }: { men
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [activeCategory, setActiveCategory] = useState<string>(menuItem[0].category);
   const [categoryImg, setCategoryImg] = useState<string>(menuItem[0].categoryImg);
+
+  useEffect(() => {
+    const item = menuItem.find((item) => item.items.some((menu) => menu.url === currentPath));
+    if (item) {
+      setActiveCategory(item.category);
+    }
+  }, [currentPath, menuItem]);
 
   useEffect(() => {
     setCategoryImg(menuItem.filter((menu) => menu.category === activeCategory)[0].categoryImg);
@@ -111,6 +119,14 @@ export default function MenuNav({ menuItem, currentPath, userName, mail }: { men
             マイページ
             <Badge className='badge' color="primary" badgeContent={100} max={99}/>
           </MenuItem>
+          {roles === 9 &&
+          <MenuItem className='account-menu' onClick={() => link('/admin/dashboard')}>
+            <ListItemIcon>
+              <LockPersonOutlinedIcon/>
+            </ListItemIcon>
+            管理者画面
+          </MenuItem>
+          }
           <Divider/>
           <MenuItem className='account-menu' onClick={() => setModalOpen(true)}>
             <ListItemIcon>

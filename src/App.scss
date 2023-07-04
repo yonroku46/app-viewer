@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@200;400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@200;400;700;900&display=swap');
 
 $header-height: 48px;
 $app-max-width: 1280px;
@@ -12,10 +12,6 @@ $section-width: $app-max-width - $search-nav-width;
 
 html {
   font-family: 'Noto Sans JP', sans-serif;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-use-select: none;
-  user-select: none;
   &::-webkit-scrollbar {
     display: none;
   }
@@ -70,14 +66,18 @@ body {
   --bg-color: rgb(244, 244, 244);
   --load-color: rgb(255, 255, 255);
   --load-off-color: rgba(255, 255, 255, 0.2);
+  --backdrop-color: rgba(0, 0, 0, 0.45);
   --contents-color: rgb(255, 255, 255);
+  --shadow-color: rgb(221, 221, 221);
   --main-color: rgb(25, 98, 245);
   --sub-color: rgb(65, 127, 251);
+  --opp-main-color: rgb(52, 168, 83);
+  --opp-sub-color: rgb(83, 187, 111);
   --success-color: rgb(154, 205, 50);
   --warring-color: rgb(255, 165, 0);
-  --main-shadow-color: rgb(221, 221, 221);
-  --menu-active-color: rgba(26, 99, 245, 0.08);
-  --menu-active-dark-color: rgba(26, 99, 245, 0.3);
+  --menu-active-color: rgb(26, 99, 245);
+  --menu-active-bg-color: rgba(26, 99, 245, 0.08);
+  --menu-hover-color: rgba(128, 128, 128, 0.1);
   --sns-twitter-color: rgb(29, 161, 242);
   --sns-facebook-color: rgb(66, 103, 178);
   --sns-instagram-color: rgb(255, 48, 108);
@@ -131,6 +131,7 @@ a {
   text-decoration: none;
 }
 button {
+  cursor: pointer;
   font-family: 'Noto Sans JP', sans-serif;
   padding: 6px 18px;
   border-radius: 8px;
@@ -140,7 +141,7 @@ button {
   color: black;
   transition: opacity 0.15s ease-in-out, color 0.15s ease-in-out, background-color 0.15s ease-in-out;
   &:hover {
-    cursor: pointer;
+    opacity: 0.85;
     background-color: black;
     color: white;
   }
@@ -169,6 +170,26 @@ hr {
   text-align: center;
   flex-direction: column;
   height: calc(100vh - 96px);
+}
+.table {
+  &::-webkit-scrollbar-track {
+    border-radius: 4px;
+    background-color: #0000;
+  }
+  &::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+    background-color: #0000;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: gray;
+  }
+  th {
+    background-color: black;
+    color: white !important;
+    padding: 8px;
+  }
 }
 
 /* sp */

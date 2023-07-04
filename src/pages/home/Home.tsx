@@ -13,12 +13,13 @@ export default function Home() {
       <div className='left'>
         <h1>
           アプリパッケージ<br/>
-          デモ<span>作成</span>中<br/>
+          デモ作成中<br/>
         </h1>
         <h5>
           アプリの説明
         </h5>
         <button className='sign-btn' onClick={() => navigate('/login')}>無料で始める</button>
+        <button className='contact-btn' onClick={() => navigate('/contact')}>お問い合わせ</button>
       </div>
       <div className='right'>
         <img className='banner-img' src={mainBanner} alt='banner'/>

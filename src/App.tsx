@@ -17,17 +17,19 @@ import Empty from 'pages/empty/Empty';
 import MyPage from 'pages/mypage/MyPage';
 import AuthPage from 'pages/auth/AuthPage';
 import AuthRecover from 'pages/auth/AuthRecover';
+import AdminPage from 'pages/admin/AdminPage';
 import Login from 'pages/login/Login';
 import Recover from 'pages/recover/Recover';
 import Signup from 'pages/signup/Signup';
+import Contact from 'pages/contact/Contact';
 import Labo from 'pages/labo/Labo';
 import './App.scss';
 
 import RocketLaunchIcon from '@mui/icons-material/RocketLaunch';
+import ContactSupportTwoToneIcon from '@mui/icons-material/ContactSupportTwoTone';
 import PsychologyTwoToneIcon from '@mui/icons-material/PsychologyTwoTone';
 import FindInPageTwoToneIcon from '@mui/icons-material/FindInPageTwoTone';
 import WidgetsTwoToneIcon from '@mui/icons-material/WidgetsTwoTone';
-import SummarizeTwoToneIcon from '@mui/icons-material/SummarizeTwoTone';
 
 export default function App() {
   const navigate = useNavigate();
@@ -42,20 +44,20 @@ export default function App() {
   
   const menuItem: MenuItem[] = [
     {
-      category: 'カテゴリー',
+      category: 'サンプル',
       categoryImg: category1,
       items: [
-        { url: 'search', icon: <FindInPageTwoToneIcon/>, title: '検索'},
-        { url: 'menu1', icon: <WidgetsTwoToneIcon/>, title: 'メニュー1'},
-        { url: 'menu2', icon: <SummarizeTwoToneIcon/>, title: 'メニュー2'},
+        { url: 'search', icon: <FindInPageTwoToneIcon/>, title: '検索' },
+        { url: 'contact', icon: <ContactSupportTwoToneIcon/>, title: 'お問い合わせ' },
+        { url: 'menu1', icon: <WidgetsTwoToneIcon/>, title: 'メニュー1' },
       ]
     },{
       category: 'ラボ',
       categoryImg: category2,
       items: [
-        { url: 'labo', icon: <PsychologyTwoToneIcon/>, title: '実験室'},
+        { url: 'labo', icon: <PsychologyTwoToneIcon/>, title: '実験室' },
       ]
-    },
+    }
   ]
 
   // ポップアップ表示ロジック、上段ポップアップの場合2秒位表示
@@ -100,7 +102,7 @@ export default function App() {
             <RocketLaunchIcon className='labo'/>
           </div>
           <div className='side'>
-            <MenuNav menuItem={menuItem} currentPath={currentPath} userName={user?.userName} mail={user?.mail}/>
+            <MenuNav menuItem={menuItem} currentPath={currentPath} userName={user?.userName} mail={user?.mail} roles={user?.roles}/>
           </div>
         </div>
       </header>
@@ -128,8 +130,11 @@ export default function App() {
           <Route path="/mypage" element={<MyPage/>}/>
           <Route path="/search" element={<Search/>}/>
           <Route path="/labo" element={<Labo/>}/>
+          <Route path="/contact" element={<Contact/>}/>
           <Route path="/auth" element={<AuthPage/>}/>
             <Route path="/auth/recover" element={<AuthRecover/>}/>
+          <Route path="/admin" element={<AdminPage/>}/>
+            <Route path="/admin/:tab" element={<AdminPage/>}/>
           <Route path='/*' element={<Empty/>}/>
         </Routes>
       </main>

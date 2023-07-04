@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import Backdrop from 'components/backdrop/Backdrop';
-import Complete from 'components/auth/Complete';
+import AuthComplete from 'components/auth/AuthComplete';
 import AuthService from 'api/service/AuthService';
 import { useDispatch } from "react-redux";
 import { showTopPopup, showCenterLinkPopup } from "redux/actions/popupActions";
@@ -45,7 +45,7 @@ export default function AuthPage() {
     <Backdrop open={loading} loading={loading}/>
     <section className='auth fullsize'>
       {isComplete && 
-        <Complete icon={<MarkEmailReadIcon className='icon' sx={{ fontSize: 80 }}/>} title={'登録完了'} subTitle={'ご登録頂きありがとうございます'} path={'home'}/>
+        <AuthComplete icon={<MarkEmailReadIcon className='icon' sx={{ fontSize: 80 }}/>} title={'登録完了'} subTitle={'ご登録頂きありがとうございます'} path={'home'}/>
       }
     </section>
     </>
