@@ -1,11 +1,12 @@
 export interface UserState {
-    uid?: number;
+    userId?: number;
     userName?: string;
+    profileImg?: string;
     mail?: string;
     token?: string;
     refreshToken?: string;
     mailAuth?: boolean;
-    roles?: number;
+    role?: number;
 }
   
 export enum UserActionTypes {

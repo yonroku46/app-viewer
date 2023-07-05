@@ -102,7 +102,7 @@ export default function App() {
             <RocketLaunchIcon className='labo'/>
           </div>
           <div className='side'>
-            <MenuNav menuItem={menuItem} currentPath={currentPath} userName={user?.userName} mail={user?.mail} roles={user?.roles}/>
+            <MenuNav menuItem={menuItem} currentPath={currentPath} userName={user?.userName} profileImg={user?.profileImg} mail={user?.mail} role={user?.role}/>
           </div>
         </div>
       </header>

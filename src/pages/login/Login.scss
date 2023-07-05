@@ -88,19 +88,30 @@
       width: -webkit-fill-available;
     }
   }
-  .google-signin {
+  .social-signin {
     display: flex;
     background-color: white;
     color: black;
-    padding: 12px 42px;
+    padding: 12px 26px;
     width: -webkit-fill-available;
+    &:nth-child(odd) {
+      margin-bottom: 8px;
+    }
+    &.line:hover {
+      background-color: var(--sns-line-color);
+      color: white;
+    }
+    &.google:hover {
+      background-color: var(--main-color);
+      color: white;
+    }
     img {
       display: inherit;
-      margin-left: auto;
-      margin-right: 10px;
+      margin-right: -20px;
     }
     div {
       display: inherit;
+      margin-left: auto;
       margin-right: auto;
     }
   }

@@ -7,17 +7,15 @@ export default function Home() {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const title = 'アプリパッケージ\nデモ作成中';
+  const subTitle = 'アプリの説明';
+
   function HomeMain() {
     return(
       <>
       <div className='left'>
-        <h1>
-          アプリパッケージ<br/>
-          デモ作成中<br/>
-        </h1>
-        <h5>
-          アプリの説明
-        </h5>
+        <h1>{ title }</h1>
+        <h5>{ subTitle }</h5>
         <button className='sign-btn' onClick={() => navigate('/login')}>無料で始める</button>
         <button className='contact-btn' onClick={() => navigate('/contact')}>お問い合わせ</button>
       </div>

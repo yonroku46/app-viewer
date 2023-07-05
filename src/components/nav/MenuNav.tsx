@@ -29,7 +29,7 @@ export interface MenuItem {
   }[];
 }
 
-export default function MenuNav({ menuItem, currentPath, userName, mail, roles }: { menuItem: MenuItem[], currentPath: string | undefined, userName: string | undefined, mail: string | undefined, roles: number | undefined}) {
+export default function MenuNav({ menuItem, currentPath, userName, profileImg, mail, role }: { menuItem: MenuItem[], currentPath: string | undefined, userName: string | undefined, profileImg: string | undefined, mail: string | undefined, role: number | undefined}) {
   const isSp = useMediaQuery({ maxWidth: 767 });
   const navigate = useNavigate();
   const location = useLocation();
@@ -119,7 +119,7 @@ export default function MenuNav({ menuItem, currentPath, userName, mail, roles }
             マイページ
             <Badge className='badge' color="primary" badgeContent={100} max={99}/>
           </MenuItem>
-          {roles === 9 &&
+          {role === 9 &&
           <MenuItem className='account-menu' onClick={() => link('/admin/dashboard')}>
             <ListItemIcon>
               <LockPersonOutlinedIcon/>
@@ -143,7 +143,7 @@ export default function MenuNav({ menuItem, currentPath, userName, mail, roles }
           </div>
         </Menu>
         <Badge variant="dot" color="primary">
-          <img className='profile' src={imgSrc('/tmp/dummy.jpg')} onError={handleImgError} onClick={() => {}} alt='profile'/>
+          <img className='profile' src={imgSrc(profileImg)} onError={handleImgError} onClick={() => {}} alt='profile'/>
         </Badge>
       </div>
     : (currentPath !== 'login') &&
@@ -161,7 +161,7 @@ export default function MenuNav({ menuItem, currentPath, userName, mail, roles }
       <div className={open ? 'menu open' : 'menu'}>
         {userName ?
           <div className='userinfo'>
-            <img className='profile' src={imgSrc('/tmp/dummy.jpg')} onError={handleImgError} onClick={() => link('/mypage')} alt='profile'/>
+            <img className='profile' src={imgSrc(profileImg)} onError={handleImgError} onClick={() => link('/mypage')} alt='profile'/>
             <div className='info'>
               <div className='name' onClick={() => link('/mypage')}>
                 { userName }

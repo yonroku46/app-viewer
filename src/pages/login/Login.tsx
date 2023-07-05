@@ -1,5 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate, useLocation } from "react-router-dom";
+import lineLogo from 'assets/icon/line_logo.svg';
+import googleLogo from 'assets/icon/google_logo.svg';
+import logo from "assets/icon/logo.svg";
 import Backdrop from 'components/backdrop/Backdrop';
 import AuthService from 'api/service/AuthService';
 import './Login.scss';
@@ -65,9 +68,14 @@ export default function Login() {
     });
   }
 
-  function googleLogin() {
-    alert('まだ対応しておりません');
-    setErrMsg('');
+  function socialLogin(app: string) {
+    if (app === 'line') {
+      alert('まだLINEは対応しておりません');
+      setErrMsg('');
+    } else if (app === 'google') {
+      alert('まだGoogleは対応しておりません');
+      setErrMsg('');
+    }
   }
 
   function errReset() {
@@ -108,8 +116,12 @@ export default function Login() {
         </div>
         <button type='submit' className='signin'>ログイン</button>
         <hr/>
-        <button type='button' className='google-signin' onClick={() => googleLogin()}>
-          <img src='https://cdn.qiita.com/assets/brand_icons/icon-google-5508f0ec691cc26ade72f941cc6a87b7.svg' width='20px' height='20px'/>
+        <button type='button' className='social-signin line' onClick={() => socialLogin('line')}>
+          <img src={lineLogo} width='20px' height='20px'/>
+          <div>LINEでログイン</div>
+        </button>
+        <button type='button' className='social-signin google' onClick={() => socialLogin('google')}>
+          <img src={googleLogo} width='20px' height='20px'/>
           <div>Googleでログイン</div>
         </button>
         <p className='signup'>

@@ -16,7 +16,7 @@ export default class AuthService {
         const current = new Date();
         const userInfo = response.data.responseData;
         var jwtInfo = {
-          uid: userInfo.uid,
+          userId: userInfo.userId,
           mail: userInfo.mail,
           iat: current.getTime(),
           lat: current.getTime() + (2*60*60*1000)

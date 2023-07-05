@@ -4,7 +4,7 @@ export function userLogin(user: UserState): UserAction {
   return {
     type: UserActionTypes.USER_LOGIN,
     user: {
-      uid: user.uid,
+      userId: user.userId,
       userName: user.userName,
       mail: user.mail,
       token: user.token,

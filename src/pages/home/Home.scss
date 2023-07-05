@@ -64,6 +64,7 @@ $section-width: $app-max-width - $search-nav-width;
       }
       .left {
         z-index: 1;
+        white-space: pre-wrap;
       }
       .right {
         display: flex;
