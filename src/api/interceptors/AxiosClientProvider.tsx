@@ -29,7 +29,7 @@ export function AxiosClientProvider({ children }: { children: React.ReactNode })
   }, [])
  
   // デフォルト設定
-  axios.defaults.baseURL = process.env.REACT_APP_API_BASE;
+  axios.defaults.baseURL = `${process.env.REACT_APP_ADDRESS}:${process.env.REACT_APP_VIEW_PORT}`;
   axios.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8';
   axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
 

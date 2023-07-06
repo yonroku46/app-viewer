@@ -1,10 +1,11 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from "react-router-dom";
+import { createState } from "common/utils/stringUtils";
 import lineLogo from 'assets/icon/line_logo.svg';
 import googleLogo from 'assets/icon/google_logo.svg';
-import logo from "assets/icon/logo.svg";
 import Backdrop from 'components/backdrop/Backdrop';
 import AuthService from 'api/service/AuthService';
+import Oauth2Service from 'api/service/Oauth2Service';
 import './Login.scss';
 
 import VisibilityIcon from '@mui/icons-material/Visibility';
@@ -15,6 +16,7 @@ export default function Login() {
   const location = useLocation();
   
   const authService = new AuthService();
+  const oAuth2Service = new Oauth2Service();
   
   const [passwordType, setPasswordType] = useState<{type: string, visible: boolean}>({
     type: 'password',
@@ -52,13 +54,13 @@ export default function Login() {
   }
 
   async function login() {
+    errReset();
     setLoading(true);
     await authService.login(mail, password).then(data => {
       setLoading(false);
       if (data.responseData) {
-        errReset();
         if (location.state?.pathname) {
-          navigate(location.state?.pathname);
+          navigate(location.state?.pathname, { replace: true });
         } else {
           navigate('/', { replace: true });
         }
@@ -68,14 +70,50 @@ export default function Login() {
     });
   }
 
-  function socialLogin(app: string) {
-    if (app === 'line') {
-      alert('まだLINEは対応しておりません');
-      setErrMsg('');
-    } else if (app === 'google') {
-      alert('まだGoogleは対応しておりません');
-      setErrMsg('');
+  async function socialLogin(type: string) {
+    errReset();
+    setLoading(true);
+    // LINEロジック
+    if (type === 'line') {
+      const authUrl = "https://access.line.me/oauth2/v2.1/authorize";
+      const clientId = "2000050381";
+      const redirectUri = `${process.env.REACT_APP_ADDRESS}:${process.env.REACT_APP_VIEW_PORT}/login/oauth2/line`;
+      const state = createState(8);
+      const url = `${authUrl}?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&state=${state}&scope=openid%20profile%20email`;
+      openLoginPopup(type, state, url);
     }
+    // Googleロジック
+    else if (type === 'google') {
+      alert('まだGoogleは対応しておりません');
+    }
+    setLoading(false);
+  }
+    
+  async function openLoginPopup(type: string, originState: string, url: string) {
+    const name = `${type} Login`;
+    const width = 500;
+    const height = 760;
+    const left = (window.innerWidth - width) / 2;
+    const top = (window.innerHeight - height) / 2;
+    const specs = `width=${width},height=${height},left=${left},top=${top}`;
+  
+    window.open(url, name, specs);
+    window.addEventListener('message', (event) => {
+      const { code, state } = event.data;
+      if (originState === state) {
+        oAuth2Service.lineAccess(code).then(data => {
+          if (data.responseData) {
+            if (location.state?.pathname) {
+              navigate(location.state?.pathname, { replace: true });
+            } else {
+              navigate('/', { replace: true });
+            }
+          } else {
+            setErrMsg('ログイン情報をもう一度ご確認ください');
+          }
+        });
+      }
+    });
   }
 
   function errReset() {

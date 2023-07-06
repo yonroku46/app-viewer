@@ -14,7 +14,7 @@ import PhotoCameraFrontTwoToneIcon from '@mui/icons-material/PhotoCameraFrontTwo
 export default function AdminPage() {
   const navigate = useNavigate();
   const isSp = useMediaQuery({ maxWidth: 767 });
-  const {tab} = useParams();
+  const { tab } = useParams();
 
   const menuItem: SideMenuItem[] = [
     {

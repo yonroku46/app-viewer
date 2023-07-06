@@ -19,7 +19,7 @@ export default class AuthService {
           userId: userInfo.userId,
           mail: userInfo.mail,
           iat: current.getTime(),
-          lat: current.getTime() + (2*60*60*1000)
+          lat: current.getTime() + (1000*60*60*24)
         }
         localStorage.setItem('jwtInfo', JSON.stringify(jwtInfo));
         localStorage.setItem('currentUser', JSON.stringify(userInfo));

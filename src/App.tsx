@@ -19,6 +19,7 @@ import AuthPage from 'pages/auth/AuthPage';
 import AuthRecover from 'pages/auth/AuthRecover';
 import AdminPage from 'pages/admin/AdminPage';
 import Login from 'pages/login/Login';
+import Oauth2Login from 'pages/login/Oauth2Login';
 import Recover from 'pages/recover/Recover';
 import Signup from 'pages/signup/Signup';
 import Contact from 'pages/contact/Contact';
@@ -125,6 +126,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home/>}/>
           <Route path="/login" element={<Login/>}/>
+            <Route path="/login/oauth2/:type" element={<Oauth2Login/>}/>
           <Route path="/recover" element={<Recover/>}/>
           <Route path="/signup" element={<Signup/>}/>
           <Route path="/mypage" element={<MyPage/>}/>

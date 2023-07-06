@@ -14,9 +14,7 @@ export module ApiRoutes {
 
   // oauth2
   const oauth2Root = `${root}/oauth2/login`;
-  export const GOOGLE_CODE = `${oauth2Root}/google/code`;
   export const GOOGLE_ACCESS_TOKEN = `${oauth2Root}/google/access-token`;
-  export const LINE_CODE = `${oauth2Root}/line/code`;
   export const LINE_ACCESS_TOKEN = `${oauth2Root}/line/access-token`;
 
   // auth

@@ -3,7 +3,7 @@ module.exports = function(app) {
   app.use(
     '/api/*',
     createProxyMiddleware({
-      target: process.env.REACT_APP_API_PORT,
+      target: `${process.env.REACT_APP_ADDRESS}:${process.env.REACT_APP_API_PORT}`,
       changeOrigin: true,
     })
   );
