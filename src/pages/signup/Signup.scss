@@ -67,6 +67,7 @@
         text-align: center;
         animation: shake 0.3s;
         margin: 0;
+        white-space: pre-wrap;
       }
     }
     .submit {
@@ -85,7 +86,7 @@
   .terms-check {
     text-align: left;
     margin-left: -9px;
-    .terms {
+    .policy {
       cursor: pointer;
       color: var(--main-color);
       line-height: 42px;

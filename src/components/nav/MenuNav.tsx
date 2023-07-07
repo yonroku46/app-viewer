@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useMediaQuery } from 'react-responsive';
 import logo from "assets/icon/logo.svg";
 import AuthService from 'api/service/AuthService';
-import { imgSrc, handleImgError } from "common/utils/imgUtils";
+import { imgSrc, handleImgError } from "common/utils/ImgUtils";
 import Backdrop from 'components/backdrop/Backdrop'
 import Modal from 'components/modal/Modal';
 import './MenuNav.scss';

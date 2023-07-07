@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from "react-router-dom";
-import { createState } from "common/utils/stringUtils";
+import { lineLogin, googleLogin } from "common/utils/OAuth2Utils";
 import lineLogo from 'assets/icon/line_logo.svg';
 import googleLogo from 'assets/icon/google_logo.svg';
 import Backdrop from 'components/backdrop/Backdrop';
 import AuthService from 'api/service/AuthService';
-import Oauth2Service from 'api/service/Oauth2Service';
+import OAuth2Service from 'api/service/OAuth2Service';
 import './Login.scss';
 
 import VisibilityIcon from '@mui/icons-material/Visibility';
@@ -16,7 +16,11 @@ export default function Login() {
   const location = useLocation();
   
   const authService = new AuthService();
-  const oAuth2Service = new Oauth2Service();
+  const oAuth2Service = new OAuth2Service();
+
+  const searchParams = new URLSearchParams(location.search);
+  const type = searchParams.get('type');
+  const code = searchParams.get('code');
   
   const [passwordType, setPasswordType] = useState<{type: string, visible: boolean}>({
     type: 'password',
@@ -27,6 +31,37 @@ export default function Login() {
   const [loading, setLoading] = useState<boolean>(false);
   const [errMsg, setErrMsg] = useState<string>("");
 
+  useEffect(() => {
+    if (location.state === 'oauth2' && type && code) {
+      setLoading(true);
+      if (type === 'line') {
+        oAuth2Service.lineAccess(code).then(data => {
+          if (data.responseData) {
+            loginSuccess();
+          } else {
+            setErrMsg('ソーシャルログインのアクセスに失敗しました');
+            setLoading(false);
+          }
+        });
+      }
+      else if (type === 'google') {
+        oAuth2Service.googleAccess(code).then(data => {
+          if (data.responseData) {
+            loginSuccess();
+          } else {
+            setErrMsg('ソーシャルログインのアクセスに失敗しました');
+            setLoading(false);
+          }
+        });
+      }
+    } else {
+      const user = authService.getCurrentUser();
+      if (user) {
+        navigate(-1);
+      }
+    }
+  }, []);
+  
   function passwordTypeHandler(e: React.MouseEvent<HTMLSpanElement, MouseEvent>) {
     setPasswordType(() => {
       if (!passwordType.visible) {
@@ -35,13 +70,6 @@ export default function Login() {
       return { type: 'password', visible: false };
     })
   }
-
-  useEffect(() => {
-    const user = authService.getCurrentUser();
-    if (user) {
-      navigate(-1);
-    }
-  }, [authService]);
 
   function onSubmitHandler(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -59,61 +87,30 @@ export default function Login() {
     await authService.login(mail, password).then(data => {
       setLoading(false);
       if (data.responseData) {
-        if (location.state?.pathname) {
-          navigate(location.state?.pathname, { replace: true });
-        } else {
-          navigate('/', { replace: true });
-        }
+        loginSuccess();
       } else {
         setErrMsg('ログイン情報をもう一度ご確認ください');
       }
     });
   }
 
+  function loginSuccess() {
+    if (location.state?.pathname) {
+      navigate(location.state?.pathname, { replace: true });
+    } else {
+      navigate('/', { replace: true });
+    }
+  }
+
   async function socialLogin(type: string) {
     errReset();
     setLoading(true);
-    // LINEロジック
     if (type === 'line') {
-      const authUrl = "https://access.line.me/oauth2/v2.1/authorize";
-      const clientId = "2000050381";
-      const redirectUri = `${process.env.REACT_APP_ADDRESS}:${process.env.REACT_APP_VIEW_PORT}/login/oauth2/line`;
-      const state = createState(8);
-      const url = `${authUrl}?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&state=${state}&scope=openid%20profile%20email`;
-      openLoginPopup(type, state, url);
-    }
-    // Googleロジック
-    else if (type === 'google') {
-      alert('まだGoogleは対応しておりません');
+      window.location.href = lineLogin();
+    } else if (type === 'google') {
+      window.location.href = googleLogin();
     }
     setLoading(false);
-  }
-    
-  async function openLoginPopup(type: string, originState: string, url: string) {
-    const name = `${type} Login`;
-    const width = 500;
-    const height = 760;
-    const left = (window.innerWidth - width) / 2;
-    const top = (window.innerHeight - height) / 2;
-    const specs = `width=${width},height=${height},left=${left},top=${top}`;
-  
-    window.open(url, name, specs);
-    window.addEventListener('message', (event) => {
-      const { code, state } = event.data;
-      if (originState === state) {
-        oAuth2Service.lineAccess(code).then(data => {
-          if (data.responseData) {
-            if (location.state?.pathname) {
-              navigate(location.state?.pathname, { replace: true });
-            } else {
-              navigate('/', { replace: true });
-            }
-          } else {
-            setErrMsg('ログイン情報をもう一度ご確認ください');
-          }
-        });
-      }
-    });
   }
 
   function errReset() {

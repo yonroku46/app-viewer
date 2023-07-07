@@ -66,7 +66,6 @@ export default function AuthRecover() {
     await authService.keyCheck(mail, key).then(data => {
       setLoading(false);
       if (data.responseData) {
-        console.log(data.responseData)
         setAuth(true);
         dispatch(showTopPopup('認証完了'));
         setMail(data.responseData.mail);

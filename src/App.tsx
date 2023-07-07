@@ -19,10 +19,11 @@ import AuthPage from 'pages/auth/AuthPage';
 import AuthRecover from 'pages/auth/AuthRecover';
 import AdminPage from 'pages/admin/AdminPage';
 import Login from 'pages/login/Login';
-import Oauth2Login from 'pages/login/Oauth2Login';
+import OAuth2Login from 'pages/login/OAuth2Login';
 import Recover from 'pages/recover/Recover';
 import Signup from 'pages/signup/Signup';
 import Contact from 'pages/contact/Contact';
+import Policy from 'pages/policy/Policy';
 import Labo from 'pages/labo/Labo';
 import './App.scss';
 
@@ -30,7 +31,7 @@ import RocketLaunchIcon from '@mui/icons-material/RocketLaunch';
 import ContactSupportTwoToneIcon from '@mui/icons-material/ContactSupportTwoTone';
 import PsychologyTwoToneIcon from '@mui/icons-material/PsychologyTwoTone';
 import FindInPageTwoToneIcon from '@mui/icons-material/FindInPageTwoTone';
-import WidgetsTwoToneIcon from '@mui/icons-material/WidgetsTwoTone';
+import AdminPanelSettingsTwoToneIcon from '@mui/icons-material/AdminPanelSettingsTwoTone';
 
 export default function App() {
   const navigate = useNavigate();
@@ -50,7 +51,7 @@ export default function App() {
       items: [
         { url: 'search', icon: <FindInPageTwoToneIcon/>, title: '検索' },
         { url: 'contact', icon: <ContactSupportTwoToneIcon/>, title: 'お問い合わせ' },
-        { url: 'menu1', icon: <WidgetsTwoToneIcon/>, title: 'メニュー1' },
+        { url: 'policy', icon: <AdminPanelSettingsTwoToneIcon/>, title: 'ポリシー' },
       ]
     },{
       category: 'ラボ',
@@ -126,13 +127,14 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home/>}/>
           <Route path="/login" element={<Login/>}/>
-            <Route path="/login/oauth2/:type" element={<Oauth2Login/>}/>
+            <Route path="/login/oauth2/:type" element={<OAuth2Login/>}/>
           <Route path="/recover" element={<Recover/>}/>
           <Route path="/signup" element={<Signup/>}/>
           <Route path="/mypage" element={<MyPage/>}/>
           <Route path="/search" element={<Search/>}/>
           <Route path="/labo" element={<Labo/>}/>
           <Route path="/contact" element={<Contact/>}/>
+          <Route path="/policy" element={<Policy/>}/>
           <Route path="/auth" element={<AuthPage/>}/>
             <Route path="/auth/recover" element={<AuthRecover/>}/>
           <Route path="/admin" element={<AdminPage/>}/>

@@ -1,0 +1,92 @@
+$app-sp-width: 767px;
+
+.policy {
+  .title {
+    font-weight: bold;
+    font-size: 24px;
+    text-align: left;
+    margin-bottom: 8px;
+    width: 80%;
+  }
+  .sub-title {
+    font-weight: bold;
+    font-size: 14px;
+    text-align: left;
+    margin-top: 16px;
+    margin-bottom: -8px;
+    width: 80%;
+  }
+  .message {
+    width: 80%;
+    padding: 10px;
+    border: 4px solid var(--bg-color);
+    border-radius: 8px;
+    text-align: left;
+    white-space: pre-wrap;
+    overflow-y: scroll;
+    &::-webkit-scrollbar-track {
+      border-radius: 4px;
+      background-color: #0000;
+    }
+    &::-webkit-scrollbar {
+      width: 4px;
+      height: 4px;
+      background-color: #0000;
+    }
+    &::-webkit-scrollbar-thumb {
+      border-radius: 4px;
+      background-color: gray;
+    }
+    h4 {
+      margin: 10px 0px;
+      padding-bottom: 5px;
+      border-bottom: 1px solid black;
+      &:not(:first-child) {
+        margin-top: 30px;
+      }
+    }
+    h5 {
+      margin: 15px 20px;
+    }
+    p {
+      margin: 10px 30px;
+    }
+    ul {
+      margin: 10px 0px;
+      padding-left: inherit;
+      list-style-type: none;
+      li::before {
+        content: "-";
+        margin-left: 4px;
+        margin-right: 8px;
+      }
+    }
+    
+  }
+  .back-button {
+    margin: 24px 0;
+    min-width: 160px;
+  }
+}
+
+/* sp */
+@media only screen and (max-width: $app-sp-width) {
+  .policy {
+    .title {
+      width: 92%;
+    }
+    .sub-title {
+      width: 92%;
+    }
+    .message {
+      width: 92%;
+      padding: 5px;
+      h5 {
+        margin: 10px 5px;
+      }
+      p {
+        margin: 10px 10px;
+      }
+    }
+  }
+}

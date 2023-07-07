@@ -2,7 +2,7 @@ import React, { useEffect, useState, useMemo } from 'react';
 import { Link, Route, Routes, useNavigate } from "react-router-dom";
 import { useScroll, useWindowScroll } from 'react-use';
 import { useDispatch } from "react-redux";
-import { imgSrc, handleImgError } from "common/utils/imgUtils";
+import { imgSrc, handleImgError } from "common/utils/ImgUtils";
 import { format } from 'date-fns';
 import { showTopPopup, showCenterPopup } from "redux/actions/popupActions";
 import './Labo.scss';
