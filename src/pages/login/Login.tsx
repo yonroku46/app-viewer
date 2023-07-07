@@ -152,11 +152,11 @@ export default function Login() {
         <button type='submit' className='signin'>ログイン</button>
         <hr/>
         <button type='button' className='social-signin line' onClick={() => socialLogin('line')}>
-          <img src={lineLogo} width='20px' height='20px'/>
+          <img src={lineLogo}/>
           <div>LINEでログイン</div>
         </button>
         <button type='button' className='social-signin google' onClick={() => socialLogin('google')}>
-          <img src={googleLogo} width='20px' height='20px'/>
+          <img src={googleLogo}/>
           <div>Googleでログイン</div>
         </button>
         <p className='signup'>
