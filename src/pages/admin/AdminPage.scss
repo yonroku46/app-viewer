@@ -1,0 +1,19 @@
+.admin {
+  .contents {
+    margin: 8px;
+    transition: width 0.25s;
+    box-shadow: 0 0px 4px 1px var(--shadow-color);
+    .title {
+      display: flex;
+      align-items: center;
+      font-weight: bold;
+      font-size: 18px;
+      margin-top: 8px;
+      margin-bottom: 16px;
+      svg {
+        font-size: 26px;
+        margin: 0 4px;
+      }
+    }
+  }
+}

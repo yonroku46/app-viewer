@@ -1,0 +1,11 @@
+.labo-page {
+  margin: 8px;
+  button {
+    &.top {
+      background-color: aquamarine;
+    }
+    &.center {
+      background-color: blueviolet;
+    }
+  }
+}
