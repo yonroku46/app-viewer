@@ -23,7 +23,7 @@ $section-width: $app-max-width - $search-nav-width;
       grid-template-columns: 50% 50%;
       h1 {
         width: max-content;
-        font-size: 50px;
+        font-size: 46px;
         font-weight: 900;
         line-height: 56px;
         background-color: var(--opp-main-color);
@@ -41,20 +41,20 @@ $section-width: $app-max-width - $search-nav-width;
         margin-left: 6px;
       }
       .sign-btn {
-        font-size: 20px;
+        font-size: 18px;
         font-weight: normal;
         margin-top: 60px;
-        padding: 10px 30px;
+        padding: 10px 26px;
         color: white;
         background-color: var(--main-color);
         border: none;
       }
       .contact-btn {
         margin-left: 10px;
-        font-size: 20px;
+        font-size: 18px;
         font-weight: normal;
         margin-top: 60px;
-        padding: 10px 30px;
+        padding: 10px 26px;
         color: var(--main-color);
         border: none;
         box-shadow: 0 0 0 1px var(--main-color) inset;

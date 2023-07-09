@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { useNavigate, useLocation } from "react-router-dom";
 import mainBanner from "assets/img/main-banner.webp";
+import { UserState } from "redux/types/UserActionTypes";
+import AuthService from 'api/service/AuthService';
 import './Home.scss';
 
 export default function Home() {
@@ -10,14 +12,28 @@ export default function Home() {
   const title = 'アプリパッケージ\nデモ作成中';
   const subTitle = 'アプリの説明';
 
+  const authService = new AuthService();
+
+  const [user, setUser] = useState<UserState|undefined>(undefined);
+
+  useEffect(() => {
+    const currentUser = authService.getCurrentUser();
+    setUser(currentUser);
+  }, []);
+
+
   function HomeMain() {
     return(
       <>
       <div className='left'>
         <h1>{ title }</h1>
         <h5>{ subTitle }</h5>
-        <button className='sign-btn' onClick={() => navigate('/login')}>無料で始める</button>
-        <button className='contact-btn' onClick={() => navigate('/contact')}>お問い合わせ</button>
+        {!user &&
+          <>
+          <button className='sign-btn' onClick={() => navigate('/login')}>無料で始める</button>
+          <button className='contact-btn' onClick={() => navigate('/contact')}>お問い合わせ</button>
+          </>
+        }
       </div>
       <div className='right'>
         <img className='banner-img' src={mainBanner} alt='banner'/>

@@ -94,10 +94,6 @@ export default function MenuNav({ menuItem, currentPath, userName, profileImg, m
     }
   }
 
-  function handleClose() {
-    setAnchorEl(null);
-  }
-
   function handleModalClose() {
     setModalOpen(false);
   };
@@ -108,10 +104,9 @@ export default function MenuNav({ menuItem, currentPath, userName, profileImg, m
     <Modal open={modalOpen} onClose={handleModalClose}/>
     {/* 共通メニューコンポネント */}
     {(currentPath !== 'login') && userName ?
-      <div className='user-badge' onClick={handleClick} onMouseEnter={handleClick} onMouseLeave={handleClose}>
+      <div className='user-badge' onClick={handleClick}>
         <Menu anchorEl={anchorEl} open={openEl} PaperProps={accountMenuProps}
          transformOrigin={{ horizontal: 'right', vertical: 'top' }} anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}>
-          <div onMouseLeave={handleClose}>
           <MenuItem className='account-menu' onClick={() => link('/mypage')}>
             <ListItemIcon>
               <PersonOutlineIcon/>
@@ -140,7 +135,6 @@ export default function MenuNav({ menuItem, currentPath, userName, profileImg, m
             </ListItemIcon>
             ログアウト
           </MenuItem>
-          </div>
         </Menu>
         <Badge variant="dot" color="primary">
           <img className='profile' src={imgSrc(profileImg)} onError={handleImgError} onClick={() => {}} alt='profile'/>
@@ -151,7 +145,7 @@ export default function MenuNav({ menuItem, currentPath, userName, profileImg, m
         <span className='text'>ログイン</span>
       </button>
     }
-    <div className={open ? 'menu-btn open' : 'menu-btn'} onClick={() => setOpen(!open)}>
+    <div className={open ? 'menu-btn open' : 'menu-btn'} onClick={() => {setOpen(!open); setAnchorEl(null);}}>
       <span></span>
       <span></span>
       <span></span>

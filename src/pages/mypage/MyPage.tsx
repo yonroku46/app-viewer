@@ -36,6 +36,7 @@ export default function MyPage() {
       <h3>basic profile</h3>
       <div>{userInfo?.userName}</div>
       <div>{userInfo?.mail}</div>
+      <button>会員退会</button>
     </section>
     <section className='mypage contents'>
       <h3>sns data</h3>
