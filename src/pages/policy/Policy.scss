@@ -49,7 +49,7 @@ $app-sp-width: 767px;
       margin: 15px 20px;
       font-weight: 500;
     }
-    p {
+    div {
       margin: 10px 30px;
       font-weight: 300;
     }
@@ -65,8 +65,8 @@ $app-sp-width: 767px;
     }
     
   }
-  .back-button {
-    margin: 24px 0;
+  .back-btn {
+    margin: 24px 0px;
     min-width: 160px;
   }
 }
@@ -86,7 +86,7 @@ $app-sp-width: 767px;
       h5 {
         margin: 10px 5px;
       }
-      p {
+      div {
         margin: 10px 10px;
       }
     }

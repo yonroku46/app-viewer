@@ -2,13 +2,13 @@ $header-height: 48px;
 $app-max-width: 1280px;
 $app-min-width: 280px;
 $app-sp-width: 767px;
-$main-margin: 16px;
+$main-margin: 8px;
 $search-nav-width: 188px;
 $search-nav-sp-width: 20px;
 $nav-width: 180px;
 $nav-margin: 38px;
 $nav-sp-margin: 16px;
-$section-width: $app-max-width - $search-nav-width;
+$section-width: $app-max-width - $search-nav-sp-width;
 
 .menu-btn {
   cursor: pointer;
@@ -114,7 +114,6 @@ $section-width: $app-max-width - $search-nav-width;
   transition: all 0.25s;
   .text {
     display: flex;
-    font-size: 15px;
     margin-top: -4px;
   }
 }
@@ -165,6 +164,7 @@ $section-width: $app-max-width - $search-nav-width;
         &:hover {
           cursor: pointer;
           opacity: 0.8;
+          color: var(--menu-active-color);
         }
         &.active {
           font-weight: bold;
@@ -201,7 +201,7 @@ $section-width: $app-max-width - $search-nav-width;
           }
           &:hover {
             opacity: 0.8;
-            background-color: var(--menu-active-bg-color);
+            color: var(--menu-active-color);
           }
           span {
             margin: 0;
@@ -242,8 +242,8 @@ $section-width: $app-max-width - $search-nav-width;
         white-space: pre;
         &:hover {
           cursor: pointer;
-          background-color: var(--menu-hover-color);
           opacity: 0.8;
+          color: var(--menu-active-color);
         }
         &.active {
           font-weight: bold;

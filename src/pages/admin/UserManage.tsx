@@ -1,4 +1,4 @@
-import { ReactElement } from 'react';
+import { useState } from 'react';
 import { useNavigate, useParams } from "react-router-dom";
 
 import Table from '@mui/material/Table';
@@ -8,8 +8,19 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import Box from '@mui/material/Box';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import TextField from '@mui/material/TextField';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 export default function UserManage() {
+
+  const [filter, setFilter] = useState('');
+  const handleChange = (event: SelectChangeEvent) => {
+    setFilter(event.target.value as string);
+  };
 
   function createData(
     name: string,
@@ -30,7 +41,7 @@ export default function UserManage() {
   ];
 
   function UserTable() {
-    return (
+    return(
       <TableContainer component={Paper}>
       <Table className='table' sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead className='table-head'>
@@ -60,6 +71,19 @@ export default function UserManage() {
 
   return(
     <section className="contents">
+      <Box className='search-area' sx={{ minWidth: 120 }}>
+        <FormControl className='filter' size="small">
+          <InputLabel id="demo-simple-select-label">フィルター項目</InputLabel>
+          <Select labelId="demo-simple-select-label" id="demo-simple-select" value={filter} label="フィルター項目" onChange={handleChange}>
+            {rows.map((row) => (
+              <MenuItem key={row.name} value={row.name}>
+                {row.name}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        <TextField id="outlined-basic" label="検索" variant="outlined" className='search' size="small" fullWidth/>
+      </Box>
       <UserTable/>
     </section>
   )

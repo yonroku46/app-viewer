@@ -85,14 +85,14 @@ export default function Policy() {
         <div className='title'>
           運用ポリシー
         </div>
-      <p className="message">
+      <div className="message">
         <h4>{socialLoginPolicy.title}</h4>
         {socialLoginPolicy.contents.map((content) => (
           <Fragment key={content.sectionNo}>
             <h5>
               {content.sectionNo}.&nbsp;{content.sectionTitle}
             </h5>
-            <p>
+            <div>
               {content.detail}
               {content.sub &&
                 <ul>
@@ -101,7 +101,7 @@ export default function Policy() {
                   ))}
                 </ul>
               }
-            </p>
+            </div>
           </Fragment>
         ))}
         <h4>{privacyPolicy.title}</h4>
@@ -110,7 +110,7 @@ export default function Policy() {
             <h5>
               {content.sectionNo}.&nbsp;{content.sectionTitle}
             </h5>
-            <p>
+            <div>
               {content.detail}
               {content.sub &&
                 <ul>
@@ -119,14 +119,14 @@ export default function Policy() {
                   ))}
                 </ul>
               }
-            </p>
+            </div>
           </Fragment>
         ))}
-      </p>
+      </div>
       {closeFlg ?
-        <button className="back-button" onClick={() => window.close()}>確認</button>
+        <button className="back-btn" onClick={() => window.close()}>確認</button>
         :
-        <button className="back-button" onClick={() => navigate(-1)}>戻る</button>
+        <button className="back-btn" onClick={() => navigate(-1)}>戻る</button>
       }
     </section>
   )

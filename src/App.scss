@@ -4,11 +4,11 @@ $header-height: 48px;
 $app-max-width: 1280px;
 $app-min-width: 280px;
 $app-sp-width: 767px;
-$main-margin: 16px;
+$main-margin: 8px;
 $search-nav-width: 188px;
 $search-nav-sp-width: 20px;
 $nav-width: 180px;
-$section-width: $app-max-width - $search-nav-width;
+$section-width: $app-max-width - $search-nav-sp-width;
 
 html {
   font-family: 'Noto Sans JP', sans-serif;
@@ -64,20 +64,22 @@ body {
   margin: 0px;
   background-color: var(--bg-color);
   --bg-color: rgb(244, 244, 244);
+  --bg-active-color: rgba(34, 34, 34, 0.5);
   --load-color: rgb(255, 255, 255);
   --load-off-color: rgba(255, 255, 255, 0.2);
   --backdrop-color: rgba(0, 0, 0, 0.45);
   --contents-color: rgb(255, 255, 255);
   --shadow-color: rgb(221, 221, 221);
   --main-color: rgb(25, 98, 245);
-  --sub-color: rgb(65, 127, 251);
+  --sub-color: rgb(24, 144, 255);
   --opp-main-color: rgb(52, 168, 83);
   --opp-sub-color: rgb(83, 187, 111);
   --success-color: rgb(154, 205, 50);
   --warring-color: rgb(255, 165, 0);
+  --buy-color: rgb(239, 98, 83);
+  --offer-color: rgb(65, 181, 185);
   --menu-active-color: rgb(26, 99, 245);
   --menu-active-bg-color: rgba(26, 99, 245, 0.08);
-  --menu-hover-color: rgba(128, 128, 128, 0.1);
   --sns-line-color: rgb(6, 199, 85);
   --sns-google-color: rgb(66, 133 , 244);
   --sns-twitter-color: rgb(29, 161, 242);
@@ -90,7 +92,7 @@ main {
   position: relative;
   max-width: $app-max-width;
   min-width: $app-min-width;
-  min-height: calc(100vh - 48px - 32px);
+  min-height: calc((var(--vh, 1vh) * 100) - 48px - 16px);
   border-radius: 8px;
   margin-top: $main-margin + $header-height;
   margin-bottom: $main-margin;
@@ -138,14 +140,14 @@ button {
   padding: 6px 18px;
   border-radius: 8px;
   border: 1px solid black;
+  color: black;
   background-color: rgba(0, 0, 0, 0);
   font-weight: bold;
-  color: black;
   transition: opacity 0.15s ease-in-out, color 0.15s ease-in-out, background-color 0.15s ease-in-out;
   &:hover {
-    opacity: 0.85;
-    background-color: black;
-    color: white;
+    border-color: var(--bg-active-color);
+    background-color: var(--bg-color);
+    color: var(--bg-active-color);
   }
   &.disable {
     opacity: 0.5;
@@ -171,7 +173,7 @@ hr {
   align-items: center;
   text-align: center;
   flex-direction: column;
-  height: calc(100vh - 96px);
+  height: calc((var(--vh, 1vh) * 100) - 88px);
 }
 .table {
   &::-webkit-scrollbar-track {

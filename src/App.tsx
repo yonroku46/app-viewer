@@ -15,6 +15,8 @@ import Home from 'pages/home/Home';
 import Search from 'pages/search/Search';
 import Empty from 'pages/empty/Empty';
 import MyPage from 'pages/mypage/MyPage';
+import Products from 'pages/products/Products';
+import ProductDetail from 'pages/products/ProductDetail';
 import AuthPage from 'pages/auth/AuthPage';
 import AuthRecover from 'pages/auth/AuthRecover';
 import AdminPage from 'pages/admin/AdminPage';
@@ -49,7 +51,7 @@ export default function App() {
       category: 'サンプル',
       categoryImg: category1,
       items: [
-        { url: 'search', icon: <FindInPageTwoToneIcon/>, title: '検索' },
+        { url: 'products', icon: <FindInPageTwoToneIcon/>, title: '商品' },
         { url: 'contact', icon: <ContactSupportTwoToneIcon/>, title: 'お問い合わせ' },
         { url: 'policy', icon: <AdminPanelSettingsTwoToneIcon/>, title: 'ポリシー' },
       ]
@@ -71,7 +73,7 @@ export default function App() {
         dispatch(showPopup());
         const timer = setTimeout(() => {
           dispatch(hidePopup());
-        }, 2200);
+        }, 2700);
         return () => clearTimeout(timer);
       }
     }
@@ -132,6 +134,8 @@ export default function App() {
           <Route path="/signup" element={<Signup/>}/>
           <Route path="/mypage" element={<MyPage/>}/>
           <Route path="/search" element={<Search/>}/>
+          <Route path="/products" element={<Products/>}/>
+            <Route path="/products/:id" element={<ProductDetail/>}/>
           <Route path="/labo" element={<Labo/>}/>
           <Route path="/contact" element={<Contact/>}/>
           <Route path="/policy" element={<Policy/>}/>

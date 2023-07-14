@@ -1,4 +1,4 @@
-import { Fragment, forwardRef } from 'react';
+import { useState, Fragment, forwardRef } from 'react';
 import { TableVirtuoso, TableComponents } from 'react-virtuoso';
 
 import Table from '@mui/material/Table';
@@ -8,8 +8,19 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import Box from '@mui/material/Box';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import TextField from '@mui/material/TextField';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 export default function DataManage() {
+
+  const [filter, setFilter] = useState('');
+  const handleChange = (event: SelectChangeEvent) => {
+    setFilter(event.target.value as string);
+  };
 
   interface Data {
     calories: number;
@@ -100,7 +111,7 @@ export default function DataManage() {
   };
   
   function fixedHeaderContent() {
-    return (
+    return(
       <TableRow>
         {columns.map((column) => (
           <TableCell key={column.dataKey} variant="head" align={column.numeric || false ? 'right' : 'left'} style={{ width: column.width }}>
@@ -112,7 +123,7 @@ export default function DataManage() {
   }
   
   function rowContent(_index: number, row: Data) {
-    return (
+    return(
       <Fragment>
         {columns.map((column) => (
           <TableCell key={column.dataKey} align={column.numeric || false ? 'right' : 'left'}>
@@ -125,8 +136,8 @@ export default function DataManage() {
   
 
   function DataTable() {
-    return (
-      <Paper style={{ height: 'calc(100vh - 96px)', width: '100%' }}>
+    return(
+      <Paper style={{ height: 'calc((var(--vh, 1vh) * 100) - 160px)', width: '100%' }}>
         <TableVirtuoso className='table' data={rows} components={VirtuosoTableComponents}
           fixedHeaderContent={fixedHeaderContent}
           itemContent={rowContent}
@@ -137,6 +148,19 @@ export default function DataManage() {
 
   return(
     <section className="contents">
+      <Box className='search-area' sx={{ minWidth: 120 }}>
+        <FormControl className='filter' size="small">
+          <InputLabel id="demo-simple-select-label">フィルター項目</InputLabel>
+          <Select labelId="demo-simple-select-label" id="demo-simple-select" value={filter} label="フィルター項目" onChange={handleChange}>
+            {columns.map((column) => (
+              <MenuItem key={column.dataKey} value={column.dataKey}>
+                {column.label}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        <TextField id="outlined-basic" label="検索" variant="outlined" className='search' size="small" fullWidth/>
+      </Box>
       <DataTable/>
     </section>
   )

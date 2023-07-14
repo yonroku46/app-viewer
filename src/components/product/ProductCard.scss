@@ -1,0 +1,134 @@
+$app-sp-width: 767px;
+
+.cardbox {
+  box-sizing: border-box;
+  display: flex;
+  flex-flow: row wrap;
+  margin-top: -20px;
+  margin-left: -20px;
+  &.contents {
+    background-color: unset;
+  }
+  .product-card {
+    z-index: 0;
+    position: relative;
+    width: calc(25% - 20px);
+    height: fit-content;
+    border-radius: 12px;
+    background-image: none;
+    overflow: hidden;
+    box-shadow: 0 0px 4px 1px var(--shadow-color);
+    transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    margin-top: 20px;
+    margin-left: 20px;
+    &:hover {
+      cursor: pointer;
+    }
+    label {
+      height: 24px;
+      min-width: 22px;
+      border-radius: 6px;
+      -webkit-box-align: center;
+      align-items: center;
+      white-space: nowrap;
+      display: inline-flex;
+      -webkit-box-pack: center;
+      justify-content: center;
+      padding: 0px 8px;
+      color: white;
+      font-size: 12px;
+      font-weight: 700;
+      z-index: 1;
+      top: 16px;
+      right: 16px;
+      position: absolute;
+      text-transform: uppercase;
+      &.new {
+        background-color: var(--sub-color);
+      }
+      &.sale {
+        background-color: red;
+      }
+    }
+    .media {
+      padding-top: 100%;
+      position: relative;
+      &:hover {
+        opacity: 0.85;
+      }
+      img {
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        position: absolute;
+      }
+    }
+    .content {
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+      font-size: 13px;
+      background: white;
+      position: relative;
+      .name {
+        margin: 0px;
+        line-height: 20px;
+        font-size: 13px;
+        margin-left: -6px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .sub-area {
+        margin-top: 20px;
+        display: flex;
+        justify-content: space-between;
+        .colors {
+          display: flex;
+          flex-direction: row;
+          -webkit-box-align: center;
+          align-items: center;
+          -webkit-box-pack: end;
+          justify-content: flex-end;
+          span {
+            margin-left: -6px;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            border: 2px solid rgb(255, 255, 255);
+            box-shadow: rgba(0, 0, 0, 0.24) -1px 1px 2px inset;
+            &.additional {
+              margin: 0;
+              border: none;
+              box-shadow: none;
+              line-height: 15px;
+              color: black;
+            }
+          }
+        }
+        .price {
+          font-size: 15px;
+          font-weight: 700;
+          color: black;
+        }
+        .sale {
+          font-size: 15px;
+          font-weight: 700;
+          color: lightgray;
+          margin-right: 4px;
+          text-decoration: line-through;
+        }
+      }
+    }
+  }
+}
+
+/* sp */
+@media only screen and (max-width: $app-sp-width) {
+  .cardbox {
+    .product-card {
+      width: calc(50% - 20px);
+    }
+  }
+}

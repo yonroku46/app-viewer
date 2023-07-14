@@ -10,7 +10,7 @@ export default function Empty() {
     <section className="empty fullsize">
       <p className="message">{ emptyMessage }</p>
       <img src={empty} alt='empty'/>
-      <button className="back-button" onClick={() => navigate(-1)}>戻る</button>
+      <button className="back-btn" onClick={() => navigate(-1)}>戻る</button>
     </section>
   )
 }

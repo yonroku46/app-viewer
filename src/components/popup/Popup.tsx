@@ -6,7 +6,6 @@ import { hidePopup } from "redux/actions/popupActions";
 import Backdrop from 'components/backdrop/Backdrop'
 import './Popup.scss';
 
-import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import OfflineBoltIcon from '@mui/icons-material/OfflineBolt';
 
@@ -23,16 +22,8 @@ export default function Popup({ title = '', contents, link, center, backdropClos
   const navigate = useNavigate();
 
   const show = useSelector((state: RootState) => state.popup.isShow);
-  const [iconShow, setIconShow] = useState<boolean>(false);
   const [errFlg, setErrFlg] = useState<boolean>(false);
   const errKeyword = ['error','エラー','権限'];
-
-  useEffect(() => {
-    if (show) {
-      setIconShow(false);
-      setIconShow(true);
-    }
-  }, [show]);
 
   useEffect(() => {
     const containsError:boolean = errKeyword.some(err => {
@@ -42,20 +33,6 @@ export default function Popup({ title = '', contents, link, center, backdropClos
     });
     setErrFlg(containsError);
   }, [contents]);
-  
-  // 上段ポップアップアイコン表示ロジック
-  useEffect(() => {
-    if (center) {
-      setIconShow(false);
-    } else {
-      if (iconShow) {
-        const timer = setTimeout(() => {
-          setIconShow(false);
-        }, 2500);
-        return () => clearTimeout(timer);
-      }
-    }
-  }, [center, iconShow]);
 
   function popupClose() {
     dispatch(hidePopup());
@@ -69,7 +46,6 @@ export default function Popup({ title = '', contents, link, center, backdropClos
     <Backdrop open={center && show} onClick={() => backdropClose && popupClose()}/>
     {/* 上段ポップアップ */}
     <div className={'popup' + (show ? ' show' : ' hide') + (center ? ' none' : '')} onClick={() => popupClose()}>
-      {iconShow && <NotificationsActiveIcon className='icon'/>}
       <div className='text'>
         { contents }
       </div>
@@ -87,7 +63,7 @@ export default function Popup({ title = '', contents, link, center, backdropClos
       <div className='popup-contents'>
         { contents }
       </div>
-      <button className='popup-button' onClick={() => popupClose()}>OK</button>
+      <button className='popup-btn' onClick={() => popupClose()}>OK</button>
     </div>
     </>
   )

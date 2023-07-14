@@ -14,6 +14,7 @@ import PhotoCameraFrontTwoToneIcon from '@mui/icons-material/PhotoCameraFrontTwo
 export default function AdminPage() {
   const navigate = useNavigate();
   const isSp = useMediaQuery({ maxWidth: 767 });
+  const [fold, setFold] = useState<boolean>(isSp);
   const { tab } = useParams();
 
   const menuItem: SideMenuItem[] = [
@@ -31,8 +32,6 @@ export default function AdminPage() {
     },
   ]
 
-  const [navShow, setNavShow] = useState<boolean>(true);
-
   function TabView() {
     if (tab === 'user') {
       return <UserManage/>;
@@ -47,8 +46,8 @@ export default function AdminPage() {
 
   return(
     <>
-    <SideNav menuItem={menuItem} isSp={isSp}/>
-    <section className={navShow ? isSp ? 'with-nav sp admin' : 'with-nav admin' : 'admin'}>
+    <SideNav menuItem={menuItem} fold={fold} setFold={setFold}/>
+    <section className={fold ? 'with-nav sp admin' : 'with-nav admin'}>
       <TabView/>
     </section>
     </>

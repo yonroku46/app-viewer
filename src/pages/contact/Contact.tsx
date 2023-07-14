@@ -7,7 +7,7 @@ export default function Contact() {
   return(
     <section className="contact fullsize">
       お問い合わせ
-      <button className="back-button" onClick={() => navigate(-1)}>戻る</button>
+      <button className="back-btn" onClick={() => navigate(-1)}>戻る</button>
     </section>
   )
 }
