@@ -54,26 +54,24 @@ export default function Products() {
   const recommends: ProductData[] = [
     {
       id: 1,
-      date: new Date(2023, 6, 13),
+      date: new Date(2023, 7, 18),
       name: 'Nike Air Force',
       imgs: ['https://minimal-kit-react.vercel.app/assets/images/products/product_1.jpg'],
       price: 5000,
       priceSale: 3000,
-      status: 'sale',
       colors: ['green', 'white'],
     },
     {
       id: 2,
-      date: new Date(2023, 6, 14),
+      date: new Date(2023, 7, 20),
       name: 'Nike Space Hippie 04 SUPER Edition',
       imgs: ['https://minimal-kit-react.vercel.app/assets/images/products/product_2.jpg'],
       price: 10200,
-      status: 'new',
       colors: ['lightgray', 'orange'],
     },
     {
       id: 3,
-      date: new Date(2023, 6, 15),
+      date: new Date(2023, 7, 18),
       name: 'Nike Air Max Zephyr',
       imgs: ['https://minimal-kit-react.vercel.app/assets/images/products/product_7.jpg'],
       price: 8900,
@@ -81,7 +79,7 @@ export default function Products() {
     },
     {
       id: 4,
-      date: new Date(2023, 6, 16),
+      date: new Date(2023, 7, 17),
       name: 'Jodern Delta',
       imgs: ['https://minimal-kit-react.vercel.app/assets/images/products/product_8.jpg'],
       price: 10200,
@@ -108,7 +106,7 @@ export default function Products() {
   const products: ProductData[] = [
     {
       id: 11,
-      date: new Date(2023, 7, 13),
+      date: new Date(2023, 7, 18),
       name: 'Nike ZoomX Super',
       imgs: ['https://minimal-kit-react.vercel.app/assets/images/products/product_5.jpg'],
       price: 5000,
@@ -117,7 +115,7 @@ export default function Products() {
     },
     {
       id: 12,
-      date: new Date(2023, 7, 14),
+      date: new Date(2023, 7, 17),
       name: 'Nike ZoomX:Re',
       imgs: ['https://minimal-kit-react.vercel.app/assets/images/products/product_3.jpg'],
       price: 5000,
@@ -153,7 +151,9 @@ export default function Products() {
       </div>
       <div className='menu-title'>
         <div className='sub'>Result</div>
-        <div className='main'><span style={{ color: 'var(--main-color)' }}>"{value}"</span> {recommends.length}件</div>
+        <div className='main'>
+          <span style={{ color: 'var(--main-color)' }}>"{value}"</span> {recommends.length}件
+        </div>
       </div>
       <ProductCard products={recommends}/>
       </>

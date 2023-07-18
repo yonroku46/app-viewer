@@ -14,7 +14,7 @@ $app-sp-width: 767px;
     .sub {
       font-size: 15px;
       color: gray;
-      margin-bottom: -6px;
+      margin-bottom: -8px;
     }
   }
   .filter-area {
@@ -31,10 +31,10 @@ $app-sp-width: 767px;
       .title {
         font-weight: bold;
         margin-right: 4px;
-        font-size: 14px;
+        font-size: 13px;
       }
       .value {
-        font-size: 13px;
+        font-size: 12px;
         font-weight: 500;
         width: 78px;
         text-align: center;
@@ -66,8 +66,9 @@ $app-sp-width: 767px;
     margin-right: auto;
     padding: 30px 0;
     p {
+      font-weight: bold;
       margin-top: 0px;
-      margin-bottom: 8px;
+      margin-bottom: 12px;
       &::before {
         content: '#';
         margin-right: 4px;
@@ -131,7 +132,6 @@ $app-sp-width: 767px;
       }
     }
     .info-area {
-      min-height: 2200px; //testcode
       display: flex;
       flex: 1;
       padding: 40px;
@@ -155,24 +155,6 @@ $app-sp-width: 767px;
             color: black;
           }
         }
-        .like {
-          padding: 0px;
-          width: 38px;
-          height: 38px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          margin-left: auto;
-          margin-bottom: -38px;
-          margin-right: 45px;
-          .icon {
-            font-size: 20px;
-          }
-          &:hover {
-            border-color: var(--main-color);
-            color: var(--main-color);
-          }
-        }
         .title {
           font-size: 15px;
           margin-bottom: -8px;
@@ -181,6 +163,10 @@ $app-sp-width: 767px;
           font-weight: 900;
           font-size: 20px;
         }
+      }
+      .sale-label {
+        font-weight: 700;
+        color: var(--buy-color);
       }
       .info-detail {
         display: flex;
@@ -205,10 +191,10 @@ $app-sp-width: 767px;
             border: none;
           }
         }
-        .liked, .used, .offer-num {
+        .browsed, .used, .offer-num {
           text-align: center;
           span {
-            font-weight: 700;
+            font-weight: 900;
             font-size: 18px;
           }
         }
@@ -240,13 +226,13 @@ $app-sp-width: 767px;
             border-right: 1px solid white;
           }
           .price {
+            padding-left: 15px;
             &.offer {
               flex: 1;
             }
             input {
               width: 100%;
               font-size: 18px;
-              text-align: right;
               font-weight: bold;
               color: white;
               padding: 0;
@@ -260,8 +246,7 @@ $app-sp-width: 767px;
           }
           .sale {
             opacity: 0.3;
-            margin-left: auto;
-            margin-right: 4px;
+            margin-left: 4px;
             font-weight: 500;
             text-decoration: line-through;
           }
@@ -313,7 +298,7 @@ $app-sp-width: 767px;
           width: 13px;
           height: 13px;
           border-radius: 50%;
-          border: 2px solid rgb(255, 255, 255);
+          margin-right: 4px;
           box-shadow: rgba(0, 0, 0, 0.24) -1px 1px 2px inset;
         }
       }
@@ -353,7 +338,7 @@ $app-sp-width: 767px;
         width: 100%;
       }
       .info-area {
-        padding: 30px 4px;
+        padding: 30px 0px;
         border-left: none;
         border-top: 1px solid var(--bg-active-color);;
       }

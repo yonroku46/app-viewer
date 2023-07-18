@@ -1,8 +1,8 @@
-import { useState, ChangeEvent } from 'react';
+import { useState } from 'react';
 import { useNavigate, useParams } from "react-router-dom";
 import { useMediaQuery } from 'react-responsive';
 import { ProductData } from 'components/product/ProductCard';
-import { currency } from 'common/utils/StringUtils';
+import { currency, calcDiscountRate } from 'common/utils/StringUtils';
 import { Carousel } from "react-responsive-carousel";
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import './Products.scss';
@@ -32,11 +32,11 @@ export default function ProductDetail() {
     setCurrentIndex(index);
   }
 
-const offerPriceHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-  const inputValue = e.target.value.replace(/[^0-9]/g, "");
-  const numericValue = parseInt(inputValue, 10);
-  setOfferPrice(isNaN(numericValue) ? 0 : numericValue);
-}
+  const offerPriceHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const inputValue = e.target.value.replace(/[^0-9]/g, "");
+    const numericValue = parseInt(inputValue, 10);
+    setOfferPrice(isNaN(numericValue) ? 0 : numericValue);
+  }
 
   const prod: ProductData = {
     id: 1,
@@ -56,7 +56,6 @@ const offerPriceHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     ],
     price: 5000,
     priceSale: 3000,
-    status: 'sale',
     colors: ['green', 'white', 'red', 'gray', 'yellow'],
   };
 
@@ -109,7 +108,7 @@ const offerPriceHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
       <div className='product'>
         {/* 画像情報 */}
         <div className='img-area'>
-          <Carousel showArrows={true} showStatus={false} infiniteLoop={true} showThumbs={true} selectedItem={currentIndex} onChange={handleChange}>
+          <Carousel showArrows={true} showStatus={false} infiniteLoop={true} showThumbs={true} selectedItem={currentIndex} emulateTouch={true} onChange={handleChange}>
             {prod.imgs.map(img => (
               <div key={img}>
                 <img src={img}/>
@@ -123,9 +122,6 @@ const offerPriceHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
             <button className='share'>
               <ShareTwoToneIcon className='icon'/>
             </button>
-            <button className='like'>
-              <BookmarkTwoToneIcon className='icon'/>
-            </button>
             <div className='title'>
               {'Title'}
             </div>
@@ -133,13 +129,20 @@ const offerPriceHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
               {prod.name}
             </div>
           </div>
+          {prod.priceSale &&
+            <div className='sale-label'>
+              <span>
+                {calcDiscountRate(prod.price, prod.priceSale) + 'OFF'}
+              </span>
+            </div>
+          }
           {/* 購入・オファー */}
           <div className='info-buy'>
             {buyStatus ?
             <button className='buy now'>
               <div className='title'>購入</div>
-              <div className={prod.priceSale ? 'sale' : 'price'}>{currency(prod.price)}</div>
               {prod.priceSale && <div className='price'>{currency(prod.priceSale)}</div>}
+              <div className={prod.priceSale ? 'sale' : 'price'}>{currency(prod.price)}</div>
             </button>
             :
             <button className='buy offer'>
@@ -157,9 +160,9 @@ const offerPriceHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
           </div>
           {/* 商品ステータス */}
           <div className='info-detail'>
-            <div className='liked'>
-              <label>保存数</label>
-              <span>{'20'}</span>
+            <div className='browsed'>
+              <label>閲覧数</label>
+              <span>{'1.5K'}</span>
             </div>
             <div className='offer-num'>
               <label>オファー数</label>
@@ -173,29 +176,37 @@ const offerPriceHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
           {/* 商品詳細 */}
           <p>商品詳細</p>
           <div className='definition'>
-            <dl>
+            <dl key='1'>
               <dt>素材</dt>
               <dd>コットン100%</dd>
             </dl>
-            <dl>
+            <dl key='2'>
               <dt>サイズ</dt>
               <dd>95</dd>
             </dl>
-            <dl>
+            <dl key='3'>
               <dt>性別タイプ</dt>
               <dd>メンズ・レディース</dd>
             </dl>
-            <dl>
+            <dl key='4'>
               <dt>カラー</dt>
               <dd>
                 <div className='colors'>
                   {prod.colors.map((color) => (
-                    <Tooltip title={color} placement="top-end" arrow>
-                      <span style={{ backgroundColor: color }} key={color}></span>
+                    <Tooltip title={color} placement="top-end" key={color} arrow>
+                      <span style={{ backgroundColor: color }}></span>
                     </Tooltip>
                   ))}
                 </div>
               </dd>
+            </dl>
+            <dl key='5'>
+              <dt>関連タグ</dt>
+              <dd>おしゃれ / 夏服 / 新品</dd>
+            </dl>
+            <dl key='6'>
+              <dt>登録日</dt>
+              <dd>2023/07/14</dd>
             </dl>
           </div>
           {/* 履歴 */}

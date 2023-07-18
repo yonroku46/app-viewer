@@ -167,5 +167,9 @@ $section-width: $app-max-width - $search-nav-sp-width;
   }
   .category-area {
     justify-content: normal;
+    .category {
+      margin-left: 16px;
+      margin-right: 16px;
+    }
   }
 }

@@ -14,18 +14,18 @@ $app-sp-width: 767px;
     position: relative;
     width: calc(25% - 20px);
     height: fit-content;
-    border-radius: 12px;
+    border-radius: 6px;
     background-image: none;
     overflow: hidden;
-    box-shadow: 0 0px 4px 1px var(--shadow-color);
+    box-shadow: unset;
     transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     margin-top: 20px;
     margin-left: 20px;
     &:hover {
       cursor: pointer;
     }
-    label {
-      height: 24px;
+    .sale-label {
+      height: 21px;
       min-width: 22px;
       border-radius: 6px;
       -webkit-box-align: center;
@@ -34,21 +34,13 @@ $app-sp-width: 767px;
       display: inline-flex;
       -webkit-box-pack: center;
       justify-content: center;
-      padding: 0px 8px;
+      padding: 0px 10px;
       color: white;
-      font-size: 12px;
-      font-weight: 700;
+      font-size: 13px;
+      font-weight: bold;
       z-index: 1;
-      top: 16px;
-      right: 16px;
-      position: absolute;
       text-transform: uppercase;
-      &.new {
-        background-color: var(--sub-color);
-      }
-      &.sale {
-        background-color: red;
-      }
+      background-color: red;
     }
     .media {
       padding-top: 100%;
@@ -62,61 +54,44 @@ $app-sp-width: 767px;
         height: 100%;
         object-fit: cover;
         position: absolute;
+        border-radius: 6px;
       }
     }
     .content {
       display: flex;
+      align-items: baseline;
       flex-direction: column;
-      padding: 20px;
-      font-size: 13px;
+      padding: 10px 6px 30px 6px;
       background: white;
       position: relative;
       .name {
+        font-family: 'Noto Sans JP', sans-serif;
+        font-weight: bold;
         margin: 0px;
         line-height: 20px;
-        font-size: 13px;
+        font-size: 15px;
         margin-left: -6px;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
       }
       .sub-area {
-        margin-top: 20px;
+        font-family: 'Noto Sans JP', sans-serif;
+        margin-top: 12px;
+        width: 100%;
         display: flex;
+        align-items: center;
         justify-content: space-between;
-        .colors {
-          display: flex;
-          flex-direction: row;
-          -webkit-box-align: center;
-          align-items: center;
-          -webkit-box-pack: end;
-          justify-content: flex-end;
-          span {
-            margin-left: -6px;
-            width: 15px;
-            height: 15px;
-            border-radius: 50%;
-            border: 2px solid rgb(255, 255, 255);
-            box-shadow: rgba(0, 0, 0, 0.24) -1px 1px 2px inset;
-            &.additional {
-              margin: 0;
-              border: none;
-              box-shadow: none;
-              line-height: 15px;
-              color: black;
-            }
-          }
-        }
         .price {
           font-size: 15px;
-          font-weight: 700;
+          font-weight: bold;
           color: black;
         }
         .sale {
           font-size: 15px;
-          font-weight: 700;
+          font-weight: bold;
           color: lightgray;
-          margin-right: 4px;
+          margin-left: 4px;
           text-decoration: line-through;
         }
       }
@@ -127,8 +102,23 @@ $app-sp-width: 767px;
 /* sp */
 @media only screen and (max-width: $app-sp-width) {
   .cardbox {
+    margin-top: -8px;
+    margin-left: -8px;
+    padding: 0;
+    &.contents {
+      padding: 0;
+    }
     .product-card {
-      width: calc(50% - 20px);
+      width: calc(50% - 8px);
+      margin-top: 8px;
+      margin-left: 8px;
+      .sale-label {
+        position: initial;
+        font-size: 11px;
+      }
+      .sub-area {
+        flex-wrap: wrap;
+      }
     }
   }
 }

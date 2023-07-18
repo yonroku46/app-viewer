@@ -76,6 +76,7 @@ body {
   --opp-sub-color: rgb(83, 187, 111);
   --success-color: rgb(154, 205, 50);
   --warring-color: rgb(255, 165, 0);
+  --like-color: rgb(255, 205, 60);
   --buy-color: rgb(239, 98, 83);
   --offer-color: rgb(65, 181, 185);
   --menu-active-color: rgb(26, 99, 245);
@@ -195,6 +196,12 @@ hr {
     padding: 8px;
   }
 }
+.login-form, .auth-recover-form, .recover-form, .signup-form {
+  background-color: white;
+  border: 1px solid var(--bg-active-color);
+  border-radius: 8px;
+  padding: 50px 40px;
+}
 
 /* sp */
 @media only screen and (max-width: $app-sp-width) {
@@ -203,6 +210,9 @@ hr {
       margin-left: $nav-width + $main-margin;
       max-width: unset;
     }
+  }
+  .login-form, .auth-recover-form, .recover-form, .signup-form {
+    border: none;
   }
 }
 

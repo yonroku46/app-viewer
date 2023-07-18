@@ -14,6 +14,14 @@ export function currency(num: number): string {
   return '¥' + num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
+export function calcDiscountRate(price: number, priceSale: number): string | undefined {
+  if (priceSale !== undefined && priceSale < price) {
+    const discountRate = ((price - priceSale) / price) * 100;
+    return discountRate.toString() + '% ';
+  }
+  return undefined;
+}
+
 export function dateToString(date: Date): string {
   const formatDate = new Intl.DateTimeFormat('ja-JP', {
     year: 'numeric',

@@ -64,6 +64,19 @@ export default function App() {
     }
   ]
 
+  // ユーザーの実際ウィンドウズ高さに沿ってvh変更
+  useEffect(() => {
+    const updateVh = () => {
+      let vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty('--vh', `${vh}px`);
+    };
+    updateVh();
+    window.addEventListener('resize', updateVh);
+    return () => {
+      window.removeEventListener('resize', updateVh);
+    };
+  }, []);
+
   // ポップアップ表示ロジック、上段ポップアップの場合2秒位表示
   useEffect(() => {
     if (popup.isShow) {
