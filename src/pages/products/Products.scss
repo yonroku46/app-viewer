@@ -138,6 +138,27 @@ $app-sp-width: 767px;
       flex-direction: column;
       border-left: 1px solid var(--bg-active-color);
       .top {
+        .like {
+          padding: 0px;
+          width: 38px;
+          height: 38px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-left: auto;
+          margin-right: 48px;
+          margin-bottom: -38px;
+          .icon {
+            font-size: 24px;
+          }
+          &.liked {
+            color: rgb(255, 205, 25);
+            background-color: rgba(255, 219, 88, 0.2);
+          }
+          &:hover {
+            border-color: black;
+          }
+        }
         .share {
           padding: 0px;
           width: 38px;
@@ -191,7 +212,7 @@ $app-sp-width: 767px;
             border: none;
           }
         }
-        .browsed, .used, .offer-num {
+        .size {
           text-align: center;
           span {
             font-weight: 900;
@@ -303,24 +324,8 @@ $app-sp-width: 767px;
         }
       }
     }
-    .history {
+    .offer-data {
       margin-bottom: 20px;
-      .history-table {
-        width: auto;
-        box-shadow: none;
-        th, tr, td {
-          font-family: 'Noto Sans JP', sans-serif;
-        }
-        th {
-          background-color: var(--bg-color);
-          padding: 3px 16px;
-        }
-        tr {
-          &:nth-child(even) {
-            background-color: var(--bg-color);
-          }
-        }
-      }
     }
   }
 }

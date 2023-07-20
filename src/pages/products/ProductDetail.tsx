@@ -7,23 +7,17 @@ import { Carousel } from "react-responsive-carousel";
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import './Products.scss';
 
+import StarTwoToneIcon from '@mui/icons-material/StarTwoTone';
 import ShareTwoToneIcon from '@mui/icons-material/ShareTwoTone';
 import HandshakeTwoToneIcon from '@mui/icons-material/HandshakeTwoTone';
-import BookmarkTwoToneIcon from '@mui/icons-material/BookmarkTwoTone';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
 import Tooltip from '@mui/material/Tooltip';
-import Paper from '@mui/material/Paper';
 
 export default function ProductDetail() {
   const navigate = useNavigate();
   const isSp = useMediaQuery({ maxWidth: 767 });
   const { id } = useParams();
 
+  const [liked, setLiked] = useState<boolean>(false);
   const [buyStatus, setBuyStatus] = useState<boolean>(true);
   const [offerPrice, setOfferPrice] = useState<number>(0);
 
@@ -66,41 +60,6 @@ export default function ProductDetail() {
   ) {
     return { user, price, date };
   }
-  
-  const historyList = [
-    createData('サザエさん', 5000, '2023-07-14'),
-    createData('マスオ', 3200, '2023-07-13'),
-    createData('ノリスケ', 2000, '2023-07-12'),
-    createData('ワカメ', 1200, '2023-07-11'),
-    createData('タラオ', 1000, '2023-07-01'),
-  ];
-
-  function HistoryTable() {
-    return (
-      <TableContainer className='history-table' component={Paper}>
-        <Table size="small" aria-label="a dense table">
-          <TableHead>
-            <TableRow>
-              <TableCell>購入者</TableCell>
-              <TableCell align="right">価格</TableCell>
-              <TableCell align="right">日付</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {historyList.map((row) => (
-              <TableRow key={row.user} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                <TableCell scope="row">
-                  {row.user}
-                </TableCell>
-                <TableCell align="right">{currency(row.price)}</TableCell>
-                <TableCell align="right">{row.date}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    );
-  }
 
   return(
     <>
@@ -119,6 +78,9 @@ export default function ProductDetail() {
         {/* 詳細情報 */}
         <div className='info-area'>
           <div className='top'>
+            <button className={liked ? 'like liked' : 'like'} onClick={() => setLiked(!liked)}>
+              <StarTwoToneIcon className='icon'/>
+            </button>
             <button className='share'>
               <ShareTwoToneIcon className='icon'/>
             </button>
@@ -158,19 +120,28 @@ export default function ProductDetail() {
               </button>
             </Tooltip>
           </div>
-          {/* 商品ステータス */}
+          {/* 商品サイズ */}
+          <p>サイズ</p>
           <div className='info-detail'>
-            <div className='browsed'>
-              <label>閲覧数</label>
-              <span>{'1.5K'}</span>
+            <div className='size'>
+              <label>ウエスト</label>
+              <span>{72}</span>
             </div>
-            <div className='offer-num'>
-              <label>オファー数</label>
-              <span>{'20'}</span>
+            <div className='size'>
+              <label>ヒップ</label>
+              <span>{100}</span>
             </div>
-            <div className='used'>
-              <label>購入履歴</label>
-              <span>{historyList.length}</span>
+            <div className='size'>
+              <label>パンツ丈</label>
+              <span>{107}</span>
+            </div>
+            <div className='size'>
+              <label>すそ周り</label>
+              <span>{74}</span>
+            </div>
+            <div className='size'>
+              <label>すそ周り</label>
+              <span>{54}</span>
             </div>
           </div>
           {/* 商品詳細 */}
@@ -181,8 +152,8 @@ export default function ProductDetail() {
               <dd>コットン100%</dd>
             </dl>
             <dl key='2'>
-              <dt>サイズ</dt>
-              <dd>95</dd>
+              <dt>カテゴリー</dt>
+              <dd>パンツ / デニム</dd>
             </dl>
             <dl key='3'>
               <dt>性別タイプ</dt>
@@ -209,13 +180,8 @@ export default function ProductDetail() {
               <dd>2023/07/14</dd>
             </dl>
           </div>
-          {/* 履歴 */}
-          <p>履歴</p>
-          <div className='history'>
-            <HistoryTable/>
-          </div>
           <p>オファー推移</p>
-          <div className='history'>
+          <div className='offer-data'>
             <img src='https://qiita-user-contents.imgix.net/https%3A%2F%2Fqiita-image-store.s3.ap-northeast-1.amazonaws.com%2F0%2F1337870%2F051aa72c-6d8a-2528-4d57-f233021af234.png?ixlib=rb-4.0.0&auto=format&gif-q=60&q=75&s=81f03a92e54688318c204bd0f383752a' width={'100%'}/>
           </div>
         </div>

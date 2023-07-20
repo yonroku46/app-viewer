@@ -24,6 +24,12 @@ $app-sp-width: 767px;
     &:hover {
       cursor: pointer;
     }
+    .like {
+      color: white;
+      &.liked {
+        color: rgb(255, 205, 25);
+      }
+    }
     .sale-label {
       height: 21px;
       min-width: 22px;
