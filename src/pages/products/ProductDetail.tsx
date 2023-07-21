@@ -17,7 +17,6 @@ export default function ProductDetail() {
   const isSp = useMediaQuery({ maxWidth: 767 });
   const { id } = useParams();
 
-  const [liked, setLiked] = useState<boolean>(false);
   const [buyStatus, setBuyStatus] = useState<boolean>(true);
   const [offerPrice, setOfferPrice] = useState<number>(0);
 
@@ -34,6 +33,7 @@ export default function ProductDetail() {
 
   const prod: ProductData = {
     id: 1,
+    liked: false,
     date: new Date(2023, 6, 13),
     name: 'Nike Air Force',
     imgs: [
@@ -78,7 +78,7 @@ export default function ProductDetail() {
         {/* 詳細情報 */}
         <div className='info-area'>
           <div className='top'>
-            <button className={liked ? 'like liked' : 'like'} onClick={() => setLiked(!liked)}>
+            <button className={prod.liked ? 'like liked' : 'like'}>
               <StarTwoToneIcon className='icon'/>
             </button>
             <button className='share'>

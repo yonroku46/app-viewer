@@ -54,6 +54,7 @@ export default function Products() {
   const recommends: ProductData[] = [
     {
       id: 1,
+      liked: true,
       date: new Date(2023, 7, 18),
       name: 'Nike Air Force',
       imgs: ['https://minimal-kit-react.vercel.app/assets/images/products/product_1.jpg'],
@@ -63,6 +64,7 @@ export default function Products() {
     },
     {
       id: 2,
+      liked: true,
       date: new Date(2023, 7, 20),
       name: 'Nike Space Hippie 04 SUPER Edition',
       imgs: ['https://minimal-kit-react.vercel.app/assets/images/products/product_2.jpg'],
@@ -71,6 +73,7 @@ export default function Products() {
     },
     {
       id: 3,
+      liked: false,
       date: new Date(2023, 7, 18),
       name: 'Nike Air Max Zephyr',
       imgs: ['https://minimal-kit-react.vercel.app/assets/images/products/product_7.jpg'],
@@ -79,6 +82,7 @@ export default function Products() {
     },
     {
       id: 4,
+      liked: false,
       date: new Date(2023, 7, 17),
       name: 'Jodern Delta',
       imgs: ['https://minimal-kit-react.vercel.app/assets/images/products/product_8.jpg'],
@@ -87,6 +91,7 @@ export default function Products() {
     },
     {
       id: 5,
+      liked: false,
       date: new Date(2023, 6, 17),
       name: 'Nike Air Max Up',
       imgs: ['https://minimal-kit-react.vercel.app/assets/images/products/product_17.jpg'],
@@ -95,6 +100,7 @@ export default function Products() {
     },
     {
       id: 6,
+      liked: false,
       date: new Date(2023, 6, 1),
       name: 'Nike Air Zoom',
       imgs: ['https://minimal-kit-react.vercel.app/assets/images/products/product_21.jpg'],
@@ -106,6 +112,7 @@ export default function Products() {
   const products: ProductData[] = [
     {
       id: 11,
+      liked: false,
       date: new Date(2023, 7, 18),
       name: 'Nike ZoomX Super',
       imgs: ['https://minimal-kit-react.vercel.app/assets/images/products/product_5.jpg'],
@@ -115,6 +122,7 @@ export default function Products() {
     },
     {
       id: 12,
+      liked: false,
       date: new Date(2023, 7, 17),
       name: 'Nike ZoomX:Re',
       imgs: ['https://minimal-kit-react.vercel.app/assets/images/products/product_3.jpg'],

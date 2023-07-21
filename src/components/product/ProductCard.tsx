@@ -12,6 +12,7 @@ type NonEmptyArray<T> = [T, ...T[]];
 
 export interface ProductData {
   id: number;
+  liked: boolean;
   date: Date;
   name: string;
   imgs: NonEmptyArray<string>;
@@ -22,13 +23,24 @@ export interface ProductData {
 
 export default function ProductCard({ products }: { products: ProductData[] }) {
   const navigate = useNavigate();
-  const [liked, setLiked] = useState<boolean>(true);
+  const [likedProducts, setLikedProducts] = useState<number[]>([]);
+
+  const likeClick = (event: React.MouseEvent, productId: number) => {
+    event.stopPropagation();
+    // TODO
+    if (likedProducts.includes(productId)) {
+      setLikedProducts(likedProducts.filter((id) => id !== productId));
+    } else {
+      setLikedProducts([...likedProducts, productId]);
+    }
+    // TODO
+  };
 
   return(
     <div className='contents cardbox'>
       {products.map((prod) => (
         <Card className='product-card' key={prod.id} onClick={() => navigate('/products/' + prod.id)}>
-          <span className={liked ? 'like liked' : 'like'} onClick={() => setLiked(!liked)}>
+          <span className={prod.liked ? 'like liked' : 'like'} onClick={(event) => likeClick(event, prod.id)}>
             <StarTwoToneIcon className='icon'/>
           </span>
           <CardActionArea className='media'>
