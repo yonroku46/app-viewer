@@ -76,7 +76,8 @@ body {
   --opp-sub-color: rgb(83, 187, 111);
   --success-color: rgb(154, 205, 50);
   --warring-color: rgb(255, 165, 0);
-  --like-color: rgb(255, 205, 60);
+  --like-color: rgb(255, 215, 0);
+  --like-bg-color: rgba(255, 215, 0, 0.1);
   --buy-color: rgb(239, 98, 83);
   --offer-color: rgb(65, 181, 185);
   --menu-active-color: rgb(26, 99, 245);
@@ -122,6 +123,9 @@ footer {
     text-align: right;
     margin-right: 6px;
   }
+}
+input {
+  font-family: inherit;
 }
 img {
   -webkit-user-drag: none;

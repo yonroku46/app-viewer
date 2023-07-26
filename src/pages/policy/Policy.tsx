@@ -18,7 +18,7 @@ export default function Policy() {
   }, []);
 
   const socialLoginPolicy = {
-    title: "ソーシャルログインポリシー",
+    title: "【ソーシャルログインポリシー】",
     contents: [
       {
         sectionNo: 1,
@@ -49,7 +49,7 @@ export default function Policy() {
   };
   
   const privacyPolicy = {
-    title: "個人情報保護ポリシー",
+    title: "【個人情報保護ポリシー】",
     contents: [
       {
         sectionNo: 1,

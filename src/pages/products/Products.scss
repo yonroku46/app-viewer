@@ -41,6 +41,7 @@ $app-sp-width: 767px;
       }
       .icon {
         margin-left: 4px;
+        font-size: 18px;
       }
       &:hover {
         cursor: pointer;
@@ -48,9 +49,18 @@ $app-sp-width: 767px;
         background-color: var(--menu-active-bg-color);
       }
     }
-    .sort-menu {
-      min-width: 160px;
-    }
+  }
+}
+.css-3dzjca-MuiPaper-root-MuiPopover-paper-MuiMenu-paper {
+  box-shadow: 0 0px 4px 1px var(--shadow-color) !important;
+  .css-6hp17o-MuiList-root-MuiMenu-list {
+    padding-top: 0px;
+    padding-bottom: 0px;
+  }
+  .sort-menu {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 13px;
+    min-height: auto;
   }
 }
 
@@ -69,6 +79,7 @@ $app-sp-width: 767px;
       font-weight: bold;
       margin-top: 0px;
       margin-bottom: 12px;
+      font-size: 16px;
       &::before {
         content: '#';
         margin-right: 4px;
@@ -123,10 +134,10 @@ $app-sp-width: 767px;
         .thumb {
           border-radius: 8px;
           &:hover {
-            border: 2px solid black;
+            border: 2px solid gray;
           }
           &.selected {
-            border: 2px solid black;
+            border: 2px solid gray;
           }
         }
       }
@@ -152,8 +163,8 @@ $app-sp-width: 767px;
             font-size: 24px;
           }
           &.liked {
-            color: rgb(255, 205, 25);
-            background-color: rgba(255, 219, 88, 0.2);
+            color: var(--like-color);
+            background-color: var(--like-bg-color);
           }
           &:hover {
             border-color: black;
@@ -176,18 +187,22 @@ $app-sp-width: 767px;
             color: black;
           }
         }
-        .title {
-          font-size: 15px;
-          margin-bottom: -8px;
+        .sale-label {
+          font-weight: 700;
+          font-size: 14px;
+          margin-bottom: -4px;
+          color: var(--buy-color);
         }
         .name {
           font-weight: 900;
           font-size: 20px;
+          line-height: 20px;
+          width: calc(100% - 100px);
+          &.not-sale {
+            margin-top: 8px;
+            margin-bottom: 8px;
+          }
         }
-      }
-      .sale-label {
-        font-weight: 700;
-        color: var(--buy-color);
       }
       .info-detail {
         display: flex;
@@ -222,7 +237,7 @@ $app-sp-width: 767px;
       }
       .info-buy {
         display: flex;
-        margin-top: 20px;
+        margin-top: 10px;
         margin-bottom: 20px;
         .buy {
           position: relative;

@@ -79,7 +79,7 @@ $section-width: $app-max-width - $search-nav-sp-width;
           background-color: var(--bg-color);
         }
         &.boundary {
-          width: 94%;
+          width: 98%;
           border-bottom: 1px solid var(--bg-active-color);
           margin-left: auto;
           border-radius: 0;
@@ -156,13 +156,6 @@ $section-width: $app-max-width - $search-nav-sp-width;
     width: 98%;
     .history-area {
       width: 98%;
-      div {
-        div {
-          &.boundary {
-            width: 90%;
-          }
-        }
-      }
     }
   }
   .category-area {

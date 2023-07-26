@@ -94,6 +94,7 @@ export default function App() {
   
   // URL変更による処理
   useEffect(() => {
+    window.scrollTo({ top: 0 });
     const currentPath = location.pathname;
     const path = currentPath.split('/')[1];
     setCurrentPath(path);

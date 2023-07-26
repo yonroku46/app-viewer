@@ -53,21 +53,13 @@ export default function ProductDetail() {
     colors: ['green', 'white', 'red', 'gray', 'yellow'],
   };
 
-  function createData(
-    user: string,
-    price: number,
-    date: string,
-  ) {
-    return { user, price, date };
-  }
-
   return(
     <>
     <section className='product-detail'>
       <div className='product'>
         {/* 画像情報 */}
         <div className='img-area'>
-          <Carousel showArrows={true} showStatus={false} infiniteLoop={true} showThumbs={true} selectedItem={currentIndex} emulateTouch={true} onChange={handleChange}>
+          <Carousel showArrows={true} showStatus={false} infiniteLoop={false} showThumbs={true} selectedItem={currentIndex} emulateTouch={true} onChange={handleChange}>
             {prod.imgs.map(img => (
               <div key={img}>
                 <img src={img}/>
@@ -84,20 +76,17 @@ export default function ProductDetail() {
             <button className='share'>
               <ShareTwoToneIcon className='icon'/>
             </button>
-            <div className='title'>
-              {'Title'}
-            </div>
-            <div className='name'>
+            {prod.priceSale &&
+              <div className='sale-label'>
+                <span>
+                  {calcDiscountRate(prod.price, prod.priceSale) + 'OFF'}
+                </span>
+              </div>
+            }
+            <div className={prod.priceSale ? 'name' : 'name not-sale'}>
               {prod.name}
             </div>
           </div>
-          {prod.priceSale &&
-            <div className='sale-label'>
-              <span>
-                {calcDiscountRate(prod.price, prod.priceSale) + 'OFF'}
-              </span>
-            </div>
-          }
           {/* 購入・オファー */}
           <div className='info-buy'>
             {buyStatus ?

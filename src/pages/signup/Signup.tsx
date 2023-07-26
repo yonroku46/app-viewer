@@ -112,8 +112,10 @@ export default function Signup() {
             }
           </div>
           <div className='terms-check'>
-            <Checkbox value={termsCheck} onChange={checkHandler}/>
-            <span className='policy' onClick={() => window.open('/policy?close=true', '_blank')}>利用規約</span>に同意する
+            <Checkbox className='icon' value={termsCheck} onChange={checkHandler}/>
+            <span>
+              <span className='policy' onClick={() => window.open('/policy?close=true', '_blank')}>利用規約</span>に同意する
+            </span>
           </div>
           <div className='err-area'> 
             {errMsg && <p className='errmsg'>{errMsg}</p>}     

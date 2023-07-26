@@ -25,20 +25,29 @@ $app-sp-width: 767px;
       cursor: pointer;
     }
     .like {
-      color: white;
       position: absolute;
       z-index: 1;
       top: 4px;
       right: 4px;
-      transition: color 0.25s;
+      svg {
+        transition: color 0.25s, transform 0.25s;
+        transform: rotate(0deg);
+        color: white;
+      }
       &.liked {
-        color: red;
+        svg {
+          transform: rotate(72deg);
+          color: var(--like-color);
+        }
       }
     }
     .sale-label {
+      position: absolute;
+      bottom: 0px;
+      left: 0px;
       height: 21px;
       min-width: 22px;
-      border-radius: 6px;
+      border-radius: 6px 6px 6px 0px;
       -webkit-box-align: center;
       align-items: center;
       white-space: nowrap;
@@ -88,7 +97,7 @@ $app-sp-width: 767px;
       }
       .sub-area {
         font-family: 'Noto Sans JP', sans-serif;
-        margin-top: 12px;
+        margin-top: 8px;
         width: 100%;
         display: flex;
         align-items: center;
@@ -124,7 +133,6 @@ $app-sp-width: 767px;
       margin-top: 8px;
       margin-left: 8px;
       .sale-label {
-        position: initial;
         font-size: 11px;
       }
       .sub-area {

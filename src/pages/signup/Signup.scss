@@ -86,6 +86,13 @@
   .terms-check {
     text-align: left;
     margin-left: -9px;
+    font-size: 14px;
+    display: flex;
+    .icon {
+      svg {
+        font-size: 18px;
+      }
+    }
     .policy {
       cursor: pointer;
       color: var(--main-color);

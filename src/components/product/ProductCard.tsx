@@ -27,24 +27,27 @@ export default function ProductCard({ products }: { products: ProductData[] }) {
 
   const likeClick = (event: React.MouseEvent, productId: number) => {
     event.stopPropagation();
-    // TODO
     if (likedProducts.includes(productId)) {
       setLikedProducts(likedProducts.filter((id) => id !== productId));
     } else {
       setLikedProducts([...likedProducts, productId]);
     }
-    // TODO
   };
 
   return(
     <div className='contents cardbox'>
       {products.map((prod) => (
         <Card className='product-card' key={prod.id} onClick={() => navigate('/products/' + prod.id)}>
-          <span className={prod.liked ? 'like liked' : 'like'} onClick={(event) => likeClick(event, prod.id)}>
+          <span className={likedProducts.includes(prod.id) ? 'like liked' : 'like'} onClick={(event) => likeClick(event, prod.id)}>
             <StarTwoToneIcon className='icon'/>
           </span>
           <CardActionArea className='media'>
             <CardMedia component='img' image={prod.imgs[0]} alt={prod.name}/>
+            {prod.priceSale &&
+              <span className='sale-label'>
+                {calcDiscountRate(prod.price, prod.priceSale) + 'OFF'}
+              </span>
+            }
           </CardActionArea>
           <CardContent className='content'>
             <Typography className='name' gutterBottom variant='h5' component='div'>
@@ -55,13 +58,6 @@ export default function ProductCard({ products }: { products: ProductData[] }) {
                 {prod.priceSale && <span className='price'>{currency(prod.priceSale)}</span>}
                 <span className={prod.priceSale ? 'sale' : 'price'}>{currency(prod.price)}</span>
               </div>
-              {prod.priceSale &&
-                <div className='sale-label'>
-                  <span>
-                    {calcDiscountRate(prod.price, prod.priceSale) + 'OFF'}
-                  </span>
-                </div>
-              }
             </Typography>
           </CardContent>
         </Card>
