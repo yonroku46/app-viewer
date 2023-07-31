@@ -32,21 +32,12 @@ export function SearchArea({ value }: { value: string }) {
 
   return(
     <>
-    <div className='search-box'>
-      <div className='search-area' onClick={() => navigate('/search', { state: { from: location.pathname, value: value } })}>
-        <SearchIcon className='icon'/>
-        <input type='text' placeholder='検索' value={value} readOnly/>
-      </div>
-    </div>
-    <div className='category-area'>
-      {categoryList.map((category) => (
-        <div className='category' key={category.categoryName} onClick={() => search(category.categoryName)}>
-          <img src={category.img}/>
-          <div className='name'>{category.categoryName}</div>
+      <div className='search-box'>
+        <div className='search-area' onClick={() => navigate('/search', { state: { from: location.pathname, value: value } })}>
+          <SearchIcon className='icon'/>
+          <input type='text' placeholder='検索' value={value} readOnly/>
         </div>
-      ))}
-    </div>
-    <hr/>
+      </div>
     </>
   );
 }
@@ -57,7 +48,7 @@ export default function SearchInput({ value, onChange }: { value: string, onChan
   const storage = window.localStorage;
 
   const [localHistory, setLocalHistory] = useState<string[]>([]);
-  const [trendList, setTrendList] = useState<string[]>(['人気アイテム','パーソナルカラー']);
+  const [trendList, setTrendList] = useState<string[]>(['人気アイテム', 'パーソナルカラー', '新商品']);
 
   useEffect(() => {
     const history = storage.getItem('localHistory');
@@ -166,6 +157,14 @@ export default function SearchInput({ value, onChange }: { value: string, onChan
           </div>
         )}
       </div>
+      <div className='category-area'>
+      {categoryList.map((category) => (
+        <div className='category' key={category.categoryName} onClick={() => search(category.categoryName)}>
+          <img src={category.img}/>
+          <div className='name'>{category.categoryName}</div>
+        </div>
+      ))}
+    </div>
     </>
   );
 }

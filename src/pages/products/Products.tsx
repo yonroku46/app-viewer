@@ -2,6 +2,7 @@ import { MouseEvent, useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { SearchArea } from 'components/input/SearchInput';
 import ProductCard, { ProductData } from 'components/product/ProductCard';
+import ClothesSprite from 'components/sprite/ClothesSprite';
 import './Products.scss';
 
 import FilterListSharpIcon from '@mui/icons-material/FilterListSharp';
@@ -12,6 +13,7 @@ export default function Products() {
   const search = useLocation().search;
   const query = new URLSearchParams(search);
   const [value, setValue] = useState<string>('');
+  const [filterOpen, setFilterOpen] = useState<boolean>(false);
 
   useEffect(() => {
     const getValue = query.get('v');
@@ -23,10 +25,13 @@ export default function Products() {
   }, [query]);
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [selectedIndex, setSelectedIndex] = useState<number>(0);
   const open = Boolean(anchorEl);
   const handleClickListItem = (event: MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
+  };
+  const handleClickFilter = (event: MouseEvent<HTMLElement>) => {
+    setFilterOpen(!filterOpen);
   };
 
   const handleMenuItemClick = (event: MouseEvent<HTMLElement>, index: number) => {
@@ -37,6 +42,10 @@ export default function Products() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  
+  const prodCategoryList: string[] = [
+    'jaket', 'plain-shirt', 'suit-shirt', 'sweater', 'short-round', 'short-sleeve'
+  ]
 
   interface SortData {
     sortName: string;
@@ -107,6 +116,43 @@ export default function Products() {
       price: 9200,
       colors: ['green', 'pink'],
     },
+    {
+      id: 7,
+      liked: true,
+      date: new Date(2023, 7, 18),
+      name: 'Nike Air Force',
+      imgs: ['https://minimal-kit-react.vercel.app/assets/images/products/product_1.jpg'],
+      price: 5000,
+      priceSale: 3000,
+      colors: ['green', 'white'],
+    },
+    {
+      id: 8,
+      liked: true,
+      date: new Date(2023, 7, 20),
+      name: 'Nike Space Hippie 04 SUPER Edition',
+      imgs: ['https://minimal-kit-react.vercel.app/assets/images/products/product_2.jpg'],
+      price: 10200,
+      colors: ['lightgray', 'orange'],
+    },
+    {
+      id: 9,
+      liked: false,
+      date: new Date(2023, 7, 18),
+      name: 'Nike Air Max Zephyr',
+      imgs: ['https://minimal-kit-react.vercel.app/assets/images/products/product_7.jpg'],
+      price: 8900,
+      colors: ['green', 'red'],
+    },
+    {
+      id: 10,
+      liked: false,
+      date: new Date(2023, 7, 17),
+      name: 'Jodern Delta',
+      imgs: ['https://minimal-kit-react.vercel.app/assets/images/products/product_8.jpg'],
+      price: 10200,
+      colors: ['yellowgreen', 'blue'],
+    },
   ]
 
   const products: ProductData[] = [
@@ -135,11 +181,9 @@ export default function Products() {
     <>
     <section className='products'>
       <SearchArea value={value}/>
-      {value ? 
-      <>
-      {/* 検索結果 */}
+       {/* フィルター */}
       <div className='filter-area'>
-        <div>
+        <div onClick={handleClickFilter}>
           <span className='title'>フィルター</span>
           <FilterListSharpIcon className='icon'/>
         </div>
@@ -157,54 +201,46 @@ export default function Products() {
           ))}
         </Menu>
       </div>
-      <div className='menu-title'>
-        <div className='sub'>Result</div>
-        <div className='main'>
-          <span style={{ color: 'var(--main-color)' }}>"{value}"</span> {recommends.length}件
+      <div className={filterOpen ? 'filter open' : 'filter'}>
+        <div className='categorys'>
+          {prodCategoryList.map(category => 
+            <div className='category'>
+              <ClothesSprite id={category} key={category}/>
+            </div>
+          )}
         </div>
       </div>
-      <ProductCard products={recommends}/>
+      {value ? 
+      <>
+        {/* 検索結果 */}
+        <div className='menu-title'>
+          <div className='sub'>Result</div>
+          <div className='main'>
+            <span style={{ color: 'var(--main-color)' }}>"{value}"</span> {recommends.length}件
+          </div>
+        </div>
+        <ProductCard products={recommends}/>
       </>
       :
       <>
-      {/* フィルター */}
-      <div className='filter-area'>
-        <div>
-          <span className='title'>フィルター</span>
-          <FilterListSharpIcon className='icon'/>
+        {/* 新着商品 */}
+        <div className='menu-title'>
+          <div className='sub'>New Arrivals</div>
+          <div className='main'>新着</div>
         </div>
-        <div onClick={handleClickListItem}>
-          <span className='title'>ソート：</span>
-          <span className='value'>{sortList[selectedIndex].sortName}</span>
-          <ExpandMoreSharpIcon className='icon'/>
+        <ProductCard products={products}/>
+        {/* ランキング商品 */}
+        <div className='menu-title'>
+          <div className='sub'>Ranking</div>
+          <div className='main'>人気アイテム</div>
         </div>
-        <Menu anchorEl={anchorEl} open={open} onClose={handleClose} 
-          transformOrigin={{ horizontal: 'right', vertical: 'top' }} anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}>
-          {sortList.map((sort, index) => (
-            <MenuItem className='sort-menu' key={sort.value} selected={index === selectedIndex} onClick={(event) => handleMenuItemClick(event, index)}>
-              {sort.sortName}
-            </MenuItem>
-          ))}
-        </Menu>
-      </div>
-      {/* 新着商品 */}
-      <div className='menu-title'>
-        <div className='sub'>New Arrivals</div>
-        <div className='main'>新着</div>
-      </div>
-      <ProductCard products={products}/>
-      {/* ランキング商品 */}
-      <div className='menu-title'>
-        <div className='sub'>Ranking</div>
-        <div className='main'>人気アイテム</div>
-      </div>
-      <ProductCard products={recommends}/>
-      {/* おすすめ商品 */}
-      <div className='menu-title'>
-        <div className='sub'>Recommends</div>
-        <div className='main'>おすすめアイテム</div>
-      </div>
-      <ProductCard products={recommends}/>
+        <ProductCard products={recommends}/>
+        {/* おすすめ商品 */}
+        <div className='menu-title'>
+          <div className='sub'>Recommends</div>
+          <div className='main'>おすすめアイテム</div>
+        </div>
+        <ProductCard products={recommends}/>
       </>
       }
     </section>

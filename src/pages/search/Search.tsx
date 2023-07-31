@@ -11,9 +11,6 @@ export default function Search() {
     <>
     <section className='search fullsize'>
       <SearchInput value={value} onChange={(e) => setValue(e.target.value)}/>
-      <div className='recommends-area'>
-        recommends
-      </div>
     </section>
     </>
   )

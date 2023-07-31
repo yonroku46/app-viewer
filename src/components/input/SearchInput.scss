@@ -10,10 +10,13 @@ $section-width: $app-max-width - $search-nav-sp-width;
 
 .search-box {
   width: 60%;
+  z-index: 1;
+  background: white;
   display: grid;
   margin-top: 16px;
   margin-left: auto;
   margin-right: auto;
+  margin-bottom: 26px;
   border-radius: 8px;
   border: 1px solid var(--bg-active-color);
   color: var(--bg-active-color);
@@ -117,9 +120,11 @@ $section-width: $app-max-width - $search-nav-sp-width;
   }
 }
 .category-area {
+  position: absolute;
+  top: 99px;
+  z-index: 0;
   width: 100%;
   display: inline-flex;
-  margin-top: 16px;
   justify-content: center;
   overflow-x: auto;
   .category {
