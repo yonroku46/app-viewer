@@ -34,7 +34,7 @@ $section-width: $app-max-width - $search-nav-sp-width;
       border-radius: 8px;
       width: 100%;
       font-size: 14px;
-      padding: 14px 20px 14px 38px;
+      padding: 10px 20px 10px 38px;
       border: none;
       outline: none;
       color: var(--bg-active-color);
@@ -93,6 +93,12 @@ $section-width: $app-max-width - $search-nav-sp-width;
             background-color: unset;
           }
         }
+        &.history, &.trend {
+          &.selected {
+            color: black;
+            background-color: var(--bg-color);
+          }
+        }
         &.del {
           justify-content: flex-end;
           font-size: 12px;
@@ -121,7 +127,7 @@ $section-width: $app-max-width - $search-nav-sp-width;
 }
 .category-area {
   position: absolute;
-  top: 99px;
+  top: 92px;
   z-index: 0;
   width: 100%;
   display: inline-flex;

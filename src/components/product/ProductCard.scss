@@ -12,7 +12,7 @@ $app-sp-width: 767px;
   .product-card {
     z-index: 0;
     position: relative;
-    width: calc(25% - 20px);
+    width: calc(20% - 20px);
     height: fit-content;
     border-radius: 6px;
     background-image: none;
@@ -31,17 +31,21 @@ $app-sp-width: 767px;
     .like {
       position: absolute;
       z-index: 1;
-      top: 4px;
-      right: 4px;
+      top: 2px;
+      right: 2px;
       svg {
-        transition: color 0.25s, transform 0.25s;
+        font-size: 26px;
+        transition: all 0.25s, transform 0.25s;
         transform: rotate(0deg);
         color: white;
+        stroke: gray;
+        stroke-width: 1px;
       }
       &.liked {
         svg {
           transform: rotate(72deg);
           color: var(--like-color);
+          stroke: black;
         }
       }
     }
@@ -137,9 +141,16 @@ $app-sp-width: 767px;
       padding: 0;
     }
     .product-card {
-      width: calc(50% - 8px);
+      width: calc(33.3% - 8px);
       margin-top: 8px;
       margin-left: 8px;
+      .like {
+        top: 2px;
+        right: 2px;
+        svg {
+          font-size: 22px;
+        }
+      }
       .sale-label {
         font-size: 11px;
       }

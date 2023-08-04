@@ -18,9 +18,9 @@ html {
 }
 header {
   z-index: 9000;
-  background-color: rgba(244, 244, 244, 0.65);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
+  background-color: white;
+  // backdrop-filter: blur(6px);
+  // -webkit-backdrop-filter: blur(6px);
   position: fixed;
   height: $header-height;
   width: 100%;
@@ -62,7 +62,7 @@ header {
 }
 body {
   margin: 0px;
-  background-color: var(--bg-color);
+  // background-color: var(--bg-color);
   --bg-color: rgb(244, 244, 244);
   --bg-active-color: rgba(34, 34, 34, 0.5);
   --load-color: rgb(255, 255, 255);

@@ -5,7 +5,7 @@ import './ProductCard.scss';
 
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
-import StarTwoToneIcon from '@mui/icons-material/StarTwoTone';
+import StarRoundedIcon from '@mui/icons-material/StarRounded';
 import { Card, Typography, CardActionArea } from '@mui/material';
 
 type NonEmptyArray<T> = [T, ...T[]];
@@ -19,6 +19,7 @@ export interface ProductData {
   price: number;
   priceSale?: number;
   colors: NonEmptyArray<string>;
+  history?: Array<ProductData>;
 }
 
 export default function ProductCard({ products }: { products: ProductData[] }) {
@@ -39,7 +40,7 @@ export default function ProductCard({ products }: { products: ProductData[] }) {
       {products.map((prod) => (
         <Card className='product-card' key={prod.id} onClick={() => navigate('/products/' + prod.id)}>
           <span className={likedProducts.includes(prod.id) ? 'like liked' : 'like'} onClick={(event) => likeClick(event, prod.id)}>
-            <StarTwoToneIcon className='icon'/>
+            <StarRoundedIcon className='icon'/>
           </span>
           <CardActionArea className='media'>
             <CardMedia component='img' image={prod.imgs[0]} alt={prod.name}/>

@@ -53,11 +53,26 @@ export default function Products() {
   }
 
   const sortList: SortData[] = [
-    { sortName: '新しい順', value: 'neweast' },
-    { sortName: '古い順', value: 'lastest' },
-    { sortName: '料金が高い順', value: 'highest' },
-    { sortName: '料金が安い順', value: 'lowest' },
-    { sortName: '評価が高い順', value: 'rate' },
+    { sortName: '人気順', value: 'rate' },
+    { sortName: '新着順', value: 'neweast' },
+    { sortName: '古い商品順', value: 'lastest' },
+    { sortName: '価格が安い順', value: 'highest' },
+    { sortName: '価格が高い順', value: 'lowest' },
+  ]
+
+  const brandList: string[] = [
+    'https://estore.jeansmate.co.jp/cdn/shop/files/logo_01_280x.png?v=1623244895',
+    'https://estore.jeansmate.co.jp/cdn/shop/files/logo_02_280x.png?v=1623244895',
+    'https://estore.jeansmate.co.jp/cdn/shop/files/logo_03_280x.png?v=1623244895',
+    'https://estore.jeansmate.co.jp/cdn/shop/files/logo_04_280x.png?v=1623244895',
+    'https://estore.jeansmate.co.jp/cdn/shop/files/logo_05_280x.png?v=1623244895',
+    'https://estore.jeansmate.co.jp/cdn/shop/files/logo_06_280x.png?v=1623244895',
+    'https://estore.jeansmate.co.jp/cdn/shop/files/logo_07_280x.png?v=1623244895',
+    'https://estore.jeansmate.co.jp/cdn/shop/files/logo_08_280x.png?v=1623244895',
+    'https://estore.jeansmate.co.jp/cdn/shop/files/logo_09_280x.png?v=1623244895',
+    'https://estore.jeansmate.co.jp/cdn/shop/files/logo_10_280x.png?v=1623244895',
+    'https://estore.jeansmate.co.jp/cdn/shop/files/logo_11_280x.png?v=1623244895',
+    'https://estore.jeansmate.co.jp/cdn/shop/files/logo_12_280x.png?v=1623244895',
   ]
 
   const recommends: ProductData[] = [
@@ -187,27 +202,53 @@ export default function Products() {
           <span className='title'>フィルター</span>
           <FilterListSharpIcon className='icon'/>
         </div>
-        <div onClick={handleClickListItem}>
-          <span className='title'>ソート：</span>
-          <span className='value'>{sortList[selectedIndex].sortName}</span>
-          <ExpandMoreSharpIcon className='icon'/>
+      </div>
+      {/* フィルター詳細 */}
+      <div className={filterOpen ? 'filter open' : 'filter'}>
+        <div className='sort' onClick={handleClickListItem}>
+          <label>並び替え</label>
+          <div className='sort-item'>
+            <span className='value'>{sortList[selectedIndex].sortName}</span>
+            <ExpandMoreSharpIcon className='icon'/>
+          </div>
         </div>
         <Menu anchorEl={anchorEl} open={open} onClose={handleClose} 
-          transformOrigin={{ horizontal: 'right', vertical: 'top' }} anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}>
+          transformOrigin={{ horizontal: 'left', vertical: 'top' }} 
+          anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}>
           {sortList.map((sort, index) => (
             <MenuItem className='sort-menu' key={sort.value} selected={index === selectedIndex} onClick={(event) => handleMenuItemClick(event, index)}>
               {sort.sortName}
             </MenuItem>
           ))}
         </Menu>
-      </div>
-      <div className={filterOpen ? 'filter open' : 'filter'}>
+
+        <div className='price'>
+          <label>価格</label>
+          <div className='price-range'>
+            <input placeholder='0'/>
+            <span> ~ </span>
+            <input placeholder='15000'/>
+          </div>
+        </div>
+
+        <div className='brand'>
+          <label>ブランド</label>
+          <div className='quick-map'>
+            {brandList.map((brand) => (
+              <img src={brand}/>
+            ))}
+          </div>
+        </div>
+
         <div className='categorys'>
-          {prodCategoryList.map(category => 
-            <div className='category'>
-              <ClothesSprite id={category} key={category}/>
-            </div>
-          )}
+          <label>カテゴリー</label>
+          <div className='quick-map'>
+            {prodCategoryList.map(category => 
+              <div className='category'>
+                <ClothesSprite id={category} key={category}/>
+              </div>
+            )}
+          </div>
         </div>
       </div>
       {value ? 

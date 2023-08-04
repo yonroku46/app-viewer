@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Route, Routes, useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { Helmet } from 'react-helmet-async';
 import { RootState } from "redux/reducers";
 import { showPopup, hidePopup } from "redux/actions/popupActions";
 import { UserState } from "redux/types/UserActionTypes";
@@ -46,6 +47,27 @@ export default function App() {
   const [user, setUser] = useState<UserState|undefined>(undefined);
   const popup = useSelector((state: RootState) => state.popup);
   
+  type PathMap = {
+    [key: string]: {
+      title: string;
+      description: string;
+    };
+  };
+  
+  const pathMap: PathMap = {
+    login: { title: 'ログイン', description: 'アカウントでログインしてサービスを利用してください' },
+    recover: { title: 'パスワード再発行', description: 'パスワードの再発行' },
+    signup: { title: '会員登録', description: '新規登録ページ' },
+    mypage: { title: 'マイページ', description: 'マイページへようこそ' },
+    search: { title: '検索', description: '検索ページ' },
+    products: { title: '商品', description: '商品ページ' },
+    labo: { title: '実験室', description: '実験室ページ' },
+    contact: { title: 'お問い合わせ', description: 'お問い合わせページ' },
+    policy: { title: '運用ポリシー', description: '運用ポリシーページ' },
+    auth: { title: '認証', description: '認証ページ' },
+    admin: { title: '管理者ページ', description: '管理者ページへようこそ' },
+  };
+
   const menuItem: MenuItem[] = [
     {
       category: 'サンプル',
@@ -112,8 +134,14 @@ export default function App() {
   }, [location.pathname]);
 
   function Header() {
+    const currentPathData = pathMap[currentPath];
     return(
       <header>
+        <Helmet>
+          <title>{currentPathData?.title ? currentPathData.title + ' - DadLabo' : 'DadLabo'}</title>
+          <meta name="description" content={currentPathData?.description ? currentPathData.description : 'DadLabへようこそ'}/>
+          <link rel="canonical" href={`https://dad-labo.com/${currentPath}`}/>
+        </Helmet>
         <div className='header-main'>
           <div className='logo' onClick={() => navigate('/')}>
             <img src={logo} alt=''/>

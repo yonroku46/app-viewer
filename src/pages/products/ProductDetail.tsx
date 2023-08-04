@@ -7,8 +7,12 @@ import { Carousel } from "react-responsive-carousel";
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import './Products.scss';
 
-import StarTwoToneIcon from '@mui/icons-material/StarTwoTone';
+import LayersIcon from '@mui/icons-material/Layers';
+import LayersClearIcon from '@mui/icons-material/LayersClear';
+import StarRoundedIcon from '@mui/icons-material/StarRounded';
 import ShareTwoToneIcon from '@mui/icons-material/ShareTwoTone';
+import CollectionsTwoToneIcon from '@mui/icons-material/CollectionsTwoTone';
+import LibraryAddCheckTwoToneIcon from '@mui/icons-material/LibraryAddCheckTwoTone';
 import HandshakeTwoToneIcon from '@mui/icons-material/HandshakeTwoTone';
 import Tooltip from '@mui/material/Tooltip';
 
@@ -17,12 +21,23 @@ export default function ProductDetail() {
   const isSp = useMediaQuery({ maxWidth: 767 });
   const { id } = useParams();
 
+  const [thumbShow, setThumbShow] = useState<boolean>(true);
+  const [thumbCompShow, setThumbCompShow] = useState<boolean>(true);
   const [buyStatus, setBuyStatus] = useState<boolean>(true);
+  const [compMode, setCompMode] = useState<boolean>(false);
   const [offerPrice, setOfferPrice] = useState<number>(0);
 
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   function handleChange(index: number) {
     setCurrentIndex(index);
+  }
+  const [currentCompIndex, setCurrentCompIndex] = useState<number>(0);
+  function handleCompChange(index: number) {
+    setCurrentCompIndex(index);
+  }
+  const [currentHistoryIndex, setHistoryCompIndex] = useState<number>(0);
+  function handleHistoryChange(index: number) {
+    setHistoryCompIndex(index);
   }
 
   const offerPriceHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -51,27 +66,44 @@ export default function ProductDetail() {
     price: 5000,
     priceSale: 3000,
     colors: ['green', 'white', 'red', 'gray', 'yellow'],
+    history: [
+      {
+        id: 1,
+        liked: false,
+        date: new Date(2023, 8, 4),
+        name: 'Nike Air Force',
+        imgs: [
+          'https://minimal-kit-react.vercel.app/assets/images/products/product_6.jpg',
+          'https://minimal-kit-react.vercel.app/assets/images/products/product_7.jpg',
+          'https://minimal-kit-react.vercel.app/assets/images/products/product_8.jpg',
+          'https://minimal-kit-react.vercel.app/assets/images/products/product_9.jpg',
+          'https://minimal-kit-react.vercel.app/assets/images/products/product_10.jpg',
+        ],
+        price: 5000,
+        colors: ['green', 'white', 'red', 'gray', 'yellow'],
+      }
+    ]
   };
+
+  function compToggle() {
+    setCompMode(!compMode)
+  }
 
   return(
     <>
     <section className='product-detail'>
-      <div className='product'>
-        {/* 画像情報 */}
-        <div className='img-area'>
-          <Carousel showArrows={true} showStatus={false} infiniteLoop={false} showThumbs={true} selectedItem={currentIndex} emulateTouch={true} onChange={handleChange}>
-            {prod.imgs.map(img => (
-              <div key={img}>
-                <img src={img}/>
-              </div>
-            ))}
-          </Carousel>
-        </div>
-        {/* 詳細情報 */}
-        <div className='info-area'>
+      {/* スナップ情報 */}
+      <div className='main-area'>
+        <div className='snap'>
+          <img className='thumbnail' src={prod.imgs[0]}/>
           <div className='top'>
+            {prod.history &&
+              <button className={compMode ? 'comp active' : 'comp'} onClick={() => compToggle()}>
+                {compMode ? <CollectionsTwoToneIcon className='icon'/> : <LibraryAddCheckTwoToneIcon className='icon'/>}
+              </button>
+            }
             <button className={prod.liked ? 'like liked' : 'like'}>
-              <StarTwoToneIcon className='icon'/>
+              <StarRoundedIcon className='icon'/>
             </button>
             <button className='share'>
               <ShareTwoToneIcon className='icon'/>
@@ -87,6 +119,39 @@ export default function ProductDetail() {
               {prod.name}
             </div>
           </div>
+        </div>
+      </div>
+      {/* 詳細情報 */}
+      <div className='product'>
+        <div className='img-area'>
+          <div className='thumb-toggle' onClick={() => setThumbShow(!thumbShow)}>
+            {thumbShow ? <LayersIcon className='icon'/> : <LayersClearIcon className='icon'/>}
+          </div>
+          {/* 画像 */}
+          <Carousel className={thumbShow ? 'thumb-visible' : ''} showArrows={false} showStatus={false} infiniteLoop={false} showThumbs={true} selectedItem={currentIndex} emulateTouch={true} thumbWidth={50} onChange={handleChange}>
+            {prod.imgs.map(img => (
+              <div key={img}>
+                <img src={img}/>
+              </div>
+            ))}
+          </Carousel>
+        </div>
+        {compMode ?
+        <div className='img-area comp'>
+          <div className='thumb-toggle' onClick={() => setThumbCompShow(!thumbCompShow)}>
+            {thumbCompShow ? <LayersIcon className='icon'/> : <LayersClearIcon className='icon'/>}
+          </div>
+          {/* 比較画像 */}
+          <Carousel className={thumbCompShow ? 'thumb-visible' : ''} showArrows={false} showStatus={false} infiniteLoop={false} showThumbs={true} selectedItem={currentCompIndex} emulateTouch={true} thumbWidth={50} onChange={handleCompChange}>
+            {prod.history && prod.history[currentHistoryIndex].imgs.map(img => (
+              <div key={img}>
+                <img src={img}/>
+              </div>
+            ))}
+          </Carousel>
+        </div>
+        :
+        <div className='info-area'>
           {/* 購入・オファー */}
           <div className='info-buy'>
             {buyStatus ?
@@ -174,6 +239,7 @@ export default function ProductDetail() {
             <img src='https://qiita-user-contents.imgix.net/https%3A%2F%2Fqiita-image-store.s3.ap-northeast-1.amazonaws.com%2F0%2F1337870%2F051aa72c-6d8a-2528-4d57-f233021af234.png?ixlib=rb-4.0.0&auto=format&gif-q=60&q=75&s=81f03a92e54688318c204bd0f383752a' width={'100%'}/>
           </div>
         </div>
+        }
       </div>
     </section>
     </>
