@@ -62,7 +62,6 @@ header {
 }
 body {
   margin: 0px;
-  // background-color: var(--bg-color);
   --bg-color: rgb(244, 244, 244);
   --bg-active-color: rgba(34, 34, 34, 0.5);
   --load-color: rgb(255, 255, 255);
@@ -79,7 +78,9 @@ body {
   --like-color: rgb(255, 215, 0);
   --like-bg-color: rgba(255, 215, 0, 0.1);
   --buy-color: rgb(239, 98, 83);
+  --buy-bg-color: rgba(239, 98, 83, 0.1);
   --offer-color: rgb(65, 181, 185);
+  --offer-bg-color: rgba(65, 181, 185, 0.1);
   --menu-active-color: rgb(26, 99, 245);
   --menu-active-bg-color: rgba(26, 99, 245, 0.08);
   --sns-line-color: rgb(6, 199, 85);

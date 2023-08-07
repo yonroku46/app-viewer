@@ -85,6 +85,7 @@ export default function Products() {
       price: 5000,
       priceSale: 3000,
       colors: ['green', 'white'],
+      status: 'S',
     },
     {
       id: 2,
@@ -94,6 +95,7 @@ export default function Products() {
       imgs: ['https://minimal-kit-react.vercel.app/assets/images/products/product_2.jpg'],
       price: 10200,
       colors: ['lightgray', 'orange'],
+      status: 'S',
     },
     {
       id: 3,
@@ -103,6 +105,7 @@ export default function Products() {
       imgs: ['https://minimal-kit-react.vercel.app/assets/images/products/product_7.jpg'],
       price: 8900,
       colors: ['green', 'red'],
+      status: 'S',
     },
     {
       id: 4,
@@ -112,6 +115,7 @@ export default function Products() {
       imgs: ['https://minimal-kit-react.vercel.app/assets/images/products/product_8.jpg'],
       price: 10200,
       colors: ['yellowgreen', 'blue'],
+      status: 'S',
     },
     {
       id: 5,
@@ -121,6 +125,7 @@ export default function Products() {
       imgs: ['https://minimal-kit-react.vercel.app/assets/images/products/product_17.jpg'],
       price: 9200,
       colors: ['white', 'pink'],
+      status: 'S',
     },
     {
       id: 6,
@@ -130,6 +135,7 @@ export default function Products() {
       imgs: ['https://minimal-kit-react.vercel.app/assets/images/products/product_21.jpg'],
       price: 9200,
       colors: ['green', 'pink'],
+      status: 'S',
     },
     {
       id: 7,
@@ -140,6 +146,7 @@ export default function Products() {
       price: 5000,
       priceSale: 3000,
       colors: ['green', 'white'],
+      status: 'S',
     },
     {
       id: 8,
@@ -149,6 +156,7 @@ export default function Products() {
       imgs: ['https://minimal-kit-react.vercel.app/assets/images/products/product_2.jpg'],
       price: 10200,
       colors: ['lightgray', 'orange'],
+      status: 'S',
     },
     {
       id: 9,
@@ -158,6 +166,7 @@ export default function Products() {
       imgs: ['https://minimal-kit-react.vercel.app/assets/images/products/product_7.jpg'],
       price: 8900,
       colors: ['green', 'red'],
+      status: 'S',
     },
     {
       id: 10,
@@ -167,6 +176,7 @@ export default function Products() {
       imgs: ['https://minimal-kit-react.vercel.app/assets/images/products/product_8.jpg'],
       price: 10200,
       colors: ['yellowgreen', 'blue'],
+      status: 'S',
     },
   ]
 
@@ -180,6 +190,7 @@ export default function Products() {
       price: 5000,
       priceSale: 1000,
       colors: ['orange', 'black', 'red', 'yellow'],
+      status: 'S',
     },
     {
       id: 12,
@@ -189,6 +200,7 @@ export default function Products() {
       imgs: ['https://minimal-kit-react.vercel.app/assets/images/products/product_3.jpg'],
       price: 5000,
       colors: ['lightgray'],
+      status: 'S',
     },
   ]
 

@@ -13,7 +13,7 @@ interface InternalAxiosRequestConfig extends AxiosRequestConfig {
 }
 
 export function AxiosClientProvider({ children }: { children: React.ReactNode }): JSX.Element {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const authService = new AuthService();
   

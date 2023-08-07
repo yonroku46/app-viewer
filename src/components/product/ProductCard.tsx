@@ -12,13 +12,14 @@ type NonEmptyArray<T> = [T, ...T[]];
 
 export interface ProductData {
   id: number;
-  liked: boolean;
+  liked?: boolean;
   date: Date;
   name: string;
   imgs: NonEmptyArray<string>;
   price: number;
   priceSale?: number;
   colors: NonEmptyArray<string>;
+  status: string;
   history?: Array<ProductData>;
 }
 

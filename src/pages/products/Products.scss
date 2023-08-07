@@ -164,16 +164,46 @@ $app-sp-width: 767px;
   background-color: var(--contents-color);
   padding: 8px;
   border-radius: 8px;
-  .main-area {
-    position: sticky;
+  .snap-toggle {
     z-index: 3;
-    top: 46px;
+    position: sticky;
+    width: fit-content;
+    top: 42px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: -26px;
+    color: white;
+    stroke: var(--bg-active-color);
+    transition: all 0.25s;
+    &.active {
+      top: 110px;
+    }
+    &:hover {
+      cursor: pointer;
+      opacity: 0.75;
+    }
+    .icon {
+      transform: rotate(270deg);
+      &.active {
+        transform: rotate(90deg);
+      }
+    }
+  }
+  .snap-area {
+    z-index: 3;
     display: flex;
+    position: sticky;
+    top: 46px;
+    width: 100%;
     padding: 10px 15px;
     margin-left: -15px;
     box-shadow: 0px 3px 4px 0 var(--shadow-color);
     background-color: white;
-    width: 100%;
+    transition: all 0.25s;
+    &:not(.active) {
+      transform: translate(0, -120%);
+      margin-bottom: -74px;
+    }
     .snap {
       display: flex;
       justify-content: space-between;
@@ -181,10 +211,10 @@ $app-sp-width: 767px;
       margin-left: auto;
       margin-right: auto;
       .thumbnail {
-        width: 46px;
+        width: 42px;
         border-radius: 8px;
-        transition: all 0.25s;
         margin-right: 10px;
+        transition: all 0.25s;
         &:hover {
           opacity: 0.9;
           cursor: pointer;
@@ -215,10 +245,16 @@ $app-sp-width: 767px;
           .icon {
             font-size: 20px;
           }
-          &.active {
-            background-color: black;
+          &.buy.active {
+            background-color: var(--buy-bg-color);
             .icon {
-              color: white;
+              color: var(--buy-color);
+            }
+          }
+          &.offer.active {
+            background-color: var(--offer-bg-color);
+            .icon {
+              color: var(--offer-color);
             }
           }
         }
@@ -231,11 +267,13 @@ $app-sp-width: 767px;
           svg {
             color: lightgray;
             stroke: black;
-            stroke-width: 1px;
+            transform: rotate(0deg);
+            transition: all 0.25s;
           }
           &.liked {
             background-color: var(--like-bg-color);
             svg {
+              transform: rotate(72deg);
               color: var(--like-color);
             }
           }
@@ -244,6 +282,12 @@ $app-sp-width: 767px;
           margin-bottom: -38px;
           .icon {
             font-size: 20px;
+          }
+          &:hover {
+            background-color: var(--menu-active-bg-color);
+            svg {
+              color: var(--menu-active-color);
+            }
           }
         }
         .sale-label {
@@ -273,21 +317,31 @@ $app-sp-width: 767px;
     margin-right: auto;
     padding: 20px 0;
     p {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
       font-weight: bold;
       margin-top: 0px;
-      margin-bottom: 12px;
-      font-size: 16px;
-      &::before {
-        content: '#';
+      margin-bottom: 10px;
+      font-size: 14px;
+      .icon {
+        font-size: 18px;
         margin-right: 4px;
+        &.buy {
+          color: var(--buy-color);
+        }
+        &.offer {
+          color: var(--offer-color);
+        }
       }
     }
     .img-area {
-      width: calc(50% - 60px);
+      width: calc(50% - 40px);
       height: fit-content;
       flex: 1;
       margin-top: 7px;
       padding-right: 40px;
+      
       &.comp {
         display: flex;
         flex: 1;
@@ -296,26 +350,68 @@ $app-sp-width: 767px;
         flex-direction: column;
         border-left: 1px solid var(--bg-active-color);
       }
-      .thumb-toggle {
+      .features {
         z-index: 1;
         display: flex;
+        justify-content: space-between;
         position: relative;
-        border: 1px solid white;
-        width: fit-content;
-        border-radius: 8px;
-        padding: 2px;
-        margin-bottom: -36px;
         margin-right: 7px;
-        margin-left: auto;
-        opacity: 0.3;
-        transition: transform 0.25s, opacity 0.25s;
-        &:hover {
-          opacity: 1;
-          background-color: var(--bg-active-color);
-          cursor: pointer;
-        }
-        .icon {
+        margin-bottom: -36px;
+        .data-info {
+          display: flex;
+          align-items: center;
+          padding: 0 15px 0 10px;
           color: white;
+          max-width: 68%;
+          border-radius: 0px 8px 8px 0px;
+          white-space: pre;
+          overflow: hidden;
+          font-size: 12px;
+          transition: all 0.25s;
+          &.buy {
+            background-color: var(--buy-color);
+          }
+          &.offer {
+            background-color: var(--offer-color);
+          }
+          &:not(.active) {
+            width: 0;
+            padding: 0;
+            &::after {
+              display: none;
+            }
+          }
+          span {
+            margin-right: 6px;
+          }
+          .icon {
+            font-size: 18px;
+          }
+        }
+        .buttons {
+          display: flex;
+          .thumb-toggle {
+            display: inherit;
+            border: 1px solid white;
+            width: fit-content;
+            border-radius: 8px;
+            padding: 2px;
+            margin-left: 7px;
+            opacity: 0.3;
+            transition: transform 0.25s, opacity 0.25s;
+            &:hover {
+              opacity: 1;
+              background-color: var(--bg-active-color);
+              cursor: pointer;
+            }
+            .icon {
+              color: white;
+            }
+            &:not(.visible) {
+              opacity: 0;
+              pointer-events: none;
+            }
+          }
         }
       }
       img {
@@ -349,7 +445,7 @@ $app-sp-width: 767px;
         }
         .thumbs-wrapper {
           margin: 0 12px;
-          margin-top: -78px;
+          margin-top: -75px;
           transition: all 0.25s ease-out;
           opacity: 0;
           pointer-events: none;
@@ -379,6 +475,38 @@ $app-sp-width: 767px;
       padding-left: 40px;
       flex-direction: column;
       border-left: 1px solid var(--bg-active-color);
+      .condition {
+        ul {
+          display: flex;
+          list-style: none;
+          margin: 0;
+          padding: 0;
+          margin-bottom: 20px;
+          li {
+            border: 1px solid var(--bg-active-color);
+            background-color: var(--bg-color);
+            border-radius: 8px;
+            color: lightgray;
+            font-size: 18px;
+            text-align: center;
+            padding: 6px;
+            width: calc((100% - 20px) / 5);
+            &.buy.active {
+              font-weight: 900;
+              background-color: var(--buy-color);
+              color: white;
+            }
+            &.offer.active {
+              font-weight: 900;
+              background-color: var(--offer-color);
+              color: white;
+            }
+            &:not(:first-child) {
+              margin-left: 8px;
+            }
+          }
+        }
+      }
       .info-buy {
         margin-bottom: 20px;
         display: flex;
@@ -389,7 +517,7 @@ $app-sp-width: 767px;
           height: fit-content;
           align-items: center;
           font-size: 18px;
-          padding: 8px 15px;
+          padding: 10px 15px;
           color: white;
           transition: background-color 0.25s;
           &.now {
@@ -451,13 +579,28 @@ $app-sp-width: 767px;
           }
         }
       }
+      .size-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 11px;
+        margin-bottom: -1px;
+        border-radius: 6px 6px 0 0;
+        border-color: var(--bg-active-color);
+        color: black;
+        transition: all 0.25s;
+        .icon {
+          font-size: 18px;
+          margin-right: 4px;
+        }
+      }
       .info-detail {
         display: flex;
         height: 60px;
         border: 1px solid var(--bg-active-color);
-        padding: 6px 0px;
-        border-radius: 8px;
         margin-bottom: 20px;
+        padding: 6px 0px;
+        border-radius: 0 0 6px 6px;
         div {
           display: flex;
           flex: 1;
@@ -467,8 +610,8 @@ $app-sp-width: 767px;
           min-width: 60px;
           label {
             display: block;
-            font-size: 13px;
-            line-height: 13px;
+            font-size: 11px;
+            line-height: 11px;
           }
           &:last-child {
             border: none;
@@ -534,7 +677,7 @@ $app-sp-width: 767px;
     }
   }
   .product-detail {
-    .main-area {
+    .snap-area {
       .snap {
         width: 100%;
         .top {
@@ -586,7 +729,7 @@ $app-sp-width: 767px;
         }
       }
       .info-area {
-        padding: 15px 0px;
+        padding: 10px 0px;
         border-left: none;
       }
     }
