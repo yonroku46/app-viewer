@@ -47,6 +47,10 @@ export default function Products() {
     'jaket', 'plain-shirt', 'suit-shirt', 'sweater', 'short-round', 'short-sleeve'
   ]
 
+  const prodStatusList: string[] = [
+    'S', 'A', 'B', 'C', 'D'
+  ]
+
   interface SortData {
     sortName: string;
     value: string;
@@ -86,6 +90,16 @@ export default function Products() {
       priceSale: 3000,
       colors: ['green', 'white'],
       status: 'S',
+      size: [
+        {name: 'ウエスト', value: '72', unit: 'cm'},
+        {name: 'ヒップ', value: '100', unit: 'cm'},
+        {name: 'パンツ丈', value: '107', unit: 'cm'},
+        {name: 'すそ周り', value: '74', unit: 'cm'},
+        {name: '裾', value: '54', unit: 'cm'},
+      ],
+      mainCategory: 'パンツ',
+      subCategory: 'デニム',
+      type: 'M'
     },
     {
       id: 2,
@@ -96,6 +110,16 @@ export default function Products() {
       price: 10200,
       colors: ['lightgray', 'orange'],
       status: 'S',
+      size: [
+        {name: 'ウエスト', value: '72', unit: 'cm'},
+        {name: 'ヒップ', value: '100', unit: 'cm'},
+        {name: 'パンツ丈', value: '107', unit: 'cm'},
+        {name: 'すそ周り', value: '74', unit: 'cm'},
+        {name: '裾', value: '54', unit: 'cm'},
+      ],
+      mainCategory: 'パンツ',
+      subCategory: 'デニム',
+      type: 'M',
     },
     {
       id: 3,
@@ -106,6 +130,16 @@ export default function Products() {
       price: 8900,
       colors: ['green', 'red'],
       status: 'S',
+      size: [
+      {name: 'ウエスト', value: '72', unit: 'cm'},
+      {name: 'ヒップ', value: '100', unit: 'cm'},
+      {name: 'パンツ丈', value: '107', unit: 'cm'},
+      {name: 'すそ周り', value: '74', unit: 'cm'},
+      {name: '裾', value: '54', unit: 'cm'},
+    ],
+    mainCategory: 'パンツ',
+    subCategory: 'デニム',
+    type: 'M',
     },
     {
       id: 4,
@@ -116,6 +150,16 @@ export default function Products() {
       price: 10200,
       colors: ['yellowgreen', 'blue'],
       status: 'S',
+      size: [
+      {name: 'ウエスト', value: '72', unit: 'cm'},
+      {name: 'ヒップ', value: '100', unit: 'cm'},
+      {name: 'パンツ丈', value: '107', unit: 'cm'},
+      {name: 'すそ周り', value: '74', unit: 'cm'},
+      {name: '裾', value: '54', unit: 'cm'},
+    ],
+    mainCategory: 'パンツ',
+    subCategory: 'デニム',
+    type: 'M',
     },
     {
       id: 5,
@@ -126,6 +170,16 @@ export default function Products() {
       price: 9200,
       colors: ['white', 'pink'],
       status: 'S',
+      size: [
+      {name: 'ウエスト', value: '72', unit: 'cm'},
+      {name: 'ヒップ', value: '100', unit: 'cm'},
+      {name: 'パンツ丈', value: '107', unit: 'cm'},
+      {name: 'すそ周り', value: '74', unit: 'cm'},
+      {name: '裾', value: '54', unit: 'cm'},
+    ],
+    mainCategory: 'パンツ',
+    subCategory: 'デニム',
+    type: 'M',
     },
     {
       id: 6,
@@ -136,6 +190,16 @@ export default function Products() {
       price: 9200,
       colors: ['green', 'pink'],
       status: 'S',
+      size: [
+      {name: 'ウエスト', value: '72', unit: 'cm'},
+      {name: 'ヒップ', value: '100', unit: 'cm'},
+      {name: 'パンツ丈', value: '107', unit: 'cm'},
+      {name: 'すそ周り', value: '74', unit: 'cm'},
+      {name: '裾', value: '54', unit: 'cm'},
+    ],
+    mainCategory: 'パンツ',
+    subCategory: 'デニム',
+    type: 'M',
     },
     {
       id: 7,
@@ -147,6 +211,16 @@ export default function Products() {
       priceSale: 3000,
       colors: ['green', 'white'],
       status: 'S',
+      size: [
+      {name: 'ウエスト', value: '72', unit: 'cm'},
+      {name: 'ヒップ', value: '100', unit: 'cm'},
+      {name: 'パンツ丈', value: '107', unit: 'cm'},
+      {name: 'すそ周り', value: '74', unit: 'cm'},
+      {name: '裾', value: '54', unit: 'cm'},
+    ],
+    mainCategory: 'パンツ',
+    subCategory: 'デニム',
+    type: 'M',
     },
     {
       id: 8,
@@ -157,6 +231,16 @@ export default function Products() {
       price: 10200,
       colors: ['lightgray', 'orange'],
       status: 'S',
+      size: [
+      {name: 'ウエスト', value: '72', unit: 'cm'},
+      {name: 'ヒップ', value: '100', unit: 'cm'},
+      {name: 'パンツ丈', value: '107', unit: 'cm'},
+      {name: 'すそ周り', value: '74', unit: 'cm'},
+      {name: '裾', value: '54', unit: 'cm'},
+    ],
+    mainCategory: 'パンツ',
+    subCategory: 'デニム',
+    type: 'M',
     },
     {
       id: 9,
@@ -167,6 +251,16 @@ export default function Products() {
       price: 8900,
       colors: ['green', 'red'],
       status: 'S',
+      size: [
+      {name: 'ウエスト', value: '72', unit: 'cm'},
+      {name: 'ヒップ', value: '100', unit: 'cm'},
+      {name: 'パンツ丈', value: '107', unit: 'cm'},
+      {name: 'すそ周り', value: '74', unit: 'cm'},
+      {name: '裾', value: '54', unit: 'cm'},
+    ],
+    mainCategory: 'パンツ',
+    subCategory: 'デニム',
+    type: 'M',
     },
     {
       id: 10,
@@ -177,6 +271,16 @@ export default function Products() {
       price: 10200,
       colors: ['yellowgreen', 'blue'],
       status: 'S',
+      size: [
+      {name: 'ウエスト', value: '72', unit: 'cm'},
+      {name: 'ヒップ', value: '100', unit: 'cm'},
+      {name: 'パンツ丈', value: '107', unit: 'cm'},
+      {name: 'すそ周り', value: '74', unit: 'cm'},
+      {name: '裾', value: '54', unit: 'cm'},
+    ],
+    mainCategory: 'パンツ',
+    subCategory: 'デニム',
+    type: 'M',
     },
   ]
 
@@ -191,6 +295,16 @@ export default function Products() {
       priceSale: 1000,
       colors: ['orange', 'black', 'red', 'yellow'],
       status: 'S',
+      size: [
+      {name: 'ウエスト', value: '72', unit: 'cm'},
+      {name: 'ヒップ', value: '100', unit: 'cm'},
+      {name: 'パンツ丈', value: '107', unit: 'cm'},
+      {name: 'すそ周り', value: '74', unit: 'cm'},
+      {name: '裾', value: '54', unit: 'cm'},
+    ],
+    mainCategory: 'パンツ',
+    subCategory: 'デニム',
+    type: 'M',
     },
     {
       id: 12,
@@ -201,6 +315,16 @@ export default function Products() {
       price: 5000,
       colors: ['lightgray'],
       status: 'S',
+      size: [
+        {name: 'ウエスト', value: '72', unit: 'cm'},
+        {name: 'ヒップ', value: '100', unit: 'cm'},
+        {name: 'パンツ丈', value: '107', unit: 'cm'},
+        {name: 'すそ周り', value: '74', unit: 'cm'},
+        {name: '裾', value: '54', unit: 'cm'},
+      ],
+      mainCategory: 'パンツ',
+      subCategory: 'デニム',
+      type: 'M',
     },
   ]
 
@@ -258,6 +382,17 @@ export default function Products() {
             {prodCategoryList.map(category => 
               <div className='category'>
                 <ClothesSprite id={category} key={category}/>
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className='status'>
+          <label>状態</label>
+          <div className='quick-map'>
+            {prodStatusList.map(status => 
+              <div className='level'>
+                {status}
               </div>
             )}
           </div>

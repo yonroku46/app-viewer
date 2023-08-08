@@ -64,6 +64,7 @@ body {
   margin: 0px;
   --bg-color: rgb(244, 244, 244);
   --bg-active-color: rgba(34, 34, 34, 0.5);
+  --bg-active-dark-color: rgba(34, 34, 34, 0.85);
   --load-color: rgb(255, 255, 255);
   --load-off-color: rgba(255, 255, 255, 0.2);
   --backdrop-color: rgba(0, 0, 0, 0.45);
@@ -77,6 +78,8 @@ body {
   --warring-color: rgb(255, 165, 0);
   --like-color: rgb(255, 215, 0);
   --like-bg-color: rgba(255, 215, 0, 0.1);
+  --favorite-color: rgb(240, 42, 42);
+  --favorite-bg-color: rgba(240, 42, 42, 0.1);
   --buy-color: rgb(239, 98, 83);
   --buy-bg-color: rgba(239, 98, 83, 0.1);
   --offer-color: rgb(65, 181, 185);
@@ -142,6 +145,9 @@ img {
 }
 a {
   text-decoration: none;
+  &:active {
+    color: var(--main-color);
+  }
 }
 button {
   cursor: pointer;
@@ -243,41 +249,32 @@ hr {
 }
 @keyframes shake {
   0% {
-    transform: rotate(0);
+    transform: translateX(0);
   }
   20% {
-    transform: rotate(8deg);
+    transform: translateX(1px);
   }
   40% {
-    transform: rotate(-8deg);
+    transform: translateX(-1px);
   }
   60% {
-    transform: rotate(8deg);
+    transform: translateX(1px);
   }
   80% {
-    transform: rotate(-8deg);
+    transform: translateX(-1px);
   }
   100% {
-    transform: rotate(0);
+    transform: translateX(0);
   }
 }
-@keyframes shake {
+@keyframes sizeUpAndDown {
   0% {
-    transform: translateX(0);
+    transform: scale(1);
   }
-  20% {
-    transform: translateX(1px);
-  }
-  40% {
-    transform: translateX(-1px);
-  }
-  60% {
-    transform: translateX(1px);
-  }
-  80% {
-    transform: translateX(-1px);
+  50% {
+    transform: scale(1.15);
   }
   100% {
-    transform: translateX(0);
+    transform: scale(1);
   }
 }

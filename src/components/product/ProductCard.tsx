@@ -10,16 +10,35 @@ import { Card, Typography, CardActionArea } from '@mui/material';
 
 type NonEmptyArray<T> = [T, ...T[]];
 
+export interface SizeData {
+  name: string;
+  value: string;
+  unit: string;
+}
+
+export interface AdditionalData {
+  name: string;
+  value: string;
+}
+
 export interface ProductData {
   id: number;
   liked?: boolean;
   date: Date;
   name: string;
   imgs: NonEmptyArray<string>;
+  sizeImgIndex?: number;
   price: number;
   priceSale?: number;
+  brand?: string;
   colors: NonEmptyArray<string>;
   status: string;
+  size: NonEmptyArray<SizeData>;
+  mainCategory: string;
+  subCategory?: string;
+  type: string;
+  tags?: Array<string>;
+  additional?: Array<AdditionalData>;
   history?: Array<ProductData>;
 }
 
@@ -38,27 +57,27 @@ export default function ProductCard({ products }: { products: ProductData[] }) {
 
   return(
     <div className='contents cardbox'>
-      {products.map((prod) => (
-        <Card className='product-card' key={prod.id} onClick={() => navigate('/products/' + prod.id)}>
-          <span className={likedProducts.includes(prod.id) ? 'like liked' : 'like'} onClick={(event) => likeClick(event, prod.id)}>
+      {products.map((data) => (
+        <Card className='product-card' key={data.id} onClick={() => navigate('/products/' + data.id)}>
+          <span className={likedProducts.includes(data.id) ? 'like liked' : 'like'} onClick={(event) => likeClick(event, data.id)}>
             <StarRoundedIcon className='icon'/>
           </span>
           <CardActionArea className='media'>
-            <CardMedia component='img' image={prod.imgs[0]} alt={prod.name}/>
-            {prod.priceSale &&
+            <CardMedia component='img' image={data.imgs[0]} alt={data.name}/>
+            {data.priceSale &&
               <span className='sale-label'>
-                {calcDiscountRate(prod.price, prod.priceSale) + 'OFF'}
+                {calcDiscountRate(data.price, data.priceSale) + 'OFF'}
               </span>
             }
           </CardActionArea>
           <CardContent className='content'>
             <Typography className='name' gutterBottom variant='h5' component='div'>
-              {prod.name}
+              {data.name}
             </Typography>
             <Typography className='sub-area' color='text.secondary' component='div'>
               <div>
-                {prod.priceSale && <span className='price'>{currency(prod.priceSale)}</span>}
-                <span className={prod.priceSale ? 'sale' : 'price'}>{currency(prod.price)}</span>
+                {data.priceSale && <span className='price'>{currency(data.priceSale)}</span>}
+                <span className={data.priceSale ? 'sale' : 'price'}>{currency(data.price)}</span>
               </div>
             </Typography>
           </CardContent>

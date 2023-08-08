@@ -81,11 +81,27 @@ $app-sp-width: 767px;
         flex-wrap: wrap;
         padding: 10px;
         .category {
-          padding: 10px;
+          padding: 10px 20px;
           border: 1px solid #e1e3e4;
           width: fit-content;
           border-radius: 6px;
           transition: all 0.25s;
+          &:hover {
+            cursor: pointer;
+            box-shadow: 0 0px 4px 1px var(--shadow-color);
+          }
+        }
+      }
+    }
+    .status {
+      .quick-map {
+        display: flex;
+        padding: 10px;
+        .level {
+          padding: 10px 22px;
+          border-radius: 6px;
+          margin-right: 10px;
+          border: 1px solid #e1e3e4;
           &:hover {
             cursor: pointer;
             box-shadow: 0 0px 4px 1px var(--shadow-color);
@@ -164,6 +180,24 @@ $app-sp-width: 767px;
   background-color: var(--contents-color);
   padding: 8px;
   border-radius: 8px;
+  .fab {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    pointer-events: none;
+    opacity: 0;
+    background-color: black;
+    color: white;
+    transition: all 0.25s;
+    &:hover {
+      background-color: black;
+      color: white;
+    }
+    &.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+  }
   .snap-toggle {
     z-index: 3;
     position: sticky;
@@ -171,12 +205,12 @@ $app-sp-width: 767px;
     top: 42px;
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: -26px;
-    color: white;
-    stroke: var(--bg-active-color);
+    margin-top: -22px;
+    opacity: 0.25;
+    color: var(--bg-active-color);
     transition: all 0.25s;
     &.active {
-      top: 110px;
+      top: 88px;
     }
     &:hover {
       cursor: pointer;
@@ -195,8 +229,8 @@ $app-sp-width: 767px;
     position: sticky;
     top: 46px;
     width: 100%;
-    padding: 10px 15px;
-    margin-left: -15px;
+    padding: 10px 8px;
+    margin-left: -8px;
     box-shadow: 0px 3px 4px 0 var(--shadow-color);
     background-color: white;
     transition: all 0.25s;
@@ -210,14 +244,58 @@ $app-sp-width: 767px;
       width: 90%;
       margin-left: auto;
       margin-right: auto;
+      .select-history {
+        display: flex;
+        position: absolute;
+        flex-direction: column;
+        padding: 0px 6px 12px 6px;
+        background-color: white;
+        box-shadow: 0px 3px 4px 0 var(--shadow-color);
+        border-radius: 0 0 6px 6px;
+        margin-top: -6px;
+        margin-left: -6px;
+        transform: translateY(-6px);
+        opacity: 0;
+        margin-top: 50px;
+        pointer-events: none;
+        transition: all 0.25s;
+        &.active {
+          pointer-events: auto;
+          transform: translateY(0px);
+          opacity: 1;
+        }
+        .thumbnail-list {
+          z-index: 1;
+          .thumbnail-data {
+            display: flex;
+            align-items: center;
+            font-size: 12px;
+            transition: all 0.25s;
+            &:not(:first-child) {
+              margin-top: 4px;
+            }
+            &:hover {
+              cursor: pointer;
+              opacity: 0.9;
+            }
+            .date {
+              color: var(--bg-active-dark-color);
+            }
+            .user {
+              margin: 0 4px;
+            }
+          }
+        }
+      }
       .thumbnail {
+        z-index: 2;
         width: 42px;
         border-radius: 8px;
         margin-right: 10px;
         transition: all 0.25s;
         &:hover {
-          opacity: 0.9;
           cursor: pointer;
+          opacity: 0.9;
         }
       }
       .top {
@@ -341,7 +419,7 @@ $app-sp-width: 767px;
       flex: 1;
       margin-top: 7px;
       padding-right: 40px;
-      
+      transition: width 0.25s;
       &.comp {
         display: flex;
         flex: 1;
@@ -349,6 +427,21 @@ $app-sp-width: 767px;
         padding-left: 40px;
         flex-direction: column;
         border-left: 1px solid var(--bg-active-color);
+        &.empty {
+          align-items: center;
+          color: var(--bg-active-color);
+          padding: 40px;
+          margin-left: 40px;
+          margin-top: auto;
+          margin-bottom: auto;
+          border: 1px solid var(--bg-active-color);
+          border-radius: 8px;
+          transition: opacity 0.25s;
+          &:hover {
+            cursor: pointer;
+            opacity: 0.8;
+          }
+        }
       }
       .features {
         z-index: 1;
@@ -360,29 +453,63 @@ $app-sp-width: 767px;
         .data-info {
           display: flex;
           align-items: center;
-          padding: 0 15px 0 10px;
+          padding: 0 15px;
           color: white;
-          max-width: 68%;
+          max-width: 86%;
           border-radius: 0px 8px 8px 0px;
           white-space: pre;
           overflow: hidden;
           font-size: 12px;
-          transition: all 0.25s;
+          transition: all 0.35s;
+          span {
+            opacity: 1;
+            margin-right: 8px;
+            transition: all 0.25s;
+            &.status {
+              font-weight: 900;
+              font-size: 18px;
+            }
+          }
+          &::after {
+            content: "";
+            height: 100%;
+            left: 0px;
+            position: absolute;
+            width: 4px;
+          }
           &.buy {
-            background-color: var(--buy-color);
+            background-image: linear-gradient(90deg, var(--bg-active-dark-color) 20%, var(--bg-active-color) 100%);
+            span {
+              opacity: 1;
+              &.status {
+                color: var(--buy-color);
+              }
+            }
+            &::after {
+              background: var(--buy-color);
+            }
           }
           &.offer {
-            background-color: var(--offer-color);
+            background-image: linear-gradient(90deg, var(--bg-active-dark-color) 20%, var(--bg-active-color) 100%);
+            span {
+              opacity: 1;
+              &.status {
+                color: var(--offer-color);
+              }
+            }
+            &::after {
+              background: var(--offer-color);
+            }
           }
           &:not(.active) {
             width: 0;
             padding: 0;
-            &::after {
-              display: none;
+            span {
+              opacity: 0;
             }
-          }
-          span {
-            margin-right: 6px;
+            &::after {
+              width: 0;
+            }
           }
           .icon {
             font-size: 18px;
@@ -397,7 +524,7 @@ $app-sp-width: 767px;
             border-radius: 8px;
             padding: 2px;
             margin-left: 7px;
-            opacity: 0.3;
+            opacity: 0.5;
             transition: transform 0.25s, opacity 0.25s;
             &:hover {
               opacity: 1;
@@ -454,12 +581,20 @@ $app-sp-width: 767px;
             padding: 5px 0;
             margin-top: -12px;
           }
+          .control-prev.control-arrow:before {
+            border-right: 12px solid white;
+            margin-left: 0;
+          }
+          .control-next.control-arrow:before {
+            border-left: 12px solid white;
+            margin-right: 0;
+          }
         }
         .thumb {
           border-radius: 8px;
-          margin-right: 8px;
           padding: 0;
           border: unset;
+          transition: unset;
           &:hover {
             border: 1px solid var(--bg-active-color);
           }
@@ -484,7 +619,6 @@ $app-sp-width: 767px;
           margin-bottom: 20px;
           li {
             border: 1px solid var(--bg-active-color);
-            background-color: var(--bg-color);
             border-radius: 8px;
             color: lightgray;
             font-size: 18px;
@@ -587,12 +721,35 @@ $app-sp-width: 767px;
         margin-bottom: -1px;
         border-radius: 6px 6px 0 0;
         border-color: var(--bg-active-color);
-        color: black;
+        color: var(--bg-active-color);
+        background-color: var(--bg-color);
+        pointer-events: none;
         transition: all 0.25s;
         .icon {
           font-size: 18px;
           margin-right: 4px;
         }
+        &.active {
+          pointer-events: auto;
+          background-color: unset;
+          color: black;
+          &:hover {
+            background-color: var(--bg-color);
+          }
+        }
+      }
+      .contact-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px;
+        margin-bottom: -1px;
+        border-radius: 6px;
+        border-color: var(--bg-active-color);
+        .icon {
+          font-size: 18px;
+          margin-right: 4px;
+        } 
       }
       .info-detail {
         display: flex;
@@ -628,19 +785,26 @@ $app-sp-width: 767px;
     }
     .definition {
       margin-bottom: 20px;
-      padding: 10px 15px;
+      padding: 10px 20px;
       border-radius: 8px;
-      font-size: 13px;
-      background-color: var(--bg-color);
-      color: var(--bg-active-color);
+      font-size: 12px;
+      border: 1px solid var(--bg-active-color);
       dl {
         display: flex;
         align-items: center;
         dt {
-          width: 90px;
+          width: 75px;
         }
         dd {
           color: black;
+          .link {
+            &:not(:first-child) {
+              &:before {
+                content: '/';
+                margin: 0 4px;
+              }
+            }
+          }
         }
       }
       .colors {
@@ -649,8 +813,8 @@ $app-sp-width: 767px;
         -webkit-box-align: center;
         align-items: center;
         span {
-          width: 13px;
-          height: 13px;
+          width: 12px;
+          height: 12px;
           border-radius: 50%;
           margin-right: 4px;
           box-shadow: rgba(0, 0, 0, 0.24) -1px 1px 2px inset;
@@ -659,6 +823,31 @@ $app-sp-width: 767px;
     }
     .offer-data {
       margin-bottom: 20px;
+    }
+  }
+  .recommends {
+    display: flex;
+    flex-direction: column;
+    margin: 40px 0;
+    padding: 0 40px;
+    border-top: 1px solid var(--bg-active-color);
+    p {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      font-weight: bold;
+      font-size: 14px;
+      margin: 20px 0;
+      .icon {
+        font-size: 18px;
+        margin-right: 4px;
+      }
+    }
+    .more-button {
+      max-width: 200px;
+      font-size: 12px;
+      margin-left: auto;
+      margin-right: auto;
     }
   }
 }
@@ -726,12 +915,23 @@ $app-sp-width: 767px;
         &.comp {
           padding: 0px;
           border-left: unset;
+          width: 92%;
+          margin-left: auto;
+          margin-right: auto;
+          &.empty {
+            padding: 22px 0;
+            margin-left: auto;
+            margin-right: auto;
+          }
         }
       }
       .info-area {
         padding: 10px 0px;
         border-left: none;
       }
+    }
+    .recommends {
+      padding: 0;
     }
   }
 }
