@@ -12,7 +12,6 @@ import { Carousel } from "react-responsive-carousel";
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import './Products.scss';
 
-import ExpandCircleDownRoundedIcon from '@mui/icons-material/ExpandCircleDownRounded';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import LayersRoundedIcon from '@mui/icons-material/LayersRounded';
 import LayersClearRoundedIcon from '@mui/icons-material/LayersClearRounded';
@@ -21,9 +20,10 @@ import ShareTwoToneIcon from '@mui/icons-material/ShareTwoTone';
 import CollectionsTwoToneIcon from '@mui/icons-material/CollectionsTwoTone';
 import LibraryAddCheckTwoToneIcon from '@mui/icons-material/LibraryAddCheckTwoTone';
 import HandshakeTwoToneIcon from '@mui/icons-material/HandshakeTwoTone';
-import FitScreenTwoToneIcon from '@mui/icons-material/FitScreenTwoTone';
-import ContactSupportTwoToneIcon from '@mui/icons-material/ContactSupportTwoTone';
+import FitScreenOutlinedIcon from '@mui/icons-material/FitScreenOutlined';
+import ContactSupportOutlinedIcon from '@mui/icons-material/ContactSupportOutlined';
 import NavigationRoundedIcon from '@mui/icons-material/NavigationRounded';
+import HighlightAltTwoToneIcon from '@mui/icons-material/HighlightAltTwoTone';
 import Fab from '@mui/material/Fab';
 import Tooltip from '@mui/material/Tooltip';
 
@@ -517,7 +517,7 @@ export default function ProductDetail() {
         <KeyboardArrowRightIcon className={snapShow ? 'icon active' : 'icon'}/>
       </div>
       {/* 詳細情報 */}
-      <div className='product'>
+      <div className={snapShow ? 'product' : 'product hide'}>
         <div className={isSp && compMode ? 'img-area comp' : 'img-area'}>
           <div className='features'>
             <div className={compMode && thumbShow ? buyStatus ? 'data-info buy active' : 'data-info offer active' : 'data-info'}>
@@ -570,8 +570,10 @@ export default function ProductDetail() {
             </div>
           :
             <div className='img-area comp empty' onClick={() => setHistoryShow(!historyShow)}>
-              <div>比較する履歴を選択してください</div>
-              <img src='https://i.pinimg.com/originals/a9/89/c2/a989c2548dce3d72627bdf2a1dc8631e.png'/>
+              <HighlightAltTwoToneIcon className='icon'/>
+              <div className='empty-msg'>
+                {'比較する履歴を\n選択してください'}
+              </div>
             </div>
         :
         <div className='info-area'>
@@ -600,7 +602,6 @@ export default function ProductDetail() {
           {/* コンディション */}
           <div className='condition'>
             <p>
-              <ExpandCircleDownRoundedIcon className={buyStatus ? 'icon buy' : 'icon offer'}/>
               状態
             </p>
             <ul>
@@ -613,11 +614,10 @@ export default function ProductDetail() {
           </div>
           {/* 商品サイズ */}
           <p>
-            <ExpandCircleDownRoundedIcon className={buyStatus ? 'icon buy' : 'icon offer'}/>
             サイズ
           </p>
           <button className={prod.sizeImgIndex ? 'size-button active' : 'size-button'} onClick={() => prod.sizeImgIndex && setCurrentIndex(prod.sizeImgIndex)}>
-            <FitScreenTwoToneIcon className='icon'/> サイズ画像を見る
+            <FitScreenOutlinedIcon className='icon'/> サイズ画像を見る
           </button>
           <div className='info-detail'>
             {prod.size.map(size => 
@@ -630,30 +630,26 @@ export default function ProductDetail() {
           </div>
           {/* 商品詳細 */}
           <p>
-            <ExpandCircleDownRoundedIcon className={buyStatus ? 'icon buy' : 'icon offer'}/>
             商品詳細
           </p>
           <ProductDefinition/>
           <p>
-            <ExpandCircleDownRoundedIcon className={buyStatus ? 'icon buy' : 'icon offer'}/>
             人気推移
           </p>
           <div className='offer-data'>
             <img src='https://qiita-user-contents.imgix.net/https%3A%2F%2Fqiita-image-store.s3.ap-northeast-1.amazonaws.com%2F0%2F1337870%2F051aa72c-6d8a-2528-4d57-f233021af234.png?ixlib=rb-4.0.0&auto=format&gif-q=60&q=75&s=81f03a92e54688318c204bd0f383752a' width={'100%'}/>
           </div>
           <p>
-            <ExpandCircleDownRoundedIcon className={buyStatus ? 'icon buy' : 'icon offer'}/>
             お問い合わせ
           </p>
           <button className='contact-button'>
-            <ContactSupportTwoToneIcon className='icon'/> 商品について質問
+            <ContactSupportOutlinedIcon className='icon'/> 商品について質問
           </button>
         </div>
         }
       </div>
       <div className='recommends coordination'>
         <p>
-          <ExpandCircleDownRoundedIcon className='icon'/>
           コディネート
         </p>
         <StyleCard styles={isSp ? recommendsStyleSp : recommendsStyle}/>
@@ -663,7 +659,6 @@ export default function ProductDetail() {
       </div>
       <div className='recommends items'>
         <p>
-          <ExpandCircleDownRoundedIcon className='icon'/>
           関連アイテム
         </p>
         <ProductCard products={isSp ? recommendsSp : recommends}/>

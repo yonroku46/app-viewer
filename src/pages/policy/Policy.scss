@@ -20,18 +20,18 @@ $app-sp-width: 767px;
     width: 78%;
     padding: 15px;
     border: 2px solid var(--bg-color);
-    border-radius: 8px;
+    border-radius: 4px;
     text-align: left;
     white-space: pre-wrap;
     overflow-y: scroll;
     &::-webkit-scrollbar-track {
       border-radius: 4px;
-      background-color: #0000;
+      background-color: var(--scroll-bg-color);
     }
     &::-webkit-scrollbar {
       width: 4px;
       height: 4px;
-      background-color: #0000;
+      background-color: var(--scroll-bg-color);
     }
     &::-webkit-scrollbar-thumb {
       border-radius: 4px;

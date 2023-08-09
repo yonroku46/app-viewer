@@ -21,7 +21,7 @@ $section-width: $app-max-width - $search-nav-sp-width;
   align-items: center;
   font-size: 13px;
   padding: 12px 18px;
-  border-radius: 8px;
+  border-radius: 4px;
   min-width: 180px;
   transition: top 0.4s cubic-bezier(0, 0, 0.2, 1), margin-top 0.4s cubic-bezier(0, 0, 0.2, 1);
   &:hover {
@@ -51,7 +51,7 @@ $section-width: $app-max-width - $search-nav-sp-width;
   color: white;
   text-align: center;
   padding: 24px 30px;
-  border-radius: 8px;
+  border-radius: 4px;
   width: 340px;
   &.show {
     top: 38%;

@@ -62,11 +62,13 @@ header {
 }
 body {
   margin: 0px;
+  --scroll-bg-color: rgba(0, 0, 0, 0);
   --bg-color: rgb(244, 244, 244);
   --bg-active-color: rgba(34, 34, 34, 0.5);
   --bg-active-dark-color: rgba(34, 34, 34, 0.85);
   --load-color: rgb(255, 255, 255);
   --load-off-color: rgba(255, 255, 255, 0.2);
+  --border-color: rgb(225, 227, 228);
   --backdrop-color: rgba(0, 0, 0, 0.45);
   --contents-color: rgb(255, 255, 255);
   --shadow-color: rgb(221, 221, 221);
@@ -99,7 +101,7 @@ main {
   max-width: $app-max-width;
   min-width: $app-min-width;
   min-height: calc((var(--vh, 1vh) * 100) - 48px - 16px);
-  border-radius: 8px;
+  border-radius: 4px;
   margin-top: $main-margin + $header-height;
   margin-bottom: $main-margin;
   margin-left: auto;
@@ -153,16 +155,16 @@ button {
   cursor: pointer;
   font-family: 'Noto Sans JP', sans-serif;
   padding: 6px 18px;
-  border-radius: 8px;
+  border-radius: 4px;
   border: 1px solid black;
   color: black;
   background-color: rgba(0, 0, 0, 0);
   font-weight: bold;
   transition: opacity 0.15s ease-in-out, color 0.15s ease-in-out, background-color 0.15s ease-in-out;
   &:hover {
-    border-color: var(--bg-active-color);
     background-color: var(--bg-color);
     color: var(--bg-active-color);
+    border-color: var(--bg-active-color);
   }
   &.disable {
     opacity: 0.5;
@@ -176,12 +178,12 @@ hr {
 }
 .contents {
   background-color: var(--contents-color);
-  border-radius: 8px;
+  border-radius: 4px;
   padding: 8px;
 }
 .fullsize {
   background-color: var(--contents-color);
-  border-radius: 8px;
+  border-radius: 4px;
   padding: 8px;
   display: flex;
   justify-content: center;
@@ -193,12 +195,12 @@ hr {
 .table {
   &::-webkit-scrollbar-track {
     border-radius: 4px;
-    background-color: #0000;
+    background-color: var(--scroll-bg-color);
   }
   &::-webkit-scrollbar {
     width: 4px;
     height: 4px;
-    background-color: #0000;
+    background-color: var(--scroll-bg-color);
   }
   &::-webkit-scrollbar-thumb {
     border-radius: 4px;
@@ -213,7 +215,7 @@ hr {
 .login-form, .auth-recover-form, .recover-form, .signup-form {
   background-color: white;
   border: 1px solid var(--bg-active-color);
-  border-radius: 8px;
+  border-radius: 4px;
   padding: 50px 40px;
 }
 
@@ -243,9 +245,9 @@ hr {
   }
 }
 @keyframes pulse {	
-  50% { 
+  50% {
     background: var(--load-color);
-  } 
+  }
 }
 @keyframes shake {
   0% {

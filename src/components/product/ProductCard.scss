@@ -14,21 +14,17 @@ $app-sp-width: 767px;
     position: relative;
     width: calc(20% - 20px);
     height: fit-content;
-    border-radius: 6px;
+    border-radius: 4px;
     background-image: none;
     overflow: hidden;
     box-shadow: unset;
     margin-top: 20px;
     margin-left: 20px;
-    // margin-right: calc(-20%);
-    // transform: translateX(50px) rotateX(-10deg) rotateY(45deg) translateZ(15px);
-    // transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     &:hover {
       cursor: pointer;
-      // margin-right: 0;
-      // transform: translateX(90px) rotateX(-10deg) rotateY(0deg) translateZ(-15px);
     }
     .like {
+      display: flex;
       position: absolute;
       z-index: 1;
       top: 2px;
@@ -38,14 +34,11 @@ $app-sp-width: 767px;
         transition: all 0.25s, transform 0.25s;
         transform: rotate(0deg);
         color: white;
-        stroke: gray;
-        stroke-width: 1px;
       }
       &.liked {
         svg {
           transform: rotate(72deg);
           color: var(--like-color);
-          stroke: black;
         }
       }
     }
@@ -55,7 +48,7 @@ $app-sp-width: 767px;
       left: 0px;
       height: 21px;
       min-width: 22px;
-      border-radius: 6px 6px 0px 0px;
+      border-radius: 4px 4px 0px 0px;
       -webkit-box-align: center;
       align-items: center;
       white-space: nowrap;
@@ -74,6 +67,17 @@ $app-sp-width: 767px;
       padding-top: 125%;
       position: relative;
       background-color: white;
+      &::after {
+        content: "";
+        position: absolute;
+        pointer-events: none;
+        top: 0;
+        right: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0.5;
+        background: linear-gradient(to top right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 70%, rgba(0, 0, 0, 0.15) 100%);
+      }
       img {
         top: 0px;
         width: 100%;
