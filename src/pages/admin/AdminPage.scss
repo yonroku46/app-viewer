@@ -1,7 +1,12 @@
+$footer-height: 16px;
+
 .admin {
+  margin-top: -$footer-height;
+  padding-top: $footer-height;
   .contents {
-    margin: 8px 8px 8px 16px;
+    margin: 0px 8px 0px 16px;
     transition: width 0.25s;
+    height: calc((var(--vh, 1vh) * 100) - 88px - 16px);
     box-shadow: 0 0px 4px 1px var(--shadow-color);
     .title {
       display: flex;

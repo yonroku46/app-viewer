@@ -378,6 +378,12 @@ export default function ProductDetail() {
     setThumbShow(true);
     setThumbCompShow(true);
   }
+  function snapToggle() {
+    setSnapShow(!snapShow);
+    if (snapShow) {
+      setHistoryShow(false);
+    }
+  }
   
   function liked() {
     setProd((prevProd) => ({
@@ -391,7 +397,9 @@ export default function ProductDetail() {
     navigator.clipboard.writeText(currentUrl).then(
       () => {
         dispatch(showTopPopup('URLをコピーしました'));
-      }, (error) => {}
+      }, (error) => {
+        dispatch(showTopPopup('サポートしないブラウザです'));
+      }
     );
   }
 
@@ -513,7 +521,7 @@ export default function ProductDetail() {
           </div>
         </div>
       </div>
-      <div className={snapShow ? 'snap-toggle active' : 'snap-toggle'} onClick={() => setSnapShow(!snapShow)}>
+      <div className={snapShow ? 'snap-toggle active' : 'snap-toggle'} onClick={() => snapToggle()}>
         <KeyboardArrowRightIcon className={snapShow ? 'icon active' : 'icon'}/>
       </div>
       {/* 詳細情報 */}
@@ -523,7 +531,7 @@ export default function ProductDetail() {
             <div className={compMode && thumbShow ? buyStatus ? 'data-info buy active' : 'data-info offer active' : 'data-info'}>
               <span className='status'>{prod.status}</span>
               <span>{dateToString(prod.date)}</span>
-              <span>{'Shop'}</span>
+              <span>{'ショップ'}</span>
             </div>
             <div className='buttons'>
               <div className='thumb-toggle visible' onClick={() => setThumbShow(!thumbShow)}>
@@ -537,7 +545,7 @@ export default function ProductDetail() {
             emulateTouch={true} thumbWidth={50} onChange={handleChange}>
             {prod.imgs.map(img => (
               <div key={img}>
-                <img src={img}/>
+                <img src={img} loading='lazy'/>
               </div>
             ))}
           </Carousel>
@@ -563,7 +571,7 @@ export default function ProductDetail() {
                 emulateTouch={true} thumbWidth={50} onChange={handleCompChange}>
                 {prod.history && prod.history[currentCompHistoryIndex].imgs.map(img => (
                   <div key={img}>
-                    <img src={img}/>
+                    <img src={img} loading='lazy'/>
                   </div>
                 ))}
               </Carousel>

@@ -137,7 +137,7 @@ export default function DataManage() {
 
   function DataTable() {
     return(
-      <Paper style={{ height: 'calc((var(--vh, 1vh) * 100) - 160px)', width: '100%' }}>
+      <Paper style={{ height: 'calc((var(--vh, 1vh) * 100) - 168px)', width: '100%' }}>
         <TableVirtuoso className='table' data={rows} components={VirtuosoTableComponents}
           fixedHeaderContent={fixedHeaderContent}
           itemContent={rowContent}

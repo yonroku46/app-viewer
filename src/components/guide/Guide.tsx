@@ -15,23 +15,23 @@ export default function Guide() {
       <div className='links'>
         <div className='link'>
           <ShoppingBagTwoToneIcon className='icon'/>
-          <label>商品について</label>
+          <span>商品について</span>
         </div>
         <div className='link'>
           <SavingsTwoToneIcon className='icon'/>
-          <label>決済について</label>
+          <span>決済について</span>
         </div>
         <div className='link'>
           <LocalShippingTwoToneIcon className='icon'/>
-          <label>配送について</label>
+          <span>配送について</span>
         </div>
         <div className='link'>
           <SwapHorizontalCircleTwoToneIcon className='icon'/>
-          <label>返品について</label>
+          <span>返品について</span>
         </div>
         <div className='link'>
           <ContactSupportTwoToneIcon className='icon'/>
-          <label>よくある質問</label>
+          <span>よくある質問</span>
         </div>
       </div>
     </div>

@@ -54,7 +54,7 @@ export default function StyleCard({ styles }: { styles: StyleData[] }) {
             <FavoriteRoundedIcon className='icon'/>
           </span>
           <CardActionArea className='media'>
-            <CardMedia component='img' image={data.imgs[0]} alt={data.name}/>
+            <CardMedia component='img' image={data.imgs[0]} loading='lazy' alt={data.name}/>
           </CardActionArea>
           <CardContent className='content'>
             <img className='profile' src={data.profile}/>

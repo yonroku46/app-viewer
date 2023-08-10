@@ -192,7 +192,7 @@ export default function SearchInput({ value, resetValue, onChange }: { value: st
       <div className='category-area'>
       {categoryList.map((category) => (
         <div className='category' key={category.categoryName} onClick={() => search(category.categoryName)}>
-          <img src={category.img}/>
+          <img src={category.img} loading='lazy'/>
           <div className='name'>{category.categoryName}</div>
         </div>
       ))}

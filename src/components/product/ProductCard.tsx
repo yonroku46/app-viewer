@@ -63,7 +63,7 @@ export default function ProductCard({ products }: { products: ProductData[] }) {
             <StarRoundedIcon className='icon'/>
           </span>
           <CardActionArea className='media'>
-            <CardMedia component='img' image={data.imgs[0]} alt={data.name}/>
+            <CardMedia component='img' image={data.imgs[0]} loading='lazy' alt={data.name}/>
             {data.priceSale &&
               <span className='sale-label'>
                 {calcDiscountRate(data.price, data.priceSale) + 'OFF'}

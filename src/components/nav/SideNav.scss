@@ -1,4 +1,5 @@
 $header-height: 48px;
+$footer-height: 16px;
 $app-max-width: 1280px;
 $app-min-width: 280px;
 $app-sp-width: 767px;
@@ -17,7 +18,7 @@ $section-width: $app-max-width - $search-nav-sp-width;
     border-radius: 4px;
     padding: 8px;
     width: $search-nav-width;
-    height: calc((var(--vh, 1vh) * 100) - 88px);
+    height: calc((var(--vh, 1vh) * 100) - 88px - 16px);
     box-shadow: 0 0px 4px 1px var(--shadow-color);
     &.sp {
       width: $search-nav-sp-width;

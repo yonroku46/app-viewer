@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@200;400;700;900&display=swap');
 
 $header-height: 48px;
+$footer-height: 16px;
 $app-max-width: 1280px;
 $app-min-width: 280px;
 $app-sp-width: 767px;
@@ -34,30 +35,30 @@ header {
     margin-right: auto;
     display: flex;
     align-items: center;
-  }
-  .logo {
-    cursor: pointer;
-    height: 30px;
-    margin: 10px;
-    filter: grayscale(1) brightness(0);
-    img {
+    .logo {
+      cursor: pointer;
       height: 30px;
-      margin-top: -1px;
+      margin: 10px;
+      filter: grayscale(1) brightness(0);
+      img {
+        height: 30px;
+        margin-top: -1px;
+      }
+      .labo {
+        transform: rotate(316deg);
+        margin-left: -12px;
+        margin-top: -12px;
+        margin-bottom: 12px;
+        font-size: 16px;
+      }
     }
-    .labo {
-      transform: rotate(316deg);
-      margin-left: -12px;
-      margin-top: -12px;
-      margin-bottom: 12px;
-      font-size: 16px;
+    .side {
+      display: flex;
+      align-items: center;
+      height: $header-height;
+      margin-right: 10px;
+      margin-left: auto;
     }
-  }
-  .side {
-    display: flex;
-    align-items: center;
-    height: $header-height;
-    margin-right: 10px;
-    margin-left: auto;
   }
 }
 body {
@@ -96,14 +97,34 @@ body {
   --sns-youtube-color: rgb(229, 9, 20);
   --sns-tiktok-color: rgb(0, 0, 0);
 }
+footer {
+  display: block;
+  background-color: black;
+  color: white;
+  height: $footer-height;
+  width: 100%;
+  .footer-main {
+    font-size: 10px;
+    max-width: $app-max-width;
+    min-width: $app-min-width;
+    height: $footer-height;
+    margin-left: auto;
+    margin-right: auto;
+    .side {
+      flex: 1;
+      opacity: 0.5;
+      text-align: right;
+      margin-right: 10px;
+    }
+  }
+}
 main {
   position: relative;
   max-width: $app-max-width;
   min-width: $app-min-width;
-  min-height: calc((var(--vh, 1vh) * 100) - 48px - 16px);
+  min-height: calc((var(--vh, 1vh) * 100) - 48px - 8px);
   border-radius: 4px;
   margin-top: $main-margin + $header-height;
-  margin-bottom: $main-margin;
   margin-left: auto;
   margin-right: auto;
 }
@@ -114,20 +135,6 @@ section {
     &.sp {
       margin-left: $search-nav-sp-width + $main-margin;
     }
-  }
-}
-footer {
-  display: block;
-  height: 16px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: -16px;
-  max-width: $app-max-width;
-  font-size: 10px;
-  opacity: 0.15;
-  div {
-    text-align: right;
-    margin-right: 6px;
   }
 }
 input {
@@ -190,6 +197,7 @@ hr {
   align-items: center;
   text-align: center;
   flex-direction: column;
+  margin-top: - $footer-height;
   height: calc((var(--vh, 1vh) * 100) - 88px);
 }
 .table {

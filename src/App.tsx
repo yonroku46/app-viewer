@@ -158,7 +158,11 @@ export default function App() {
   function Footer() {
     return(
       <footer>
-        <div>Copyright © 2023 Dad Inc. All Rights Reserved.</div>
+        <div className='footer-main'>
+          <div className='side'>
+            Copyright © 2023 Dad Inc. All Rights Reserved.
+          </div>
+        </div>
       </footer>
     )
   }

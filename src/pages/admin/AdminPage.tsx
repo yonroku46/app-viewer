@@ -45,11 +45,11 @@ export default function AdminPage() {
   }
 
   return(
-    <>
-    <SideNav menuItem={menuItem} fold={fold} setFold={setFold}/>
-    <section className={fold ? 'with-nav sp admin' : 'with-nav admin'}>
-      <TabView/>
+    <section className='admin'>
+      <SideNav menuItem={menuItem} fold={fold} setFold={setFold}/>
+      <section className={fold ? 'with-nav sp' : 'with-nav'}>
+        <TabView/>
+      </section>
     </section>
-    </>
   )
 }
