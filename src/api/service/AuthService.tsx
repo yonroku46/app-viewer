@@ -1,11 +1,14 @@
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { UserState } from "redux/types/UserActionTypes";
 import { userLogin, userLogout } from "redux/actions/userActions";
 import { ApiResponse, ApiRoutes } from 'api/Api';
+import { showTopPopup } from "redux/actions/popupActions";
 import axios from 'axios';
 
 export default class AuthService {
   dispatch = useDispatch();
+  navigate = useNavigate();
 
   async login(mail: string, password: string): Promise<any> {
     return axios.post<ApiResponse>(ApiRoutes.LOGIN, {
@@ -112,5 +115,16 @@ export default class AuthService {
     localStorage.removeItem('jwtInfo');
     localStorage.removeItem('currentUser');
     this.dispatch(userLogout());
+  }
+
+  loginRequire(): boolean {
+    const currentUser = localStorage.getItem('currentUser');
+    if (currentUser) {
+      return true;
+    } else {
+      this.dispatch(showTopPopup('ログインが必要です'));
+      this.navigate('/login');
+      return false;
+    }
   }
 }

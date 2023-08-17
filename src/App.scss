@@ -81,12 +81,12 @@ body {
   --warring-color: rgb(255, 165, 0);
   --like-color: rgb(255, 215, 0);
   --like-bg-color: rgba(255, 215, 0, 0.1);
-  --favorite-color: rgb(240, 42, 42);
-  --favorite-bg-color: rgba(240, 42, 42, 0.1);
+  --like-style-color: rgb(240, 42, 42);
+  --like-style-bg-color: rgba(240, 42, 42, 0.1);
   --buy-color: rgb(239, 98, 83);
   --buy-bg-color: rgba(239, 98, 83, 0.1);
-  --offer-color: rgb(65, 181, 185);
-  --offer-bg-color: rgba(65, 181, 185, 0.1);
+  --offer-color: rgb(48, 178, 127);
+  --offer-bg-color: rgb(48, 178, 127, 0.1);
   --menu-active-color: rgb(26, 99, 245);
   --menu-active-bg-color: rgba(26, 99, 245, 0.08);
   --sns-line-color: rgb(6, 199, 85);
@@ -286,5 +286,16 @@ hr {
   }
   100% {
     transform: scale(1);
+  }
+}
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }

@@ -29,4 +29,10 @@ $pulse-duration: 750ms;
     left: ($base-line-height / 2.5);
     animation-delay: ($pulse-duration / 1.5);
   }
+  &.dark {
+    background-color: var(--bg-color);
+    &:before, &:after {
+      background-color: var(--bg-color);
+    }
+  }
 }

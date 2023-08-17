@@ -2,9 +2,12 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from "react-router-dom";
 import { useMediaQuery } from 'react-responsive';
 import { useWindowScroll } from 'react-use';
-import ProductCard, { ProductData } from 'components/product/ProductCard';
+import ProductCard from 'components/product/ProductCard';
+import AuthService from 'api/service/AuthService';
+import ProductService, { ProductInfo } from 'api/service/ProductService';
 import StyleCard, { StyleData } from 'components/style/StyleCard';
 import Guide from 'components/guide/Guide';
+import Empty from "components/empty/Empty";
 import { useDispatch } from "react-redux";
 import { showTopPopup } from "redux/actions/popupActions";
 import { currency, calcDiscountRate, dateToString } from 'common/utils/StringUtils';
@@ -24,8 +27,10 @@ import FitScreenOutlinedIcon from '@mui/icons-material/FitScreenOutlined';
 import ContactSupportOutlinedIcon from '@mui/icons-material/ContactSupportOutlined';
 import NavigationRoundedIcon from '@mui/icons-material/NavigationRounded';
 import HighlightAltTwoToneIcon from '@mui/icons-material/HighlightAltTwoTone';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import Fab from '@mui/material/Fab';
 import Tooltip from '@mui/material/Tooltip';
+import Loading from 'components/backdrop/Loading';
 
 export default function ProductDetail() {
   const navigate = useNavigate();
@@ -33,8 +38,18 @@ export default function ProductDetail() {
   const isSp = useMediaQuery({ maxWidth: 767 });
   const { id } = useParams();
 
+  const authService = new AuthService();
+  const productService = new ProductService();
+
   const { y: windowY } = useWindowScroll();
   const spareArea: number = 100;
+
+  useEffect(() => {
+    if (id) {
+      const productId = parseInt(id);
+      getProductInfo(productId);
+    }
+  }, []);
 
   useEffect(() => {
     if (windowY > spareArea) {
@@ -44,98 +59,43 @@ export default function ProductDetail() {
     }
   }, [windowY]);
 
-  const prodDummy: ProductData = {
-    id: 1,
-    liked: false,
-    date: new Date(2023, 6, 13),
-    name: 'Nike Air Force',
-    imgs: [
-      'https://minimal-kit-react.vercel.app/assets/images/products/product_1.jpg',
-      'https://minimal-kit-react.vercel.app/assets/images/products/product_2.jpg',
-      'https://minimal-kit-react.vercel.app/assets/images/products/product_3.jpg',
-      'https://minimal-kit-react.vercel.app/assets/images/products/product_4.jpg',
-      'https://minimal-kit-react.vercel.app/assets/images/products/product_5.jpg',
-      'https://minimal-kit-react.vercel.app/assets/images/products/product_6.jpg',
-      'https://minimal-kit-react.vercel.app/assets/images/products/product_7.jpg',
-      'https://minimal-kit-react.vercel.app/assets/images/products/product_8.jpg',
-      'https://minimal-kit-react.vercel.app/assets/images/products/product_9.jpg',
-      'https://minimal-kit-react.vercel.app/assets/images/products/product_10.jpg'
-    ],
-    sizeImgIndex: 1,
-    price: 5000,
-    priceSale: 3000,
-    brand: 'Dickies',
-    colors: ['green', 'white', 'red', 'gray', 'yellow'],
-    status: 'S',
-    size: [
-      {name: 'ウエスト', value: '72', unit: 'cm'},
-      {name: 'ヒップ', value: '100', unit: 'cm'},
-      {name: 'パンツ丈', value: '107', unit: 'cm'},
-      {name: 'すそ周り', value: '74', unit: 'cm'},
-      {name: '裾', value: '54', unit: 'cm'},
-    ],
-    mainCategory: 'パンツ',
-    subCategory: 'デニム',
-    type: 'M',
-    tags: ['おしゃれ', '夏服', '新品'],
-    additional: [
-      {name: '素材', value: 'コットン100%'},
-      {name: '生産国', value: '米国'},
-    ],
-    history: [
-      {
-        id: 1,
-        date: new Date(2023, 7, 4),
-        name: 'Nike Air Force',
-        imgs: [
-          'https://minimal-kit-react.vercel.app/assets/images/products/product_6.jpg',
-          'https://minimal-kit-react.vercel.app/assets/images/products/product_7.jpg',
-          'https://minimal-kit-react.vercel.app/assets/images/products/product_8.jpg',
-          'https://minimal-kit-react.vercel.app/assets/images/products/product_9.jpg',
-          'https://minimal-kit-react.vercel.app/assets/images/products/product_10.jpg',
-        ],
-        price: 5000,
-        colors: ['green', 'white', 'red', 'gray', 'yellow'],
-        status: 'A',
-        size: [
-          {name: 'ウエスト', value: '72', unit: 'cm'},
-          {name: 'ヒップ', value: '100', unit: 'cm'},
-          {name: 'パンツ丈', value: '107', unit: 'cm'},
-          {name: 'すそ周り', value: '74', unit: 'cm'},
-          {name: '裾', value: '54', unit: 'cm'},
-        ],
-        mainCategory: 'パンツ',
-        subCategory: 'デニム',
-        type: 'M'
-      },
-      {
-        id: 1,
-        date: new Date(2023, 7, 8),
-        name: 'Nike Air Force',
-        imgs: [
-          'https://minimal-kit-react.vercel.app/assets/images/products/product_7.jpg',
-          'https://minimal-kit-react.vercel.app/assets/images/products/product_10.jpg',
-        ],
-        price: 6000,
-        colors: ['green', 'white', 'red', 'gray', 'yellow'],
-        status: 'B',
-        size: [
-          {name: 'ウエスト', value: '72', unit: 'cm'},
-          {name: 'ヒップ', value: '100', unit: 'cm'},
-          {name: 'パンツ丈', value: '107', unit: 'cm'},
-          {name: 'すそ周り', value: '74', unit: 'cm'},
-          {name: '裾', value: '54', unit: 'cm'},
-        ],
-        mainCategory: 'パンツ',
-        subCategory: 'デニム',
-        type: 'M'
-      }
-    ]
-  };
+  async function getProductInfo(productId: number) {
+    await productService.productInfo(productId).then(data => {
+      setProduct(data.responseData);
+      getProductHistoryInfo(data.responseData.productId, data.responseData.history);
+    });
+    setIsLoading(false);
+  }
 
-  const recommends: ProductData[] = [
+  async function getProductHistoryInfo(productId: number, productIdList: Array<number>) {
+    await productService.getProductHistoryInfo(productId, productIdList).then(data => {
+      setProductHistory(data.responseData.productList);
+    });
+  }
+
+  async function productLike(productId: number, liked: boolean) {
+    if (liked) {
+      await productService.productLike(productId).then(data => {
+        if (product) {
+          setProduct(
+            {...product, liked: liked}
+          );
+        }
+      });
+    } else {
+      await productService.productUnlike(productId).then(data => {
+        if (product) {
+          setProduct(
+            {...product, liked: liked}
+          );
+        }
+      });
+    }
+  }
+
+  const recommends: ProductInfo[] = [
     {
-      id: 1,
+      productId: 1,
       liked: true,
       date: new Date(2023, 7, 18),
       name: 'Nike Air Force',
@@ -153,10 +113,11 @@ export default function ProductDetail() {
       ],
       mainCategory: 'パンツ',
       subCategory: 'デニム',
-      type: 'M'
+      gender: 'M',
+      history: []
     },
     {
-      id: 2,
+      productId: 2,
       liked: true,
       date: new Date(2023, 7, 20),
       name: 'Nike Space Hippie 04 SUPER Edition',
@@ -173,10 +134,11 @@ export default function ProductDetail() {
       ],
       mainCategory: 'パンツ',
       subCategory: 'デニム',
-      type: 'M',
+      gender: 'M',
+      history: []
     },
     {
-      id: 3,
+      productId: 3,
       liked: false,
       date: new Date(2023, 7, 18),
       name: 'Nike Air Max Zephyr',
@@ -193,10 +155,11 @@ export default function ProductDetail() {
     ],
     mainCategory: 'パンツ',
     subCategory: 'デニム',
-    type: 'M',
+    gender: 'M',
+    history: []
     },
     {
-      id: 4,
+      productId: 4,
       liked: false,
       date: new Date(2023, 7, 17),
       name: 'Jodern Delta',
@@ -213,10 +176,11 @@ export default function ProductDetail() {
     ],
     mainCategory: 'パンツ',
     subCategory: 'デニム',
-    type: 'M',
+    gender: 'M',
+    history: []
     },
     {
-      id: 5,
+      productId: 5,
       liked: false,
       date: new Date(2023, 6, 17),
       name: 'Nike Air Max Up',
@@ -233,12 +197,13 @@ export default function ProductDetail() {
     ],
     mainCategory: 'パンツ',
     subCategory: 'デニム',
-    type: 'M',
+    gender: 'M',
+    history: []
     }
   ]
-  const recommendsSp: ProductData[] = recommends.slice();
+  const recommendsSp: ProductInfo[] = recommends.slice();
   recommendsSp.push({
-    id: 6,
+    productId: 6,
     liked: false,
     date: new Date(2023, 6, 17),
     name: 'Nike Air Max Up',
@@ -255,13 +220,14 @@ export default function ProductDetail() {
     ],
     mainCategory: 'パンツ',
     subCategory: 'デニム',
-    type: 'M',
+    gender: 'M',
+    history: []
   });
 
   const recommendsStyle: StyleData[] = [
     {
-      id: 1,
-      favorited: true,
+      styleId: 101,
+      liked: true,
       date: new Date(2023, 7, 18),
       profile: 'https://minimal-kit-react.vercel.app/assets/images/avatars/avatar_2.jpg',
       name: 'TestUser',
@@ -269,11 +235,11 @@ export default function ProductDetail() {
       size: [
         {name: '身長', value: '172', unit: 'cm'},
       ],
-      type: 'M'
+      gender: 'M'
     },
     {
-      id: 2,
-      favorited: true,
+      styleId: 102,
+      liked: true,
       date: new Date(2023, 7, 20),
       profile: 'https://minimal-kit-react.vercel.app/assets/images/avatars/avatar_2.jpg',
       name: 'TestUser',
@@ -281,11 +247,11 @@ export default function ProductDetail() {
       size: [
         {name: '身長', value: '163', unit: 'cm'},
       ],
-      type: 'M',
+      gender: 'M',
     },
     {
-      id: 3,
-      favorited: false,
+      styleId: 103,
+      liked: false,
       date: new Date(2023, 7, 18),
       profile: 'https://minimal-kit-react.vercel.app/assets/images/avatars/avatar_2.jpg',
       name: 'TestUser',
@@ -293,11 +259,11 @@ export default function ProductDetail() {
       size: [
       {name: '身長', value: '175', unit: 'cm'},
     ],
-    type: 'M',
+    gender: 'M',
     },
     {
-      id: 4,
-      favorited: false,
+      styleId: 104,
+      liked: false,
       date: new Date(2023, 7, 17),
       profile: 'https://minimal-kit-react.vercel.app/assets/images/avatars/avatar_2.jpg',
       name: 'TestUser',
@@ -305,11 +271,11 @@ export default function ProductDetail() {
       size: [
       {name: '身長', value: '180', unit: 'cm'},
     ],
-    type: 'M',
+    gender: 'M',
     },
     {
-      id: 5,
-      favorited: false,
+      styleId: 105,
+      liked: false,
       date: new Date(2023, 6, 17),
       profile: 'https://minimal-kit-react.vercel.app/assets/images/avatars/avatar_2.jpg',
       name: 'TestUser',
@@ -317,13 +283,13 @@ export default function ProductDetail() {
       size: [
       {name: '身長', value: '170', unit: 'cm'},
     ],
-    type: 'M',
+    gender: 'M',
     }
   ]
   const recommendsStyleSp: StyleData[] = recommendsStyle.slice();
   recommendsStyleSp.push({
-    id: 6,
-    favorited: false,
+    styleId: 106,
+    liked: false,
     date: new Date(2023, 6, 17),
     profile: 'https://minimal-kit-react.vercel.app/assets/images/avatars/avatar_10.jpg',
     name: 'SpUser',
@@ -331,11 +297,12 @@ export default function ProductDetail() {
     size: [
       {name: '身長', value: '169', unit: 'cm'},
     ],
-    type: 'M',
+    gender: 'M',
   });
 
 
-  const [prod, setProd] = useState<ProductData>(prodDummy);
+  const [product, setProduct] = useState<ProductInfo|undefined>(undefined);
+  const [productHistory, setProductHistory] = useState<Array<ProductInfo>>([]);
   const [snapShow, setSnapShow] = useState<boolean>(true);
   const [thumbShow, setThumbShow] = useState<boolean>(true);
   const [thumbCompShow, setThumbCompShow] = useState<boolean>(true);
@@ -344,6 +311,7 @@ export default function ProductDetail() {
   const [buyStatus, setBuyStatus] = useState<boolean>(true);
   const [compMode, setCompMode] = useState<boolean>(false);
   const [offerPrice, setOfferPrice] = useState<number>(0);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const prodStatusList: string[] = [
     'S', 'A', 'B', 'C', 'D'
@@ -362,6 +330,7 @@ export default function ProductDetail() {
     setCurrentCompHistoryIndex(index);
     setHistoryShow(false);
     setCompMode(true);
+    setCurrentCompIndex(0);
   }
 
   const offerPriceHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -385,11 +354,12 @@ export default function ProductDetail() {
     }
   }
   
-  function liked() {
-    setProd((prevProd) => ({
-      ...prevProd,
-      liked: !prevProd.liked
-    }));
+  function likeClick() {
+    if (product) {
+      if (authService.loginRequire()) {
+        productLike(product.productId, !product.liked);
+      }
+    }
   }
 
   function share() {
@@ -407,40 +377,41 @@ export default function ProductDetail() {
     window.scrollTo({ top: 0 });
   }
 
-  function ProductDefinition() {
+  function ProductDefinition({ product }: { product: ProductInfo })  {
     return(
       <div className='definition'>
-        <dl key='type'>
+        <dl key='gender'>
           <dt>性別タイプ</dt>
-          <dd>{prod.type === 'M' ? 'メンズ' : prod.type === 'W' ? 'レディース' : 'メンズ・レディース'}</dd>
+          <dd>
+            {product.gender === 'M' ? 'メンズ' : product.gender === 'W' ? 'レディース' : product.gender === 'A' ? '兼用' : ''}
+          </dd>
         </dl>
         <dl key='category'>
           <dt>カテゴリー</dt>
           <dd>
-            <span className='link' key={prod.mainCategory}>
-              <a href='#'>{prod.mainCategory}</a>
+            <span className='link' key={product.mainCategory}>
+              <a href='#'>{product.mainCategory}</a>
             </span>
-            {prod.subCategory &&
-              <span className='link' key={prod.subCategory}>
-                <a href='#'>{prod.subCategory}</a>
+            {product.subCategory &&
+              <span className='link' key={product.subCategory}>
+                <a href='#'>{product.subCategory}</a>
               </span>
             }
           </dd>
         </dl>
-        {prod.additional &&
-          prod.additional.map((data, index) => 
-            <dl key={'additional ' + index}>
-              <dt>{data.name}</dt>
-              <dd>{data.value}</dd>
+        {product.additional &&
+          Object.entries(product.additional).map(([additionalName, additionalValue]) => (
+            <dl key={additionalName}>
+              <dt>{additionalName}</dt>
+              <dd>{additionalValue}</dd>
             </dl>
-          )
-        }
-        {prod.brand &&
+        ))}
+        {product.brand &&
           <dl key='brand'>
             <dt>ブランド</dt>
             <dd>
-              <span className='link' key={prod.brand}>
-                <a href='#'>{prod.brand}</a>
+              <span className='link' key={product.brand}>
+                <a href='#'>{product.brand}</a>
               </span>
             </dd>
           </dl>
@@ -449,7 +420,7 @@ export default function ProductDetail() {
           <dt>カラー</dt>
           <dd>
             <div className='colors'>
-              {prod.colors.map((color) => (
+              {product.colors.map((color) => (
                 <Tooltip title={color} placement="top-end" key={color} arrow>
                   <span style={{ backgroundColor: color }}></span>
                 </Tooltip>
@@ -457,11 +428,11 @@ export default function ProductDetail() {
             </div>
           </dd>
         </dl>
-        {prod.tags &&
+        {product.tags?.length !== 0 &&
           <dl key='tags'>
             <dt>関連タグ</dt>
             <dd>
-              {prod.tags.map(tag =>
+              {product.tags?.map(tag =>
                 <span className='link' key={tag}>
                   <a href='#'>{tag}</a>
                 </span>
@@ -469,213 +440,238 @@ export default function ProductDetail() {
             </dd>
           </dl>
         }
+        <dl key='date'>
+          <dt>登録日</dt>
+          <dd>
+            {dateToString(product.date)}
+          </dd>
+        </dl>
       </div>
     )
   }
 
-  return(
-    <>
-    <section className='product-detail'>
-      <Fab className={fabShow ? 'fab active' : 'fab'} size='small' onClick={() => scrollToTop()}>
-        <NavigationRoundedIcon/>
-      </Fab>
-      {/* スナップ情報 */}
-      <div className={snapShow ? 'snap-area active' : 'snap-area'}>
-        <div className='snap'>
-          <div className={historyShow ? 'select-history active' : 'select-history'}>
-            <div className='thumbnail-list'>
-              {prod.history?.map((history, index) => 
-                <div className='thumbnail-data' onClick={() => handleHistoryChange(index)}>
-                  <img className='thumbnail' key={history.imgs[0]} src={history.imgs[0]}/>
-                  <div>
-                    <div className='date'>{dateToString(history.date)}</div>
-                    <div className='user'>{prod.history && prod.history.length - index + '回前のユーザー'}</div>
+  if (isLoading) {
+    return(
+      <section className='product-detail'>
+        <Loading dark={true}/>
+      </section>
+    )
+  }
+
+  if (product) {
+    return(
+      <>
+      <section className='product-detail'>
+        <Fab className={fabShow ? 'fab active' : 'fab'} size='small' onClick={() => scrollToTop()}>
+          <NavigationRoundedIcon/>
+        </Fab>
+        {/* スナップ情報 */}
+        <div className={snapShow ? 'snap-area active' : 'snap-area'}>
+          <div className='snap'>
+            <div className={productHistory?.length === 0 ? 'select-history disable' : historyShow ? 'select-history active' : 'select-history'}>
+              <div className='thumbnail-list'>
+                {productHistory?.length !== 0 && productHistory?.map((history, index) => 
+                  <div className='thumbnail-data' onClick={() => handleHistoryChange(index)} key={index}>
+                    <img className='thumbnail' key={history.imgs[0]} src={history.imgs[0]}/>
+                    <div>
+                      <div className='date'>{dateToString(history.date)}</div>
+                      <div className='user'>{productHistory?.length - index + '回前のユーザー'}</div>
+                    </div>
                   </div>
-                </div>
-              )}
+                )}
+              </div>
             </div>
-          </div>
-          <img className='thumbnail' src={prod.imgs[0]} onClick={() => setHistoryShow(!historyShow)}/>
-          <div className='top'>
-            {prod.history &&
-              <button className={compMode ? buyStatus ? 'comp buy active' : 'comp offer active' : 'comp'} onClick={() => compToggle()}>
-                {compMode ? <CollectionsTwoToneIcon className='icon'/> : <LibraryAddCheckTwoToneIcon className='icon'/>}
+            <img className='thumbnail' src={product.imgs[0]} onClick={() => setHistoryShow(!historyShow)}/>
+            <div className='top'>
+              {productHistory?.length !== 0  &&
+                <button className={compMode ? buyStatus ? 'comp buy active' : 'comp offer active' : 'comp'} onClick={() => compToggle()}>
+                  {compMode ? <CollectionsTwoToneIcon className='icon'/> : <LibraryAddCheckTwoToneIcon className='icon'/>}
+                </button>
+              }
+              <button className={product.liked ? 'like liked' : 'like'} onClick={() => likeClick()}>
+                <StarRoundedIcon className='icon'/>
               </button>
-            }
-            <button className={prod.liked ? 'like liked' : 'like'} onClick={() => liked()}>
-              <StarRoundedIcon className='icon'/>
-            </button>
-            <button className='share' onClick={() => share()}>
-              <ShareTwoToneIcon className='icon'/>
-            </button>
-            {prod.priceSale && buyStatus &&
-              <div className='sale-label'>
-                <span>
-                  {calcDiscountRate(prod.price, prod.priceSale) + 'OFF'}
-                </span>
+              <button className='share' onClick={() => share()}>
+                <ShareTwoToneIcon className='icon'/>
+              </button>
+              {product.priceSale && buyStatus &&
+                <div className='sale-label'>
+                  <span>
+                    {calcDiscountRate(product.price, product.priceSale) + 'OFF'}
+                  </span>
+                </div>
+              }
+              <div className={product.priceSale && buyStatus ? 'name' : 'name not-sale'}>
+                {product.name}
               </div>
-            }
-            <div className={prod.priceSale && buyStatus ? 'name' : 'name not-sale'}>
-              {prod.name}
             </div>
           </div>
         </div>
-      </div>
-      <div className={snapShow ? 'snap-toggle active' : 'snap-toggle'} onClick={() => snapToggle()}>
-        <KeyboardArrowRightIcon className={snapShow ? 'icon active' : 'icon'}/>
-      </div>
-      {/* 詳細情報 */}
-      <div className={snapShow ? 'product' : 'product hide'}>
-        <div className={isSp && compMode ? 'img-area comp' : 'img-area'}>
-          <div className='features'>
-            <div className={compMode && thumbShow ? buyStatus ? 'data-info buy active' : 'data-info offer active' : 'data-info'}>
-              <span className='status'>{prod.status}</span>
-              <span>{dateToString(prod.date)}</span>
-              <span>{'ショップ'}</span>
-            </div>
-            <div className='buttons'>
-              <div className='thumb-toggle visible' onClick={() => setThumbShow(!thumbShow)}>
-                {thumbShow ? <LayersRoundedIcon className='icon'/> : <LayersClearRoundedIcon className='icon'/>}
-              </div>
-            </div>
-          </div>
-          {/* 画像 */}
-          <Carousel className={thumbShow ? 'thumb-visible' : ''}
-            showArrows={false} showStatus={false} infiniteLoop={false} showThumbs={true} selectedItem={currentIndex}
-            emulateTouch={true} thumbWidth={50} onChange={handleChange}>
-            {prod.imgs.map(img => (
-              <div key={img}>
-                <img src={img} loading='lazy'/>
-              </div>
-            ))}
-          </Carousel>
+        <div className={snapShow ? 'snap-toggle active' : 'snap-toggle'} onClick={() => snapToggle()}>
+          <KeyboardArrowRightIcon className={snapShow ? 'icon active' : 'icon inactive'}/>
         </div>
-        {compMode ?
-          currentCompHistoryIndex !== undefined ?
-            <div className='img-area comp'>
-              <div className='features'>
-                <div className={compMode && thumbCompShow ? buyStatus ? 'data-info buy active' : 'data-info offer active' : 'data-info'}>
-                  <span className='status'>{prod.history && prod.history[currentCompHistoryIndex].status}</span>
-                  <span>{prod.history && dateToString(prod.history[currentCompHistoryIndex].date)}</span>
-                  <span>{prod.history && prod.history.length > 0 ? prod.history.length - currentCompHistoryIndex + '回前のユーザー' : 'Origin'}</span>
-                </div>
-                <div className='buttons'>
-                  <div className='thumb-toggle visible' onClick={() => setThumbCompShow(!thumbCompShow)}>
-                    {thumbCompShow ? <LayersRoundedIcon className='icon'/> : <LayersClearRoundedIcon className='icon'/>}
-                  </div>
+        {/* 詳細情報 */}
+        <div className={snapShow ? 'product' : 'product hide'}>
+          <div className={snapShow ? (isSp && compMode) ? 'img-area comp' : 'img-area' : (isSp && compMode) ? 'img-area snap-hide comp' : 'img-area snap-hide'}>
+            <div className='features'>
+              <div className={compMode && thumbShow ? buyStatus ? 'data-info buy active' : 'data-info offer active' : 'data-info'}>
+                <span className='status'>{product.status}</span>
+                <span>{dateToString(product.date)}</span>
+                <span>{'ショップ'}</span>
+              </div>
+              <div className='buttons'>
+                <div className='thumb-toggle visible' onClick={() => setThumbShow(!thumbShow)}>
+                  {thumbShow ? <LayersRoundedIcon className='icon'/> : <LayersClearRoundedIcon className='icon'/>}
                 </div>
               </div>
-              {/* 比較画像 */}
-              <Carousel className={thumbCompShow ? 'thumb-visible' : ''} 
-                showArrows={false} showStatus={false} infiniteLoop={false} showThumbs={true} selectedItem={currentCompIndex} 
-                emulateTouch={true} thumbWidth={50} onChange={handleCompChange}>
-                {prod.history && prod.history[currentCompHistoryIndex].imgs.map(img => (
-                  <div key={img}>
-                    <img src={img} loading='lazy'/>
+            </div>
+            {/* 画像 */}
+            <Carousel className={thumbShow ? 'thumb-visible' : ''}
+              showArrows={false} showStatus={false} infiniteLoop={false} showThumbs={true} selectedItem={currentIndex}
+              emulateTouch={true} thumbWidth={50} onChange={handleChange}>
+              {product.imgs.map(img => (
+                <div key={img}>
+                  <img src={img} loading='lazy'/>
+                </div>
+              ))}
+            </Carousel>
+            {/* 購入・オファー */}
+            {!compMode &&
+              <div className='buy-area'>
+                {buyStatus ?
+                <button className='buy now'>
+                  <div className='title'>購入</div>
+                  {product.priceSale && <div className='price'>{currency(product.priceSale)}</div>}
+                  <div className={product.priceSale ? 'sale' : 'price'}>{currency(product.price)}</div>
+                </button>
+                :
+                <button className='buy offer'>
+                  <div className='title'>オファー</div>
+                  <div className={buyStatus ? 'price' : 'price offer'}>
+                    <input type='text' placeholder='金額を入力' value={'¥' + offerPrice.toLocaleString("ja-JP")} onChange={offerPriceHandler}/>
                   </div>
-                ))}
-              </Carousel>
-            </div>
-          :
-            <div className='img-area comp empty' onClick={() => setHistoryShow(!historyShow)}>
-              <HighlightAltTwoToneIcon className='icon'/>
-              <div className='empty-msg'>
-                {'比較する履歴を\n選択してください'}
+                </button>
+                }
+                <Tooltip title={buyStatus ? 'オファーに変更' : '購入に変更'} placement="right-end" arrow>
+                  <button className={buyStatus ? 'status-toggle' : 'status-toggle turn'} onClick={() => setBuyStatus(!buyStatus)}>
+                    <HandshakeTwoToneIcon className={buyStatus ? 'icon' : 'icon turn'}/>
+                  </button>
+                </Tooltip>
               </div>
-            </div>
-        :
-        <div className='info-area'>
-          {/* 購入・オファー */}
-          <div className='info-buy'>
-            {buyStatus ?
-            <button className='buy now'>
-              <div className='title'>購入</div>
-              {prod.priceSale && <div className='price'>{currency(prod.priceSale)}</div>}
-              <div className={prod.priceSale ? 'sale' : 'price'}>{currency(prod.price)}</div>
-            </button>
+            }
+          </div>
+          {compMode ?
+            currentCompHistoryIndex !== undefined ?
+              <div className='img-area comp'>
+                <div className='features'>
+                  <div className={compMode && thumbCompShow ? buyStatus ? 'data-info buy active' : 'data-info offer active' : 'data-info'}>
+                    <span className='status'>{productHistory && productHistory[currentCompHistoryIndex].status}</span>
+                    <span>{productHistory && dateToString(productHistory[currentCompHistoryIndex].date)}</span>
+                    <span>{productHistory?.length > 0 ? productHistory.length - currentCompHistoryIndex + '回前のユーザー' : 'Origin'}</span>
+                  </div>
+                  <div className='buttons'>
+                    <div className='thumb-toggle visible' onClick={() => setThumbCompShow(!thumbCompShow)}>
+                      {thumbCompShow ? <LayersRoundedIcon className='icon'/> : <LayersClearRoundedIcon className='icon'/>}
+                    </div>
+                  </div>
+                </div>
+                {/* 比較画像 */}
+                <Carousel className={thumbCompShow ? 'thumb-visible' : ''} 
+                  showArrows={false} showStatus={false} infiniteLoop={false} showThumbs={true} selectedItem={currentCompIndex} 
+                  emulateTouch={true} thumbWidth={50} onChange={handleCompChange}>
+                  {productHistory && productHistory[currentCompHistoryIndex].imgs.map(img => (
+                    <div key={img}>
+                      <img src={img} loading='lazy'/>
+                    </div>
+                  ))}
+                </Carousel>
+              </div>
             :
-            <button className='buy offer'>
-              <div className='title'>オファー</div>
-              <div className={buyStatus ? 'price' : 'price offer'}>
-                <input type='text' placeholder='金額を入力' value={'¥' + offerPrice.toLocaleString("ja-JP")} onChange={offerPriceHandler}/>
+              <div className='img-area comp empty' onClick={() => setHistoryShow(!historyShow)}>
+                <HighlightAltTwoToneIcon className='icon'/>
+                <div className='empty-msg'>
+                  {'比較する履歴を\n選択してください'}
+                </div>
               </div>
-            </button>
-            }
-            <Tooltip title={buyStatus ? 'オファーに変更' : '購入に変更'} placement="right-end" arrow>
-              <button className={buyStatus ? 'status-toggle' : 'status-toggle turn'} onClick={() => setBuyStatus(!buyStatus)}>
-                <HandshakeTwoToneIcon className={buyStatus ? 'icon' : 'icon turn'}/>
+          :
+            <div className='info-area'>
+              {/* コンディション */}
+              <div className='condition'>
+                <p>
+                  状態
+                  <InfoOutlinedIcon className='icon'/>
+                </p>
+                <ul>
+                  {prodStatusList.map(status => 
+                    <li className={status === product.status ? buyStatus ? 'active buy' : 'active offer' : ''} key={status}>
+                      {status}
+                    </li>
+                  )}
+                </ul>
+              </div>
+              {/* 商品サイズ */}
+              <p>
+                サイズ
+                <InfoOutlinedIcon className='icon'/>
+              </p>
+              <button className={product.sizeIdx ? 'size-btn active' : 'size-btn'} onClick={() => product.sizeIdx && setCurrentIndex(product.sizeIdx)}>
+                <FitScreenOutlinedIcon className='icon'/> サイズ画像を見る
               </button>
-            </Tooltip>
-          </div>
-          {/* コンディション */}
-          <div className='condition'>
-            <p>
-              状態
-            </p>
-            <ul>
-              {prodStatusList.map(status => 
-                <li className={status === prod.status ? buyStatus ? 'active buy' : 'active offer' : ''} key={status}>
-                  {status}
-                </li>
-              )}
-            </ul>
-          </div>
-          {/* 商品サイズ */}
-          <p>
-            サイズ
-          </p>
-          <button className={prod.sizeImgIndex ? 'size-button active' : 'size-button'} onClick={() => prod.sizeImgIndex && setCurrentIndex(prod.sizeImgIndex)}>
-            <FitScreenOutlinedIcon className='icon'/> サイズ画像を見る
-          </button>
-          <div className='info-detail'>
-            {prod.size.map(size => 
-              <div className='size'>
-                <label>{size.name}</label>
-                <span>{size.value}</span>
-                <label>{size.unit}</label>
+              <div className='info-detail'>
+                {product.size &&
+                  Object.entries(product.size).map(([sizeName, sizeValue]) => (
+                    <div className='size' key={sizeName}>
+                      <label>{sizeName}</label>
+                      <span>{sizeValue}</span>
+                      <label>cm</label>
+                    </div>
+                ))}
               </div>
-            )}
-          </div>
-          {/* 商品詳細 */}
+              {/* 商品詳細 */}
+              <p>
+                商品詳細
+              </p>
+              <ProductDefinition product={product}/>
+              <p>
+                人気推移
+              </p>
+              <div className='offer-data'>
+                <img src='https://qiita-user-contents.imgix.net/https%3A%2F%2Fqiita-image-store.s3.ap-northeast-1.amazonaws.com%2F0%2F1337870%2F051aa72c-6d8a-2528-4d57-f233021af234.png?ixlib=rb-4.0.0&auto=format&gif-q=60&q=75&s=81f03a92e54688318c204bd0f383752a' width={'100%'}/>
+              </div>
+              <p>
+                お問い合わせ
+              </p>
+              <button className='contact-btn'>
+                <ContactSupportOutlinedIcon className='icon'/> 商品について質問
+              </button>
+            </div>
+          }
+        </div>
+        <div className='recommends coordination'>
           <p>
-            商品詳細
+            コディネート
           </p>
-          <ProductDefinition/>
-          <p>
-            人気推移
-          </p>
-          <div className='offer-data'>
-            <img src='https://qiita-user-contents.imgix.net/https%3A%2F%2Fqiita-image-store.s3.ap-northeast-1.amazonaws.com%2F0%2F1337870%2F051aa72c-6d8a-2528-4d57-f233021af234.png?ixlib=rb-4.0.0&auto=format&gif-q=60&q=75&s=81f03a92e54688318c204bd0f383752a' width={'100%'}/>
-          </div>
-          <p>
-            お問い合わせ
-          </p>
-          <button className='contact-button'>
-            <ContactSupportOutlinedIcon className='icon'/> 商品について質問
+          <StyleCard dataList={isSp ? recommendsStyleSp : recommendsStyle}/>
+          <button className='more-btn'>
+            + もっと見る
           </button>
         </div>
-        }
-      </div>
-      <div className='recommends coordination'>
-        <p>
-          コディネート
-        </p>
-        <StyleCard styles={isSp ? recommendsStyleSp : recommendsStyle}/>
-        <button className='more-button'>
-          + もっと見る
-        </button>
-      </div>
-      <div className='recommends items'>
-        <p>
-          関連アイテム
-        </p>
-        <ProductCard products={isSp ? recommendsSp : recommends}/>
-        <button className='more-button'>
-          + もっと見る
-        </button>
-      </div>
-      <Guide/>
-    </section>
-    </>
-  )
+        <div className='recommends items'>
+          <p>
+            関連アイテム
+          </p>
+          <ProductCard dataList={isSp ? recommendsSp : recommends}/>
+          <button className='more-btn'>
+            + もっと見る
+          </button>
+        </div>
+        <Guide/>
+      </section>
+      </>
+    )
+  } else {
+    return (
+      <Empty/>
+    )
+  }
 }

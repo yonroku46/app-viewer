@@ -1,65 +1,90 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import AuthService from 'api/service/AuthService';
+import ProductService, { ProductInfo } from 'api/service/ProductService';
 import { currency, calcDiscountRate } from "common/utils/StringUtils";
 import './ProductCard.scss';
 
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import StarRoundedIcon from '@mui/icons-material/StarRounded';
+import Skeleton from '@mui/material/Skeleton';
+import Box from '@mui/material/Box';
 import { Card, Typography, CardActionArea } from '@mui/material';
 
-type NonEmptyArray<T> = [T, ...T[]];
-
-export interface SizeData {
-  name: string;
-  value: string;
-  unit: string;
-}
-
-export interface AdditionalData {
-  name: string;
-  value: string;
-}
-
-export interface ProductData {
-  id: number;
-  liked?: boolean;
-  date: Date;
-  name: string;
-  imgs: NonEmptyArray<string>;
-  sizeImgIndex?: number;
-  price: number;
-  priceSale?: number;
-  brand?: string;
-  colors: NonEmptyArray<string>;
-  status: string;
-  size: NonEmptyArray<SizeData>;
-  mainCategory: string;
-  subCategory?: string;
-  type: string;
-  tags?: Array<string>;
-  additional?: Array<AdditionalData>;
-  history?: Array<ProductData>;
-}
-
-export default function ProductCard({ products }: { products: ProductData[] }) {
+export default function ProductCard({ dataList }: { dataList: ProductInfo[] }) {
   const navigate = useNavigate();
-  const [likedProducts, setLikedProducts] = useState<number[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [products, setProducts] = useState<ProductInfo[]>([]);
 
-  const likeClick = (event: React.MouseEvent, productId: number) => {
-    event.stopPropagation();
-    if (likedProducts.includes(productId)) {
-      setLikedProducts(likedProducts.filter((id) => id !== productId));
+  const authService = new AuthService();
+  const productService = new ProductService();
+
+  useEffect(() => {
+    if (dataList.length > 0) {
+      setIsLoading(false);
+      setProducts(dataList)
+    }
+  }, [dataList]);
+
+  async function productLike(productId: number, liked: boolean) {
+    if (liked) {
+      await productService.productLike(productId).then(data => {
+        const updatedDataList = products.map(data => {
+          if (data.productId === productId) {
+            return {...data, liked: liked};
+          }
+          return data;
+        });
+        setProducts(updatedDataList);
+      });
     } else {
-      setLikedProducts([...likedProducts, productId]);
+      await productService.productUnlike(productId).then(data => {
+        const updatedDataList = products.map(data => {
+          if (data.productId === productId) {
+            return {...data, liked: liked};
+          }
+          return data;
+        });
+        setProducts(updatedDataList);
+      });
+    }
+  }
+
+  const likeClick = (event: React.MouseEvent, productId: number, liked: boolean) => {
+    event.stopPropagation();
+    if (authService.loginRequire()) {
+      productLike(productId, liked)
     }
   };
+
+  function CardSkeleton() {
+    return(
+      <div className='product-card skeleton'>
+        <Skeleton variant='rectangular' height={170}/>
+        <Box sx={{ pt: 0.5 }}>
+          <Skeleton />
+          <Skeleton width='60%'/>
+        </Box>
+      </div>
+    )
+  }
+
+  if (isLoading) {
+    return(
+      <div className='contents cardbox'>
+        {Array.from(new Array(10)).map((item, index) => (
+          <CardSkeleton key={index}/>
+        ))}
+      </div>
+    )
+  }
 
   return(
     <div className='contents cardbox'>
       {products.map((data) => (
-        <Card className='product-card' key={data.id} onClick={() => navigate('/products/' + data.id)}>
-          <span className={likedProducts.includes(data.id) ? 'like liked' : 'like'} onClick={(event) => likeClick(event, data.id)}>
+        <Card className='product-card' key={data.productId} onClick={() => navigate('/products/' + data.productId)}>
+          <span className={data.liked ? 'like liked' : 'like'} onClick={(event) => likeClick(event, data.productId, !data.liked)}>
             <StarRoundedIcon className='icon'/>
           </span>
           <CardActionArea className='media'>

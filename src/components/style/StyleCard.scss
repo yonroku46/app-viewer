@@ -13,17 +13,19 @@ $app-sp-width: 767px;
     z-index: 0;
     position: relative;
     width: calc(20% - 20px);
-    height: fit-content;
     border-radius: 4px;
     background-image: none;
     overflow: hidden;
     box-shadow: unset;
     margin-top: 20px;
     margin-left: 20px;
+    &.skeleton {
+      pointer-events: none;
+    }
     &:hover {
       cursor: pointer;
     }
-    .favorite {
+    .like {
       display: flex;
       position: absolute;
       z-index: 1;
@@ -35,10 +37,10 @@ $app-sp-width: 767px;
         transform: rotate(0deg);
         color: white;
       }
-      &.favorited {
+      &.liked {
         svg {
           animation: sizeUpAndDown 0.3s;
-          color: var(--favorite-color);
+          color: var(--like-style-color);
         }
       }
     }
@@ -120,7 +122,7 @@ $app-sp-width: 767px;
       width: calc(33.3% - 8px);
       margin-top: 8px;
       margin-left: 8px;
-      .favorite {
+      .like {
         svg {
           font-size: 19px;
         }

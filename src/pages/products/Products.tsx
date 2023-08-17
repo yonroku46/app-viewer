@@ -1,7 +1,8 @@
 import { MouseEvent, useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { SearchArea } from 'components/input/SearchInput';
-import ProductCard, { ProductData } from 'components/product/ProductCard';
+import ProductCard from 'components/product/ProductCard';
+import ProductService, { ProductFilter, ProductInfo } from 'api/service/ProductService';
 import ClothesSprite from 'components/sprite/ClothesSprite';
 import './Products.scss';
 
@@ -11,19 +12,35 @@ import { Menu, MenuItem } from '@mui/material';
 
 export default function Products() {
   const search = useLocation().search;
-  const query = new URLSearchParams(search);
+  const param = new URLSearchParams(search);
   const [value, setValue] = useState<string>('');
   const [filterOpen, setFilterOpen] = useState<boolean>(false);
 
+  const productService = new ProductService();
+
   useEffect(() => {
-    const getValue = query.get('v');
+    const getValue = param.get('v');
     if (getValue) {
       setValue(getValue);
     } else {
       setValue('');
     }
-  }, [query]);
+  }, [param]);
 
+  useEffect(() => {
+    getProductList();
+  }, []);
+
+  async function getProductList() {
+    const filter: ProductFilter = {
+      keyword: value,
+    };
+    await productService.productList(filter).then(data => {
+      setDataList(data.responseData.productList);
+    });
+  }
+
+  const [dataList, setDataList] = useState<ProductInfo[]>([]);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
   const open = Boolean(anchorEl);
@@ -79,9 +96,9 @@ export default function Products() {
     'https://estore.jeansmate.co.jp/cdn/shop/files/logo_12_280x.png?v=1623244895',
   ]
 
-  const recommends: ProductData[] = [
+  const recommends: ProductInfo[] = [
     {
-      id: 1,
+      productId: 1,
       liked: true,
       date: new Date(2023, 7, 18),
       name: 'Nike Air Force',
@@ -99,10 +116,11 @@ export default function Products() {
       ],
       mainCategory: 'パンツ',
       subCategory: 'デニム',
-      type: 'M'
+      gender: 'M',
+      history: []
     },
     {
-      id: 2,
+      productId: 2,
       liked: true,
       date: new Date(2023, 7, 20),
       name: 'Nike Space Hippie 04 SUPER Edition',
@@ -119,10 +137,11 @@ export default function Products() {
       ],
       mainCategory: 'パンツ',
       subCategory: 'デニム',
-      type: 'M',
+      gender: 'M',
+      history: []
     },
     {
-      id: 3,
+      productId: 3,
       liked: false,
       date: new Date(2023, 7, 18),
       name: 'Nike Air Max Zephyr',
@@ -139,10 +158,11 @@ export default function Products() {
     ],
     mainCategory: 'パンツ',
     subCategory: 'デニム',
-    type: 'M',
+    gender: 'M',
+    history: []
     },
     {
-      id: 4,
+      productId: 4,
       liked: false,
       date: new Date(2023, 7, 17),
       name: 'Jodern Delta',
@@ -159,10 +179,11 @@ export default function Products() {
     ],
     mainCategory: 'パンツ',
     subCategory: 'デニム',
-    type: 'M',
+    gender: 'M',
+    history: []
     },
     {
-      id: 5,
+      productId: 5,
       liked: false,
       date: new Date(2023, 6, 17),
       name: 'Nike Air Max Up',
@@ -179,10 +200,11 @@ export default function Products() {
     ],
     mainCategory: 'パンツ',
     subCategory: 'デニム',
-    type: 'M',
+    gender: 'M',
+    history: []
     },
     {
-      id: 6,
+      productId: 6,
       liked: false,
       date: new Date(2023, 6, 1),
       name: 'Nike Air Zoom',
@@ -199,10 +221,11 @@ export default function Products() {
     ],
     mainCategory: 'パンツ',
     subCategory: 'デニム',
-    type: 'M',
+    gender: 'M',
+    history: []
     },
     {
-      id: 7,
+      productId: 7,
       liked: true,
       date: new Date(2023, 7, 18),
       name: 'Nike Air Force',
@@ -220,10 +243,11 @@ export default function Products() {
     ],
     mainCategory: 'パンツ',
     subCategory: 'デニム',
-    type: 'M',
+    gender: 'M',
+    history: []
     },
     {
-      id: 8,
+      productId: 8,
       liked: true,
       date: new Date(2023, 7, 20),
       name: 'Nike Space Hippie 04 SUPER Edition',
@@ -240,10 +264,11 @@ export default function Products() {
     ],
     mainCategory: 'パンツ',
     subCategory: 'デニム',
-    type: 'M',
+    gender: 'M',
+    history: []
     },
     {
-      id: 9,
+      productId: 9,
       liked: false,
       date: new Date(2023, 7, 18),
       name: 'Nike Air Max Zephyr',
@@ -260,10 +285,11 @@ export default function Products() {
     ],
     mainCategory: 'パンツ',
     subCategory: 'デニム',
-    type: 'M',
+    gender: 'M',
+    history: []
     },
     {
-      id: 10,
+      productId: 10,
       liked: false,
       date: new Date(2023, 7, 17),
       name: 'Jodern Delta',
@@ -280,51 +306,8 @@ export default function Products() {
     ],
     mainCategory: 'パンツ',
     subCategory: 'デニム',
-    type: 'M',
-    },
-  ]
-
-  const products: ProductData[] = [
-    {
-      id: 11,
-      liked: false,
-      date: new Date(2023, 7, 18),
-      name: 'Nike ZoomX Super',
-      imgs: ['https://minimal-kit-react.vercel.app/assets/images/products/product_5.jpg'],
-      price: 5000,
-      priceSale: 1000,
-      colors: ['orange', 'black', 'red', 'yellow'],
-      status: 'S',
-      size: [
-      {name: 'ウエスト', value: '72', unit: 'cm'},
-      {name: 'ヒップ', value: '100', unit: 'cm'},
-      {name: 'パンツ丈', value: '107', unit: 'cm'},
-      {name: 'すそ周り', value: '74', unit: 'cm'},
-      {name: '裾', value: '54', unit: 'cm'},
-    ],
-    mainCategory: 'パンツ',
-    subCategory: 'デニム',
-    type: 'M',
-    },
-    {
-      id: 12,
-      liked: false,
-      date: new Date(2023, 7, 17),
-      name: 'Nike ZoomX:Re',
-      imgs: ['https://minimal-kit-react.vercel.app/assets/images/products/product_3.jpg'],
-      price: 5000,
-      colors: ['lightgray'],
-      status: 'S',
-      size: [
-        {name: 'ウエスト', value: '72', unit: 'cm'},
-        {name: 'ヒップ', value: '100', unit: 'cm'},
-        {name: 'パンツ丈', value: '107', unit: 'cm'},
-        {name: 'すそ周り', value: '74', unit: 'cm'},
-        {name: '裾', value: '54', unit: 'cm'},
-      ],
-      mainCategory: 'パンツ',
-      subCategory: 'デニム',
-      type: 'M',
+    gender: 'M',
+    history: []
     },
   ]
 
@@ -371,7 +354,7 @@ export default function Products() {
           <label>ブランド</label>
           <div className='quick-map'>
             {brandList.map((brand) => (
-              <img src={brand}/>
+              <img src={brand} key={brand}/>
             ))}
           </div>
         </div>
@@ -380,7 +363,7 @@ export default function Products() {
           <label>カテゴリー</label>
           <div className='quick-map'>
             {prodCategoryList.map(category => 
-              <div className='category'>
+              <div className='category' key={category}>
                 <ClothesSprite id={category} key={category}/>
               </div>
             )}
@@ -391,7 +374,7 @@ export default function Products() {
           <label>状態</label>
           <div className='quick-map'>
             {prodStatusList.map(status => 
-              <div className='level'>
+              <div className='level' key={status}>
                 {status}
               </div>
             )}
@@ -407,7 +390,7 @@ export default function Products() {
             <span style={{ color: 'var(--main-color)' }}>"{value}"</span> {recommends.length}件
           </div>
         </div>
-        <ProductCard products={recommends}/>
+        <ProductCard dataList={recommends}/>
       </>
       :
       <>
@@ -416,19 +399,19 @@ export default function Products() {
           <div className='sub'>New Arrivals</div>
           <div className='main'>新着</div>
         </div>
-        <ProductCard products={products}/>
+        <ProductCard dataList={dataList}/>
         {/* ランキング商品 */}
         <div className='menu-title'>
           <div className='sub'>Ranking</div>
           <div className='main'>人気アイテム</div>
         </div>
-        <ProductCard products={recommends}/>
+        <ProductCard dataList={recommends}/>
         {/* おすすめ商品 */}
         <div className='menu-title'>
           <div className='sub'>Recommends</div>
           <div className='main'>おすすめアイテム</div>
         </div>
-        <ProductCard products={recommends}/>
+        <ProductCard dataList={recommends}/>
       </>
       }
     </section>

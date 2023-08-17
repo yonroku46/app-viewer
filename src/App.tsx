@@ -14,13 +14,14 @@ import MenuNav, { MenuItem } from 'components/nav/MenuNav';
 import { showCenterLinkPopup } from "redux/actions/popupActions";
 import Home from 'pages/home/Home';
 import Search from 'pages/search/Search';
-import Empty from 'pages/empty/Empty';
+import Empty from 'components/empty/Empty';
 import MyPage from 'pages/mypage/MyPage';
 import Products from 'pages/products/Products';
 import ProductDetail from 'pages/products/ProductDetail';
 import AuthPage from 'pages/auth/AuthPage';
 import AuthRecover from 'pages/auth/AuthRecover';
-import AdminPage from 'pages/admin/AdminPage';
+import AdminPage from 'pages/manage/admin/AdminPage';
+import ShopPage from 'pages/manage/shop/ShopPage';
 import Login from 'pages/login/Login';
 import OAuth2Login from 'pages/login/OAuth2Login';
 import Recover from 'pages/recover/Recover';
@@ -108,7 +109,7 @@ export default function App() {
         dispatch(showPopup());
         const timer = setTimeout(() => {
           dispatch(hidePopup());
-        }, 2700);
+        }, 2200);
         return () => clearTimeout(timer);
       }
     }
@@ -187,8 +188,10 @@ export default function App() {
           <Route path="/policy" element={<Policy/>}/>
           <Route path="/auth" element={<AuthPage/>}/>
             <Route path="/auth/recover" element={<AuthRecover/>}/>
-          <Route path="/admin" element={<AdminPage/>}/>
-            <Route path="/admin/:tab" element={<AdminPage/>}/>
+          <Route path="/manage/admin" element={<AdminPage/>}/>
+            <Route path="/manage/admin/:tab" element={<AdminPage/>}/>
+          <Route path="/manage/shop" element={<ShopPage/>}/>
+            <Route path="/manage/shop/:tab" element={<ShopPage/>}/>
           <Route path='/*' element={<Empty/>}/>
         </Routes>
       </main>

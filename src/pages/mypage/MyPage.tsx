@@ -19,7 +19,7 @@ export default function MyPage() {
     if (user) {
       getUserInfo();
     } else {
-      navigate('/login');
+      navigate('/login', { replace: true });
     }
   }, []);
 

@@ -19,6 +19,7 @@ export function AxiosClientProvider({ children }: { children: React.ReactNode })
   
   const isRefreshing = useRef<boolean>(false);
   let refreshTokenSubject = new BehaviorSubject<any>(null);
+  const tokenPrefix = `${process.env.REACT_APP_TOKEN_PREFIX}`;
 
   // クリーンアップ
   useEffect(() => {
@@ -38,8 +39,10 @@ export function AxiosClientProvider({ children }: { children: React.ReactNode })
     (config) => {
       if (config.headers) {
         const currentUser = authService.getCurrentUser();
-        config.headers.Authorization = `Bearer ${currentUser ? currentUser.token : ''}`;
-        config.headers.RefreshToken = `Bearer ${currentUser ? currentUser.refreshToken : ''}`;
+        if (currentUser) {
+          config.headers.Authorization = `${tokenPrefix} ${currentUser.token}`;
+          config.headers.RefreshToken = `${tokenPrefix} ${currentUser.refreshToken}`;
+        }
       }
       return config;
     }
@@ -91,7 +94,7 @@ export function AxiosClientProvider({ children }: { children: React.ReactNode })
           refreshTokenSubject.next(response.responseData.token);
           return axios(addToken(error.config));
         } else {
-          authService.logout(false);
+          authService.logout(true);
           openPopup('セッション満了', 'セッションエラーが発生しました。\nもう一度ログインをお願いします。', '/login');
           return throwError(response);
         }
@@ -119,7 +122,7 @@ export function AxiosClientProvider({ children }: { children: React.ReactNode })
   }
 
   function handle409Error(): void {
-    authService.logout(false);
+    authService.logout(true);
     openPopup('エラー', 'エラーが発生しました。\nもう一度ログインをお願いします。', '/login');
   }
 
@@ -132,8 +135,10 @@ export function AxiosClientProvider({ children }: { children: React.ReactNode })
     const currentUser = authService.getCurrentUser();
     if (config) {
       if (config.headers) {
-        config.headers.Authorization = `Bearer ${currentUser ? currentUser.token : ''}`;
-        config.headers.RefreshToken = `Bearer ${currentUser ? currentUser.refreshToken : ''}`;
+        if (currentUser) {
+          config.headers.Authorization = `${tokenPrefix} ${currentUser.token}`;
+          config.headers.RefreshToken = `${tokenPrefix} ${currentUser.refreshToken}`;
+        }
       }
       return config;
     } else {

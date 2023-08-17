@@ -69,6 +69,7 @@ $app-sp-width: 767px;
           border: 1px solid var(--border-color);
           border-radius: 4px;
           padding: 6px 0;
+          transition: all 0.25s;
           &:hover {
             cursor: pointer;
             box-shadow: 0 0px 4px 1px var(--shadow-color);
@@ -102,6 +103,7 @@ $app-sp-width: 767px;
           padding: 10px 22px;
           border-radius: 4px;
           border: 1px solid var(--border-color);
+          transition: all 0.25s;
           &:hover {
             cursor: pointer;
             box-shadow: 0 0px 4px 1px var(--shadow-color);
@@ -203,25 +205,25 @@ $app-sp-width: 767px;
     z-index: 3;
     position: sticky;
     width: fit-content;
-    top: 42px;
+    top: 44px;
+    margin-bottom: -9px;
     margin-left: auto;
     margin-right: auto;
-    margin-top: -24px;
-    margin-bottom: -9px;
-    opacity: 0.2;
     color: var(--bg-active-color);
-    transition: all 0.25s;
+    transition: all 0.45s;
     &.active {
+      margin-top: -24px;
       top: 85px;
     }
     &:hover {
       cursor: pointer;
-      opacity: 0.75;
     }
     .icon {
+      color: lightgray;
       transform: rotate(90deg);
       &.active {
         transform: rotate(270deg);
+        animation: fadeIn 0.7s;
       }
     }
   }
@@ -235,7 +237,7 @@ $app-sp-width: 767px;
     margin-left: -8px;
     box-shadow: 0px 3px 4px 0 var(--shadow-color);
     background-color: white;
-    transition: all 0.25s;
+    transition: all 0.45s;
     &:not(.active) {
       transform: translate(0, -62px);
       margin-bottom: -58px;
@@ -252,7 +254,7 @@ $app-sp-width: 767px;
         flex-direction: column;
         padding: 0px 8px 8px 6px;
         background-color: white;
-        box-shadow: 0px 3px 4px 0 var(--shadow-color);
+        box-shadow: 3px 3px 4px 0 var(--shadow-color);
         border-radius: 0 0 4px 4px;
         margin-top: -6px;
         margin-left: -6px;
@@ -261,6 +263,9 @@ $app-sp-width: 767px;
         margin-top: 50px;
         pointer-events: none;
         transition: all 0.25s;
+        &.disable {
+          display: none;
+        }
         &.active {
           pointer-events: auto;
           transform: translateY(0px);
@@ -407,6 +412,14 @@ $app-sp-width: 767px;
       margin-top: 0px;
       margin-bottom: 10px;
       font-size: 15px;
+      .icon {
+        margin-left: 4px;
+        font-size: 18px;
+        color: lightgray;
+        &:hover {
+          cursor: pointer;
+        }
+      }
     }
     .img-area {
       position: sticky;
@@ -415,7 +428,10 @@ $app-sp-width: 767px;
       height: fit-content;
       flex: 1;
       padding-right: 40px;
-      transition: width 0.25s;
+      transition: width 0.25s, top 0.25s;
+      &.snap-hide {
+        top: 64px;
+      }
       &.comp {
         display: flex;
         flex: 1;
@@ -612,6 +628,80 @@ $app-sp-width: 767px;
         }
       }
     }
+    .buy-area {
+      display: flex;
+      margin-top: 10px;
+      .buy {
+        position: relative;
+        display: inline-flex;
+        flex: 1;
+        height: fit-content;
+        align-items: center;
+        font-size: 18px;
+        padding: 10px 15px;
+        height: 47px;
+        color: white;
+        border-color: var(--bg-active-color);
+        transition: background-color 0.25s;
+        &.now {
+          background-color: var(--buy-color)
+        }
+        &.offer {
+          background-color: var(--offer-color);
+        }
+        .title {
+          width: fit-content;
+          width: 80px;
+          padding-right: 15px;
+          border-right: 1px solid white;
+        }
+        .price {
+          padding-left: 15px;
+          &.offer {
+            flex: 1;
+          }
+          input {
+            width: 100%;
+            font-size: 18px;
+            font-weight: bold;
+            color: white;
+            padding: 0;
+            background-color: unset;
+            border: none;
+            outline: none;
+            &::placeholder {
+              color: white;
+            }
+          }
+        }
+        .sale {
+          opacity: 0.3;
+          margin-left: 4px;
+          font-weight: 500;
+          text-decoration: line-through;
+        }
+      }
+      .status-toggle {
+        display: flex;
+        align-items: center;
+        padding: 0px 10px;
+        margin-left: 10px;
+        border-color: var(--buy-color);
+        &.turn {
+          border-color: var(--offer-color);
+        }
+        .icon {
+          font-size: 26px;
+          color: var(--buy-color);
+          transition: all 0.25s;
+          transform: rotateY(180deg);
+          &.turn {
+            color: var(--offer-color);
+            transform: rotateY(0deg);
+          }
+        }
+      }
+    }
     .info-area {
       display: flex;
       flex: 1;
@@ -649,80 +739,7 @@ $app-sp-width: 767px;
           }
         }
       }
-      .info-buy {
-        display: flex;
-        margin-bottom: 30px;
-        .buy {
-          position: relative;
-          display: inline-flex;
-          flex: 1;
-          height: fit-content;
-          align-items: center;
-          font-size: 18px;
-          padding: 10px 15px;
-          color: white;
-          border-color: var(--bg-active-color);
-          transition: background-color 0.25s;
-          &.now {
-            background-color: var(--buy-color)
-          }
-          &.offer {
-            background-color: var(--offer-color);
-          }
-          .title {
-            width: fit-content;
-            width: 80px;
-            padding-right: 15px;
-            border-right: 1px solid white;
-          }
-          .price {
-            padding-left: 15px;
-            &.offer {
-              flex: 1;
-            }
-            input {
-              width: 100%;
-              font-size: 18px;
-              font-weight: bold;
-              color: white;
-              padding: 0;
-              background-color: unset;
-              border: none;
-              outline: none;
-              &::placeholder {
-                color: white;
-              }
-            }
-          }
-          .sale {
-            opacity: 0.3;
-            margin-left: 4px;
-            font-weight: 500;
-            text-decoration: line-through;
-          }
-        }
-        .status-toggle {
-          display: flex;
-          align-items: center;
-          padding: 0px 10px;
-          margin-left: 8px;
-          border-color: var(--buy-color);
-          &.turn {
-            border-color: var(--offer-color);
-          }
-          .icon {
-            font-size: 26px;
-            color: var(--buy-color);
-            transition: all 0.25s;
-            transform: rotateY(180deg);
-            &.turn {
-              color: var(--offer-color);
-              transform: rotateY(0deg);
-            }
-          }
-        }
-      }
-      .size-button {
+      .size-btn {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -748,11 +765,12 @@ $app-sp-width: 767px;
           }
         }
       }
-      .contact-button {
+      .contact-btn {
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: 10px;
+        padding: 10px 15px;
+        height: 47px;
         margin-bottom: -1px;
         border-radius: 4px;
         font-size: 13px;
@@ -855,7 +873,7 @@ $app-sp-width: 767px;
         margin-right: 4px;
       }
     }
-    .more-button {
+    .more-btn {
       max-width: 200px;
       font-size: 12px;
       margin-left: auto;
@@ -937,6 +955,9 @@ $app-sp-width: 767px;
             margin-right: auto;
           }
         }
+      }
+      .buy-area {
+        margin-bottom: 20px;
       }
       .info-area {
         padding: 10px 0px;

@@ -29,4 +29,11 @@ export module ApiRoutes {
   // user
   const userRoot = `${root}/user`;
   export const USER_INFO = `${userRoot}/info`;
+  
+  // product
+  const productRoot = `${root}/product`;
+  export const PRODUCT_INFO = `${productRoot}/info`;
+  export const PRODUCT_FILTER = `${productRoot}/filter`;
+  export const PRODUCT_HISTORY = `${productRoot}/history`;
+  export const PRODUCT_LIKED = `${productRoot}/like`;
 }

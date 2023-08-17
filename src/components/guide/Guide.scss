@@ -4,7 +4,7 @@ $app-sp-width: 767px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 40px 0;
+  padding: 80px 0;
   background-color: var(--bg-color);
   border-radius: 4px;
   .main {
@@ -19,7 +19,8 @@ $app-sp-width: 767px;
   }
   .links {
     display: flex;
-    width: 60%;
+    width: 90%;
+    max-width: 900px;
     margin-left: auto;
     margin-right: auto;
     .link {
@@ -30,7 +31,7 @@ $app-sp-width: 767px;
       width: calc(25% - 16px);
       border: 2px solid var(--bg-color);
       background-color: white;
-      padding: 35px 10px;
+      padding: 50px 10px;
       border-radius: 4px;
       margin: 20px 8px;
       font-size: 12px;
@@ -66,7 +67,9 @@ $app-sp-width: 767px;
       flex-wrap: wrap;
       justify-content: center;
       .link {
-        margin: 8px;
+        width: calc(28% - 16px);
+        padding: 40px 10px;
+        margin: 8px 4px;
       }
     }
   }

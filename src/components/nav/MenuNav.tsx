@@ -9,6 +9,7 @@ import Modal from 'components/modal/Modal';
 import './MenuNav.scss';
 
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
+import StorefrontOutlinedIcon from '@mui/icons-material/StorefrontOutlined';
 import LockPersonOutlinedIcon from '@mui/icons-material/LockPersonOutlined';
 import Badge from '@mui/material/Badge';
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -114,12 +115,20 @@ export default function MenuNav({ menuItem, currentPath, userName, profileImg, m
             マイページ
             <Badge className='badge' color="primary" badgeContent={100} max={99}/>
           </MenuItem>
+          {role === 2 &&
+          <MenuItem className='account-menu' onClick={() => link('/manage/shop/main')}>
+            <ListItemIcon>
+              <StorefrontOutlinedIcon/>
+            </ListItemIcon>
+            ショップ管理
+          </MenuItem>
+          }
           {role === 9 &&
-          <MenuItem className='account-menu' onClick={() => link('/admin/dashboard')}>
+          <MenuItem className='account-menu' onClick={() => link('/manage/admin/main')}>
             <ListItemIcon>
               <LockPersonOutlinedIcon/>
             </ListItemIcon>
-            管理者画面
+            アプリ管理
           </MenuItem>
           }
           <Divider/>

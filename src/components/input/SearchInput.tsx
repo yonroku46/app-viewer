@@ -130,9 +130,9 @@ export default function SearchInput({ value, resetValue, onChange }: { value: st
       history += history ? ',' + valueToSave : valueToSave;
       storage.setItem('localHistory', history);
     } else {
-      const idx = historyList.indexOf(valueToSave);
-      if (idx > -1) {
-        historyList.splice(idx, 1);
+      const index = historyList.indexOf(valueToSave);
+      if (index > -1) {
+        historyList.splice(index, 1);
         historyList.push(valueToSave);
         history = historyList.join(',');
         storage.setItem('localHistory', history);
