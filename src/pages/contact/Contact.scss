@@ -1,6 +1,9 @@
 $app-sp-width: 767px;
 
 .contact {
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
   .title {
     font-weight: bold;
     font-size: 24px;
@@ -25,10 +28,18 @@ $app-sp-width: 767px;
       font-size: 14px;
       margin-bottom: -14px;
     }
+    .select-box {
+      display: flex;
+      align-items: center;
+      .icon {
+        margin-left: -30px;
+        pointer-events: none;
+      }
+    }
     .email, .category, .content {
       input, select, textarea {
         width: -webkit-fill-available;
-        margin: 20px 0px;
+        margin: 20px 0px 10px 0px;
         padding: 12px;
         border-radius: 4px;
       }
@@ -39,8 +50,8 @@ $app-sp-width: 767px;
     }
     .content {
       textarea {
-        resize: none;
-        min-height: 280px;
+        resize: vertical;
+        height: 200px;
       }
     }
     .terms-check {

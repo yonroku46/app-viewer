@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthService from 'api/service/AuthService';
+import searchEmpty from 'assets/img/search-empty.png';
 import ProductService, { ProductInfo } from 'api/service/ProductService';
 import { currency, calcDiscountRate } from "common/utils/StringUtils";
 import './ProductCard.scss';
@@ -21,9 +22,17 @@ export default function ProductCard({ dataList }: { dataList: ProductInfo[] }) {
   const productService = new ProductService();
 
   useEffect(() => {
+    setProducts([]);
     if (dataList.length > 0) {
       setIsLoading(false);
       setProducts(dataList)
+    } else {
+      const timeoutId = setTimeout(() => {
+        if (dataList.length === 0) {
+          setIsLoading(false);
+        }
+      }, 1000);
+      return () => clearTimeout(timeoutId);
     }
   }, [dataList]);
 
@@ -80,10 +89,19 @@ export default function ProductCard({ dataList }: { dataList: ProductInfo[] }) {
     )
   }
 
+  if (products.length === 0) {
+    return(
+      <div className='empty'>
+        <img src={searchEmpty}/>
+        <div className='message'>{'条件に一致する商品が見つかりません'}</div>
+      </div>
+    )
+  }
+
   return(
     <div className='contents cardbox'>
       {products.map((data) => (
-        <Card className='product-card' key={data.productId} onClick={() => navigate('/products/' + data.productId)}>
+        <Card className='product-card' key={data.productId} onClick={() => window.open('/products/' + data.productId, '_blank')}>
           <span className={data.liked ? 'like liked' : 'like'} onClick={(event) => likeClick(event, data.productId, !data.liked)}>
             <StarRoundedIcon className='icon'/>
           </span>

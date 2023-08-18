@@ -4,6 +4,7 @@ import { UserState } from "redux/types/UserActionTypes";
 import AuthService from 'api/service/AuthService';
 import './Contact.scss';
 
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import Checkbox from '@mui/material/Checkbox';
 
 export default function Contact() {
@@ -54,11 +55,14 @@ export default function Contact() {
         </div>
         <div className='category'>
           <label>お問い合わせカテゴリー</label>
-          <select onChange={(e) => setCategory(e.target.value)}>
-            {categoryList.map((category) => (
-              <option value={category}>{category}</option>
-            ))}
-          </select>
+          <div className='select-box'>
+            <select onChange={(e) => setCategory(e.target.value)}>
+              {categoryList.map((category) => (
+                <option value={category}>{category}</option>
+              ))}
+            </select>
+            <ArrowDropDownIcon className='icon'/>
+          </div>
         </div>
         <div className='content'>
           <label>内容詳細</label>

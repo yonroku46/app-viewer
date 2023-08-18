@@ -21,14 +21,12 @@ $app-sp-width: 767px;
   .filter {
     height: 0px;
     overflow: hidden;
+    border-radius: 4px;
     transition: height 0.25s;
     &.open {
-      padding: 30px 10px;
-      position: sticky;
+      padding: 40px 10px;
       height: fit-content;
-      top: 47px;
-      z-index: 1;
-      background-color: white;
+      background-color: var(--bg-color);
     }
     label {
       display: block;
@@ -36,78 +34,26 @@ $app-sp-width: 767px;
       font-weight: bold;
     }
     .sort {
-      width: fit-content;
-      &:hover {
-        cursor: pointer;
-      }
       .sort-item {
         display: flex;
         align-items: center;
         margin: 10px;
-        padding: 6px 12px;
-        border: 1px solid var(--border-color);
-        width: 120px;
-        border-radius: 4px;
-        .value {
-          font-size: 12px;
-          font-weight: 500;
-          width: 78px;
+        select {
+          padding: 6px 12px;
+          border: 1px solid var(--border-color);
+          width: 140px;
+          height: 32px;
+          border-radius: 4px;
+          background-color: white;
+          appearance: none;
+          -webkit-appearance: none;
+          &:hover {
+            cursor: pointer;
+          }
         }
         .icon {
-          margin-left: auto;
-        }
-      }
-    }
-    .brand {
-      .quick-map {
-        display: flex;
-        -ms-flex-wrap: wrap;
-        flex-wrap: wrap;
-        padding: 10px;
-        img {
-          width: 12%;
-          border: 1px solid var(--border-color);
-          border-radius: 4px;
-          padding: 6px 0;
-          transition: all 0.25s;
-          &:hover {
-            cursor: pointer;
-            box-shadow: 0 0px 4px 1px var(--shadow-color);
-          }
-        }
-      }
-    }
-    .categorys {
-      .quick-map {
-        display: flex;
-        flex-wrap: wrap;
-        padding: 10px;
-        .category {
-          padding: 10px 20px;
-          border: 1px solid var(--border-color);
-          width: fit-content;
-          border-radius: 4px;
-          transition: all 0.25s;
-          &:hover {
-            cursor: pointer;
-            box-shadow: 0 0px 4px 1px var(--shadow-color);
-          }
-        }
-      }
-    }
-    .status {
-      .quick-map {
-        display: flex;
-        padding: 10px;
-        .level {
-          padding: 10px 22px;
-          border-radius: 4px;
-          border: 1px solid var(--border-color);
-          transition: all 0.25s;
-          &:hover {
-            cursor: pointer;
-            box-shadow: 0 0px 4px 1px var(--shadow-color);
-          }
+          margin-left: -30px;
+          pointer-events: none;
         }
       }
     }
@@ -122,24 +68,148 @@ $app-sp-width: 767px;
         }
       }
     }
+    .brand {
+      .quick-map {
+        display: flex;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        padding: 10px;
+        .brand-img {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 120px;
+          height: 60px;
+          border: 1px solid var(--border-color);
+          border-radius: 4px;
+          padding: 6px 0;
+          background-color: var(--bg-color);
+          box-shadow: 0px 3px 4px 0 inset var(--shadow-color);
+          transition: all 0.25s;
+          img {
+            width: 60%;
+          }
+          &:hover {
+            cursor: pointer;
+            opacity: 0.8;
+          }
+          &.active {
+            background-color: white;
+            box-shadow: 0 0px 4px 1px var(--shadow-color);
+          }
+        }
+      }
+    }
+    .categorys {
+      .quick-map {
+        display: flex;
+        flex-wrap: wrap;
+        padding: 10px;
+        .category {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-direction: column;
+          width: 120px;
+          height: 60px;
+          padding: 10px;
+          border: 1px solid var(--border-color);
+          border-radius: 4px;
+          background-color: var(--bg-color);
+          box-shadow: 0px 3px 4px 0 inset var(--shadow-color);
+          transition: all 0.25s;
+          .value {
+            text-transform: uppercase;
+            font-size: 11px;
+            font-weight: 900;
+          }
+          .icon {
+            opacity: 0.25;
+          }
+          &:hover {
+            cursor: pointer;
+          }
+          &.active {
+            background-color: white;
+            box-shadow: 0 0px 4px 1px var(--shadow-color);
+          }
+        }
+      }
+    }
+    .status {
+      .quick-map {
+        display: flex;
+        padding: 10px;
+        .level {
+          text-align: center;
+          width: 20%;
+          max-width: 60px;
+          padding: 10px 22px;
+          border-radius: 4px;
+          border: 1px solid var(--border-color);
+          background-color: var(--bg-color);
+          box-shadow: 0px 3px 4px 0 inset var(--shadow-color);
+          transition: all 0.25s;
+          &:hover {
+            cursor: pointer;
+          }
+          &.active {
+            background-color: white;
+            box-shadow: 0 0px 4px 1px var(--shadow-color);
+          }
+        }
+      }
+    }
+    .buttons {
+      display: flex;
+      justify-content: flex-end;
+      button {
+        display: flex;
+        align-items: center;
+        border-radius: 4px;
+        padding: 8px 24px;
+        transition: background-color 0.25s;
+        margin-top: 10px;
+        margin-left: 6px;
+        border: none;
+        .title {
+          font-weight: bold;
+          margin-right: 4px;
+          font-size: 13px;
+        }
+        .icon {
+          font-size: 18px;
+        }
+        &.reset {
+          background: var(--bg-active-color);
+          color: white;
+        }
+        &.search {
+          background: var(--main-color);
+          color: white;
+        }
+      }
+    }
   }
   .filter-area {
-    position: sticky;
-    top: 48px;
-    z-index: 2;
+    z-index: 1;
     display: flex;
     justify-content: flex-end;
     margin-top: -8px;
-    margin-bottom: -24px;
-    div {
+    margin-bottom: -35px;
+    .filter-toggle {
       display: flex;
       align-items: center;
-      border-radius: 4px;
-      padding: 5px 12px;
-      transition: background-color 0.25s;
+      border-radius: 0 0 4px 4px;
+      padding: 8px 20px;
       background-color: white;
-      border: 1px solid black;
-      margin-left: 6px;
+      transition: all 0.25s;
+      &:hover {
+        cursor: pointer;
+      }
+      &.active {
+        box-shadow: 0px 3px 4px 0 var(--shadow-color);
+      }
       .title {
         font-weight: bold;
         margin-right: 4px;
@@ -154,27 +224,12 @@ $app-sp-width: 767px;
       .icon {
         margin-left: 4px;
         font-size: 18px;
-      }
-      &:hover {
-        cursor: pointer;
-        color: white;
-        background-color: black;
+        transition: all 0.25s;
+        &.active {
+          transform: scaleY(-1);
+        }
       }
     }
-  }
-}
-.css-3dzjca-MuiPaper-root-MuiPopover-paper-MuiMenu-paper {
-  margin-left: 10px;
-  width: 163px;
-  box-shadow: 0 0px 4px 1px var(--shadow-color) !important;
-  .css-6hp17o-MuiList-root-MuiMenu-list {
-    padding-top: 0px;
-    padding-bottom: 0px;
-  }
-  .sort-menu {
-    font-family: 'Noto Sans JP', sans-serif;
-    font-size: 13px;
-    min-height: auto;
   }
 }
 
@@ -235,12 +290,20 @@ $app-sp-width: 767px;
     width: 100%;
     padding: 10px 8px;
     margin-left: -8px;
-    box-shadow: 0px 3px 4px 0 var(--shadow-color);
     background-color: white;
     transition: all 0.45s;
     &:not(.active) {
       transform: translate(0, -62px);
       margin-bottom: -58px;
+    }
+    &:after {
+      content: '';
+      position: absolute;
+      height: 4px;
+      bottom: 0;
+      width: 100%;
+      margin-left: -8px;
+      box-shadow: 0px 3px 4px 0 var(--shadow-color);
     }
     .snap {
       display: flex;
@@ -249,6 +312,7 @@ $app-sp-width: 767px;
       margin-left: auto;
       margin-right: auto;
       .select-history {
+        z-index: 3;
         display: flex;
         position: absolute;
         flex-direction: column;
@@ -888,10 +952,15 @@ $app-sp-width: 767px;
     .filter {
       .brand {
         .quick-map {
-          img {
-            width: 32%;
+          .brand-img {
+            width: 31%;
           }
         }
+      }
+    }
+    .filter-area {
+      .filter-toggle {
+        padding: 8px;
       }
     }
   }

@@ -6,12 +6,11 @@ type NonEmptyArray<T> = [T, ...T[]];
 
 export interface ProductFilter {
   keyword?: string;
-  fromPrice?: number;
-  toPrice?: number;
-  brand?: string;
-  mainCategory?: string;
-  subCategory?: string;
-  status?: number;
+  minPrice?: number;
+  maxPrice?: number;
+  brands?: Array<string>;
+  category?: Array<number>;
+  status?: Array<number>;
 }
 
 export interface ProductInfo {
@@ -51,7 +50,14 @@ export default class ProductService {
   }
   
   async productList(filter: ProductFilter): Promise<any> {
-    const params = filter;
+    const params = {
+      keyword: filter.keyword,
+      minPrice: filter.minPrice,
+      maxPrice: filter.maxPrice,
+      brands: filter.brands?.join(','),
+      category: filter.category?.join(','),
+      status: filter.status?.join(',')
+    }
     return axios.get<ApiResponse>(ApiRoutes.PRODUCT_FILTER, {params})
     .then(response => {
       if (response && !response.data?.hasErrors) {

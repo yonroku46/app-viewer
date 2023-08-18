@@ -66,7 +66,7 @@ export default function App() {
     contact: { title: 'お問い合わせ', description: 'お問い合わせページ' },
     policy: { title: '運用ポリシー', description: '運用ポリシーページ' },
     auth: { title: '認証', description: '認証ページ' },
-    admin: { title: '管理者ページ', description: '管理者ページへようこそ' },
+    manage: { title: '管理者ページ', description: '管理者ページへようこそ' },
   };
 
   const menuItem: MenuItem[] = [

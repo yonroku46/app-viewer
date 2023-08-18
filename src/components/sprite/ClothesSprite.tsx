@@ -6,8 +6,8 @@ interface ClothesSpriteProps {
   size?: number;
 }
 
-const ClothesSprite: React.FC<ClothesSpriteProps> = ({ id, color, size = 65 }) => (
-  <svg fill={color} width={size} height={size}>
+const ClothesSprite: React.FC<ClothesSpriteProps> = ({ id, color, size = 55 }) => (
+  <svg fill={color} width={size} height={size} className='icon'>
     <use href={`${ClothesSpriteSVG}#${id}`}/>
   </svg>
 );

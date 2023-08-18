@@ -318,7 +318,7 @@ $section-width: $app-max-width - $search-nav-sp-width;
     .menu {
       display: block;
       .userinfo {
-        width: calc(100% - $nav-margin);
+        width: calc(100% - 38px);
         margin-left: $nav-sp-margin;
         margin-right: $nav-sp-margin;
       }

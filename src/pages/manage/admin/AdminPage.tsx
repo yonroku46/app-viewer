@@ -7,9 +7,12 @@ import UserManage from "./UserManage";
 import DataManage from "./DataManage";
 import './AdminPage.scss';
 
+import ForumTwoToneIcon from '@mui/icons-material/ForumTwoTone';
 import SpaceDashboardTwoToneIcon from '@mui/icons-material/SpaceDashboardTwoTone';
-import DonutSmallTwoToneIcon from '@mui/icons-material/DonutSmallTwoTone';
 import PhotoCameraFrontTwoToneIcon from '@mui/icons-material/PhotoCameraFrontTwoTone';
+import StoreMallDirectoryTwoToneIcon from '@mui/icons-material/StoreMallDirectoryTwoTone';
+import HeadsetTwoToneIcon from '@mui/icons-material/HeadsetTwoTone';
+import NotificationsActiveTwoToneIcon from '@mui/icons-material/NotificationsActiveTwoTone';
 
 export default function AdminPage() {
   const navigate = useNavigate();
@@ -22,12 +25,16 @@ export default function AdminPage() {
       category: '全体',
       items: [
         { value: 'dashboard', link: '/manage/admin/dashboard', icon: <SpaceDashboardTwoToneIcon/>, title: 'ダッシュボード'},
+        { value: 'messages', link: '/manage/admin/messages', icon: <ForumTwoToneIcon/>, title: 'メッセージ'},
       ]
-    },{
+    },
+    {
       category: '管理項目',
       items: [
         { value: 'user', link: '/manage/admin/user', icon: <PhotoCameraFrontTwoToneIcon/>, title: 'ユーザー管理'},
-        { value: 'data', link: '/manage/admin/data', icon: <DonutSmallTwoToneIcon/>, title: 'データ管理'},
+        { value: 'shop', link: '/manage/admin/shop', icon: <StoreMallDirectoryTwoToneIcon/>, title: 'ショップ管理'},
+        { value: 'contact', link: '/manage/admin/contact', icon: <HeadsetTwoToneIcon/>, title: 'お問い合わせ管理'},
+        { value: 'notice', link: '/manage/admin/notice', icon: <NotificationsActiveTwoToneIcon/>, title: 'お知らせ管理'},
       ]
     },
   ]
@@ -35,7 +42,13 @@ export default function AdminPage() {
   function TabView() {
     if (tab === 'user') {
       return <UserManage/>;
-    } else if (tab === 'data') {
+    } else if (tab === 'messages') {
+      return <DataManage/>;
+    } else if (tab === 'shop') {
+      return <DataManage/>;
+    } else if (tab === 'contact') {
+      return <DataManage/>;
+    } else if (tab === 'notice') {
       return <DataManage/>;
     } else if (tab === 'dashboard') {
       return <DashBoard/>;

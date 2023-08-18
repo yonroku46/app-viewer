@@ -6,8 +6,11 @@ import DashBoard from "./DashBoard";
 import DataManage from "./DataManage";
 import './ShopPage.scss';
 
+import ForumTwoToneIcon from '@mui/icons-material/ForumTwoTone';
 import SpaceDashboardTwoToneIcon from '@mui/icons-material/SpaceDashboardTwoTone';
-import DonutSmallTwoToneIcon from '@mui/icons-material/DonutSmallTwoTone';
+import ConnectWithoutContactTwoToneIcon from '@mui/icons-material/ConnectWithoutContactTwoTone';
+import LocalShippingTwoToneIcon from '@mui/icons-material/LocalShippingTwoTone';
+import ContentPasteSearchTwoToneIcon from '@mui/icons-material/ContentPasteSearchTwoTone';
 
 export default function ShopPage() {
   const navigate = useNavigate();
@@ -20,11 +23,14 @@ export default function ShopPage() {
       category: '全体',
       items: [
         { value: 'dashboard', link: '/manage/shop/dashboard', icon: <SpaceDashboardTwoToneIcon/>, title: 'ダッシュボード'},
+        { value: 'messages', link: '/manage/shop/messages', icon: <ForumTwoToneIcon/>, title: 'メッセージ'},
       ]
     },{
       category: '管理項目',
       items: [
-        { value: 'data', link: '/manage/shop/products', icon: <DonutSmallTwoToneIcon/>, title: '商品管理'},
+        { value: 'products', link: '/manage/shop/products', icon: <ContentPasteSearchTwoToneIcon/>, title: '商品管理'},
+        { value: 'consign', link: '/manage/shop/consign', icon: <ConnectWithoutContactTwoToneIcon/>, title: '委託管理'},
+        { value: 'order', link: '/manage/shop/order', icon: <LocalShippingTwoToneIcon/>, title: '注文管理'},
       ]
     },
   ]
@@ -32,6 +38,12 @@ export default function ShopPage() {
   function TabView() {
     if (tab === 'products') {
       return <DataManage/>;
+    } else if (tab === 'messages') {
+      return <DashBoard/>;
+    } else if (tab === 'consign') {
+      return <DashBoard/>;
+    } else if (tab === 'order') {
+      return <DashBoard/>;
     } else if (tab === 'dashboard') {
       return <DashBoard/>;
     } else {

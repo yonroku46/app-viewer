@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from "react-router-dom";
 import { useMediaQuery } from 'react-responsive';
 import { useWindowScroll } from 'react-use';
+import { Helmet } from 'react-helmet-async';
 import ProductCard from 'components/product/ProductCard';
 import AuthService from 'api/service/AuthService';
 import ProductService, { ProductInfo } from 'api/service/ProductService';
@@ -461,6 +462,7 @@ export default function ProductDetail() {
   if (product) {
     return(
       <>
+      <Helmet title={product ? product.name + ' - DadLabo' : 'DadLabo'}/>
       <section className='product-detail'>
         <Fab className={fabShow ? 'fab active' : 'fab'} size='small' onClick={() => scrollToTop()}>
           <NavigationRoundedIcon/>
@@ -531,7 +533,7 @@ export default function ProductDetail() {
               emulateTouch={true} thumbWidth={50} onChange={handleChange}>
               {product.imgs.map(img => (
                 <div key={img}>
-                  <img src={img} loading='lazy'/>
+                  <img src={img} loading='eager'/>
                 </div>
               ))}
             </Carousel>
@@ -581,7 +583,7 @@ export default function ProductDetail() {
                   emulateTouch={true} thumbWidth={50} onChange={handleCompChange}>
                   {productHistory && productHistory[currentCompHistoryIndex].imgs.map(img => (
                     <div key={img}>
-                      <img src={img} loading='lazy'/>
+                      <img src={img} loading='eager'/>
                     </div>
                   ))}
                 </Carousel>

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import searchEmpty from 'assets/img/search-empty.png';
 import './StyleCard.scss';
 
 import CardContent from '@mui/material/CardContent';
@@ -41,9 +42,17 @@ export default function StyleCard({ dataList }: { dataList: StyleData[] }) {
   const [styles, setStyles] = useState<StyleData[]>([]);
 
   useEffect(() => {
+    setStyles([]);
     if (dataList.length > 0) {
       setIsLoading(false);
       setStyles(dataList)
+    } else {
+      const timeoutId = setTimeout(() => {
+        if (dataList.length === 0) {
+          setIsLoading(false);
+        }
+      }, 1000);
+      return () => clearTimeout(timeoutId);
     }
   }, [dataList]);
 
@@ -81,10 +90,19 @@ export default function StyleCard({ dataList }: { dataList: StyleData[] }) {
     )
   }
 
+  if (styles.length === 0) {
+    return(
+      <div className='empty'>
+        <img src={searchEmpty}/>
+        <div className='message'>{'条件に一致するデータが見つかりません'}</div>
+      </div>
+    )
+  }
+
   return(
     <div className='contents cardbox'>
       {styles.map((data) => (
-        <Card className='style-card' key={data.styleId} onClick={() => navigate('/styles/' + data.styleId)}>
+        <Card className='style-card' key={data.styleId} onClick={() => window.open('/styles/' + data.styleId, '_blank')}>
           <span className={data.liked ? 'like liked' : 'like'} onClick={(event) => likeClick(event, data.styleId)}>
             <FavoriteRoundedIcon className='icon'/>
           </span>
