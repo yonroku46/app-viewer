@@ -20,8 +20,8 @@ import Products from 'pages/products/Products';
 import ProductDetail from 'pages/products/ProductDetail';
 import AuthPage from 'pages/auth/AuthPage';
 import AuthRecover from 'pages/auth/AuthRecover';
-import AdminPage from 'pages/manage/admin/AdminPage';
-import ShopPage from 'pages/manage/shop/ShopPage';
+import AdminPage from 'pages/admin/AdminPage';
+import ShopPage from 'pages/shop/ShopPage';
 import Login from 'pages/login/Login';
 import OAuth2Login from 'pages/login/OAuth2Login';
 import Recover from 'pages/recover/Recover';
@@ -140,7 +140,9 @@ export default function App() {
       <header>
         <Helmet>
           <title>{currentPathData?.title ? currentPathData.title + ' - DadLabo' : 'DadLabo'}</title>
+          <meta property="og:title" content={currentPathData?.title ? currentPathData.title + ' - DadLabo' : 'DadLabo'}/>
           <meta name="description" content={currentPathData?.description ? currentPathData.description : 'DadLabへようこそ'}/>
+          <meta property="og:description" content={currentPathData?.description ? currentPathData.description : 'DadLabへようこそ'}/>
           <link rel="canonical" href={`https://dad-labo.com/${currentPath}`}/>
         </Helmet>
         <div className='header-main'>
@@ -188,10 +190,10 @@ export default function App() {
           <Route path="/policy" element={<Policy/>}/>
           <Route path="/auth" element={<AuthPage/>}/>
             <Route path="/auth/recover" element={<AuthRecover/>}/>
-          <Route path="/manage/admin" element={<AdminPage/>}/>
-            <Route path="/manage/admin/:tab" element={<AdminPage/>}/>
-          <Route path="/manage/shop" element={<ShopPage/>}/>
-            <Route path="/manage/shop/:tab" element={<ShopPage/>}/>
+          <Route path="/admin/manage" element={<AdminPage/>}/>
+            <Route path="/admin/manage/:tab" element={<AdminPage/>}/>
+          <Route path="/shop/manage" element={<ShopPage/>}/>
+            <Route path="/shop/manage/:tab" element={<ShopPage/>}/>
           <Route path='/*' element={<Empty/>}/>
         </Routes>
       </main>

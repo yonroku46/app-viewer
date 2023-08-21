@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from "react-router-dom";
 import { useMediaQuery } from 'react-responsive';
 import SideNav, { SideMenuItem } from 'components/nav/SideNav';
+import AuthService from 'api/service/AuthService';
 import DashBoard from "./DashBoard";
 import DataManage from "./DataManage";
 import './ShopPage.scss';
@@ -18,19 +19,28 @@ export default function ShopPage() {
   const [fold, setFold] = useState<boolean>(isSp);
   const { tab } = useParams();
 
+  const authService = new AuthService();
+
+  useEffect(() => {
+    const user = authService.getCurrentUser();
+    if (!user) {
+      navigate('/login', { replace: true });
+    }
+  }, []);
+
   const menuItem: SideMenuItem[] = [
     {
       category: '全体',
       items: [
-        { value: 'dashboard', link: '/manage/shop/dashboard', icon: <SpaceDashboardTwoToneIcon/>, title: 'ダッシュボード'},
-        { value: 'messages', link: '/manage/shop/messages', icon: <ForumTwoToneIcon/>, title: 'メッセージ'},
+        { value: 'main', link: '/shop/manage/main', icon: <SpaceDashboardTwoToneIcon/>, title: 'ダッシュボード'},
+        { value: 'messages', link: '/shop/manage/messages', icon: <ForumTwoToneIcon/>, title: 'メッセージ'},
       ]
     },{
       category: '管理項目',
       items: [
-        { value: 'products', link: '/manage/shop/products', icon: <ContentPasteSearchTwoToneIcon/>, title: '商品管理'},
-        { value: 'consign', link: '/manage/shop/consign', icon: <ConnectWithoutContactTwoToneIcon/>, title: '委託管理'},
-        { value: 'order', link: '/manage/shop/order', icon: <LocalShippingTwoToneIcon/>, title: '注文管理'},
+        { value: 'products', link: '/shop/manage/products', icon: <ContentPasteSearchTwoToneIcon/>, title: '商品管理'},
+        { value: 'consign', link: '/shop/manage/consign', icon: <ConnectWithoutContactTwoToneIcon/>, title: '委託管理'},
+        { value: 'order', link: '/shop/manage/order', icon: <LocalShippingTwoToneIcon/>, title: '注文管理'},
       ]
     },
   ]
@@ -44,7 +54,7 @@ export default function ShopPage() {
       return <DashBoard/>;
     } else if (tab === 'order') {
       return <DashBoard/>;
-    } else if (tab === 'dashboard') {
+    } else if (tab === 'main') {
       return <DashBoard/>;
     } else {
       return null;

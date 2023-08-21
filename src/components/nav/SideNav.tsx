@@ -23,9 +23,9 @@ export default function SideNav({ menuItem, fold, setFold }: { menuItem: SideMen
 
   useEffect(() => {
     const currentPath = location.pathname;
-    const path = currentPath.split('/')[2];
+    const path = currentPath.split('/')[3];
     setActiveMenu(path);
-  }, []);
+  }, [location]);
 
 
   function menuClick(value: string, link: string | undefined) {

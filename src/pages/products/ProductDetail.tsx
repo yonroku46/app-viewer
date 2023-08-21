@@ -390,11 +390,11 @@ export default function ProductDetail() {
         <dl key='category'>
           <dt>カテゴリー</dt>
           <dd>
-            <span className='link' key={product.mainCategory}>
+            <span className='category-link' key={product.mainCategory}>
               <a href='#'>{product.mainCategory}</a>
             </span>
             {product.subCategory &&
-              <span className='link' key={product.subCategory}>
+              <span className='category-link' key={product.subCategory}>
                 <a href='#'>{product.subCategory}</a>
               </span>
             }
@@ -434,7 +434,7 @@ export default function ProductDetail() {
             <dt>関連タグ</dt>
             <dd>
               {product.tags?.map(tag =>
-                <span className='link' key={tag}>
+                <span className='tag-link' key={tag}>
                   <a href='#'>{tag}</a>
                 </span>
               )}

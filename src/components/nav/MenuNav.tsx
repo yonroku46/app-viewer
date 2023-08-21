@@ -116,7 +116,7 @@ export default function MenuNav({ menuItem, currentPath, userName, profileImg, m
             <Badge className='badge' color="primary" badgeContent={100} max={99}/>
           </MenuItem>
           {role === 2 &&
-          <MenuItem className='account-menu' onClick={() => link('/manage/shop/main')}>
+          <MenuItem className='account-menu' onClick={() => link('/shop/manage/main')}>
             <ListItemIcon>
               <StorefrontOutlinedIcon/>
             </ListItemIcon>
@@ -124,7 +124,7 @@ export default function MenuNav({ menuItem, currentPath, userName, profileImg, m
           </MenuItem>
           }
           {role === 9 &&
-          <MenuItem className='account-menu' onClick={() => link('/manage/admin/main')}>
+          <MenuItem className='account-menu' onClick={() => link('/admin/manage/main')}>
             <ListItemIcon>
               <LockPersonOutlinedIcon/>
             </ListItemIcon>

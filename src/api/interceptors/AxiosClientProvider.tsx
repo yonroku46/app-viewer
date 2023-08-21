@@ -38,15 +38,20 @@ export function AxiosClientProvider({ children }: { children: React.ReactNode })
   const requestInterceptors = axios.interceptors.request.use(
     (config) => {
       if (config.headers) {
+        // パスセット
+        const currentUrl = new URL(window.location.href);
+        const path = currentUrl.pathname.split('/')[1];
+        config.headers['Mapping-Path'] = `${path}`;
+        // トークンセット
         const currentUser = authService.getCurrentUser();
         if (currentUser) {
-          config.headers.Authorization = `${tokenPrefix} ${currentUser.token}`;
-          config.headers.RefreshToken = `${tokenPrefix} ${currentUser.refreshToken}`;
+          config.headers['Authorization'] = `${tokenPrefix} ${currentUser.token}`;
+          config.headers['RefreshToken'] = `${tokenPrefix} ${currentUser.refreshToken}`;
         }
       }
       return config;
     }
-  );
+  ); 
 
   // レスポンスインターセプター
   const responseInterceptor = axios.interceptors.response.use(
@@ -136,8 +141,8 @@ export function AxiosClientProvider({ children }: { children: React.ReactNode })
     if (config) {
       if (config.headers) {
         if (currentUser) {
-          config.headers.Authorization = `${tokenPrefix} ${currentUser.token}`;
-          config.headers.RefreshToken = `${tokenPrefix} ${currentUser.refreshToken}`;
+          config.headers['Authorization'] = `${tokenPrefix} ${currentUser.token}`;
+          config.headers['RefreshToken'] = `${tokenPrefix} ${currentUser.refreshToken}`;
         }
       }
       return config;

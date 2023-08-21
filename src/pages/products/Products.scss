@@ -27,6 +27,7 @@ $app-sp-width: 767px;
       padding: 40px 10px;
       height: fit-content;
       background-color: var(--bg-color);
+      box-shadow: 0px 3px 4px 0 inset var(--shadow-color);
     }
     label {
       display: block;
@@ -891,7 +892,15 @@ $app-sp-width: 767px;
         }
         dd {
           color: black;
-          .link {
+          .category-link {
+            &:not(:first-child) {
+              &:before {
+                content: '/';
+                margin: 0 4px;
+              }
+            }
+          }
+          .tag-link {
             &:not(:first-child) {
               &:before {
                 content: '/';

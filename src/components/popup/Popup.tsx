@@ -37,7 +37,7 @@ export default function Popup({ title = '', contents, link, center, backdropClos
   function popupClose() {
     dispatch(hidePopup());
     if (link) {
-      navigate(link);
+      navigate(link, { replace: true });
     }
   }
 
