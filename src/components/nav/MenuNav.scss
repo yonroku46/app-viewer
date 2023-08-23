@@ -96,6 +96,7 @@ $section-width: $app-max-width - $search-nav-sp-width;
   .profile {
     cursor: pointer;
     width: 30px;
+    height: 30px;
     border-radius: 12px;
     border: 2px solid black;
     margin-top: -2px;
@@ -282,6 +283,7 @@ $section-width: $app-max-width - $search-nav-sp-width;
       margin-right: $nav-margin;
       .profile {
         width: 50px;
+        height: 50px;
         border-radius: 12px;
         border: 2px solid black;
       }

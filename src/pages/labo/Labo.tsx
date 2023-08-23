@@ -53,8 +53,8 @@ export default function Labo() {
   return(
     <>
     <section className='labo-page contents'>
-      <img src={useMemo(() => imgSrc('/tmp/dummy.jpg'), [])} onError={handleImgError} width='100px'/>
-      <img src={useMemo(() => imgSrc('/tmp/dummy.png'), [])} onError={handleImgError} width='100px'/>
+      <img src={useMemo(() => imgSrc('tmp/dummy.jpg'), [])} onError={handleImgError} width='100px'/>
+      <img src={useMemo(() => imgSrc('tmp/dummy.png'), [])} onError={handleImgError} width='100px'/>
       <div>{format(currentTime, 'yyyy-MM-dd')}</div>
       <div>{format(currentTime, 'HH:mm:ss')}</div>
       <br/>
