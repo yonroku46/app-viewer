@@ -4,7 +4,8 @@ import { useScroll, useWindowScroll } from 'react-use';
 import { useDispatch } from "react-redux";
 import { imgSrc, handleImgError } from "common/utils/ImgUtils";
 import { format } from 'date-fns';
-import { showTopPopup, showCenterPopup } from "redux/actions/popupActions";
+import { showTopPopup, showCenterPopup } from "store/actions/popupActions";
+import { loading, unloading } from "store/actions/loadingActions";
 import './Labo.scss';
 
 export default function Labo() {
@@ -60,6 +61,11 @@ export default function Labo() {
       <br/>
       <button className='top' onClick={() => openTopPopup('top popup')}>topPop</button>
       <button className='center' onClick={() => openCenterPopup('title', 'center popup')}>topCenter</button>
+      <br/>
+      <button onClick={() => dispatch(loading(true, true))}>darkLoading</button>
+      <button onClick={() => dispatch(loading(false, true))}>defaultLoading</button>
+      <button onClick={() => dispatch(unloading())}>unLoading</button>
+      <br/>
       { isExtendedWait ? 'extended...' : ''}
     </section>
     </>

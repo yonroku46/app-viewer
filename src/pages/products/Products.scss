@@ -706,7 +706,8 @@ $app-sp-width: 767px;
         padding: 10px 15px;
         height: 47px;
         color: white;
-        border-color: var(--bg-active-color);
+        border: none;
+        box-shadow: 0px 3px 4px 0 var(--shadow-color);
         transition: background-color 0.25s;
         &.now {
           background-color: var(--buy-color)
@@ -751,9 +752,11 @@ $app-sp-width: 767px;
         align-items: center;
         padding: 0px 10px;
         margin-left: 10px;
-        border-color: var(--buy-color);
+        border: none;
+        background-color: var(--buy-bg-color);
+        box-shadow: 0px 3px 4px 0 var(--shadow-color);
         &.turn {
-          border-color: var(--offer-color);
+          background-color: var(--offer-bg-color);
         }
         .icon {
           font-size: 26px;
@@ -780,23 +783,33 @@ $app-sp-width: 767px;
           padding: 0;
           margin-bottom: 30px;
           li {
-            border: 1px solid var(--bg-active-color);
             border-radius: 4px;
             color: lightgray;
             font-size: 18px;
             text-align: center;
             padding: 6px;
             width: calc((100% - 20px) / 5);
+            box-shadow: 0px 1px 4px 0 var(--shadow-color);
             transition: all 0.25s;
-            &.buy.active {
+            &.active {
               font-weight: 900;
               background-color: var(--buy-color);
               color: white;
-            }
-            &.offer.active {
-              font-weight: 900;
-              background-color: var(--offer-color);
-              color: white;
+              &.S {
+                background-color: var(--ranked-s-color);
+              }
+              &.A {
+                background-color: var(--ranked-a-color);
+              }
+              &.B {
+                background-color: var(--ranked-b-color);
+              }
+              &.C {
+                background-color: var(--ranked-c-color);
+              }
+              &.D {
+                background-color: var(--ranked-d-color);
+              }
             }
             &:not(:first-child) {
               margin-left: 8px;
@@ -812,7 +825,7 @@ $app-sp-width: 767px;
         margin-bottom: -1px;
         border-radius: 4px 4px 0 0;
         padding: 10px;
-        border-color: var(--bg-active-color);
+        border-color: var(--border-color);
         color: var(--bg-active-color);
         background-color: var(--bg-color);
         pointer-events: none;
@@ -840,7 +853,7 @@ $app-sp-width: 767px;
         border-radius: 4px;
         font-size: 13px;
         color: black;
-        border-color: var(--bg-active-color);
+        border-color: var(--border-color);
         .icon {
           font-size: 18px;
           margin-right: 4px;
@@ -849,7 +862,7 @@ $app-sp-width: 767px;
       .info-detail {
         display: flex;
         height: 60px;
-        border: 1px solid var(--bg-active-color);
+        border: 1px solid var(--border-color);
         margin-bottom: 30px;
         padding: 6px 0px;
         border-radius: 0 0 4px 4px;
@@ -858,7 +871,7 @@ $app-sp-width: 767px;
           flex: 1;
           justify-content: center;
           flex-direction: column;
-          border-right: 1px solid var(--bg-active-color);
+          border-right: 1px solid var(--border-color);
           min-width: 60px;
           label {
             display: block;
@@ -871,6 +884,9 @@ $app-sp-width: 767px;
         }
         .size {
           text-align: center;
+          label {
+            color: var(--bg-active-dark-color);
+          }
           span {
             font-weight: 900;
             font-size: 18px;
@@ -883,12 +899,13 @@ $app-sp-width: 767px;
       border-radius: 4px;
       font-size: 12px;
       margin-bottom: 30px;
-      border: 1px solid var(--bg-active-color);
+      border: 1px solid var(--border-color);
       dl {
         display: flex;
         align-items: center;
         dt {
           width: 75px;
+          color: var(--bg-active-dark-color);
         }
         dd {
           color: black;

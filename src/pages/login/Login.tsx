@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
 import { lineLogin, googleLogin } from "common/utils/OAuth2Utils";
 import lineLogo from 'assets/icon/line_logo.svg';
 import googleLogo from 'assets/icon/google_logo.svg';
-import Backdrop from 'components/backdrop/Backdrop';
 import AuthService from 'api/service/AuthService';
 import OAuth2Service from 'api/service/OAuth2Service';
+import { loading, unloading } from "store/actions/loadingActions";
 import './Login.scss';
 
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 export default function Login() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   
@@ -28,19 +30,18 @@ export default function Login() {
   });
   const [mail, setMail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(false);
   const [errMsg, setErrMsg] = useState<string>("");
 
   useEffect(() => {
     if (location.state === 'oauth2' && type && code) {
-      setLoading(true);
+      load();
       if (type === 'line') {
         oAuth2Service.lineAccess(code).then(data => {
           if (data.responseData) {
             loginSuccess();
           } else {
             setErrMsg('ソーシャルログインのアクセスに失敗しました');
-            setLoading(false);
+            done();
           }
         });
       }
@@ -50,7 +51,7 @@ export default function Login() {
             loginSuccess();
           } else {
             setErrMsg('ソーシャルログインのアクセスに失敗しました');
-            setLoading(false);
+            done();
           }
         });
       }
@@ -61,6 +62,13 @@ export default function Login() {
       }
     }
   }, []);
+
+  function load() {
+    dispatch(loading(true, true));
+  }
+  function done() {
+    dispatch(unloading());
+  }
   
   function passwordTypeHandler(e: React.MouseEvent<HTMLSpanElement, MouseEvent>) {
     setPasswordType(() => {
@@ -83,18 +91,19 @@ export default function Login() {
 
   async function login() {
     errReset();
-    setLoading(true);
+    load();
     await authService.login(mail, password).then(data => {
-      setLoading(false);
       if (data.responseData) {
         loginSuccess();
       } else {
         setErrMsg('ログイン情報をもう一度ご確認ください');
+        done();
       }
     });
   }
 
   function loginSuccess() {
+    done();
     if (location.state?.pathname) {
       navigate(location.state?.pathname, { replace: true });
     } else {
@@ -104,13 +113,13 @@ export default function Login() {
 
   async function socialLogin(type: string) {
     errReset();
-    setLoading(true);
+    load();
     if (type === 'line') {
       window.location.href = lineLogin();
     } else if (type === 'google') {
       window.location.href = googleLogin();
     }
-    setLoading(false);
+    done();
   }
 
   function errReset() {
@@ -118,8 +127,6 @@ export default function Login() {
   }
 
   return(
-    <>
-    <Backdrop open={loading} loading={loading}/>
     <section className='login fullsize'>
       <form className='login-form' onSubmit={onSubmitHandler}>
         <div className='sub-title'>
@@ -164,6 +171,5 @@ export default function Login() {
         </p>
       </form>
     </section>
-    </>
   )
 }

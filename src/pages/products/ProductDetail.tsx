@@ -1,16 +1,18 @@
 import { useEffect, useState } from 'react';
+import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { useMediaQuery } from 'react-responsive';
 import { useWindowScroll } from 'react-use';
 import { Helmet } from 'react-helmet-async';
-import ProductCard from 'components/product/ProductCard';
+import { handleImgError } from "common/utils/ImgUtils";
+import ProductCard from 'components/card/ProductCard';
 import AuthService from 'api/service/AuthService';
 import ProductService, { ProductInfo } from 'api/service/ProductService';
-import StyleCard, { StyleData } from 'components/style/StyleCard';
+import StyleCard, { StyleData } from 'components/card/StyleCard';
 import Guide from 'components/guide/Guide';
 import Empty from "components/empty/Empty";
-import { useDispatch } from "react-redux";
-import { showTopPopup } from "redux/actions/popupActions";
+import { showTopPopup } from "store/actions/popupActions";
+import { loading, unloading } from "store/actions/loadingActions";
 import { currency, calcDiscountRate, dateToString } from 'common/utils/StringUtils';
 import { Carousel } from "react-responsive-carousel";
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
@@ -31,7 +33,6 @@ import HighlightAltTwoToneIcon from '@mui/icons-material/HighlightAltTwoTone';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import Fab from '@mui/material/Fab';
 import Tooltip from '@mui/material/Tooltip';
-import Loading from 'components/backdrop/Loading';
 
 export default function ProductDetail() {
   const navigate = useNavigate();
@@ -61,11 +62,16 @@ export default function ProductDetail() {
   }, [windowY]);
 
   async function getProductInfo(productId: number) {
+    dispatch(loading(false, true));
+    setLoad(true);
     await productService.productInfo(productId).then(data => {
-      setProduct(data.responseData);
-      getProductHistoryInfo(data.responseData.productId, data.responseData.history);
+      if (data.responseData) {
+        setProduct(data.responseData);
+        getProductHistoryInfo(data.responseData.productId, data.responseData.history);
+      }
     });
-    setIsLoading(false);
+    dispatch(unloading());
+    setLoad(false);
   }
 
   async function getProductHistoryInfo(productId: number, productIdList: Array<number>) {
@@ -301,7 +307,9 @@ export default function ProductDetail() {
     gender: 'M',
   });
 
+  const prodStatusList = ['S','A','B','C','D']
 
+  const [load, setLoad] = useState<boolean>(false);
   const [product, setProduct] = useState<ProductInfo|undefined>(undefined);
   const [productHistory, setProductHistory] = useState<Array<ProductInfo>>([]);
   const [snapShow, setSnapShow] = useState<boolean>(true);
@@ -312,11 +320,6 @@ export default function ProductDetail() {
   const [buyStatus, setBuyStatus] = useState<boolean>(true);
   const [compMode, setCompMode] = useState<boolean>(false);
   const [offerPrice, setOfferPrice] = useState<number>(0);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-
-  const prodStatusList: string[] = [
-    'S', 'A', 'B', 'C', 'D'
-  ]
 
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   function handleChange(index: number) {
@@ -451,11 +454,9 @@ export default function ProductDetail() {
     )
   }
 
-  if (isLoading) {
+  if (load) {
     return(
-      <section className='product-detail'>
-        <Loading dark={true}/>
-      </section>
+      <section className='product-detail'/>
     )
   }
 
@@ -474,7 +475,7 @@ export default function ProductDetail() {
               <div className='thumbnail-list'>
                 {productHistory?.length !== 0 && productHistory?.map((history, index) => 
                   <div className='thumbnail-data' onClick={() => handleHistoryChange(index)} key={index}>
-                    <img className='thumbnail' key={history.imgs[0]} src={history.imgs[0]}/>
+                    <img className='thumbnail' key={history.imgs[0]} src={history.imgs[0]} onError={handleImgError}/>
                     <div>
                       <div className='date'>{dateToString(history.date)}</div>
                       <div className='user'>{productHistory?.length - index + '回前のユーザー'}</div>
@@ -483,7 +484,7 @@ export default function ProductDetail() {
                 )}
               </div>
             </div>
-            <img className='thumbnail' src={product.imgs[0]} onClick={() => setHistoryShow(!historyShow)}/>
+            <img className='thumbnail' src={product.imgs[0]} onClick={() => setHistoryShow(!historyShow)} onError={handleImgError}/>
             <div className='top'>
               {productHistory?.length !== 0  &&
                 <button className={compMode ? buyStatus ? 'comp buy active' : 'comp offer active' : 'comp'} onClick={() => compToggle()}>
@@ -533,7 +534,7 @@ export default function ProductDetail() {
               emulateTouch={true} thumbWidth={50} onChange={handleChange}>
               {product.imgs.map(img => (
                 <div key={img}>
-                  <img src={img} loading='eager'/>
+                  <img src={img} loading='eager' onError={handleImgError}/>
                 </div>
               ))}
             </Carousel>
@@ -583,7 +584,7 @@ export default function ProductDetail() {
                   emulateTouch={true} thumbWidth={50} onChange={handleCompChange}>
                   {productHistory && productHistory[currentCompHistoryIndex].imgs.map(img => (
                     <div key={img}>
-                      <img src={img} loading='eager'/>
+                      <img src={img} loading='eager' onError={handleImgError}/>
                     </div>
                   ))}
                 </Carousel>
@@ -597,15 +598,15 @@ export default function ProductDetail() {
               </div>
           :
             <div className='info-area'>
-              {/* コンディション */}
+              {/* 状態 */}
+              <p>
+                状態
+                <InfoOutlinedIcon className='icon'/>
+              </p>
               <div className='condition'>
-                <p>
-                  状態
-                  <InfoOutlinedIcon className='icon'/>
-                </p>
                 <ul>
                   {prodStatusList.map(status => 
-                    <li className={status === product.status ? buyStatus ? 'active buy' : 'active offer' : ''} key={status}>
+                    <li className={status === product.status ? 'active ' + product.status : ''} key={status}>
                       {status}
                     </li>
                   )}

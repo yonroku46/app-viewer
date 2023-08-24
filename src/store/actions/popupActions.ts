@@ -15,7 +15,7 @@ export function hidePopup(): PopupAction {
 export function showTopPopup(contents: string): PopupAction {
   return {
     type: PopupActionTypes.SHOW_TOP_POPUP,
-    value: {
+    state: {
       contents: contents
     }
   };
@@ -24,7 +24,7 @@ export function showTopPopup(contents: string): PopupAction {
 export function showCenterPopup(title: string, contents: string): PopupAction {
   return {
     type: PopupActionTypes.SHOW_CENTER_POPUP,
-    value: {
+    state: {
       title: title,
       contents: contents
     }
@@ -34,7 +34,7 @@ export function showCenterPopup(title: string, contents: string): PopupAction {
 export function showCenterLinkPopup(title: string, contents: string, link: string): PopupAction {
   return {
     type: PopupActionTypes.SHOW_CENTER_LINK_POPUP,
-    value: {
+    state: {
       title: title,
       contents: contents,
       link: link

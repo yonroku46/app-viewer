@@ -1,9 +1,9 @@
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { UserState } from "redux/types/UserActionTypes";
-import { userLogin, userLogout } from "redux/actions/userActions";
+import { UserState } from "store/types/UserActionTypes";
+import { userLogin, userLogout } from "store/actions/userActions";
+import { showTopPopup } from "store/actions/popupActions";
 import { ApiResponse, ApiRoutes } from 'api/Api';
-import { showTopPopup } from "redux/actions/popupActions";
 import axios from 'axios';
 
 export default class AuthService {

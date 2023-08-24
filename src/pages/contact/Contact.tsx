@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
-import { UserState } from "redux/types/UserActionTypes";
+import { UserState } from "store/types/UserActionTypes";
 import AuthService from 'api/service/AuthService';
 import './Contact.scss';
 

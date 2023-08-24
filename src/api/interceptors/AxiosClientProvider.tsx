@@ -4,8 +4,8 @@ import { Observable, BehaviorSubject, throwError, from, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { filter, switchMap, take } from 'rxjs/operators';
 import { useDispatch } from "react-redux";
-import { userLogin } from "redux/actions/userActions";
-import { showCenterPopup, showCenterLinkPopup } from "redux/actions/popupActions";
+import { userLogin } from "store/actions/userActions";
+import { showCenterPopup, showCenterLinkPopup } from "store/actions/popupActions";
 import AuthService from 'api/service/AuthService';
 
 interface InternalAxiosRequestConfig extends AxiosRequestConfig {

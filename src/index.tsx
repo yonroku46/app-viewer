@@ -1,10 +1,9 @@
-import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from "react-router-dom";
 import { HelmetProvider } from 'react-helmet-async';
 import { Provider } from "react-redux";
 import { createStore } from "redux";
-import rootReducer from "redux/reducers";
+import rootReducer from "store/reducers";
 import { AxiosClientProvider } from 'api/interceptors/AxiosClientProvider';
 import App from 'App';
 

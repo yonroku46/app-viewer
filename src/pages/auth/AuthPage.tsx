@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
+import { useDispatch } from "react-redux";
 import { useLocation } from 'react-router-dom';
-import Backdrop from 'components/backdrop/Backdrop';
 import AuthComplete from 'components/auth/AuthComplete';
 import AuthService from 'api/service/AuthService';
-import { useDispatch } from "react-redux";
-import { showTopPopup, showCenterLinkPopup } from "redux/actions/popupActions";
+import { showTopPopup, showCenterLinkPopup } from "store/actions/popupActions";
+import { loading, unloading } from "store/actions/loadingActions";
 import './AuthPage.scss';
 
 import MarkEmailReadIcon from '@mui/icons-material/MarkEmailRead';
@@ -16,7 +16,6 @@ export default function AuthPage() {
   
   const authService = new AuthService();
   
-  const [loading, setLoading] = useState<boolean>(false);
   const [isComplete, setIsComplete] = useState<boolean>(false);
   
   useEffect(() => {
@@ -28,9 +27,9 @@ export default function AuthPage() {
   }, []);
 
   async function keyCheck(mail: string, key: string) {
-    setLoading(true);
+    dispatch(loading(true, true));
     await authService.keyCheck(mail, key).then(data => {
-      setLoading(false);
+      dispatch(unloading());
       if (data.responseData) {
         setIsComplete(true)
         dispatch(showTopPopup('認証完了'));
@@ -41,13 +40,10 @@ export default function AuthPage() {
   }
 
   return(
-    <>
-    <Backdrop open={loading} loading={loading}/>
     <section className='auth fullsize'>
       {isComplete && 
         <AuthComplete icon={<MarkEmailReadIcon className='icon' sx={{ fontSize: 80 }}/>} title={'登録完了'} subTitle={'ご登録頂きありがとうございます'} path={'home'}/>
       }
     </section>
-    </>
   )
 }

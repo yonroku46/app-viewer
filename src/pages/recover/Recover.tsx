@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
-import Backdrop from 'components/backdrop/Backdrop';
+import { useDispatch } from "react-redux";
 import AuthComplete from 'components/auth/AuthComplete';
 import AuthService from 'api/service/AuthService';
+import { loading, unloading } from "store/actions/loadingActions";
 import './Recover.scss';
 
 import ForwardToInboxIcon from '@mui/icons-material/ForwardToInbox';
 
 export default function Recover() {
+  const dispatch = useDispatch();
 
   const authService = new AuthService();
 
   const [mail, setMail] = useState<string>("");
   const [errMsg, setErrMsg] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(false);
   const [isComplete, setIsComplete] = useState<boolean>(false);
 
   function onSubmitHandler(e: React.FormEvent<HTMLFormElement>) {
@@ -26,9 +27,9 @@ export default function Recover() {
   }
 
   async function recoverMail() {
-    setLoading(true);
+    dispatch(loading(true, true));
     await authService.recoverMail(mail).then(data => {
-      setLoading(false);
+      dispatch(unloading());
       if (data.responseData) {
         errReset();
         setIsComplete(true);
@@ -43,8 +44,6 @@ export default function Recover() {
   }
 
   return(
-    <>
-    <Backdrop open={loading} loading={loading}/>
     <section className='recover fullsize'>
       {isComplete ?
         <AuthComplete icon={<ForwardToInboxIcon className='icon' sx={{ fontSize: 80 }}/>} title={'メールを送信しました'} subTitle={'完了させるためには\nメールでの認証が必要です'} path={'login'}/>
@@ -67,6 +66,5 @@ export default function Recover() {
         </form>
       }
     </section>
-    </>
   )
 }

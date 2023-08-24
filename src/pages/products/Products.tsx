@@ -1,7 +1,7 @@
 import { MouseEvent, useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { SearchArea } from 'components/input/SearchInput';
-import ProductCard from 'components/product/ProductCard';
+import ProductCard from 'components/card/ProductCard';
 import ProductService, { ProductFilter, ProductInfo } from 'api/service/ProductService';
 import ClothesSprite from 'components/sprite/ClothesSprite';
 import './Products.scss';

@@ -15,7 +15,7 @@ export default function userReducer(
 ): UserState {
   switch (action.type) {
     case UserActionTypes.USER_LOGIN:
-      return { ...state, userId: action.user.userId, userName: action.user.userName, mail: action.user.mail, token: action.user.token, refreshToken: action.user.refreshToken, mailAuth: action.user.mailAuth };
+      return { ...state, userId: action.state.userId, userName: action.state.userName, mail: action.state.mail, token: action.state.token, refreshToken: action.state.refreshToken, mailAuth: action.state.mailAuth };
     case UserActionTypes.USER_LOGOUT:
       return { ...state, userId: undefined, userName: undefined, mail: undefined, token: undefined, refreshToken: undefined, mailAuth: undefined };
     default:

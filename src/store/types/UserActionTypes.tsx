@@ -16,7 +16,7 @@ export enum UserActionTypes {
   
 interface UserLogin {
     type: UserActionTypes.USER_LOGIN;
-    user: UserState;
+    state: UserState;
 }
   
 interface UserLogout {

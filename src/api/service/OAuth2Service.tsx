@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { userLogin } from "redux/actions/userActions";
+import { userLogin } from "store/actions/userActions";
 import { ApiResponse, ApiRoutes } from 'api/Api';
 import axios from 'axios';
 

@@ -18,11 +18,11 @@ export default function popupReducer(
     case PopupActionTypes.HIDE_POPUP:
       return { ...state, isShow: false, link: undefined };
     case PopupActionTypes.SHOW_TOP_POPUP:
-      return { ...state, isShow: true,  isCenter: false, contents: action.value.contents };
+      return { ...state, isShow: true,  isCenter: false, contents: action.state.contents };
     case PopupActionTypes.SHOW_CENTER_POPUP:
-      return { ...state, isShow: true,  isCenter: true, title: action.value.title, contents: action.value.contents };
+      return { ...state, isShow: true,  isCenter: true, title: action.state.title, contents: action.state.contents };
     case PopupActionTypes.SHOW_CENTER_LINK_POPUP:
-      return { ...state, isShow: true,  isCenter: true, title: action.value.title, contents: action.value.contents, link: action.value.link };
+      return { ...state, isShow: true,  isCenter: true, title: action.state.title, contents: action.state.contents, link: action.state.link };
     default:
       return state;
   }

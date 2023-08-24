@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
 import { useDispatch } from "react-redux";
-import Backdrop from 'components/backdrop/Backdrop';
+import { useLocation } from 'react-router-dom';
 import AuthComplete from 'components/auth/AuthComplete';
 import AuthService from 'api/service/AuthService';
-import { showTopPopup, showCenterLinkPopup } from "redux/actions/popupActions";
-import './AuthRecover.scss';
+import { showTopPopup, showCenterLinkPopup } from "store/actions/popupActions";
+import { loading, unloading } from "store/actions/loadingActions";
+import './AuthPage.scss';
 
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
@@ -32,7 +32,6 @@ export default function AuthRecover() {
   const [rePassword, setRePassword] = useState<string>("");
   const [errMsg, setErrMsg] = useState<string>("");
 
-  const [loading, setLoading] = useState<boolean>(false);
   const [isComplete, setIsComplete] = useState<boolean>(false);
   
   function passwordTypeHandler(e: React.MouseEvent<HTMLSpanElement, MouseEvent>) {
@@ -62,9 +61,9 @@ export default function AuthRecover() {
   }, []);
 
   async function keyCheck(mail: string, key: string) {
-    setLoading(true);
+    dispatch(loading(true, true));
     await authService.keyCheck(mail, key).then(data => {
-      setLoading(false);
+      dispatch(unloading());
       if (data.responseData) {
         setAuth(true);
         dispatch(showTopPopup('認証完了'));
@@ -94,9 +93,9 @@ export default function AuthRecover() {
   }
 
   async function recover() {
-    setLoading(true);
+    dispatch(loading(true, true));
     await authService.recover(mail, password).then(data => {
-      setLoading(false);
+      dispatch(unloading());
       if (data.responseData) {
         setIsComplete(true);
       }
@@ -108,8 +107,6 @@ export default function AuthRecover() {
   }
 
   return(
-    <>
-    <Backdrop open={loading} loading={loading}/>
     <section className='auth-recover fullsize'>
       {auth ?
        isComplete ?
@@ -149,6 +146,5 @@ export default function AuthRecover() {
         <></>
       }
     </section>
-    </>
   )
 }

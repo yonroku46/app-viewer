@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthService from 'api/service/AuthService';
+import { handleImgError } from "common/utils/ImgUtils";
 import searchEmpty from 'assets/img/search-empty.png';
 import ProductService, { ProductInfo } from 'api/service/ProductService';
 import { currency, calcDiscountRate } from "common/utils/StringUtils";
@@ -15,7 +16,7 @@ import { Card, Typography, CardActionArea } from '@mui/material';
 
 export default function ProductCard({ dataList }: { dataList: ProductInfo[] }) {
   const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
   const [products, setProducts] = useState<ProductInfo[]>([]);
 
   const authService = new AuthService();
@@ -24,12 +25,12 @@ export default function ProductCard({ dataList }: { dataList: ProductInfo[] }) {
   useEffect(() => {
     setProducts([]);
     if (dataList.length > 0) {
-      setIsLoading(false);
+      setLoading(false);
       setProducts(dataList)
     } else {
       const timeoutId = setTimeout(() => {
         if (dataList.length === 0) {
-          setIsLoading(false);
+          setLoading(false);
         }
       }, 1000);
       return () => clearTimeout(timeoutId);
@@ -79,7 +80,7 @@ export default function ProductCard({ dataList }: { dataList: ProductInfo[] }) {
     )
   }
 
-  if (isLoading) {
+  if (loading) {
     return(
       <div className='contents cardbox'>
         {Array.from(new Array(10)).map((item, index) => (
@@ -101,12 +102,12 @@ export default function ProductCard({ dataList }: { dataList: ProductInfo[] }) {
   return(
     <div className='contents cardbox'>
       {products.map((data) => (
-        <Card className='product-card' key={data.productId} onClick={() => window.open('/products/' + data.productId, '_blank')}>
+        <Card className='product-card' key={data.productId} onClick={() => navigate('/products/' + data.productId)}>
           <span className={data.liked ? 'like liked' : 'like'} onClick={(event) => likeClick(event, data.productId, !data.liked)}>
             <StarRoundedIcon className='icon'/>
           </span>
           <CardActionArea className='media'>
-            <CardMedia component='img' image={data.imgs[0]} loading='lazy' alt={data.name}/>
+            <CardMedia component='img' image={data.imgs[0]} onError={handleImgError} loading='lazy' alt={data.name}/>
             {data.priceSale &&
               <span className='sale-label'>
                 {calcDiscountRate(data.price, data.priceSale) + 'OFF'}

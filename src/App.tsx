@@ -2,16 +2,17 @@ import { useEffect, useState } from 'react';
 import { Route, Routes, useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Helmet } from 'react-helmet-async';
-import { RootState } from "redux/reducers";
-import { showPopup, hidePopup } from "redux/actions/popupActions";
-import { UserState } from "redux/types/UserActionTypes";
+import { RootState } from "store/reducers";
+import { showPopup, hidePopup } from "store/actions/popupActions";
+import { UserState } from "store/types/UserActionTypes";
 import AuthService from 'api/service/AuthService';
 import logo from "assets/icon/logo.svg";
 import category1 from "assets/img/category1.avif";
 import category2 from "assets/img/category2.avif";
+import Loading from 'components/backdrop/Loading';
 import Popup from 'components/popup/Popup';
 import MenuNav, { MenuItem } from 'components/nav/MenuNav';
-import { showCenterLinkPopup } from "redux/actions/popupActions";
+import { showCenterLinkPopup } from "store/actions/popupActions";
 import Home from 'pages/home/Home';
 import Search from 'pages/search/Search';
 import Empty from 'components/empty/Empty';
@@ -46,6 +47,7 @@ export default function App() {
 
   const [currentPath, setCurrentPath] = useState<string>('');
   const [user, setUser] = useState<UserState|undefined>(undefined);
+  const loading = useSelector((state: RootState) => state.loading);
   const popup = useSelector((state: RootState) => state.popup);
   
   type PathMap = {
@@ -147,7 +149,7 @@ export default function App() {
         </Helmet>
         <div className='header-main'>
           <div className='logo' onClick={() => navigate('/')}>
-            <img src={logo} alt=''/>
+            <img src={logo} alt='logo'/>
             <RocketLaunchIcon className='labo'/>
           </div>
           <div className='side'>
@@ -172,9 +174,10 @@ export default function App() {
 
   return(
     <>
+      <Loading dark={loading.isDark} show={loading.isShow}/>
+      <Popup title={popup.title} contents={popup.contents} link={popup.link} center={popup.isCenter}/>
       <Header/>
       <main>
-        <Popup title={popup.title} contents={popup.contents} link={popup.link} center={popup.isCenter}/>
         <Routes>
           <Route path="/" element={<Home/>}/>
           <Route path="/login" element={<Login/>}/>

@@ -1,8 +1,11 @@
+import Backdrop from './Backdrop';
 import './Loading.scss';
 
-export default function Loading({ dark }: { dark?: boolean}) {
-
+export default function Loading({ dark, show }: { dark?: boolean, show?: boolean }) {
   return(
-    <div className={dark ? 'loading-pulse dark' : 'loading-pulse'}/>
+    <>
+      {dark && <Backdrop open={dark}/>}
+      <div className={show ? dark ? 'loading' : 'loading darkbar' : 'loading hide'}/>
+    </>
   )
 }

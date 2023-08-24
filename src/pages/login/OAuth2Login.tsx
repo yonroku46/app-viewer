@@ -16,6 +16,6 @@ export default function OAuth2Login() {
   }, []);
 
   return(
-    <Backdrop open={true} loading={true}/>
+    <Backdrop open={true}/>
   )
 }

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { RootState } from "redux/reducers";
-import { hidePopup } from "redux/actions/popupActions";
+import { RootState } from "store/reducers";
+import { hidePopup } from "store/actions/popupActions";
 import Backdrop from 'components/backdrop/Backdrop'
 import './Popup.scss';
 

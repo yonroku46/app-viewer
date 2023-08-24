@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import Backdrop from 'components/backdrop/Backdrop';
 import AuthComplete from 'components/auth/AuthComplete';
 import AuthService from 'api/service/AuthService';
+import { loading, unloading } from "store/actions/loadingActions";
 import './Signup.scss';
 
 import VisibilityIcon from '@mui/icons-material/Visibility';
@@ -11,6 +12,7 @@ import ForwardToInboxIcon from '@mui/icons-material/ForwardToInbox';
 import Checkbox from '@mui/material/Checkbox';
 
 export default function Signup() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const authService = new AuthService();
@@ -25,7 +27,6 @@ export default function Signup() {
   const [termsCheck, setTermsCheck] = useState(false);
   const [errMsg, setErrMsg] = useState<string>("");
 
-  const [loading, setLoading] = useState<boolean>(false);
   const [isComplete, setIsComplete] = useState<boolean>(false);
 
   useEffect(() => {
@@ -64,9 +65,9 @@ export default function Signup() {
   }
   
   async function submit() {
-    setLoading(true);
+    dispatch(loading(true, true));
     await authService.submit(name, mail, password).then(data => {
-      setLoading(false);
+      dispatch(unloading());
       if (data.responseData) {
         errReset();
         setIsComplete(true);
@@ -81,8 +82,6 @@ export default function Signup() {
   }
 
   return(
-    <>
-    <Backdrop open={loading} loading={loading}/>
     <section className='signup fullsize'>
       {isComplete ? 
         <AuthComplete icon={<ForwardToInboxIcon className='icon' sx={{ fontSize: 80 }}/>} title={'メールを送信しました'} subTitle={'完了させるためには\nメールでの認証が必要です'} path={'login'}/>
@@ -124,6 +123,5 @@ export default function Signup() {
         </form>
       }
     </section>
-    </>
   )
 }

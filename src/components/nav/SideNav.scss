@@ -29,26 +29,6 @@ $section-width: $app-max-width - $search-nav-sp-width;
         }
       }
     }
-    .sns-area {
-      display: block;
-      text-align: center;
-      margin: 16px 0;
-      .Mui-selected {
-        color: white;
-        &.twitter {
-          background-color: var(--sns-twitter-color);
-        }
-        &.instagram {
-          background-color: var(--sns-instagram-color);
-        }
-        &.tiktok {
-          background-color: var(--sns-tiktok-color);
-        }
-        &.youtube {
-          background-color: var(--sns-youtube-color);
-        }
-      }
-    }
     .search-area {
       margin-top: 12px;
       .filter {

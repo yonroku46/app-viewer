@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { useNavigate, useLocation } from "react-router-dom";
 import mainBanner from "assets/img/main-banner.webp";
-import { UserState } from "redux/types/UserActionTypes";
+import { UserState } from "store/types/UserActionTypes";
 import AuthService from 'api/service/AuthService';
 import './Home.scss';
 

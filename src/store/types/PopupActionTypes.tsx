@@ -24,14 +24,14 @@ interface HidePopup {
 
 interface ShowTopPopup {
     type: PopupActionTypes.SHOW_TOP_POPUP;
-    value: {
+    state: {
         contents: string
     };
 }
   
 interface ShowCenterPopup {
     type: PopupActionTypes.SHOW_CENTER_POPUP;
-    value: {
+    state: {
         title: string,
         contents: string
     };
@@ -39,7 +39,7 @@ interface ShowCenterPopup {
 
 interface ShowCenterLinkPopup {
     type: PopupActionTypes.SHOW_CENTER_LINK_POPUP;
-    value: {
+    state: {
         title: string,
         contents: string,
         link: string

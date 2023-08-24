@@ -9,6 +9,9 @@
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  &.white {
+    background-color: red;
+  }
   &.visible {
     opacity: 1;
     visibility: visible;

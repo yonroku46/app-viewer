@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { handleImgError } from "common/utils/ImgUtils";
 import searchEmpty from 'assets/img/search-empty.png';
 import './StyleCard.scss';
 
@@ -38,18 +39,18 @@ export interface StyleData {
 
 export default function StyleCard({ dataList }: { dataList: StyleData[] }) {
   const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
   const [styles, setStyles] = useState<StyleData[]>([]);
 
   useEffect(() => {
     setStyles([]);
     if (dataList.length > 0) {
-      setIsLoading(false);
+      setLoading(false);
       setStyles(dataList)
     } else {
       const timeoutId = setTimeout(() => {
         if (dataList.length === 0) {
-          setIsLoading(false);
+          setLoading(false);
         }
       }, 1000);
       return () => clearTimeout(timeoutId);
@@ -80,7 +81,7 @@ export default function StyleCard({ dataList }: { dataList: StyleData[] }) {
     )
   }
 
-  if (isLoading) {
+  if (loading) {
     return(
       <div className='contents cardbox skeleton'>
         {Array.from(new Array(5)).map((item, index) => (
@@ -102,15 +103,15 @@ export default function StyleCard({ dataList }: { dataList: StyleData[] }) {
   return(
     <div className='contents cardbox'>
       {styles.map((data) => (
-        <Card className='style-card' key={data.styleId} onClick={() => window.open('/styles/' + data.styleId, '_blank')}>
+        <Card className='style-card' key={data.styleId} onClick={() => navigate('/styles/' + data.styleId)}>
           <span className={data.liked ? 'like liked' : 'like'} onClick={(event) => likeClick(event, data.styleId)}>
             <FavoriteRoundedIcon className='icon'/>
           </span>
           <CardActionArea className='media'>
-            <CardMedia component='img' image={data.imgs[0]} loading='lazy' alt={data.name}/>
+            <CardMedia component='img' image={data.imgs[0]} onError={handleImgError} loading='lazy' alt={data.name}/>
           </CardActionArea>
           <CardContent className='content'>
-            <img className='profile' src={data.profile}/>
+            <img className='profile' src={data.profile} onError={handleImgError}/>
             <Typography className='sub-area' gutterBottom variant='h5' component='div'>
               <span className='name'>
                 {data.name}
