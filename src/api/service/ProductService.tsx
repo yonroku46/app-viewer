@@ -15,8 +15,7 @@ export interface ProductFilter {
 
 export interface ProductInfo {
   productId: number;
-  liked: boolean;
-  date: Date;
+  owner: number;
   name: string;
   imgs: NonEmptyArray<string>;
   sizeIdx?: number;
@@ -32,6 +31,8 @@ export interface ProductInfo {
   tags?: Array<string>;
   additional?: Array<any>;
   history: Array<number>;
+  date: Date;
+  liked: boolean;
 }
 
 export default class ProductService {

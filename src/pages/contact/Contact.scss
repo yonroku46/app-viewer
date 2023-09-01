@@ -33,6 +33,7 @@ $app-sp-width: 767px;
       align-items: center;
       .icon {
         margin-left: -30px;
+        margin-top: 8px;
         pointer-events: none;
       }
     }
@@ -51,7 +52,7 @@ $app-sp-width: 767px;
     .content {
       textarea {
         resize: vertical;
-        height: 200px;
+        height: 250px;
       }
     }
     .terms-check {

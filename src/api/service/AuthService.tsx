@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { UserState } from "store/types/UserActionTypes";
 import { userLogin, userLogout } from "store/actions/userActions";
 import { showTopPopup } from "store/actions/popupActions";
@@ -9,6 +9,7 @@ import axios from 'axios';
 export default class AuthService {
   dispatch = useDispatch();
   navigate = useNavigate();
+  location = useLocation();
 
   async login(mail: string, password: string): Promise<any> {
     return axios.post<ApiResponse>(ApiRoutes.LOGIN, {
@@ -123,7 +124,7 @@ export default class AuthService {
       return true;
     } else {
       this.dispatch(showTopPopup('ログインが必要です'));
-      this.navigate('/login');
+      this.navigate('/login', { state: { prev: this.location.pathname } });
       return false;
     }
   }

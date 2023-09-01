@@ -7,8 +7,9 @@ import { Helmet } from 'react-helmet-async';
 import { handleImgError } from "common/utils/ImgUtils";
 import ProductCard from 'components/card/ProductCard';
 import AuthService from 'api/service/AuthService';
-import ProductService, { ProductInfo } from 'api/service/ProductService';
-import StyleCard, { StyleData } from 'components/card/StyleCard';
+import SocialService, { SocialFilter, SocialInfo, CommentInfo } from 'api/service/SocialService';
+import ProductService, { ProductFilter, ProductInfo } from 'api/service/ProductService';
+import SocialCard from 'components/card/SocialCard';
 import Guide from 'components/guide/Guide';
 import Empty from "components/empty/Empty";
 import { showTopPopup } from "store/actions/popupActions";
@@ -42,16 +43,52 @@ export default function ProductDetail() {
 
   const authService = new AuthService();
   const productService = new ProductService();
+  const socialService = new SocialService();
 
   const { y: windowY } = useWindowScroll();
   const spareArea: number = 100;
+
+  const [load, setLoad] = useState<boolean>(true);
+  const [product, setProduct] = useState<ProductInfo|undefined>(undefined);
+  const [productHistory, setProductHistory] = useState<Array<ProductInfo>>([]);
+  const [snapShow, setSnapShow] = useState<boolean>(true);
+  const [thumbShow, setThumbShow] = useState<boolean>(true);
+  const [thumbCompShow, setThumbCompShow] = useState<boolean>(true);
+  const [historyShow, setHistoryShow] = useState<boolean>(false);
+  const [fabShow, setFabShow] = useState<boolean>(false);
+  const [buyStatus, setBuyStatus] = useState<boolean>(true);
+  const [compMode, setCompMode] = useState<boolean>(false);
+  const [offerPrice, setOfferPrice] = useState<number>(0);
+  
+  const [productList, setProductList] = useState<ProductInfo[]>([]);
+  const [socialList, setSocialList] = useState<SocialInfo[]>([]);
+  
+  const prodStatusList = ['S','A','B','C','D']
+  
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
+  function handleChange(index: number) {
+    setCurrentIndex(index);
+  }
+  const [currentCompIndex, setCurrentCompIndex] = useState<number>(0);
+  function handleCompChange(index: number) {
+    setCurrentCompIndex(index);
+  }
+  const [currentCompHistoryIndex, setCurrentCompHistoryIndex] = useState<number | undefined>();
+  function handleHistoryChange(index?: number) {
+    setCurrentCompHistoryIndex(index);
+    setHistoryShow(false);
+    setCompMode(true);
+    setCurrentCompIndex(0);
+  }
 
   useEffect(() => {
     if (id) {
       const productId = parseInt(id);
       getProductInfo(productId);
+      getProductList();
+      getSocialList();
     }
-  }, []);
+  }, [id]);
 
   useEffect(() => {
     if (windowY > spareArea) {
@@ -80,6 +117,32 @@ export default function ProductDetail() {
     });
   }
 
+  async function getProductList(recommendFilter?: ProductFilter) {
+    const filter: ProductFilter = recommendFilter || {
+      keyword: 'Nike'
+    };
+    await productService.productList(filter).then(data => {
+      const productListWithDateConverted = data.responseData.productList.map((product: ProductInfo) => ({
+        ...product,
+        date: new Date(product.date),
+      }));
+      setProductList(productListWithDateConverted);
+    });
+  }
+
+  async function getSocialList(recommendFilter?: SocialFilter) {
+    const filter: SocialFilter = recommendFilter || {
+      keyword: 'Summer'
+    };
+    await socialService.socialList(filter).then(data => {
+      const socialListWithDateConverted = data.responseData.socialList.map((social: SocialInfo) => ({
+        ...social,
+        date: new Date(social.date),
+      }));
+      setSocialList(socialListWithDateConverted);
+    });
+  }
+
   async function productLike(productId: number, liked: boolean) {
     if (liked) {
       await productService.productLike(productId).then(data => {
@@ -98,243 +161,6 @@ export default function ProductDetail() {
         }
       });
     }
-  }
-
-  const recommends: ProductInfo[] = [
-    {
-      productId: 1,
-      liked: true,
-      date: new Date(2023, 7, 18),
-      name: 'Nike Air Force',
-      imgs: ['https://minimal-kit-react.vercel.app/assets/images/products/product_1.jpg'],
-      price: 5000,
-      priceSale: 3000,
-      colors: ['green', 'white'],
-      status: 'S',
-      size: [
-        {name: 'ウエスト', value: '72', unit: 'cm'},
-        {name: 'ヒップ', value: '100', unit: 'cm'},
-        {name: 'パンツ丈', value: '107', unit: 'cm'},
-        {name: 'すそ周り', value: '74', unit: 'cm'},
-        {name: '裾', value: '54', unit: 'cm'},
-      ],
-      mainCategory: 'パンツ',
-      subCategory: 'デニム',
-      gender: 'M',
-      history: []
-    },
-    {
-      productId: 2,
-      liked: true,
-      date: new Date(2023, 7, 20),
-      name: 'Nike Space Hippie 04 SUPER Edition',
-      imgs: ['https://minimal-kit-react.vercel.app/assets/images/products/product_2.jpg'],
-      price: 10200,
-      colors: ['lightgray', 'orange'],
-      status: 'S',
-      size: [
-        {name: 'ウエスト', value: '72', unit: 'cm'},
-        {name: 'ヒップ', value: '100', unit: 'cm'},
-        {name: 'パンツ丈', value: '107', unit: 'cm'},
-        {name: 'すそ周り', value: '74', unit: 'cm'},
-        {name: '裾', value: '54', unit: 'cm'},
-      ],
-      mainCategory: 'パンツ',
-      subCategory: 'デニム',
-      gender: 'M',
-      history: []
-    },
-    {
-      productId: 3,
-      liked: false,
-      date: new Date(2023, 7, 18),
-      name: 'Nike Air Max Zephyr',
-      imgs: ['https://minimal-kit-react.vercel.app/assets/images/products/product_7.jpg'],
-      price: 8900,
-      colors: ['green', 'red'],
-      status: 'S',
-      size: [
-      {name: 'ウエスト', value: '72', unit: 'cm'},
-      {name: 'ヒップ', value: '100', unit: 'cm'},
-      {name: 'パンツ丈', value: '107', unit: 'cm'},
-      {name: 'すそ周り', value: '74', unit: 'cm'},
-      {name: '裾', value: '54', unit: 'cm'},
-    ],
-    mainCategory: 'パンツ',
-    subCategory: 'デニム',
-    gender: 'M',
-    history: []
-    },
-    {
-      productId: 4,
-      liked: false,
-      date: new Date(2023, 7, 17),
-      name: 'Jodern Delta',
-      imgs: ['https://minimal-kit-react.vercel.app/assets/images/products/product_8.jpg'],
-      price: 10200,
-      colors: ['yellowgreen', 'blue'],
-      status: 'S',
-      size: [
-      {name: 'ウエスト', value: '72', unit: 'cm'},
-      {name: 'ヒップ', value: '100', unit: 'cm'},
-      {name: 'パンツ丈', value: '107', unit: 'cm'},
-      {name: 'すそ周り', value: '74', unit: 'cm'},
-      {name: '裾', value: '54', unit: 'cm'},
-    ],
-    mainCategory: 'パンツ',
-    subCategory: 'デニム',
-    gender: 'M',
-    history: []
-    },
-    {
-      productId: 5,
-      liked: false,
-      date: new Date(2023, 6, 17),
-      name: 'Nike Air Max Up',
-      imgs: ['https://minimal-kit-react.vercel.app/assets/images/products/product_17.jpg'],
-      price: 9200,
-      colors: ['white', 'pink'],
-      status: 'S',
-      size: [
-      {name: 'ウエスト', value: '72', unit: 'cm'},
-      {name: 'ヒップ', value: '100', unit: 'cm'},
-      {name: 'パンツ丈', value: '107', unit: 'cm'},
-      {name: 'すそ周り', value: '74', unit: 'cm'},
-      {name: '裾', value: '54', unit: 'cm'},
-    ],
-    mainCategory: 'パンツ',
-    subCategory: 'デニム',
-    gender: 'M',
-    history: []
-    }
-  ]
-  const recommendsSp: ProductInfo[] = recommends.slice();
-  recommendsSp.push({
-    productId: 6,
-    liked: false,
-    date: new Date(2023, 6, 17),
-    name: 'Nike Air Max Up',
-    imgs: ['https://minimal-kit-react.vercel.app/assets/images/products/product_18.jpg'],
-    price: 9200,
-    colors: ['white', 'pink'],
-    status: 'S',
-    size: [
-      {name: 'ウエスト', value: '72', unit: 'cm'},
-      {name: 'ヒップ', value: '100', unit: 'cm'},
-      {name: 'パンツ丈', value: '107', unit: 'cm'},
-      {name: 'すそ周り', value: '74', unit: 'cm'},
-      {name: '裾', value: '54', unit: 'cm'},
-    ],
-    mainCategory: 'パンツ',
-    subCategory: 'デニム',
-    gender: 'M',
-    history: []
-  });
-
-  const recommendsStyle: StyleData[] = [
-    {
-      styleId: 101,
-      liked: true,
-      date: new Date(2023, 7, 18),
-      profile: 'https://minimal-kit-react.vercel.app/assets/images/avatars/avatar_2.jpg',
-      name: 'TestUser',
-      imgs: ['https://jamtrading.jp/coordinate/wp-content/uploads/2023/08/oneday_logo1-375x540.jpg'],
-      size: [
-        {name: '身長', value: '172', unit: 'cm'},
-      ],
-      gender: 'M'
-    },
-    {
-      styleId: 102,
-      liked: true,
-      date: new Date(2023, 7, 20),
-      profile: 'https://minimal-kit-react.vercel.app/assets/images/avatars/avatar_2.jpg',
-      name: 'TestUser',
-      imgs: ['https://jamtrading.jp/coordinate/wp-content/uploads/2023/07/oneday_logo23-375x540.jpg'],
-      size: [
-        {name: '身長', value: '163', unit: 'cm'},
-      ],
-      gender: 'M',
-    },
-    {
-      styleId: 103,
-      liked: false,
-      date: new Date(2023, 7, 18),
-      profile: 'https://minimal-kit-react.vercel.app/assets/images/avatars/avatar_2.jpg',
-      name: 'TestUser',
-      imgs: ['	https://jamtrading.jp/coordinate/wp-content/uploads/2023/07/oneday_logo14-375x540.jpg'],
-      size: [
-      {name: '身長', value: '175', unit: 'cm'},
-    ],
-    gender: 'M',
-    },
-    {
-      styleId: 104,
-      liked: false,
-      date: new Date(2023, 7, 17),
-      profile: 'https://minimal-kit-react.vercel.app/assets/images/avatars/avatar_2.jpg',
-      name: 'TestUser',
-      imgs: ['https://jamtrading.jp/coordinate/wp-content/uploads/2023/07/oneday_logo17-375x540.jpg'],
-      size: [
-      {name: '身長', value: '180', unit: 'cm'},
-    ],
-    gender: 'M',
-    },
-    {
-      styleId: 105,
-      liked: false,
-      date: new Date(2023, 6, 17),
-      profile: 'https://minimal-kit-react.vercel.app/assets/images/avatars/avatar_2.jpg',
-      name: 'TestUser',
-      imgs: ['https://jamtrading.jp/coordinate/wp-content/uploads/2023/08/oneday_logo4-375x540.jpg'],
-      size: [
-      {name: '身長', value: '170', unit: 'cm'},
-    ],
-    gender: 'M',
-    }
-  ]
-  const recommendsStyleSp: StyleData[] = recommendsStyle.slice();
-  recommendsStyleSp.push({
-    styleId: 106,
-    liked: false,
-    date: new Date(2023, 6, 17),
-    profile: 'https://minimal-kit-react.vercel.app/assets/images/avatars/avatar_10.jpg',
-    name: 'SpUser',
-    imgs: ['https://jamtrading.jp/coordinate/wp-content/uploads/2023/07/oneday_logo30-375x540.jpg'],
-    size: [
-      {name: '身長', value: '169', unit: 'cm'},
-    ],
-    gender: 'M',
-  });
-
-  const prodStatusList = ['S','A','B','C','D']
-
-  const [load, setLoad] = useState<boolean>(false);
-  const [product, setProduct] = useState<ProductInfo|undefined>(undefined);
-  const [productHistory, setProductHistory] = useState<Array<ProductInfo>>([]);
-  const [snapShow, setSnapShow] = useState<boolean>(true);
-  const [thumbShow, setThumbShow] = useState<boolean>(true);
-  const [thumbCompShow, setThumbCompShow] = useState<boolean>(true);
-  const [historyShow, setHistoryShow] = useState<boolean>(false);
-  const [fabShow, setFabShow] = useState<boolean>(false);
-  const [buyStatus, setBuyStatus] = useState<boolean>(true);
-  const [compMode, setCompMode] = useState<boolean>(false);
-  const [offerPrice, setOfferPrice] = useState<number>(0);
-
-  const [currentIndex, setCurrentIndex] = useState<number>(0);
-  function handleChange(index: number) {
-    setCurrentIndex(index);
-  }
-  const [currentCompIndex, setCurrentCompIndex] = useState<number>(0);
-  function handleCompChange(index: number) {
-    setCurrentCompIndex(index);
-  }
-  const [currentCompHistoryIndex, setCurrentCompHistoryIndex] = useState<number | undefined>();
-  function handleHistoryChange(index?: number) {
-    setCurrentCompHistoryIndex(index);
-    setHistoryShow(false);
-    setCompMode(true);
-    setCurrentCompIndex(0);
   }
 
   const offerPriceHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -654,8 +480,8 @@ export default function ProductDetail() {
           <p>
             コディネート
           </p>
-          <StyleCard dataList={isSp ? recommendsStyleSp : recommendsStyle}/>
-          <button className='more-btn'>
+          <SocialCard dataList={socialList} additional={false}/>
+          <button className='more-btn social'>
             + もっと見る
           </button>
         </div>
@@ -663,7 +489,7 @@ export default function ProductDetail() {
           <p>
             関連アイテム
           </p>
-          <ProductCard dataList={isSp ? recommendsSp : recommends}/>
+          <ProductCard dataList={productList}/>
           <button className='more-btn'>
             + もっと見る
           </button>

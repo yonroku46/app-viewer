@@ -19,6 +19,8 @@ import Empty from 'components/empty/Empty';
 import MyPage from 'pages/mypage/MyPage';
 import Products from 'pages/products/Products';
 import ProductDetail from 'pages/products/ProductDetail';
+import Social from 'pages/social/Social';
+import SocialDetail from 'pages/social/SocialDetail';
 import AuthPage from 'pages/auth/AuthPage';
 import AuthRecover from 'pages/auth/AuthRecover';
 import AdminPage from 'pages/admin/AdminPage';
@@ -33,10 +35,10 @@ import Labo from 'pages/labo/Labo';
 import './App.scss';
 
 import RocketLaunchIcon from '@mui/icons-material/RocketLaunch';
+import StyleTwoToneIcon from '@mui/icons-material/StyleTwoTone';
 import ContactSupportTwoToneIcon from '@mui/icons-material/ContactSupportTwoTone';
 import PsychologyTwoToneIcon from '@mui/icons-material/PsychologyTwoTone';
-import FindInPageTwoToneIcon from '@mui/icons-material/FindInPageTwoTone';
-import AdminPanelSettingsTwoToneIcon from '@mui/icons-material/AdminPanelSettingsTwoTone';
+import CardGiftcardTwoToneIcon from '@mui/icons-material/CardGiftcardTwoTone';
 
 export default function App() {
   const navigate = useNavigate();
@@ -63,6 +65,7 @@ export default function App() {
     signup: { title: '会員登録', description: '新規登録ページ' },
     mypage: { title: 'マイページ', description: 'マイページへようこそ' },
     search: { title: '検索', description: '検索ページ' },
+    social: { title: 'スタイル', description: 'スタイルページ' },
     products: { title: '商品', description: '商品ページ' },
     labo: { title: '実験室', description: '実験室ページ' },
     contact: { title: 'お問い合わせ', description: 'お問い合わせページ' },
@@ -73,12 +76,12 @@ export default function App() {
 
   const menuItem: MenuItem[] = [
     {
-      category: 'サンプル',
+      category: 'メイン',
       categoryImg: category1,
       items: [
-        { url: 'products', icon: <FindInPageTwoToneIcon/>, title: '商品' },
+        { url: 'products', icon: <CardGiftcardTwoToneIcon/>, title: '商品' },
+        { url: 'social', icon: <StyleTwoToneIcon/>, title: 'スタイル' },
         { url: 'contact', icon: <ContactSupportTwoToneIcon/>, title: 'お問い合わせ' },
-        { url: 'policy', icon: <AdminPanelSettingsTwoToneIcon/>, title: 'ポリシー' },
       ]
     },{
       category: 'ラボ',
@@ -122,14 +125,13 @@ export default function App() {
     window.scrollTo({ top: 0 });
     const currentPath = location.pathname;
     const path = currentPath.split('/')[1];
-    setCurrentPath(path);
+    setCurrentPath(path); 
     const currentUser = authService.getCurrentUser();
+    setUser(currentUser);
     if (currentUser) {
-      if (currentUser.mailAuth) {
-        setUser(currentUser);
-      } else {
-        dispatch(showCenterLinkPopup('権限なし', '権限取得のため\nメールでの認証が必要です', '/'));
-        authService.logout(true).then(data => {
+      if (!currentUser.mailAuth) {
+        dispatch(showCenterLinkPopup('仮登録中', '権限取得のため\nメールでの認証が必要です', '/'));
+        authService.logout(true).then(() => {
           setUser(undefined);
         });
       }
@@ -188,6 +190,8 @@ export default function App() {
           <Route path="/search" element={<Search/>}/>
           <Route path="/products" element={<Products/>}/>
             <Route path="/products/:id" element={<ProductDetail/>}/>
+          <Route path="/social" element={<Social/>}/>
+            <Route path="/social/:id" element={<SocialDetail/>}/>
           <Route path="/labo" element={<Labo/>}/>
           <Route path="/contact" element={<Contact/>}/>
           <Route path="/policy" element={<Policy/>}/>

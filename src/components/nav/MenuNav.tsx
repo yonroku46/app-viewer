@@ -61,7 +61,7 @@ export default function MenuNav({ menuItem, currentPath, userName, profileImg, m
   
   function link(path: string) {
     setOpen(false);
-    navigate(path, { state: location });
+    navigate(path, { state: { prev: location.pathname } });
   }
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -145,9 +145,7 @@ export default function MenuNav({ menuItem, currentPath, userName, profileImg, m
             ログアウト
           </MenuItem>
         </Menu>
-        <Badge variant="dot" color="primary">
-          <img className='profile' src={imgSrc(profileImg)} onError={handleImgError} onClick={() => {}} alt='profile'/>
-        </Badge>
+        <img className='profile' src={imgSrc(profileImg)} onError={handleImgError} onClick={() => {}} alt='profile'/>
       </div>
     : (currentPath !== 'login') &&
       <button className='login-btn' onClick={() => link('/login')}>

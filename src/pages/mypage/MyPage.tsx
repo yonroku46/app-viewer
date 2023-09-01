@@ -11,7 +11,7 @@ export default function MyPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const userService = new UserService();
+  const userService = UserService();
   const authService = new AuthService();
 
   const [userInfo, setUserInfo] = useState<UserInfo|undefined>(undefined);
@@ -60,8 +60,8 @@ export default function MyPage() {
   async function updateUserInfo() {
     if (selectedFile) {
       dispatch(loading(true, true));
-      const idxDot = selectedFile.name.lastIndexOf(".") + 1;
-      const extFile = selectedFile.name.substr(idxDot, selectedFile.name.length).toLowerCase();
+      const dotIdx = selectedFile.name.lastIndexOf(".") + 1;
+      const extFile = selectedFile.name.substr(dotIdx, selectedFile.name.length).toLowerCase();
       if (supportedExtensions.includes(extFile)) {
         const formData = new FormData();
         formData.append('profileImg', selectedFile);

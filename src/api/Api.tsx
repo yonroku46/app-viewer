@@ -36,4 +36,12 @@ export module ApiRoutes {
   export const PRODUCT_FILTER = `${productRoot}/filter`;
   export const PRODUCT_HISTORY = `${productRoot}/history`;
   export const PRODUCT_LIKED = `${productRoot}/like`;
+
+  // social
+  const socialRoot = `${root}/social`;
+  export const SOCIAL_INFO = `${socialRoot}/info`;
+  export const SOCIAL_FILTER = `${socialRoot}/filter`;
+  export const SOCIAL_HISTORY = `${socialRoot}/history`;
+  export const SOCIAL_LIKE = `${socialRoot}/like`;
+  export const SOCIAL_COMMENT = `${socialRoot}/comment`;
 }

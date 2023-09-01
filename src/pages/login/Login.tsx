@@ -33,7 +33,8 @@ export default function Login() {
   const [errMsg, setErrMsg] = useState<string>("");
 
   useEffect(() => {
-    if (location.state === 'oauth2' && type && code) {
+    done()
+    if (location.state?.auth === 'oauth2' && type && code) {
       load();
       if (type === 'line') {
         oAuth2Service.lineAccess(code).then(data => {
@@ -56,8 +57,7 @@ export default function Login() {
         });
       }
     } else {
-      const user = authService.getCurrentUser();
-      if (user) {
+      if (authService.getCurrentUser()) {
         navigate(-1);
       }
     }
@@ -70,6 +70,41 @@ export default function Login() {
     dispatch(unloading());
   }
   
+  async function login() {
+    errReset();
+    load();
+    await authService.login(mail, password).then(data => {
+      if (data.responseData) {
+        loginSuccess();
+      } else {
+        setErrMsg('ログイン情報をもう一度ご確認ください');
+        done();
+      }
+    });
+  }
+
+  function loginSuccess() {
+    const prev = location.state?.prev;
+    if (prev) {
+      navigate(prev, { replace: true });
+    } else {
+      navigate('/', { replace: true });
+    }
+    done();
+  }
+
+  async function socialLogin(type: string) {
+    errReset();
+    load();
+    localStorage.setItem('prev', location.state?.prev)
+    if (type === 'line') {
+      window.location.href = lineLogin();
+    } else if (type === 'google') {
+      window.location.href = googleLogin();
+    }
+    done();
+  }
+
   function passwordTypeHandler(e: React.MouseEvent<HTMLSpanElement, MouseEvent>) {
     setPasswordType(() => {
       if (!passwordType.visible) {
@@ -87,39 +122,6 @@ export default function Login() {
       return;
     }
     login();
-  }
-
-  async function login() {
-    errReset();
-    load();
-    await authService.login(mail, password).then(data => {
-      if (data.responseData) {
-        loginSuccess();
-      } else {
-        setErrMsg('ログイン情報をもう一度ご確認ください');
-        done();
-      }
-    });
-  }
-
-  function loginSuccess() {
-    done();
-    if (location.state?.pathname) {
-      navigate(location.state?.pathname, { replace: true });
-    } else {
-      navigate('/', { replace: true });
-    }
-  }
-
-  async function socialLogin(type: string) {
-    errReset();
-    load();
-    if (type === 'line') {
-      window.location.href = lineLogin();
-    } else if (type === 'google') {
-      window.location.href = googleLogin();
-    }
-    done();
   }
 
   function errReset() {

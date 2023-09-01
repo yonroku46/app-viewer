@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { RootState } from "store/reducers";
 import { hidePopup } from "store/actions/popupActions";
 import Backdrop from 'components/backdrop/Backdrop'
@@ -20,6 +20,7 @@ interface PopupProps {
 export default function Popup({ title = '', contents, link, center, backdropClose = true }: PopupProps) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const show = useSelector((state: RootState) => state.popup.isShow);
   const [errFlg, setErrFlg] = useState<boolean>(false);
@@ -37,7 +38,7 @@ export default function Popup({ title = '', contents, link, center, backdropClos
   function popupClose() {
     dispatch(hidePopup());
     if (link) {
-      navigate(link, { replace: true });
+      navigate(link, { state: { prev: location.pathname } });
     }
   }
 

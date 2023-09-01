@@ -35,7 +35,7 @@ $app-sp-width: 767px;
     }
     &::-webkit-scrollbar-thumb {
       border-radius: 4px;
-      background-color: gray;
+      background-color: var(--border-color);
     }
     h4 {
       margin: 10px 0px;

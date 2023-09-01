@@ -57,8 +57,8 @@ export default function Contact() {
           <label>お問い合わせカテゴリー</label>
           <div className='select-box'>
             <select onChange={(e) => setCategory(e.target.value)}>
-              {categoryList.map((category) => (
-                <option value={category}>{category}</option>
+              {categoryList.map((category, index) => (
+                <option value={category} key={index}>{category}</option>
               ))}
             </select>
             <ArrowDropDownIcon className='icon'/>

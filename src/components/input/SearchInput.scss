@@ -23,6 +23,9 @@ $section-width: $app-max-width - $search-nav-sp-width;
   &.focused {
     border-color: black;
   }
+  &.inpage {
+    margin-top: 32px;
+  }
   .search-area {
     width: 100%;
     z-index: 2;
@@ -127,7 +130,7 @@ $section-width: $app-max-width - $search-nav-sp-width;
 }
 .category-area {
   position: absolute;
-  top: 92px;
+  top: 107px;
   z-index: 0;
   width: 100%;
   display: inline-flex;

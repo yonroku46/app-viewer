@@ -206,7 +206,7 @@ export default function Products() {
           <div className='sort-item'>
             <select onChange={(e) => handleSortItemClick(e.target.value)}>
               {sortList.map((sort) => (
-                <option value={sort.value}>{sort.sortName}</option>
+                <option value={sort.value} key={sort.value}>{sort.sortName}</option>
               ))}
             </select>
             <ArrowDropDownIcon className='icon'/>
@@ -274,7 +274,7 @@ export default function Products() {
         <div className='menu-title'>
           <div className='sub'>Result</div>
           <div className='main'>
-            <span style={{ color: 'var(--main-color)' }}>"{value}"</span> {dataList.length}件
+            <span className='key'>{value}</span> {dataList.length}件
           </div>
         </div>
         <ProductCard dataList={dataList}/>

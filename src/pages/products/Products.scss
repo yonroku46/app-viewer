@@ -11,6 +11,12 @@ $app-sp-width: 767px;
     .main {
       font-size: 20px;
       font-weight: 900;
+      .key {
+        color: var(--main-color);
+        &::before, &::after {
+          content: '"';
+        }
+      }
     }
     .sub {
       font-size: 15px;
@@ -24,7 +30,7 @@ $app-sp-width: 767px;
     border-radius: 4px;
     transition: height 0.25s;
     &.open {
-      padding: 40px 10px;
+      padding: 40px 10px 20px 10px;
       height: fit-content;
       background-color: var(--bg-color);
       box-shadow: 0px 3px 4px 0 inset var(--shadow-color);
@@ -964,10 +970,13 @@ $app-sp-width: 767px;
       }
     }
     .more-btn {
-      max-width: 200px;
+      width: 140px;
       font-size: 12px;
       margin-left: auto;
       margin-right: auto;
+      &.social {
+        margin-top: 20px;
+      }
     }
   }
 }

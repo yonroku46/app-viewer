@@ -92,13 +92,14 @@ $section-width: $app-max-width - $search-nav-sp-width;
   }
 }
 .user-badge {
-  margin-right: 16px;
+  margin-right: 14px;
+  margin-top: 5px;
   .profile {
     cursor: pointer;
     width: 30px;
     height: 30px;
     border-radius: 12px;
-    border: 2px solid black;
+    border: 1px solid black;
     margin-top: -2px;
     margin-right: -2px;
     transition: opacity 0.25s;
@@ -285,7 +286,7 @@ $section-width: $app-max-width - $search-nav-sp-width;
         width: 50px;
         height: 50px;
         border-radius: 12px;
-        border: 2px solid black;
+        border: 1px solid black;
       }
       .info {
         margin-top: -50px;

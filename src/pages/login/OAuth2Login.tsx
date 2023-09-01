@@ -10,9 +10,10 @@ export default function OAuth2Login() {
   
   const searchParams = new URLSearchParams(location.search);
   const code = searchParams.get('code');
+  const prev = localStorage.getItem('prev');
 
   useEffect(() => {
-    navigate(`/login?type=${type}&code=${code}`, { replace: true, state: 'oauth2' });
+    navigate(`/login?type=${type}&code=${code}`, { replace: true, state: { auth: 'oauth2', prev: prev === 'undefined' ? undefined : prev } });
   }, []);
 
   return(

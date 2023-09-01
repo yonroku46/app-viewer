@@ -29,3 +29,34 @@ export function dateToString(date: Date): string {
   });
   return formatDate.format(date);
 }
+
+export function relativeTime(dateValue: Date) {
+  const today = new Date();
+  const targetDate = new Date(dateValue);
+  
+  const betweenTime = Math.floor((today.getTime() - targetDate.getTime()) / 1000 / 60);
+  
+  if (betweenTime < 1) {
+    return '数秒前';
+  }
+  if (betweenTime < 60) {
+    return `${betweenTime}分前`;
+  }
+
+  const betweenTimeHour = Math.floor(betweenTime / 60);
+  if (betweenTimeHour < 24) {
+    return `${betweenTimeHour}時間前`;
+  }
+
+  const betweenTimeDay = Math.floor(betweenTime / 60 / 24);
+  if (betweenTimeDay < 31) {
+    return `${betweenTimeDay}日前`;
+  }
+
+  const betweenTimeMonth = Math.floor(betweenTime / 60 / 24 / 30);
+  if (betweenTimeMonth < 13) {
+    return `${betweenTimeMonth}ヶ月前`;
+  }
+
+  return `${Math.floor(betweenTimeDay / 365)}年前`;
+}

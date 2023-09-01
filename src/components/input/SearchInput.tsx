@@ -156,7 +156,7 @@ export default function SearchInput({ value, resetValue, onChange }: { value: st
 
   return(
     <>
-      <div className={isFocused ? 'search-box focused' : 'search-box'}>
+      <div className={isFocused ? 'search-box inpage focused' : 'search-box inpage'}>
         <div className='search-area'>
           <SearchIcon className={isFocused ? 'icon focused' : 'icon'} onClick={() => search()} />
           <input type='text' inputMode='search' placeholder='検索' value={value} onChange={onChange} onKeyDown={handleKeyDown} onFocus={handleInputFocus} onBlur={handleInputBlur} autoFocus={true}/>

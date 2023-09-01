@@ -17,9 +17,9 @@ export function AxiosClientProvider({ children }: { children: React.ReactNode })
 
   const authService = new AuthService();
   
+  const tokenPrefix = `${process.env.REACT_APP_TOKEN_PREFIX}`;
   const isRefreshing = useRef<boolean>(false);
   let refreshTokenSubject = new BehaviorSubject<any>(null);
-  const tokenPrefix = `${process.env.REACT_APP_TOKEN_PREFIX}`;
 
   // クリーンアップ
   useEffect(() => {
@@ -132,8 +132,9 @@ export function AxiosClientProvider({ children }: { children: React.ReactNode })
   }
 
   function handleDefaultError(error: AxiosError): void {
-    const status = error.response?.status;
-    openPopup(`${status}`, '予想しないエラーが発生しました。\n続く場合、管理者に問い合わせください。');
+    // const status = error.response?.status;
+    // openPopup(`${status}`, '予想しないエラーが発生しました。\n続く場合、管理者に問い合わせください。');
+    console.error(error.message);
   }
 
   function addToken(config: AxiosRequestConfig | undefined): InternalAxiosRequestConfig | {} {
