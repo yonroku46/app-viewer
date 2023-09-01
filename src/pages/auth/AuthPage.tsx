@@ -14,7 +14,7 @@ export default function AuthPage() {
   const search = useLocation().search;
   const query = new URLSearchParams(search);
   
-  const authService = new AuthService();
+  const authService = AuthService();
   
   const [isComplete, setIsComplete] = useState<boolean>(false);
   

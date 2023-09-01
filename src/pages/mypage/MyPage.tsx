@@ -12,7 +12,7 @@ export default function MyPage() {
   const navigate = useNavigate();
 
   const userService = UserService();
-  const authService = new AuthService();
+  const authService = AuthService();
 
   const [userInfo, setUserInfo] = useState<UserInfo|undefined>(undefined);
   const [selectedFile, setSelectedFile] = useState<File|null>(null);

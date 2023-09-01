@@ -26,9 +26,9 @@ export default function SocialDetail() {
   const dispatch = useDispatch();
   const { id } = useParams();
 
-  const authService = new AuthService();
-  const socialService = new SocialService();
-  const productService = new ProductService();
+  const authService = AuthService();
+  const socialService = SocialService();
+  const productService = ProductService();
 
   const [user, setUser] = useState<UserState|undefined>(undefined);
   const [load, setLoad] = useState<boolean>(true);

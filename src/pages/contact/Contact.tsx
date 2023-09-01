@@ -9,7 +9,7 @@ import Checkbox from '@mui/material/Checkbox';
 
 export default function Contact() {
   const navigate = useNavigate();
-  const authService = new AuthService();
+  const authService = AuthService();
   
   const categoryList: string[] = ['バグ対応', '商品注文・返品', 'その他']
 

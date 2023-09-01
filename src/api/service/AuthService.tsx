@@ -6,104 +6,120 @@ import { showTopPopup } from "store/actions/popupActions";
 import { ApiResponse, ApiRoutes } from 'api/Api';
 import axios from 'axios';
 
-export default class AuthService {
-  dispatch = useDispatch();
-  navigate = useNavigate();
-  location = useLocation();
+export default function useAuthService() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  async login(mail: string, password: string): Promise<any> {
-    return axios.post<ApiResponse>(ApiRoutes.LOGIN, {
-      mail,
-      password,
-    }).then(response => {
+  async function login(mail: string, password: string): Promise<any> {
+    try {
+      const response = await axios.post<ApiResponse>(ApiRoutes.LOGIN, {
+        mail,
+        password,
+      });
       if (response && !response.data?.hasErrors) {
         const current = new Date();
         const userInfo = response.data.responseData;
-        var jwtInfo = {
+        const jwtInfo = {
           userId: userInfo.userId,
           mail: userInfo.mail,
           iat: current.getTime(),
-          lat: current.getTime() + (1000*60*60*24)
-        }
+          lat: current.getTime() + (1000*60*60*24),
+        };
         localStorage.setItem('jwtInfo', JSON.stringify(jwtInfo));
         localStorage.setItem('currentUser', JSON.stringify(userInfo));
-        this.dispatch(userLogin(userInfo));
+        dispatch(userLogin(userInfo));
       }
       return response.data;
-    });
+    } catch (error) {
+      console.error('Error logging in:', error);
+    }
   }
 
-  async logout(isSendReq: boolean): Promise<any> {
+  async function logout(isSendReq: boolean): Promise<any> {
     if (isSendReq) {
-      return axios.post<ApiResponse>(ApiRoutes.LOGOUT)
-      .then(response => {
-        this.storageClear();
+      try {
+        const response = await axios.post<ApiResponse>(ApiRoutes.LOGOUT);
+        storageClear();
         if (response && !response.data?.hasErrors) {
           return response.data;
         }
-      }).catch(err => {
-        this.storageClear();
+      } catch (err) {
+        storageClear();
         return null;
-      });
+      }
+    } else {
+      storageClear();
     }
-    this.storageClear();
   }
 
-  async submit(name: string, mail: string, password: string): Promise<any> {
-    return axios.post<ApiResponse>(ApiRoutes.SUBMIT, {
-      name,
-      mail,
-      password,
-    })
-    .then(response => {
+  async function submit(name: string, mail: string, password: string): Promise<any> {
+    try {
+      const response = await axios.post<ApiResponse>(ApiRoutes.SUBMIT, {
+        name,
+        mail,
+        password,
+      });
       return response.data;
-    });
+    } catch (error) {
+      console.error('Error submitting data:', error);
+    }
   }
 
-  async recoverMail(mail: string): Promise<any> {
-    return axios.post<ApiResponse>(ApiRoutes.RECOVER, {
-      mail,
-    })
-    .then(response => {
+  async function recoverMail(mail: string): Promise<any> {
+    try {
+      const response = await axios.post<ApiResponse>(ApiRoutes.RECOVER, {
+        mail,
+      });
       return response.data;
-    });
+    } catch (error) {
+      console.error('Error sending recovery email:', error);
+    }
   }
 
-  async recover(mail: string, password: string): Promise<any> {
-    return axios.patch<ApiResponse>(ApiRoutes.RECOVER, {
-      mail,
-      password,
-    })
-    .then(response => {
+  async function recover(mail: string, password: string): Promise<any> {
+    try {
+      const response = await axios.patch<ApiResponse>(ApiRoutes.RECOVER, {
+        mail,
+        password,
+      });
       return response.data;
-    });
+    } catch (error) {
+      console.error('Error recovering password:', error);
+    }
   }
 
-  async keyCheck(mail: string, mailKey: string): Promise<any> {
-    return axios.post<ApiResponse>(ApiRoutes.KEY_CHECK, {
-      mail,
-      mailKey,
-    })
-    .then(response => {
+  async function keyCheck(mail: string, mailKey: string): Promise<any> {
+    try {
+      const response = await axios.post<ApiResponse>(ApiRoutes.KEY_CHECK, {
+        mail,
+        mailKey,
+      });
       return response.data;
-    });
+    } catch (error) {
+      console.error('Error checking key:', error);
+    }
   }
 
-  async refreshToken(): Promise<any> {
-    return axios.get<ApiResponse>(ApiRoutes.REFRESH_TOKEN)
-    .then(response => {
+  async function refreshToken(): Promise<any> {
+    try {
+      const response = await axios.get<ApiResponse>(ApiRoutes.REFRESH_TOKEN);
       return response.data;
-    });
+    } catch (error) {
+      console.error('Error refreshing token:', error);
+    }
   }
 
-  async healthCheck(): Promise<any> {
-    return axios.get<ApiResponse>(ApiRoutes.HEALTH_CHECK)
-    .then(response => {
+  async function healthCheck(): Promise<any> {
+    try {
+      const response = await axios.get<ApiResponse>(ApiRoutes.HEALTH_CHECK);
       return response.data;
-    });
+    } catch (error) {
+      console.error('Error checking health:', error);
+    }
   }
 
-  getCurrentUser(): UserState | undefined {
+  function getCurrentUser(): UserState | undefined {
     const currentUser = localStorage.getItem('currentUser');
     if (currentUser) {
       return JSON.parse(currentUser);
@@ -112,20 +128,33 @@ export default class AuthService {
     }
   }
 
-  storageClear(): void {
+  function storageClear(): void {
     localStorage.removeItem('jwtInfo');
     localStorage.removeItem('currentUser');
-    this.dispatch(userLogout());
+    dispatch(userLogout());
   }
 
-  loginRequire(): boolean {
+  function loginRequire(): boolean {
     const currentUser = localStorage.getItem('currentUser');
     if (currentUser) {
       return true;
     } else {
-      this.dispatch(showTopPopup('ログインが必要です'));
-      this.navigate('/login', { state: { prev: this.location.pathname } });
+      dispatch(showTopPopup('ログインが必要です'));
+      navigate('/login', { state: { prev: location.pathname } });
       return false;
     }
   }
+
+  return {
+    login,
+    logout,
+    submit,
+    recoverMail,
+    recover,
+    keyCheck,
+    refreshToken,
+    healthCheck,
+    getCurrentUser,
+    loginRequire,
+  };
 }

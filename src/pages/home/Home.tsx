@@ -12,7 +12,7 @@ export default function Home() {
   const title = 'アプリパッケージ\nデモ作成中';
   const subTitle = 'アプリの説明';
 
-  const authService = new AuthService();
+  const authService = AuthService();
 
   const [user, setUser] = useState<UserState|undefined>(undefined);
 

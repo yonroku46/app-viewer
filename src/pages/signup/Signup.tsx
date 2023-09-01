@@ -15,7 +15,7 @@ export default function Signup() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const authService = new AuthService();
+  const authService = AuthService();
 
   const [passwordType, setPasswordType] = useState<{type: string, visible: boolean}>({
     type: 'password',

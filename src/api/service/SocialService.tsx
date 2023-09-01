@@ -1,4 +1,3 @@
-import { useDispatch } from "react-redux";
 import { ApiResponse, ApiRoutes } from 'api/Api';
 import axios from 'axios';
 
@@ -32,91 +31,108 @@ export interface CommentInfo {
   date: Date;
 }
 
-export default class SocialService {
-  dispatch = useDispatch();
+export default function SocialService() {
 
-  async socialInfo(socialId: number): Promise<any> {
-    const params = {
-      socialId: socialId
-    }
-    return axios.get<ApiResponse>(ApiRoutes.SOCIAL_INFO, {params})
-    .then(response => {
+  async function socialInfo(socialId: number): Promise<any> {
+    try {
+      const params = {
+        socialId: socialId
+      };
+      const response = await axios.get<ApiResponse>(ApiRoutes.SOCIAL_INFO, { params });
       if (response && !response.data?.hasErrors) {
         return response.data;
       }
-    });
+    } catch (error) {
+      console.error('Error fetching social info:', error);
+    }
   }
   
-  async socialList(filter: SocialFilter): Promise<any> {
-    const params = {
-      keyword: filter.keyword
+  async function socialList(filter: SocialFilter): Promise<any> {
+    try {
+      const params = {
+        keyword: filter.keyword
+      };
+      const response = await axios.get<ApiResponse>(ApiRoutes.SOCIAL_FILTER, { params });
+      if (response && !response.data?.hasErrors) {
+        return response.data;
+      }
+    } catch (error) {
+      console.error('Error fetching social list:', error);
     }
-    return axios.get<ApiResponse>(ApiRoutes.SOCIAL_FILTER, {params})
-    .then(response => {
+  }
+
+  async function socialLike(socialId: number): Promise<any> {
+    try {
+      const response = await axios.put<ApiResponse>(ApiRoutes.SOCIAL_LIKE, { socialId });
       if (response && !response.data?.hasErrors) {
         return response.data;
       }
-    });
-  }
-
-  async socialLike(socialId: number): Promise<any> {
-    return axios.put<ApiResponse>(ApiRoutes.SOCIAL_LIKE, {
-      socialId
-    })
-    .then(response => {
-      if (response && !response.data?.hasErrors) {
-        return response.data;
-      }
-    });
-  }
-
-  async socialUnlike(socialId: number): Promise<any> {
-    const params = {
-      socialId: socialId
+    } catch (error) {
+      console.error('Error liking social:', error);
     }
-    return axios.delete<ApiResponse>(ApiRoutes.SOCIAL_LIKE, {params})
-    .then(response => {
+  }
+
+  async function socialUnlike(socialId: number): Promise<any> {
+    try {
+      const params = {
+        socialId: socialId
+      };
+      const response = await axios.delete<ApiResponse>(ApiRoutes.SOCIAL_LIKE, { params });
       if (response && !response.data?.hasErrors) {
         return response.data;
       }
-    });
-  }
-
-  async commentList(socialId: number): Promise<any> {
-    const params = {
-      socialId: socialId
+    } catch (error) {
+      console.error('Error unliking social:', error);
     }
-    return axios.get<ApiResponse>(ApiRoutes.SOCIAL_COMMENT, {params})
-    .then(response => {
+  }
+
+  async function commentList(socialId: number): Promise<any> {
+    try {
+      const params = {
+        socialId: socialId
+      };
+      const response = await axios.get<ApiResponse>(ApiRoutes.SOCIAL_COMMENT, { params });
       if (response && !response.data?.hasErrors) {
         return response.data;
       }
-    });
-  }
-
-  async commentInsert(socialId: number, reply: number|undefined, contents: string): Promise<any> {
-    return axios.put<ApiResponse>(ApiRoutes.SOCIAL_COMMENT, {
-      socialId,
-      reply,
-      contents
-    })
-    .then(response => {
-      if (response && !response.data?.hasErrors) {
-        return response.data;
-      }
-    });
-  }
-
-  async commentDelete(socialId: number, commentId: number): Promise<any> {
-    const params = {
-      socialId: socialId,
-      commentId: commentId
+    } catch (error) {
+      console.error('Error fetching comments:', error);
     }
-    return axios.delete<ApiResponse>(ApiRoutes.SOCIAL_COMMENT, {params})
-    .then(response => {
+  }
+
+  async function commentInsert(socialId: number, reply: number|undefined, contents: string): Promise<any> {
+    try {
+      const response = await axios.put<ApiResponse>(ApiRoutes.SOCIAL_COMMENT, { socialId, reply, contents });
       if (response && !response.data?.hasErrors) {
         return response.data;
       }
-    });
+    } catch (error) {
+      console.error('Error inserting comment:', error);
+    }
   }
+
+  async function commentDelete(socialId: number, commentId: number): Promise<any> {
+    try {
+      const params = {
+        socialId: socialId,
+        commentId: commentId
+      };
+      const response = await axios.delete<ApiResponse>(ApiRoutes.SOCIAL_COMMENT, { params });
+      if (response && !response.data?.hasErrors) {
+        return response.data;
+      }
+    } catch (error) {
+      console.error('Error deleting comment:', error);
+    }
+  }
+
+  return {
+    socialInfo,
+    socialList,
+    socialLike,
+    socialUnlike,
+    commentList,
+    commentInsert,
+    commentDelete,
+  };
 }

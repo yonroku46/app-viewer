@@ -41,9 +41,9 @@ export default function ProductDetail() {
   const isSp = useMediaQuery({ maxWidth: 767 });
   const { id } = useParams();
 
-  const authService = new AuthService();
-  const productService = new ProductService();
-  const socialService = new SocialService();
+  const authService = AuthService();
+  const productService = ProductService();
+  const socialService = SocialService();
 
   const { y: windowY } = useWindowScroll();
   const spareArea: number = 100;

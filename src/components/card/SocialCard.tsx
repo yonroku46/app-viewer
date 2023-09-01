@@ -16,8 +16,8 @@ import { Card, Typography, CardActionArea } from '@mui/material';
 export default function SocialCard({ dataList, additional, owned }: { dataList: SocialInfo[], additional: boolean, owned?: boolean }) {
   const navigate = useNavigate();
 
-  const authService = new AuthService();
-  const socialService = new SocialService();
+  const authService = AuthService();
+  const socialService = SocialService();
 
   const [loading, setLoading] = useState(true);
   const [social, setSocial] = useState<SocialInfo[]>([]);

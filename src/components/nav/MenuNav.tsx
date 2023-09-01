@@ -35,7 +35,7 @@ export default function MenuNav({ menuItem, currentPath, userName, profileImg, m
   const navigate = useNavigate();
   const location = useLocation();
 
-  const authService = new AuthService();
+  const authService = AuthService();
 
   const [open, setOpen] = useState<boolean>(false);
   const [modalOpen, setModalOpen] = useState<boolean>(false);

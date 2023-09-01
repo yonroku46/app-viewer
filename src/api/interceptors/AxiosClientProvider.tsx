@@ -15,7 +15,7 @@ interface InternalAxiosRequestConfig extends AxiosRequestConfig {
 export function AxiosClientProvider({ children }: { children: React.ReactNode }): JSX.Element {
   const dispatch = useDispatch();
 
-  const authService = new AuthService();
+  const authService = AuthService();
   
   const tokenPrefix = `${process.env.REACT_APP_TOKEN_PREFIX}`;
   const isRefreshing = useRef<boolean>(false);
@@ -134,7 +134,7 @@ export function AxiosClientProvider({ children }: { children: React.ReactNode })
   function handleDefaultError(error: AxiosError): void {
     // const status = error.response?.status;
     // openPopup(`${status}`, '予想しないエラーが発生しました。\n続く場合、管理者に問い合わせください。');
-    console.error(error.message);
+    console.error('Error response:', error.response);
   }
 
   function addToken(config: AxiosRequestConfig | undefined): InternalAxiosRequestConfig | {} {

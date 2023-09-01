@@ -16,7 +16,7 @@ export default function AuthRecover() {
   const search = useLocation().search;
   const query = new URLSearchParams(search);
   
-  const authService = new AuthService();
+  const authService = AuthService();
   
   const [passwordType, setPasswordType] = useState<{type: string, visible: boolean}>({
     type: 'password',

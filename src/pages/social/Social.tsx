@@ -12,7 +12,7 @@ export default function Social() {
   const [dataList, setDataList] = useState<SocialInfo[]>([]);
   const [value, setValue] = useState<string>('');
 
-  const socialService = new SocialService();
+  const socialService = SocialService();
 
   // 初期検索ワードがない場合、お勧め商品表示
   useEffect(() => {

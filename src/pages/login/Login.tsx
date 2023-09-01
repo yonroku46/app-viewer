@@ -17,8 +17,8 @@ export default function Login() {
   const navigate = useNavigate();
   const location = useLocation();
   
-  const authService = new AuthService();
-  const oAuth2Service = new OAuth2Service();
+  const authService = AuthService();
+  const oAuth2Service = OAuth2Service();
 
   const searchParams = new URLSearchParams(location.search);
   const type = searchParams.get('type');

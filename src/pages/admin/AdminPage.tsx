@@ -21,7 +21,7 @@ export default function AdminPage() {
   const [fold, setFold] = useState<boolean>(isSp);
   const { tab } = useParams();
 
-  const authService = new AuthService();
+  const authService = AuthService();
 
   useEffect(() => {
     const user = authService.getCurrentUser();

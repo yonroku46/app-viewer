@@ -10,7 +10,7 @@ import ForwardToInboxIcon from '@mui/icons-material/ForwardToInbox';
 export default function Recover() {
   const dispatch = useDispatch();
 
-  const authService = new AuthService();
+  const authService = AuthService();
 
   const [mail, setMail] = useState<string>("");
   const [errMsg, setErrMsg] = useState<string>("");

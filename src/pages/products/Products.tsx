@@ -24,7 +24,7 @@ export default function Products() {
   const [selectedStatus, setSelectedStatus] = useState<Array<number>>([]);
   const priceMaximum: number = 1000000;
 
-  const productService = new ProductService();
+  const productService = ProductService();
 
   // 初期検索ワードがない場合、お勧め商品表示
   useEffect(() => {

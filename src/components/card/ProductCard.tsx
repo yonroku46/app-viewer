@@ -17,8 +17,8 @@ import { Card, Typography, CardActionArea } from '@mui/material';
 export default function ProductCard({ dataList }: { dataList: ProductInfo[] }) {
   const navigate = useNavigate();
   
-  const authService = new AuthService();
-  const productService = new ProductService();
+  const authService = AuthService();
+  const productService = ProductService();
 
   const [loading, setLoading] = useState(true);
   const [products, setProducts] = useState<ProductInfo[]>([]);

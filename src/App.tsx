@@ -45,7 +45,7 @@ export default function App() {
   const dispatch = useDispatch();
   const location = useLocation();
   
-  const authService = new AuthService();
+  const authService = AuthService();
 
   const [currentPath, setCurrentPath] = useState<string>('');
   const [user, setUser] = useState<UserState|undefined>(undefined);
