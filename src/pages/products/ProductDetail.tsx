@@ -480,7 +480,7 @@ export default function ProductDetail() {
           <p>
             コディネート
           </p>
-          <SocialCard dataList={socialList} additional={false}/>
+          <SocialCard dataList={socialList} loading={load} additional={false}/>
           <button className='more-btn social'>
             + もっと見る
           </button>
@@ -489,7 +489,7 @@ export default function ProductDetail() {
           <p>
             関連アイテム
           </p>
-          <ProductCard dataList={productList}/>
+          <ProductCard dataList={productList} loading={load}/>
           <button className='more-btn'>
             + もっと見る
           </button>

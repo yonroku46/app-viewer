@@ -13,29 +13,16 @@ import Skeleton from '@mui/material/Skeleton';
 import Box from '@mui/material/Box';
 import { Card, Typography, CardActionArea } from '@mui/material';
 
-export default function SocialCard({ dataList, additional, owned }: { dataList: SocialInfo[], additional: boolean, owned?: boolean }) {
+export default function SocialCard({ dataList, loading, additional, owned }: { dataList: SocialInfo[], loading: boolean, additional: boolean, owned?: boolean }) {
   const navigate = useNavigate();
 
   const authService = AuthService();
   const socialService = SocialService();
 
-  const [loading, setLoading] = useState(true);
   const [social, setSocial] = useState<SocialInfo[]>([]);
 
-
   useEffect(() => {
-    setSocial([]);
-    if (dataList.length > 0) {
-      setLoading(false);
-      setSocial(dataList)
-    } else {
-      const timeoutId = setTimeout(() => {
-        if (dataList.length === 0) {
-          setLoading(false);
-        }
-      }, 1000);
-      return () => clearTimeout(timeoutId);
-    }
+    setSocial(dataList);
   }, [dataList]);
 
   async function socialLike(socialId: number, liked: boolean) {

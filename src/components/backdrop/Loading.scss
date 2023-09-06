@@ -1,33 +1,30 @@
-$base-line-height: 56px;
-$pulse-duration: 750ms;
-
 .loading {
   z-index: 9999;
   position: fixed;
-  width: ($base-line-height / 5);
-  height: $base-line-height;
+  width: calc(var(--loading-height) / 5);
+  height: var(--loading-height);
   background: var(--load-off-color);
-  animation: pulse $pulse-duration infinite;
-  animation-delay: ($pulse-duration / 3);
+  animation: var(--loading-purse) pulse infinite;
+  animation-delay: calc(var(--loading-purse) / 3);
   top: calc(50% - 46px);
   left: 50%;
   &:before, &:after {
     content: '';
     position: absolute;
     display: block;
-    height: ($base-line-height / 1.5);
-    width: ($base-line-height / 5);
+    height: calc(var(--loading-height) / 1.5);
+    width: calc(var(--loading-height) / 5);
     background: var(--load-off-color);
     top: 50%;
     transform: translateY(-50%);
-    animation: pulse $pulse-duration infinite;
+    animation: var(--loading-purse) pulse infinite;
   }
   &:before {
-    left: -($base-line-height / 2.5);
+    left: calc((var(--loading-height) / 2.5) * -1);
   }
   &:after {
-    left: ($base-line-height / 2.5);
-    animation-delay: ($pulse-duration / 1.5);
+    left: calc(var(--loading-height) / 2.5);
+    animation-delay: calc(var(--loading-purse) / 1.5);
   }
   &.darkbar {
     background-color: var(--bg-color);

@@ -1,12 +1,10 @@
-$footer-height: 16px;
-
 .shop {
-  margin-top: -$footer-height;
-  padding-top: $footer-height;
+  margin-top: calc(var(--footer-height) * -1);
+  padding-top: var(--footer-height);
   .contents {
     margin: 0px 8px 0px 16px;
     transition: width 0.25s;
-    height: calc((var(--vh, 1vh) * 100) - 88px - 16px);
+    height: calc((var(--vh, 1vh) * 100) - 88px - var(--footer-height));
     box-shadow: 0 0px 4px 1px var(--shadow-color);
     .title {
       display: flex;

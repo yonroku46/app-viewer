@@ -1,16 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@200;400;700;900&display=swap');
 
-$header-height: 48px;
-$footer-height: 16px;
-$app-max-width: 1280px;
-$app-min-width: 280px;
-$app-sp-width: 767px;
-$main-margin: 8px;
-$search-nav-width: 188px;
-$search-nav-sp-width: 20px;
-$nav-width: 180px;
-$section-width: $app-max-width - $search-nav-sp-width;
-
 html {
   font-family: 'Noto Sans JP', sans-serif;
   &::-webkit-scrollbar {
@@ -23,14 +12,14 @@ header {
   // backdrop-filter: blur(6px);
   // -webkit-backdrop-filter: blur(6px);
   position: fixed;
-  height: $header-height;
+  height: var(--header-height);
   width: 100%;
   top: 0;
   left: 0;
   .header-main {
-    max-width: $app-max-width;
-    min-width: $app-min-width;
-    height: $header-height;
+    max-width: var(--app-max-width);
+    min-width: var(--app-min-width);
+    height: var(--header-height);
     margin-left: auto;
     margin-right: auto;
     display: flex;
@@ -55,7 +44,7 @@ header {
     .side {
       display: flex;
       align-items: center;
-      height: $header-height;
+      height: var(--header-height);
       margin-right: 10px;
       margin-left: auto;
     }
@@ -63,6 +52,7 @@ header {
 }
 body {
   margin: 0px;
+  // color
   --scroll-bg-color: rgba(0, 0, 0, 0);
   --bg-color: rgb(244, 244, 244);
   --bg-active-color: rgba(34, 34, 34, 0.5);
@@ -96,18 +86,33 @@ body {
   --ranked-d-color: rgba(149, 130, 110, 0.8);
   --sns-line-color: rgb(6, 199, 85);
   --sns-google-color: rgb(66, 133 , 244);
+  // size
+  --header-height: 48px;
+  --footer-height: 16px;
+  --app-max-width: 1280px;
+  --app-min-width: 280px;
+  --main-margin: 8px;
+  --nav-width: 180px;
+  --nav-margin: 38px;
+  --sp-nav-margin: 16px;
+  --search-nav-width: 188px;
+  --sp-search-nav-width: 20px;
+  --loading-height: 56px;
+  --section-width: calc(var(--app-max-width) - var(--sp-search-nav-width));
+  // time
+  --loading-purse: 750ms;
 }
 footer {
   display: block;
   background-color: black;
   color: white;
-  height: $footer-height;
+  height: var(--footer-height);
   width: 100%;
   .footer-main {
     font-size: 10px;
-    max-width: $app-max-width;
-    min-width: $app-min-width;
-    height: $footer-height;
+    max-width: var(--app-max-width);
+    min-width: var(--app-min-width);
+    height: var(--footer-height);
     margin-left: auto;
     margin-right: auto;
     .side {
@@ -120,20 +125,20 @@ footer {
 }
 main {
   position: relative;
-  max-width: $app-max-width;
-  min-width: $app-min-width;
+  max-width: var(--app-max-width);
+  min-width: var(--app-min-width);
   min-height: calc((var(--vh, 1vh) * 100) - 48px - 8px);
   border-radius: 4px;
-  margin-top: $main-margin + $header-height;
+  margin-top: calc(var(--header-height) + var(--main-margin));
   margin-left: auto;
   margin-right: auto;
 }
 section {
   &.with-nav {
-    margin-left: $search-nav-width + $main-margin;
-    max-width: $section-width - $main-margin;
+    margin-left: calc(var(--search-nav-width) + var(--main-margin));
+    max-width: calc(var(--section-width) - var(--main-margin));
     &.sp {
-      margin-left: $search-nav-sp-width + $main-margin;
+      margin-left: calc(var(--sp-search-nav-width) + var(--main-margin));
     }
   }
 }
@@ -197,7 +202,7 @@ hr {
   align-items: center;
   text-align: center;
   flex-direction: column;
-  margin-top: - $footer-height;
+  margin-top: calc(var(--footer-height) * -1);
   height: calc((var(--vh, 1vh) * 100) - 88px);
 }
 .table {
@@ -228,10 +233,10 @@ hr {
 }
 
 /* sp */
-@media only screen and (max-width: $app-sp-width) {
+@media only screen and (max-width: 767px) {
   section {
     &.nav-on {
-      margin-left: $nav-width + $main-margin;
+      margin-left: calc(var(--nav-width) + var(--main-margin));
       max-width: unset;
     }
   }

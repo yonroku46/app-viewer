@@ -1,5 +1,3 @@
-$app-sp-width: 767px;
-
 .guide {
   display: flex;
   flex-direction: column;
@@ -60,7 +58,7 @@ $app-sp-width: 767px;
 }
 
 /* sp */
-@media only screen and (max-width: $app-sp-width) {
+@media only screen and (max-width: 767px) {
   .guide {
     .links {
       width: 100%;

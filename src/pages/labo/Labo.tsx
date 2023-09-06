@@ -1,6 +1,5 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo, useRef } from 'react';
 import { Link, Route, Routes, useNavigate } from "react-router-dom";
-import { useScroll, useWindowScroll } from 'react-use';
 import { useDispatch } from "react-redux";
 import { imgSrc, handleImgError } from "common/utils/ImgUtils";
 import { format } from 'date-fns';
@@ -12,26 +11,8 @@ export default function Labo() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { y: windowY } = useWindowScroll();
-  const spareArea: number = 100;
-  const [isExtendedWait, setIsExtendedWait] = useState<boolean>(false);
-
-  useEffect(() => {
-    // スクロールが一番上に来る時処理
-    if (windowY === 0) {
-      console.log('scroll start');
-    }
-    // スクロールが一番下に来る時処理
-    if (window.innerHeight + windowY >= (document.documentElement || document.body).offsetHeight - spareArea) {
-      setIsExtendedWait(true);
-      setTimeout(() => {
-        setIsExtendedWait(false);
-        console.log('scroll end');
-      }, 1000);
-    }
-  }, [windowY]);
-
   const [currentTime, setCurrentTime] = useState(new Date());
+  const pdfFileInputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -42,6 +23,46 @@ export default function Labo() {
       clearInterval(timer);
     };
   }, []);
+  
+
+  const handleUploadClick = async (event: any) => {
+    if (!pdfFileInputRef.current) {
+      alert('PDFファイルを選択してください。');
+      return;
+    }
+    const pdfFile = pdfFileInputRef.current.files?.[0];
+    if (!pdfFile) {
+      alert('PDFファイルを選択してください。');
+      return;
+    }
+
+    const apiGatewayEndpoint = 'https://bt7tec6lnc.execute-api.ap-northeast-1.amazonaws.com/api';
+    const bucketName = '/mk-tool/';
+    const fileName = pdfFile.name;
+    const url = apiGatewayEndpoint + bucketName + fileName;
+
+    fetch(url, {
+      method: "PUT",
+      body: pdfFile,
+      headers: {
+          "Content-Type": "application/pdf"
+      }
+    })
+    .then(response => {
+        if (response.ok) {
+            alert("Success");
+            // 保存されるURL、appUrlはリリースURL決まる次第変更予定
+            const appurl = 'https://d3ldc4zez8gat7.cloudfront.net/'
+            const savedPath = appurl + fileName;
+            console.log(savedPath);
+        } else {
+            alert("Fail: " + response.status);
+        }
+    })
+    .catch(error => {
+        alert("Error: " + error.message);
+    });
+  };
 
   function openTopPopup(contents: string) {
     dispatch(showTopPopup(contents));
@@ -66,7 +87,15 @@ export default function Labo() {
       <button onClick={() => dispatch(loading(false, true))}>defaultLoading</button>
       <button onClick={() => dispatch(unloading())}>unLoading</button>
       <br/>
-      { isExtendedWait ? 'extended...' : ''}
+      <div>
+        <h1>PDFアップロード</h1>
+        <input type="file" id="pdfFile" accept=".pdf" ref={pdfFileInputRef} />
+        <button onClick={handleUploadClick}>アップロード</button>
+        <a href="https://d3ldc4zez8gat7.cloudfront.net/配達（パン）.pdf" target="_blank" rel="noopener noreferrer">
+          View PDF
+        </a>
+        <iframe src='https://d3ldc4zez8gat7.cloudfront.net/配達（パン）.pdf#toolbar=0&navpanes=0'/>
+      </div>
     </section>
     </>
   )

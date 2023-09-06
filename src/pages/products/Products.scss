@@ -1,6 +1,3 @@
-$footer-height: 16px;
-$app-sp-width: 767px;
-
 .products {
   background-color: var(--contents-color);
   padding: 8px;
@@ -243,7 +240,7 @@ $app-sp-width: 767px;
 .product-detail {
   background-color: var(--contents-color);
   padding: 0px 8px;
-  margin-top: -$footer-height;
+  margin-top: calc(var(--footer-height) * -1);
   border-radius: 4px;
   .fab {
     position: fixed;
@@ -982,7 +979,7 @@ $app-sp-width: 767px;
 }
 
 /* sp */
-@media only screen and (max-width: $app-sp-width) {
+@media only screen and (max-width: 767px) {
   .products {
     .filter {
       .brand {

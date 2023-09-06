@@ -14,6 +14,7 @@ export default function Products() {
   const search = useLocation().search;
   const param = new URLSearchParams(search);
   
+  const [load, setLoad] = useState<boolean>(true);
   const [dataList, setDataList] = useState<ProductInfo[]>([]);
   const [filterOpen, setFilterOpen] = useState<boolean>(false);
   const [value, setValue] = useState<string>('');
@@ -26,25 +27,7 @@ export default function Products() {
 
   const productService = ProductService();
 
-  // 初期検索ワードがない場合、お勧め商品表示
-  useEffect(() => {
-    const getValue = param.get('v');
-    if (!getValue) {
-      const recommendFilter: ProductFilter = {
-        // keyword: 'おしゃれ',
-        // status: [5, 4]
-      };
-      getProductList(recommendFilter);
-    }
-  }, []);
-
-  // 検索ワードがある場合、再検索を行う
-  useEffect(() => {
-    if (value) {
-      getProductList();
-    }
-  }, [value]);
-
+  // パラメータ設定
   useEffect(() => {
     const getValue = param.get('v');
     if (getValue) {
@@ -54,8 +37,22 @@ export default function Products() {
     }
   }, [param]);
 
+  // ワードがない場合お勧め商品表示、ある場合、そのワードで検索を行う
+  useEffect(() => {
+    if (value === '') {
+      const recommendFilter: ProductFilter = {
+        // keyword: 'おしゃれ',
+        // status: [5, 4]
+      };
+      getProductList(recommendFilter);
+    } else {
+      getProductList();
+    }
+  }, [value]);
+
   async function getProductList(recommendFilter?: ProductFilter) {
     setFilterOpen(false);
+    setLoad(true);
     const filter: ProductFilter = recommendFilter || {
       keyword: value,
       minPrice: minPrice,
@@ -70,6 +67,7 @@ export default function Products() {
         date: new Date(product.date),
       }));
       setDataList(productListWithDateConverted);
+      setLoad(false);
     });
   }
   
@@ -274,10 +272,10 @@ export default function Products() {
         <div className='menu-title'>
           <div className='sub'>Result</div>
           <div className='main'>
-            <span className='key'>{value}</span> {dataList.length}件
+            <span className='key'>{value}</span> {!load && dataList.length}件
           </div>
         </div>
-        <ProductCard dataList={dataList}/>
+        <ProductCard dataList={dataList} loading={load}/>
       </>
       :
       <>
@@ -286,19 +284,19 @@ export default function Products() {
           <div className='sub'>New Arrivals</div>
           <div className='main'>新着</div>
         </div>
-        <ProductCard dataList={dataList}/>
+        <ProductCard dataList={dataList} loading={load}/>
         {/* ランキング商品 */}
         <div className='menu-title'>
           <div className='sub'>Ranking</div>
           <div className='main'>人気アイテム</div>
         </div>
-        <ProductCard dataList={dataList}/>
+        <ProductCard dataList={dataList} loading={load}/>
         {/* おすすめ商品 */}
         <div className='menu-title'>
           <div className='sub'>Recommends</div>
           <div className='main'>おすすめアイテム</div>
         </div>
-        <ProductCard dataList={dataList}/>
+        <ProductCard dataList={dataList} loading={load}/>
       </>
       }
     </section>

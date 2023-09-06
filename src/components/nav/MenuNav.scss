@@ -1,15 +1,3 @@
-$header-height: 48px;
-$app-max-width: 1280px;
-$app-min-width: 280px;
-$app-sp-width: 767px;
-$main-margin: 8px;
-$search-nav-width: 188px;
-$search-nav-sp-width: 20px;
-$nav-width: 180px;
-$nav-margin: 38px;
-$nav-sp-margin: 16px;
-$section-width: $app-max-width - $search-nav-sp-width;
-
 .menu-btn {
   cursor: pointer;
   position: relative;
@@ -128,7 +116,7 @@ $section-width: $app-max-width - $search-nav-sp-width;
     overflow-y: auto;
     z-index: 9999;
     width: 100vw;
-    max-width: $app-max-width;
+    max-width: var(--app-max-width);
     margin-top: -60px;
     padding: 36px 0px;
     padding-top: 160px;
@@ -148,7 +136,7 @@ $section-width: $app-max-width - $search-nav-sp-width;
     .menu-sp {
       margin-top: 6px;
       margin-bottom: 6px;
-      padding: 0px $nav-sp-margin;
+      padding: 0px var(--sp-nav-margin);
       .title {
         border-bottom: 1px solid black;
         padding-bottom: 6px;
@@ -176,7 +164,7 @@ $section-width: $app-max-width - $search-nav-sp-width;
         }
         svg {
           margin-left: 8px;
-          margin-right: $nav-sp-margin;
+          margin-right: var(--sp-nav-margin);
         }
       }
     }
@@ -187,7 +175,7 @@ $section-width: $app-max-width - $search-nav-sp-width;
       height: 180px;
       max-width: 220px;
       border-right: 1px dotted gray;
-      margin-left: $nav-margin;
+      margin-left: var(--nav-margin);
       .category {
         font-size: 18px;
         cursor: pointer;
@@ -224,7 +212,7 @@ $section-width: $app-max-width - $search-nav-sp-width;
       flex-grow: 0;
       flex-basis: 60%;
       height: 180px;
-      margin-left: $nav-margin / 2;
+      margin-left: calc(var(--nav-margin) / 2);
       ul {
         display: flex;
         flex-wrap: wrap;
@@ -266,8 +254,8 @@ $section-width: $app-max-width - $search-nav-sp-width;
       flex-grow: 0;
       flex-basis: 142px;
       height: 180px;
-      margin-left: $nav-margin;
-      margin-right: $nav-margin;
+      margin-left: var(--nav-margin);
+      margin-right: var(--nav-margin);
       .thumbnail {
         width: 142px;
         height: 180px;
@@ -280,8 +268,8 @@ $section-width: $app-max-width - $search-nav-sp-width;
       position: inherit;
       height: 56px;
       margin-top: -88px;
-      margin-left: $nav-margin;
-      margin-right: $nav-margin;
+      margin-left: var(--nav-margin);
+      margin-right: var(--nav-margin);
       .profile {
         width: 50px;
         height: 50px;
@@ -316,14 +304,14 @@ $section-width: $app-max-width - $search-nav-sp-width;
 }
 
 /* sp */
-@media only screen and (max-width: $app-sp-width) {
+@media only screen and (max-width: 767px) {
   .menu-nav {
     .menu {
       display: block;
       .userinfo {
         width: calc(100% - 38px);
-        margin-left: $nav-sp-margin;
-        margin-right: $nav-sp-margin;
+        margin-left: var(--sp-nav-margin);
+        margin-right: var(--sp-nav-margin);
       }
     }
   }

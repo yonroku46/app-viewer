@@ -1,5 +1,3 @@
-$app-sp-width: 767px;
-
 .policy {
   .title {
     font-weight: bold;
@@ -70,7 +68,7 @@ $app-sp-width: 767px;
 }
 
 /* sp */
-@media only screen and (max-width: $app-sp-width) {
+@media only screen and (max-width: 767px) {
   .policy {
     .title {
       width: 92%;

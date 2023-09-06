@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { handleImgError } from "common/utils/ImgUtils";
+import { imgSrc, handleImgError } from "common/utils/ImgUtils";
 import searchEmpty from 'assets/img/search-empty.png';
 import AuthService from 'api/service/AuthService';
 import ProductService, { ProductInfo } from 'api/service/ProductService';
@@ -14,28 +14,16 @@ import Skeleton from '@mui/material/Skeleton';
 import Box from '@mui/material/Box';
 import { Card, Typography, CardActionArea } from '@mui/material';
 
-export default function ProductCard({ dataList }: { dataList: ProductInfo[] }) {
+export default function ProductCard({ dataList, loading }: { dataList: ProductInfo[], loading: boolean }) {
   const navigate = useNavigate();
   
   const authService = AuthService();
   const productService = ProductService();
 
-  const [loading, setLoading] = useState(true);
   const [products, setProducts] = useState<ProductInfo[]>([]);
 
   useEffect(() => {
-    setProducts([]);
-    if (dataList.length > 0) {
-      setLoading(false);
-      setProducts(dataList)
-    } else {
-      const timeoutId = setTimeout(() => {
-        if (dataList.length === 0) {
-          setLoading(false);
-        }
-      }, 1000);
-      return () => clearTimeout(timeoutId);
-    }
+    setProducts(dataList);
   }, [dataList]);
 
   async function productLike(productId: number, liked: boolean) {
@@ -74,7 +62,7 @@ export default function ProductCard({ dataList }: { dataList: ProductInfo[] }) {
       <div className='product-card skeleton'>
         <Skeleton variant='rectangular' height={170}/>
         <Box sx={{ pt: 0.5 }}>
-          <Skeleton />
+          <Skeleton/>
           <Skeleton width='60%'/>
         </Box>
       </div>
@@ -105,7 +93,7 @@ export default function ProductCard({ dataList }: { dataList: ProductInfo[] }) {
       {products.map((data) => (
         <Card className='product-card' key={data.productId} onClick={() => navigate('/products/' + data.productId)}>
           <CardActionArea className='media'>
-            <CardMedia component='img' image={data.imgs[0]} onError={handleImgError} loading='lazy' alt={data.name}/>
+            <CardMedia component='img' image={imgSrc(data.imgs[0])} onError={handleImgError} loading='lazy' alt={data.name}/>
             {data.priceSale &&
               <span className='sale-label'>
                 {calcDiscountRate(data.price, data.priceSale) + 'OFF'}

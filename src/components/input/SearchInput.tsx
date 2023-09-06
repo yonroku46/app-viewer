@@ -4,6 +4,7 @@ import './SearchInput.scss';
 
 import SearchIcon from '@mui/icons-material/Search';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
+import Backdrop from "components/backdrop/Backdrop";
 
 interface CategoryData {
   categoryName: string;
@@ -24,21 +25,13 @@ export function SearchArea({ value }: { value: string }) {
   const navigate = useNavigate();
   const location = useLocation();
 
-  function search(tag: string) {
-    if (tag) {
-      navigate(`?v=${tag}`, { replace: true });
-    }
-  }
-
   return(
-    <>
-      <div className='search-box'>
-        <div className='search-area' onClick={() => navigate('/search', { state: { from: location.pathname, value: value } })}>
-          <SearchIcon className='icon'/>
-          <input type='text' placeholder='検索' value={value} readOnly/>
-        </div>
+    <div className='search-box'>
+      <div className='search-area' onClick={() => navigate('/search', { state: { from: location.pathname, value: value } })}>
+        <SearchIcon className='icon'/>
+        <input type='text' placeholder='検索' value={value} readOnly/>
       </div>
-    </>
+    </div>
   );
 }
 
@@ -51,6 +44,9 @@ export default function SearchInput({ value, resetValue, onChange }: { value: st
   const [trendList, setTrendList] = useState<string[]>(['人気アイテム', 'パーソナルカラー', '新商品']);
 
   const [selectedIndex, setSelectedIndex] = useState<number>(-1);
+  const [isFocused, setIsFocused] = useState(false);
+  const [isHover, setIsHover] = useState(false);
+  const [isDelHover, setIsDelHover] = useState(false);
 
   useEffect(() => {
     const history = storage.getItem('localHistory');
@@ -77,10 +73,6 @@ export default function SearchInput({ value, resetValue, onChange }: { value: st
     setIsHover(false);
     resetValue();
   }
-
-  const [isFocused, setIsFocused] = useState(false);
-  const [isHover, setIsHover] = useState(false);
-  const [isDelHover, setIsDelHover] = useState(false);
 
   const handleInputFocus = () => {
     setIsFocused(true);
@@ -156,6 +148,7 @@ export default function SearchInput({ value, resetValue, onChange }: { value: st
 
   return(
     <>
+      <Backdrop open={isFocused}/>
       <div className={isFocused ? 'search-box inpage focused' : 'search-box inpage'}>
         <div className='search-area'>
           <SearchIcon className={isFocused ? 'icon focused' : 'icon'} onClick={() => search()} />
@@ -190,13 +183,13 @@ export default function SearchInput({ value, resetValue, onChange }: { value: st
         )}
       </div>
       <div className='category-area'>
-      {categoryList.map((category) => (
-        <div className='category' key={category.categoryName} onClick={() => search(category.categoryName)}>
-          <img src={category.img} loading='lazy'/>
-          <div className='name'>{category.categoryName}</div>
-        </div>
-      ))}
-    </div>
+        {categoryList.map((category) => (
+          <div className='category' key={category.categoryName} onClick={() => search(category.categoryName)}>
+            <img src={category.img} loading='lazy'/>
+            <div className='name'>{category.categoryName}</div>
+          </div>
+        ))}
+      </div>
     </>
   );
 }

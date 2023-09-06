@@ -301,13 +301,13 @@ export default function SocialDetail() {
           <p>
             タグ付け商品
           </p>
-          <ProductCard dataList={productList}/>
+          <ProductCard dataList={productList} loading={load}/>
         </div>
         <div className='recommends style'>
           <p>
             <span className='name'>{social.name}</span>さんのスタイル
           </p>
-          <SocialCard dataList={socialList} additional={false} owned={true}/>
+          <SocialCard dataList={socialList} loading={load} additional={false} owned={true}/>
           <button className='more-btn social'>
             + もっと見る
           </button>
