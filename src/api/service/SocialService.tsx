@@ -63,7 +63,7 @@ export default function SocialService() {
 
   async function socialLike(socialId: number): Promise<any> {
     try {
-      const response = await axios.put<ApiResponse>(ApiRoutes.SOCIAL_LIKE, { socialId });
+      const response = await axios.post<ApiResponse>(ApiRoutes.SOCIAL_LIKE, { socialId });
       if (response && !response.data?.hasErrors) {
         return response.data;
       }
@@ -102,7 +102,7 @@ export default function SocialService() {
 
   async function commentInsert(socialId: number, reply: number|undefined, contents: string): Promise<any> {
     try {
-      const response = await axios.put<ApiResponse>(ApiRoutes.SOCIAL_COMMENT, { socialId, reply, contents });
+      const response = await axios.post<ApiResponse>(ApiRoutes.SOCIAL_COMMENT, { socialId, reply, contents });
       if (response && !response.data?.hasErrors) {
         return response.data;
       }

@@ -86,7 +86,7 @@ export default function ProductService() {
 
   async function productLike(productId: number): Promise<any> {
     try {
-      const response = await axios.put<ApiResponse>(ApiRoutes.PRODUCT_LIKED, { productId });
+      const response = await axios.post<ApiResponse>(ApiRoutes.PRODUCT_LIKED, { productId });
       if (response && !response.data?.hasErrors) {
         return response.data;
       }

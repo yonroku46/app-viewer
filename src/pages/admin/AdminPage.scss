@@ -4,7 +4,7 @@
   .contents {
     margin: 0px 8px 0px 16px;
     transition: width 0.25s;
-    height: calc((var(--vh, 1vh) * 100) - 88px - var(--footer-height));
+    height: calc((var(--vh, 1vh) * 100) - var(--full-height-margin) - var(--footer-height));
     box-shadow: 0 0px 4px 1px var(--shadow-color);
     .title {
       display: flex;

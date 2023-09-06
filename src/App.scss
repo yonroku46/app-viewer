@@ -98,6 +98,7 @@ body {
   --search-nav-width: 188px;
   --sp-search-nav-width: 20px;
   --loading-height: 56px;
+  --full-height-margin: 88px;
   --section-width: calc(var(--app-max-width) - var(--sp-search-nav-width));
   // time
   --loading-purse: 750ms;
@@ -127,7 +128,7 @@ main {
   position: relative;
   max-width: var(--app-max-width);
   min-width: var(--app-min-width);
-  min-height: calc((var(--vh, 1vh) * 100) - 48px - 8px);
+  min-height: calc((var(--vh, 1vh) * 100) - var(--header-height) - var(--main-margin));
   border-radius: 4px;
   margin-top: calc(var(--header-height) + var(--main-margin));
   margin-left: auto;
@@ -203,7 +204,7 @@ hr {
   text-align: center;
   flex-direction: column;
   margin-top: calc(var(--footer-height) * -1);
-  height: calc((var(--vh, 1vh) * 100) - 88px);
+  height: calc((var(--vh, 1vh) * 100) - var(--full-height-margin));
 }
 .table {
   &::-webkit-scrollbar-track {
