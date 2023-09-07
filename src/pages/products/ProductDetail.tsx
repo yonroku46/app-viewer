@@ -16,7 +16,6 @@ import { showTopPopup } from "store/actions/popupActions";
 import { loading, unloading } from "store/actions/loadingActions";
 import { currency, calcDiscountRate, dateToString } from 'common/utils/StringUtils';
 import { Carousel } from "react-responsive-carousel";
-import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import './Products.scss';
 
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
@@ -32,6 +31,7 @@ import ContactSupportOutlinedIcon from '@mui/icons-material/ContactSupportOutlin
 import NavigationRoundedIcon from '@mui/icons-material/NavigationRounded';
 import HighlightAltTwoToneIcon from '@mui/icons-material/HighlightAltTwoTone';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import KeyboardArrowRightSharpIcon from '@mui/icons-material/KeyboardArrowRightSharp';
 import Fab from '@mui/material/Fab';
 import Tooltip from '@mui/material/Tooltip';
 
@@ -477,22 +477,22 @@ export default function ProductDetail() {
           }
         </div>
         <div className='recommends coordination'>
-          <p>
+          <div className='title'>
             コディネート
-          </p>
+            <button className='more-btn'>
+              もっと見る<KeyboardArrowRightSharpIcon className='icon'/>
+            </button>
+          </div>
           <SocialCard dataList={socialList} loading={load} additional={false}/>
-          <button className='more-btn social'>
-            + もっと見る
-          </button>
         </div>
         <div className='recommends items'>
-          <p>
+          <div className='title'>
             関連アイテム
-          </p>
+            <button className='more-btn'>
+              もっと見る<KeyboardArrowRightSharpIcon className='icon'/>
+            </button>
+          </div>
           <ProductCard dataList={productList} loading={load}/>
-          <button className='more-btn'>
-            + もっと見る
-          </button>
         </div>
         <Guide/>
       </section>

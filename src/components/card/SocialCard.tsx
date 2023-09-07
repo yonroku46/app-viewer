@@ -30,7 +30,7 @@ export default function SocialCard({ dataList, loading, additional, owned }: { d
       await socialService.socialLike(socialId).then(data => {
         const updatedDataList = social.map(data => {
           if (data.socialId === socialId) {
-            return {...data, liked: liked, likedCount: data.likedCount !== undefined && data.likedCount > 0 ? data.likedCount + 1 : 1};
+            return {...data, liked: liked, likedCount: data.likedCount ? data.likedCount + 1 : 1};
           }
           return data;
         });
@@ -40,7 +40,7 @@ export default function SocialCard({ dataList, loading, additional, owned }: { d
       await socialService.socialUnlike(socialId).then(data => {
         const updatedDataList = social.map(data => {
           if (data.socialId === socialId) {
-            return {...data, liked: liked, likedCount: data.likedCount && data.likedCount - 1};
+            return {...data, liked: liked, likedCount: data.likedCount ? data.likedCount - 1 : 0};
           }
           return data;
         });

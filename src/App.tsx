@@ -32,6 +32,7 @@ import Signup from 'pages/signup/Signup';
 import Contact from 'pages/contact/Contact';
 import Policy from 'pages/policy/Policy';
 import Labo from 'pages/labo/Labo';
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import './App.scss';
 
 import RocketLaunchIcon from '@mui/icons-material/RocketLaunch';

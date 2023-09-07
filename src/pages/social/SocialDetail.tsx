@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import ProductCard from 'components/card/ProductCard';
@@ -12,7 +12,7 @@ import Empty from "components/empty/Empty";
 import { showTopPopup } from "store/actions/popupActions";
 import { loading, unloading } from "store/actions/loadingActions";
 import { relativeTime } from 'common/utils/StringUtils';
-import 'react-responsive-carousel/lib/styles/carousel.min.css';
+import { Carousel } from "react-responsive-carousel";
 import './Social.scss';
 
 import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded';
@@ -20,6 +20,7 @@ import ShareTwoToneIcon from '@mui/icons-material/ShareTwoTone';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import ReplyIcon from '@mui/icons-material/Reply';
 import SendIcon from '@mui/icons-material/Send';
+import KeyboardArrowRightSharpIcon from '@mui/icons-material/KeyboardArrowRightSharp';
 
 export default function SocialDetail() {
   const navigate = useNavigate();
@@ -37,9 +38,8 @@ export default function SocialDetail() {
   const [productList, setProductList] = useState<ProductInfo[]>([]);
   const [socialList, setSocialList] = useState<SocialInfo[]>([]);
   const [commentList, setCommentList] = useState<Array<CommentInfo>>([]);
-  const [commentAreaHeight, setCommentAreaHeight] = useState<number|null>(null);
   const [reply, setReply] = useState<number|undefined>(undefined);
-  const mediaAreaRef = useRef<HTMLDivElement|null>(null);
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
 
   useEffect(() => {
     if (id) {
@@ -51,28 +51,7 @@ export default function SocialDetail() {
       getProductList();
       getSocialList();
     }
-    // comment-area高さ設定ロジック
-    const setInitialCommentAreaHeight = () => {
-      if (mediaAreaRef.current && commentAreaHeight === null) {
-        setCommentAreaHeight(mediaAreaRef.current.clientHeight);
-      }
-    };
-    // 最初mediaAreaRefが設定されるまで待機
-    const waitForMediaAreaRef = setInterval(() => {
-      if (mediaAreaRef.current) {
-        clearInterval(waitForMediaAreaRef);
-        setInitialCommentAreaHeight();
-      }
-    }, 50);
-    // windowサイズ変更によるリサイズ
-    const handleResize = () => {
-      setInitialCommentAreaHeight();
-    };
-    window.addEventListener('resize', handleResize);
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
+  }, [id]);
 
   async function getSocialInfo(socialId: number) {
     dispatch(loading(false, true));
@@ -91,7 +70,7 @@ export default function SocialDetail() {
       await socialService.socialLike(socialId).then(data => {
         if (social) {
           setSocial(
-            {...social, liked: liked}
+            {...social, liked: liked, likedCount: social.likedCount ? social.likedCount + 1 : 1}
           );
         }
       });
@@ -99,7 +78,7 @@ export default function SocialDetail() {
       await socialService.socialUnlike(socialId).then(data => {
         if (social) {
           setSocial(
-            {...social, liked: liked}
+            {...social, liked: liked, likedCount: social.likedCount ? social.likedCount - 1 : 0}
           );
         }
       });
@@ -142,6 +121,10 @@ export default function SocialDetail() {
     });
   }
 
+  function handleChange(index: number) {
+    setCurrentIndex(index);
+  }
+
   function keyHandler(event: React.KeyboardEvent<HTMLInputElement>) {
     if (event.nativeEvent.isComposing) {
       return;
@@ -160,7 +143,15 @@ export default function SocialDetail() {
         getSocialCommentList(social.socialId);
         setReply(undefined);
         setMessage('');
+        scrollToCommentEnd();
       });
+    }
+  }
+
+  function scrollToCommentEnd() {
+    const commentArea = document.querySelector('.view');
+    if (commentArea) {
+      commentArea.scrollTop = 0;
     }
   }
 
@@ -210,37 +201,58 @@ export default function SocialDetail() {
       <section className='social-detail'>
         <div className='social-media'>
           {/* ソーシャルパーツ */}
-          <div className='media-area' ref={mediaAreaRef}>
-            <img className='thumbnail' src={imgSrc(social.imgs[0])} onError={handleImgError}/>
+          <div className='media-area'>
             <div className='info'>
               <div className='profile'>
                 <img src={imgSrc(social.profileImg)} onError={handleImgError}/>
-                {social.name} / {social.profileHeight}cm
+                <div className='name'>
+                  {social.name} / {social.profileHeight}cm
+                  <div className='time'>{relativeTime(social.date)}</div>
+                </div>
               </div>
-              <div className='buttons'>
-                <div className={social.liked ? 'like liked' : 'like'} onClick={(event) => likeClick()}>
-                  <FavoriteRoundedIcon className='icon'/>
+              <button className='follow-btn'>
+                フォロー
+              </button>
+            </div>
+            <Carousel
+              showStatus={false} infiniteLoop={false} showThumbs={false} selectedItem={currentIndex}
+              emulateTouch={true} thumbWidth={50} onChange={handleChange}>
+              {social.imgs.map(img => (
+                <div key={img}>
+                  <img src={img} loading='eager' onError={handleImgError}/>
                 </div>
-                <div className='share' onClick={() => share()}>
-                  <ShareTwoToneIcon className='icon'/>
-                </div>
+              ))}
+            </Carousel>
+            <div className='buttons'>
+              <div className={social.liked ? 'like liked' : 'like'} onClick={(event) => likeClick()}>
+                <FavoriteRoundedIcon className='icon'/>
+              </div>
+              <div className='share' onClick={() => share()}>
+                <ShareTwoToneIcon className='icon'/>
               </div>
             </div>
-            <div className='content'>
-              <p>
+            <div className='contents-box'>
+              <p className='content'>
                 {social.contents}
               </p>
               {social.tags?.map(tag => (
-                <a href={'#'} key={tag}>
+                <a className='tag' href={'#'} key={tag}>
                     {'#' + tag + ' '}
                 </a>
                 ))
               }
-              <div className='time'>{relativeTime(social.date)}</div>
             </div>
           </div>
           {/* コメントパーツ */}
-          <div className='comment-area' style={{ height: commentAreaHeight + 'px' }}>
+          <div className='comment-area'>
+            <div className='additional'>
+              <label className='label comment'>
+                <strong>{commentList.length}</strong> コメント
+              </label>
+              <label className='label liked'>
+                <strong>{social.likedCount}</strong> いいね
+              </label>
+            </div>
             <div className='view'>
               {commentList.length === 0 ? 
                 <div className='comment-empty'>
@@ -252,8 +264,14 @@ export default function SocialDetail() {
                     <div className={reply === comment.commentId ? 'comment selected' : 'comment'}>
                       <img className='profile' src={imgSrc(comment.profileImg)} onError={handleImgError}/>
                       <div className='contents-box'>
-                        <div className='name'>{comment.name}</div>
-                        <div className='message'>{comment.contents}</div>
+                        <div className='main'>
+                          <div className='name'>
+                            {comment.name}
+                          </div>
+                          <div className='message'>
+                            {comment.contents}
+                          </div>
+                        </div>
                         <div className='bottom'>
                           <div className='time'>{relativeTime(comment.date)}</div>
                           {user?.userId !== comment.owner &&
@@ -272,8 +290,14 @@ export default function SocialDetail() {
                       <div className='comment reply' key={reply.commentId}>
                         <img className='profile' src={imgSrc(reply.profileImg)} onError={handleImgError}/>
                         <div className='contents-box'>
-                          <div className='name'>{reply.name}</div>
-                          <div className='message'>{reply.contents}</div>
+                          <div className='main'>
+                            <div className='name'>
+                              {reply.name}
+                            </div>
+                            <div className='message'>
+                              {reply.contents}
+                            </div>
+                          </div>
                           <div className='bottom'>
                             <div className='time'>{relativeTime(reply.date)}</div>
                           </div>
@@ -289,8 +313,8 @@ export default function SocialDetail() {
               }
             </div>
             <div className='write'>
-              <input type='text' onKeyDown={keyHandler} value={message} placeholder='コメントを作成' onChange={(e) => setMessage(e.target.value)}/>
-              <button className='send-btn' onClick={() => sendMessage(message)}>
+              <input className={message.length > 0 ? 'active' : ''} type='text' onKeyDown={keyHandler} value={message} placeholder='コメントを作成' onChange={(e) => setMessage(e.target.value)}/>
+              <button className={message.length > 0 ? 'send-btn active' : 'send-btn'} onClick={() => sendMessage(message)}>
                 <SendIcon className='icon'/>
               </button>
             </div>
@@ -298,19 +322,19 @@ export default function SocialDetail() {
         </div>
         {/* タグ商品パーツ */}
         <div className='recommends products'>
-          <p>
+          <div className='title'>
             タグ付け商品
-          </p>
+          </div>
           <ProductCard dataList={productList} loading={load}/>
         </div>
         <div className='recommends style'>
-          <p>
-            <span className='name'>{social.name}</span>さんのスタイル
-          </p>
+          <div className='title'>
+            <span>@{social.name}のスタイルブック</span>
+            <button className='more-btn'>
+              もっと見る<KeyboardArrowRightSharpIcon className='icon'/>
+            </button>
+          </div>
           <SocialCard dataList={socialList} loading={load} additional={false} owned={true}/>
-          <button className='more-btn social'>
-            + もっと見る
-          </button>
         </div>
       </section>
     )
