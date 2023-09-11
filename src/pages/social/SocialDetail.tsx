@@ -247,10 +247,10 @@ export default function SocialDetail() {
           <div className='comment-area'>
             <div className='additional'>
               <label className='label comment'>
-                <strong>{commentList.length}</strong> コメント
+                <b>{commentList.length}</b> コメント
               </label>
               <label className='label liked'>
-                <strong>{social.likedCount}</strong> いいね
+                <b>{social.likedCount}</b> いいね
               </label>
             </div>
             <div className='view'>

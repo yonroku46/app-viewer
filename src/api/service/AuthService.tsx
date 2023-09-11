@@ -131,6 +131,7 @@ export default function useAuthService() {
   function storageClear(): void {
     localStorage.removeItem('jwtInfo');
     localStorage.removeItem('currentUser');
+    localStorage.removeItem('prev');
     dispatch(userLogout());
   }
 

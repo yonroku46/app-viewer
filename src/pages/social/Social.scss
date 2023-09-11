@@ -155,19 +155,6 @@
         min-height: 120px;
         max-height: 400px;
         border-radius: 4px;
-        &::-webkit-scrollbar-track {
-          border-radius: 4px;
-          background-color: var(--scroll-bg-color);
-        }
-        &::-webkit-scrollbar {
-          width: 4px;
-          height: 4px;
-          background-color: var(--scroll-bg-color);
-        }
-        &::-webkit-scrollbar-thumb {
-          border-radius: 4px;
-          background-color: var(--border-color);
-        }
         .comment-empty {
           text-align: center;
           margin: 48px 0;

@@ -31,6 +31,7 @@ import Recover from 'pages/recover/Recover';
 import Signup from 'pages/signup/Signup';
 import Contact from 'pages/contact/Contact';
 import Policy from 'pages/policy/Policy';
+import Chat from 'pages/chat/Chat';
 import Labo from 'pages/labo/Labo';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import './App.scss';
@@ -40,6 +41,7 @@ import StyleTwoToneIcon from '@mui/icons-material/StyleTwoTone';
 import ContactSupportTwoToneIcon from '@mui/icons-material/ContactSupportTwoTone';
 import PsychologyTwoToneIcon from '@mui/icons-material/PsychologyTwoTone';
 import CardGiftcardTwoToneIcon from '@mui/icons-material/CardGiftcardTwoTone';
+import QuestionAnswerTwoToneIcon from '@mui/icons-material/QuestionAnswerTwoTone';
 
 export default function App() {
   const navigate = useNavigate();
@@ -82,6 +84,7 @@ export default function App() {
       items: [
         { url: 'products', icon: <CardGiftcardTwoToneIcon/>, title: '商品' },
         { url: 'social', icon: <StyleTwoToneIcon/>, title: 'スタイル' },
+        { url: 'chat/2', icon: <QuestionAnswerTwoToneIcon/>, title: 'チャット' },
         { url: 'contact', icon: <ContactSupportTwoToneIcon/>, title: 'お問い合わせ' },
       ]
     },{
@@ -194,6 +197,7 @@ export default function App() {
           <Route path="/social" element={<Social/>}/>
             <Route path="/social/:id" element={<SocialDetail/>}/>
           <Route path="/labo" element={<Labo/>}/>
+          <Route path="/chat/:id" element={<Chat/>}/>
           <Route path="/contact" element={<Contact/>}/>
           <Route path="/policy" element={<Policy/>}/>
           <Route path="/auth" element={<AuthPage/>}/>

@@ -124,6 +124,19 @@ footer {
     }
   }
 }
+::-webkit-scrollbar-track {
+  border-radius: 4px;
+  background-color: var(--scroll-bg-color);
+}
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+  background-color: var(--scroll-bg-color);
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background-color: lightgray;
+}
 main {
   position: relative;
   max-width: var(--app-max-width);
@@ -207,19 +220,6 @@ hr {
   height: calc((var(--vh, 1vh) * 100) - var(--full-height-margin));
 }
 .table {
-  &::-webkit-scrollbar-track {
-    border-radius: 4px;
-    background-color: var(--scroll-bg-color);
-  }
-  &::-webkit-scrollbar {
-    width: 4px;
-    height: 4px;
-    background-color: var(--scroll-bg-color);
-  }
-  &::-webkit-scrollbar-thumb {
-    border-radius: 4px;
-    background-color: gray;
-  }
   th {
     background-color: black;
     color: white !important;
