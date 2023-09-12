@@ -1,0 +1,37 @@
+.send-input {
+  z-index: 1;
+  display: flex;
+  width: 100%;
+  &.social {
+    margin: 12px 0;
+  }
+  input {
+    flex: 1;
+    padding: 2px 10px;
+    border-radius: 4px;
+    border: none;
+    background-color: var(--bg-color);
+    transition: all 0.25s;
+    &:focus {
+      outline: 1px solid var(--bg-active-color);
+    }
+    &::placeholder {
+      color: var(--bg-active-color);
+    }
+  }
+  .send-btn {
+    display: flex;
+    background-color: var(--border-color);
+    color: white;
+    padding: 6px;
+    margin-left: 6px;
+    border-radius: 4px;
+    border: none;
+    pointer-events: none;
+    transition: all 0.25s;
+    &.active {
+      background-color: black;
+      pointer-events: auto;
+    }
+  }
+}

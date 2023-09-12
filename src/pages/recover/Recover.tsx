@@ -57,7 +57,7 @@ export default function Recover() {
           </div>
           <div className='email'>
             <label>メールアドレス</label>
-            <input type='email' id='email' className={mail.length > 0 ? 'entered' : ''} placeholder='メールアドレスを入力' value={mail} onChange={(e) => {setMail(e.target.value); errReset();}}/>
+            <input type='email' id='email' autoComplete='email' className={mail.length > 0 ? 'entered' : ''} placeholder='メールアドレスを入力' value={mail} onChange={(e) => {setMail(e.target.value); errReset();}}/>
           </div>
           <div className='err-area'>
             {errMsg && <p className='errmsg'>{errMsg}</p>}     

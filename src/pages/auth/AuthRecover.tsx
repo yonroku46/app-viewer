@@ -121,7 +121,7 @@ export default function AuthRecover() {
           </div>
           <div className='password'>
             <label>パスワード</label>
-            <input type={passwordType.type} id='password' className={password.length > 0 ? 'entered' : ''} placeholder='パスワードを入力(8桁以上)' value={password} onChange={(e) => {setPassword(e.target.value); errReset();}}/>
+            <input type={passwordType.type} id='password' autoComplete='current-password' className={password.length > 0 ? 'entered' : ''} placeholder='パスワードを入力(8桁以上)' value={password} onChange={(e) => {setPassword(e.target.value); errReset();}}/>
             {password.length > 0 &&
               <span className='visible' onClick={passwordTypeHandler}>
                 { passwordType.visible ? <VisibilityIcon sx={{ fontSize: 16 }}/> : <VisibilityOffIcon sx={{ fontSize: 16 }}/> }
@@ -130,7 +130,7 @@ export default function AuthRecover() {
           </div>
           <div className='password'>
             <label>パスワード再入力</label>
-            <input type={rePasswordType.type} id='re-password' className={rePassword.length > 0 ? 'entered' : ''} placeholder='パスワードを再入力' value={rePassword} onChange={(e) => {setRePassword(e.target.value); errReset();}}/>
+            <input type={rePasswordType.type} id='re-password' autoComplete='current-password' className={rePassword.length > 0 ? 'entered' : ''} placeholder='パスワードを再入力' value={rePassword} onChange={(e) => {setRePassword(e.target.value); errReset();}}/>
             {rePassword.length > 0 &&
               <span className='visible' onClick={rePasswordTypeHandler}>
                 { rePasswordType.visible ? <VisibilityIcon sx={{ fontSize: 16 }}/> : <VisibilityOffIcon sx={{ fontSize: 16 }}/> }

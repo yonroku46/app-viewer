@@ -139,11 +139,11 @@ export default function Login() {
         </div>
         <div className='email'>
           <label>メールアドレス</label>
-          <input type='email' id='email' className={mail.length > 0 ? 'entered' : ''} placeholder='メールアドレスを入力' value={mail} onChange={(e) => {setMail(e.target.value); errReset();}}/>
+          <input type='email' id='email' autoComplete='email' className={mail.length > 0 ? 'entered' : ''} placeholder='メールアドレスを入力' value={mail} onChange={(e) => {setMail(e.target.value); errReset();}}/>
         </div>
         <div className='password'>
           <label>パスワード</label>
-          <input type={passwordType.type} id='password' className={password.length > 0 ? 'entered' : ''} placeholder='パスワードを入力' value={password} onChange={(e) => {setPassword(e.target.value); errReset();}}/>
+          <input type={passwordType.type} id='password' autoComplete='current-password' className={password.length > 0 ? 'entered' : ''} placeholder='パスワードを入力' value={password} onChange={(e) => {setPassword(e.target.value); errReset();}}/>
           {password.length > 0 &&
             <span className='visible' onClick={passwordTypeHandler}>
               { passwordType.visible ? <VisibilityIcon sx={{ fontSize: 16 }}/> : <VisibilityOffIcon sx={{ fontSize: 16 }}/> }

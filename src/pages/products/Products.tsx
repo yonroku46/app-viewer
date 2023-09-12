@@ -100,7 +100,7 @@ export default function Products() {
     setFilterOpen(false);
   };
 
-  const handleClickFilter = (event: MouseEvent<HTMLElement>) => {
+  const handleClickFilter = (e: MouseEvent<HTMLElement>) => {
     setFilterOpen(!filterOpen);
   };
 
@@ -141,16 +141,16 @@ export default function Products() {
     { key: 1, value: 'D' }
   ]
 
-  const handleMinChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = parseInt(event.target.value, 10);
+  const handleMinChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = parseInt(e.target.value, 10);
     if (!isNaN(value)) {
       setMinPrice(value <= priceMaximum ? value : priceMaximum);
     } else {
       setMinPrice(undefined);
     }
   };
-  const handleMaxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = parseInt(event.target.value, 10);
+  const handleMaxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = parseInt(e.target.value, 10);
     if (!isNaN(value)) {
       setMaxPrice(value <= priceMaximum ? value : priceMaximum);
     } else {

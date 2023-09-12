@@ -240,39 +240,6 @@
           }
         }
       }
-      .write {
-        display: flex;
-        width: 100%;
-        margin: 20px 0;
-        input {
-          flex: 1;
-          padding: 2px 8px;
-          margin-right: 8px;
-          border: 1px solid var(--border-color);
-          border-radius: 4px;
-          outline: none;
-          transition: all 0.25s;
-          &::placeholder {
-            color: var(--border-color);
-          }
-          &:focus, &.active {
-            outline: 1px solid black;
-          }
-        }
-        .send-btn {
-          display: flex;
-          background-color: var(--border-color);
-          color: white;
-          padding: 6px 12px;
-          border: none;
-          pointer-events: none;
-          transition: all 0.25s;
-          &.active {
-            background-color: black;
-            pointer-events: auto;
-          }
-        }
-      }
     }
   }
   .recommends {

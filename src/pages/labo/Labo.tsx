@@ -25,7 +25,7 @@ export default function Labo() {
   }, []);
   
 
-  const handleUploadClick = async (event: any) => {
+  const handleUploadClick = async (e: any) => {
     if (!pdfFileInputRef.current) {
       alert('PDFファイルを選択してください。');
       return;

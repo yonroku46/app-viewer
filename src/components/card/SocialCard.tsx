@@ -49,8 +49,8 @@ export default function SocialCard({ dataList, loading, additional, owned }: { d
     }
   }
 
-  const likeClick = (event: React.MouseEvent, socialId: number, liked: boolean) => {
-    event.stopPropagation();
+  const likeClick = (e: React.MouseEvent, socialId: number, liked: boolean) => {
+    e.stopPropagation();
     if (authService.loginRequire()) {
       socialLike(socialId, liked)
     }

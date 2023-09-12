@@ -19,8 +19,8 @@ import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded';
 import ShareTwoToneIcon from '@mui/icons-material/ShareTwoTone';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import ReplyIcon from '@mui/icons-material/Reply';
-import SendIcon from '@mui/icons-material/Send';
 import KeyboardArrowRightSharpIcon from '@mui/icons-material/KeyboardArrowRightSharp';
+import SendInput from 'components/input/SendInput';
 
 export default function SocialDetail() {
   const navigate = useNavigate();
@@ -125,24 +125,19 @@ export default function SocialDetail() {
     setCurrentIndex(index);
   }
 
-  function keyHandler(event: React.KeyboardEvent<HTMLInputElement>) {
-    if (event.nativeEvent.isComposing) {
-      return;
-    }
-    if (event.key === 'Enter') {
-      sendMessage(message);
-    }
-  }
+  function onChangeMessage(e: React.ChangeEvent<HTMLInputElement>) {
+    setMessage(e.target.value);
+  };
 
-  function sendMessage(comment: string) {
-    if (comment.length === 0) {
+  const sendMessage = () => {
+    if (message === "" || message.length === 0) {
       return;
     }
     if (authService.loginRequire() && social) {
-      socialService.commentInsert(social.socialId, reply, comment).then(data => {
+      socialService.commentInsert(social.socialId, reply, message).then(data => {
         getSocialCommentList(social.socialId);
         setReply(undefined);
-        setMessage('');
+        setMessage("");
         scrollToCommentEnd();
       });
     }
@@ -312,12 +307,7 @@ export default function SocialDetail() {
                 ))
               }
             </div>
-            <div className='write'>
-              <input className={message.length > 0 ? 'active' : ''} type='text' onKeyDown={keyHandler} value={message} placeholder='コメントを作成' onChange={(e) => setMessage(e.target.value)}/>
-              <button className={message.length > 0 ? 'send-btn active' : 'send-btn'} onClick={() => sendMessage(message)}>
-                <SendIcon className='icon'/>
-              </button>
-            </div>
+            <SendInput className='social' value={message} placeholder={'コメントを作成'} onChange={onChangeMessage} submit={sendMessage}/>
           </div>
         </div>
         {/* タグ商品パーツ */}

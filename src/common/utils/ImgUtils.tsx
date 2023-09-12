@@ -9,6 +9,6 @@ export function imgSrc(path: string | undefined): string {
   }
 }
 
-export function handleImgError(event: React.SyntheticEvent<HTMLImageElement>) {
-  event.currentTarget.src = noimg;
+export function handleImgError(e: React.SyntheticEvent<HTMLImageElement>) {
+  e.currentTarget.src = noimg;
 }

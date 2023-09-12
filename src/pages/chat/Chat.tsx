@@ -7,7 +7,7 @@ import * as StompJs from "@stomp/stompjs";
 import "./Chat.scss";
 
 import MoreHorizRoundedIcon from '@mui/icons-material/MoreHorizRounded';
-import SendIcon from '@mui/icons-material/Send';
+import SendInput from "components/input/SendInput";
 
 interface ChatMessage {
   roomId: string;
@@ -44,10 +44,8 @@ export default function ChatRoom() {
 
   const connect = (user: UserState | undefined) => {
     try {
-      // "ws://localhost:8080/api/ws-chat",
-      console.log(`${process.env.REACT_APP_WS_BROKER}`)
       if (roomId && user) {
-        const stomp = new StompJs.Client({
+        const stompClient = new StompJs.Client({
           brokerURL: `${process.env.REACT_APP_WS_BROKER}`,
           debug: function (str: string) {
             console.log(str);
@@ -60,21 +58,21 @@ export default function ChatRoom() {
           heartbeatIncoming: 4000,
           heartbeatOutgoing: 4000,
         });
-        stomp.onConnect = function () {
-          stomp.subscribe(`/sub/chat/${roomId}`, callback);
+        stompClient.onConnect = function () {
+          stompClient.subscribe(`/sub/chat/${roomId}`, callback);
           const body: ChatMessage = {
             roomId: roomId,
             writer: user?.userId,
             message: chat,
             date: new Date()
           }
-          stomp.publish({
-            destination: "/pub/chat/join/" + roomId,
+          stompClient.publish({
+            destination: `/pub/chat/${roomId}/join`,
             body: JSON.stringify(body),
           });
         };
-        stomp.activate();
-        setClient(stomp);
+        stompClient.activate();
+        setClient(stompClient);
       }
     } catch (err) {
       console.log(err);
@@ -82,12 +80,10 @@ export default function ChatRoom() {
   };
 
   const disConnect = () => {
-    console.log(client)
     if (client === null) {
       return;
     }
     client.deactivate();
-    console.log('disconnect!')
   };
 
   const callback = function (message: StompJs.Message) {
@@ -98,7 +94,7 @@ export default function ChatRoom() {
   };
 
   const sendChat = () => {
-    if (chat === "") {
+    if (chat === "" || chat.length === 0) {
       return;
     }
     if (client && user) {
@@ -109,7 +105,7 @@ export default function ChatRoom() {
         date: new Date()
       }
       client.publish({
-        destination: "/pub/chat/send/" + roomId,
+        destination: `/pub/chat/${roomId}/send`,
         body: JSON.stringify(body),
       });
     }
@@ -123,22 +119,9 @@ export default function ChatRoom() {
     }
   }
 
-  const onChangeChat = (e: React.ChangeEvent<HTMLInputElement>) => {
+  function onChangeChat(e: React.ChangeEvent<HTMLInputElement>) {
     setChat(e.target.value);
   };
-
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
-  };
-
-  function keyHandler(event: React.KeyboardEvent<HTMLInputElement>) {
-    if (event.nativeEvent.isComposing) {
-      return;
-    }
-    if (event.key === 'Enter') {
-      sendChat();
-    }
-  }
 
   return (
     <section className='fullsize'>
@@ -181,12 +164,7 @@ export default function ChatRoom() {
             }
           })}
         </div>
-        <form className='input-area' onSubmit={handleSubmit}>
-          <input className={chat.length > 0 ? 'active' : ''} type='text' value={chat} placeholder='メッセージを入力' onChange={onChangeChat} onKeyDown={keyHandler}/>
-          <button className={chat.length > 0 ? 'send-btn active' : 'send-btn'} onClick={sendChat}>
-            <SendIcon className='icon'/>
-          </button>
-        </form>
+        <SendInput value={chat} placeholder={'メッセージを入力'} onChange={onChangeChat} submit={sendChat} />
       </div>
     </section>
   );

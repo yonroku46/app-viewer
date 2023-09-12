@@ -18,8 +18,8 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 export default function DataManage() {
 
   const [filter, setFilter] = useState('');
-  const handleChange = (event: SelectChangeEvent) => {
-    setFilter(event.target.value as string);
+  const handleChange = (e: SelectChangeEvent) => {
+    setFilter(e.target.value as string);
   };
 
   interface Data {

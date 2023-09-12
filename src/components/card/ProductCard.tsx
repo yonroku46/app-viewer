@@ -50,8 +50,8 @@ export default function ProductCard({ dataList, loading }: { dataList: ProductIn
     }
   }
 
-  const likeClick = (event: React.MouseEvent, productId: number, liked: boolean) => {
-    event.stopPropagation();
+  const likeClick = (e: React.MouseEvent, productId: number, liked: boolean) => {
+    e.stopPropagation();
     if (authService.loginRequire()) {
       productLike(productId, liked)
     }

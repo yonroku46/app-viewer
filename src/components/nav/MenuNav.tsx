@@ -87,11 +87,11 @@ export default function MenuNav({ menuItem, currentPath, userName, profileImg, m
     },
   }
 
-  function handleClick(event: React.MouseEvent<HTMLElement>) {
+  function handleClick(e: React.MouseEvent<HTMLElement>) {
     if (openEl) {
       setAnchorEl(null);
     } else {
-      setAnchorEl(event.currentTarget);
+      setAnchorEl(e.currentTarget);
     }
   }
 

@@ -39,13 +39,13 @@ export default function MyPage() {
       fileInputRef.current.click();
     }
   };
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files) {
-      const file = event.target.files[0];
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const file = e.target.files[0];
       if (file.size <= maxFileSIze) {
         setSelectedFile(file);
       } else {
-        event.target.value = '';
+        e.target.value = '';
         setSelectedFile(null);
         dispatch(showCenterPopup("ご確認", "ファイルサイズは\n5MB以下である必要があります"));
       }
