@@ -2,32 +2,18 @@
   background-color: var(--contents-color);
   padding: 8px;
   border-radius: 4px;
-  .menu-title {
-    display: inline-block;
-    margin: 28px 8px;
-    .main {
-      font-size: 20px;
-      font-weight: 900;
-    }
-    .sub {
-      font-size: 15px;
-      color: gray;
-      margin-bottom: -8px;
-    }
-  }
 }
 
 .social-detail {
   background-color: var(--contents-color);
   padding: 0px 8px;
-  padding-top: var(--footer-height);
   border-radius: 4px;
   .social-media {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     margin-top: var(--footer-height);
-    max-width: 620px;
+    max-width: 680px;
     margin: auto;
     .media-area {
       display: flex;
@@ -49,7 +35,7 @@
         .profile {
           display: flex;
           align-items: center;
-          font-size: 15px;
+          font-size: 14px;
           font-weight: bold;
           img {
             width: 36px;
@@ -70,6 +56,7 @@
           background-color: black;
           color: white;
           height: fit-content;
+          font-size: 12px;
         }
       }
       .contents-box {
@@ -80,8 +67,8 @@
           font-weight: bold;
           font-size: 18px;
         }
-        .tag {
-          font-size: 15px;
+        .hashtag {
+          font-size: 14px;
         }
       }
       .carousel-root {
@@ -90,8 +77,8 @@
             background: #fff;
             width: 30px;
             height: 3px;
-            margin: 0;
-            border-radius: 0;
+            margin: 0 4px;
+            border-radius: 4px;
             box-shadow: none;
           }
         }
@@ -130,6 +117,52 @@
         }
       }
     }
+    .tagged-area {
+      display: flex;
+      flex-direction: column;
+      padding: 0 40px;
+      margin-bottom: 40px;
+      .title {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        label {
+          font-size: 14px;
+          letter-spacing: -1px;
+          padding: 6px 10px;
+          border-bottom: 1px solid black;
+          margin-bottom: 10px;
+          width: fit-content;
+        }
+        .buttons {
+          margin: 0;
+          .prev-btn, .next-btn {
+            display: flex;
+            font-size: 10px;
+            border: none;
+            color: gray;
+            padding: 6px 10px;
+            margin-bottom: 10px;
+            &.void {
+              pointer-events: none;
+              opacity: 0;
+            }
+            .icon {
+              font-size: 15px;
+              margin: 0;
+            }
+          }
+        }
+      }
+      .tagged {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        margin-top: 10px;
+        margin-left: 10px;
+      }
+    }
     .comment-area {
       flex: 1;
       display: flex;
@@ -140,7 +173,7 @@
       .additional {
         display: flex;
         margin-bottom: 20px;
-        .label {
+        label {
           font-size: 14px;
           letter-spacing: -1px;
           padding: 6px 10px;
@@ -159,6 +192,7 @@
           text-align: center;
           margin: 48px 0;
           color: var(--bg-active-color);
+          font-size: 14px;
         }
         .comment-box {
           border-bottom: 1px solid var(--border-color);
@@ -252,22 +286,11 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      font-weight: bold;
       font-size: 15px;
       margin: 20px 0;
       .icon {
         font-size: 18px;
         margin-right: 4px;
-      }
-    }
-    .more-btn {
-      display: flex;
-      font-size: 10px;
-      border: none;
-      color: gray;
-      .icon {
-        font-size: 15px;
-        margin: 0;
       }
     }
   }
@@ -291,12 +314,17 @@
       .icon {
         font-size: 28px;
       }
+      .count {
+        font-weight: bold;
+        margin-right: 4px;
+      }
       svg {
         color: lightgray;
         stroke: black;
         transition: all 0.25s;
       }
       &.liked {
+        color: var(--like-social-color);
         svg {
           transform: rotate(0deg);
           animation: sizeUpAndDown 0.3s;
@@ -318,6 +346,9 @@
   .social-detail {
     .social-media {
       .media-area {
+        padding: 0;
+      }
+      .tagged-area {
         padding: 0;
       }
       .comment-area {

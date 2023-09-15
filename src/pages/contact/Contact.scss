@@ -41,6 +41,7 @@
         margin: 20px 0px 10px 0px;
         padding: 12px;
         border-radius: 4px;
+        font-size: 12px;
       }
       select {
         appearance: none;
@@ -51,6 +52,7 @@
       textarea {
         resize: vertical;
         height: 250px;
+        max-height: 380px;
       }
     }
     .terms-check {

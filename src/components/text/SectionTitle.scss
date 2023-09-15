@@ -1,0 +1,19 @@
+.section-title {
+  display: inline-block;
+  margin: 28px 8px;
+  .main {
+    font-size: 20px;
+    font-weight: 900;
+    .key {
+      color: var(--main-color);
+      &::before, &::after {
+        content: '"';
+      }
+    }
+  }
+  .sub {
+    font-size: 15px;
+    color: gray;
+    margin-bottom: -8px;
+  }
+}

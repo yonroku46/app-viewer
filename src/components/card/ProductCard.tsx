@@ -14,7 +14,7 @@ import Skeleton from '@mui/material/Skeleton';
 import Box from '@mui/material/Box';
 import { Card, Typography, CardActionArea } from '@mui/material';
 
-export default function ProductCard({ dataList, loading }: { dataList: ProductInfo[], loading: boolean }) {
+export default function ProductCard({ dataList, mini, loading }: { dataList: ProductInfo[], mini?: boolean, loading: boolean }) {
   const navigate = useNavigate();
   
   const authService = AuthService();
@@ -89,19 +89,21 @@ export default function ProductCard({ dataList, loading }: { dataList: ProductIn
   }
 
   return(
-    <div className='contents cardbox'>
+    <div className={mini ? 'contents cardbox mini' : 'contents cardbox'}>
       {products.map((data) => (
         <Card className='product-card' key={data.productId} onClick={() => navigate('/products/' + data.productId)}>
           <CardActionArea className='media'>
             <CardMedia component='img' image={imgSrc(data.imgs[0])} onError={handleImgError} loading='lazy' alt={data.name}/>
-            {data.priceSale &&
+            {data.priceSale && !mini &&
               <span className='sale-label'>
                 {calcDiscountRate(data.price, data.priceSale) + 'OFF'}
               </span>
             }
-            <div className={data.liked ? 'like liked' : 'like'} onClick={(event) => likeClick(event, data.productId, !data.liked)}>
-              <StarRoundedIcon className='icon'/>
-            </div>
+            {!mini && 
+              <div className={data.liked ? 'like liked' : 'like'} onClick={(event) => likeClick(event, data.productId, !data.liked)}>
+                <StarRoundedIcon className='icon'/>
+              </div>
+            }
           </CardActionArea>
           <CardContent className='content'>
             <Typography className='name' gutterBottom component='div'>
@@ -109,8 +111,14 @@ export default function ProductCard({ dataList, loading }: { dataList: ProductIn
             </Typography>
             <Typography className='sub-area' color='text.secondary' component='div'>
               <div>
-                {data.priceSale && <span className='price'>{currency(data.priceSale)}</span>}
-                <span className={data.priceSale ? 'sale' : 'price'}>{currency(data.price)}</span>
+              {mini || !data.priceSale ? 
+                <span className='price'>{currency(data.priceSale || data.price)}</span>
+              :
+              <>
+                <span className='price'>{currency(data.priceSale)}</span>
+                <span className='sale'>{currency(data.price)}</span>
+              </>
+              }
               </div>
             </Typography>
           </CardContent>

@@ -85,7 +85,7 @@ export default function Policy() {
         <div className='title'>
           運用ポリシー
         </div>
-      <div className="message">
+      <div className="message scroll">
         <h4>{socialLoginPolicy.title}</h4>
         {socialLoginPolicy.contents.map((content) => (
           <Fragment key={content.sectionNo}>

@@ -1,24 +1,32 @@
 .css-yiavyu-MuiBackdrop-root-MuiDialog-backdrop {
-    display: none !important;
-    pointer-events: none !important;
+  display: none !important;
+  pointer-events: none !important;
+}
+.css-10nakn3-MuiModal-root-MuiPopover-root-MuiMenu-root {
+  z-index: 9999 !important;
 }
 .modal {
-    z-index: 9999 !important;
-    .css-bdhsul-MuiTypography-root-MuiDialogTitle-root {
-        padding: 12px;
-        min-width: 320px;
-        font-family: 'Noto Sans JP', sans-serif !important;
+  .MuiPaper-root {
+    .title {
+      font-family: 'Noto Sans JP', sans-serif;
+      padding: 12px;
+      min-width: 320px;
+      font-size: 15px;
+      font-weight: bold;
     }
-    .MuiDialogTitle-root+.css-ypiqx9-MuiDialogContent-root {
-        padding: 12px 24px;
+    .contents {
+      padding: 12px 24px;
+      .chip {
+        margin-right: 4px;
+        margin-bottom: 4px;
+        padding: 0 4px;
+      }
     }
-    .css-1t1j96h-MuiPaper-root-MuiDialog-paper {
-        border-radius: 4px;
-    }
-    .css-hlj6pa-MuiDialogActions-root {
-        padding: 12px;
+    .bottom {
+      padding: 12px;
     }
     .save {
-        padding: 6px 32px;
+      padding: 4px 28px;
     }
+  }
 }

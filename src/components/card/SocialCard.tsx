@@ -93,14 +93,14 @@ export default function SocialCard({ dataList, loading, additional, owned }: { d
         <Card className='social-card' key={data.socialId} onClick={() => navigate('/social/' + data.socialId)}>
           <CardActionArea className='media'>
             <CardMedia component='img' image={imgSrc(data.imgs[0])} onError={handleImgError} loading='lazy' alt={data.contents}/>
-            {!owned && data.imgs.length > 1 &&
+            {data.imgs.length > 1 &&
               <span className='more-label'>
                 +{data.imgs.length - 1}
               </span>
             }
             <div className={data.liked ? 'like liked' : 'like'} onClick={(event) => likeClick(event, data.socialId, !data.liked)}>
               {data.likedCount !== undefined && data.likedCount > 0 &&
-                <div className='count'>{data.likedCount}</div>
+                <div className={data.liked ? 'count liked' : 'count'}>{data.likedCount}</div>
               }
               <FavoriteRoundedIcon className='icon'/>
             </div>
@@ -114,17 +114,13 @@ export default function SocialCard({ dataList, loading, additional, owned }: { d
                   {data.name}
                 </div>
                 <div className='height'>
-                  {data.profileHeight}cm
+                  {data.profileHeight ? data.profileHeight + 'cm' : '非公開'}
                 </div>
               </Typography>
             </div>
             {additional &&
               <div className='additional'>
-                {data.contents ? data.contents :
-                  data.tags?.map(tag => (
-                    '#' + tag + ' '
-                  ))
-                }
+                {data.contents}
               </div>
             }
           </CardContent>

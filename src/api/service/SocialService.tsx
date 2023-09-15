@@ -3,6 +3,7 @@ import axios from 'axios';
 
 export interface SocialFilter {
   keyword?: string;
+  limit?: number;
 }
 
 export interface SocialInfo {
@@ -50,7 +51,8 @@ export default function SocialService() {
   async function socialList(filter: SocialFilter): Promise<any> {
     try {
       const params = {
-        keyword: filter.keyword
+        keyword: filter.keyword,
+        limit: filter.limit
       };
       const response = await axios.get<ApiResponse>(ApiRoutes.SOCIAL_FILTER, { params });
       if (response && !response.data?.hasErrors) {

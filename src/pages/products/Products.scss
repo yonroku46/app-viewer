@@ -2,35 +2,14 @@
   background-color: var(--contents-color);
   padding: 8px;
   border-radius: 4px;
-  .menu-title {
-    display: inline-block;
-    margin: 28px 8px;
-    .main {
-      font-size: 20px;
-      font-weight: 900;
-      .key {
-        color: var(--main-color);
-        &::before, &::after {
-          content: '"';
-        }
-      }
-    }
-    .sub {
-      font-size: 15px;
-      color: gray;
-      margin-bottom: -8px;
-    }
-  }
   .filter {
     height: 0px;
     overflow: hidden;
     border-radius: 4px;
     transition: height 0.25s;
     &.open {
-      padding: 40px 10px 20px 10px;
+      padding: 20px 10px;
       height: fit-content;
-      background-color: var(--bg-color);
-      box-shadow: 0px 3px 4px 0 inset var(--shadow-color);
     }
     label {
       display: block;
@@ -49,6 +28,7 @@
           height: 32px;
           border-radius: 4px;
           background-color: white;
+          font-size: 12px;
           appearance: none;
           -webkit-appearance: none;
           &:hover {
@@ -82,24 +62,27 @@
           display: flex;
           justify-content: center;
           align-items: center;
+          flex-direction: column;
           width: 120px;
           height: 60px;
           border: 1px solid var(--border-color);
-          border-radius: 4px;
           padding: 6px 0;
-          background-color: var(--bg-color);
-          box-shadow: 0px 3px 4px 0 inset var(--shadow-color);
+          border-radius: 4px;
+          background-color: white;
           transition: all 0.25s;
           img {
             width: 60%;
+          }
+          .value {
+            text-transform: uppercase;
+            font-size: 11px;
           }
           &:hover {
             cursor: pointer;
             opacity: 0.8;
           }
           &.active {
-            background-color: white;
-            box-shadow: 0 0px 4px 1px var(--shadow-color);
+            border-color: var(--menu-active-color);
           }
         }
       }
@@ -116,26 +99,20 @@
           flex-direction: column;
           width: 120px;
           height: 60px;
-          padding: 10px;
           border: 1px solid var(--border-color);
+          padding: 6px 0;
           border-radius: 4px;
-          background-color: var(--bg-color);
-          box-shadow: 0px 3px 4px 0 inset var(--shadow-color);
+          background-color: white;
           transition: all 0.25s;
           .value {
             text-transform: uppercase;
             font-size: 11px;
-            font-weight: 900;
-          }
-          .icon {
-            opacity: 0.25;
           }
           &:hover {
             cursor: pointer;
           }
           &.active {
-            background-color: white;
-            box-shadow: 0 0px 4px 1px var(--shadow-color);
+            border-color: var(--menu-active-color);
           }
         }
       }
@@ -151,15 +128,13 @@
           padding: 10px 22px;
           border-radius: 4px;
           border: 1px solid var(--border-color);
-          background-color: var(--bg-color);
-          box-shadow: 0px 3px 4px 0 inset var(--shadow-color);
+          background-color: white;
           transition: all 0.25s;
           &:hover {
             cursor: pointer;
           }
           &.active {
-            background-color: white;
-            box-shadow: 0 0px 4px 1px var(--shadow-color);
+            border-color: var(--menu-active-color);
           }
         }
       }
@@ -176,14 +151,6 @@
         margin-top: 10px;
         margin-left: 6px;
         border: none;
-        .title {
-          font-weight: bold;
-          margin-right: 4px;
-          font-size: 13px;
-        }
-        .icon {
-          font-size: 18px;
-        }
         &.reset {
           background: var(--bg-active-color);
           color: white;
@@ -200,19 +167,16 @@
     display: flex;
     justify-content: flex-end;
     margin-top: -8px;
-    margin-bottom: -35px;
+    margin-bottom: -36px;
     .filter-toggle {
       display: flex;
       align-items: center;
       border-radius: 0 0 4px 4px;
-      padding: 8px 20px;
+      padding: 8px 10px;
       background-color: white;
       transition: all 0.25s;
       &:hover {
         cursor: pointer;
-      }
-      &.active {
-        box-shadow: 0px 3px 4px 0 var(--shadow-color);
       }
       .title {
         font-weight: bold;
@@ -240,7 +204,7 @@
 .product-detail {
   background-color: var(--contents-color);
   padding: 0px 8px;
-  margin-top: calc(var(--footer-height) * -1);
+  margin-top: calc(9px * -1);
   border-radius: 4px;
   .fab {
     position: fixed;
@@ -264,15 +228,15 @@
     z-index: 3;
     position: sticky;
     width: fit-content;
-    top: 44px;
+    top: calc(var(--header-height) + var(--nav-height) + 4px);
     margin-bottom: -9px;
     margin-left: auto;
     margin-right: auto;
     color: var(--bg-active-color);
-    transition: all 0.45s;
+    transition: top 0.45s;
     &.active {
+      top: calc(var(--header-height) + var(--nav-height) + 38px);
       margin-top: -24px;
-      top: 85px;
     }
     &:hover {
       cursor: pointer;
@@ -290,12 +254,13 @@
     z-index: 3;
     display: flex;
     position: sticky;
-    top: 46px;
+    top: calc(var(--header-height) + var(--nav-height) - 1px);
     width: 100%;
     padding: 10px 8px;
     margin-left: -8px;
     background-color: white;
     border-bottom: 1px solid var(--border-color);
+    box-shadow: 0px -1px 1px 0 white;
     transition: all 0.45s;
     &:not(.active) {
       transform: translate(0, -62px);
@@ -360,7 +325,7 @@
         border-radius: 4px;
         margin-right: 10px;
         transition: all 0.25s;
-        &:hover {
+        &:not(.disable):hover {
           cursor: pointer;
           opacity: 0.9;
         }
@@ -483,14 +448,14 @@
     }
     .img-area {
       position: sticky;
-      top: 137px;
+      top: calc(var(--header-height) + var(--nav-height) + 97px);
       width: calc(50% - 40px);
       height: fit-content;
       flex: 1;
       padding-right: 40px;
       transition: width 0.25s, top 0.25s;
       &.snap-hide {
-        top: 64px;
+        top: calc(var(--header-height) + var(--nav-height) + 23px);
       }
       &.comp {
         display: flex;
@@ -771,7 +736,6 @@
       .condition {
         ul {
           display: flex;
-          list-style: none;
           margin: 0;
           padding: 0;
           margin-bottom: 30px;
@@ -956,16 +920,6 @@
         margin-right: 4px;
       }
     }
-    .more-btn {
-      display: flex;
-      font-size: 10px;
-      border: none;
-      color: gray;
-      .icon {
-        font-size: 15px;
-        margin: 0;
-      }
-    }
   }
 }
 
@@ -976,6 +930,13 @@
       .brand {
         .quick-map {
           .brand-img {
+            width: 31%;
+          }
+        }
+      }
+      .categorys {
+        .quick-map {
+          .category {
             width: 31%;
           }
         }

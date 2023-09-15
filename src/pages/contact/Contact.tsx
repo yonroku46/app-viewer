@@ -54,7 +54,7 @@ export default function Contact() {
           <input type='email' id='email' readOnly={user?.mail !== undefined} value={user?.mail ? user.mail : mail} onChange={(e) => setMail(e.target.value)}/>
         </div>
         <div className='category'>
-          <label>お問い合わせカテゴリー</label>
+          <label>お問い合わせ内容</label>
           <div className='select-box'>
             <select onChange={(e) => setCategory(e.target.value)}>
               {categoryList.map((category, index) => (

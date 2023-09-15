@@ -7,7 +7,8 @@
   height: 100%;
   .header-area {
     display: flex;
-    margin: 4px 4px 10px 4px;
+    width: 100%;
+    margin: 4px 4px 8px 4px;
     padding-bottom: 4px;
     border-bottom: 1px solid var(--border-color);
     .back-btn {
@@ -28,7 +29,6 @@
     height: 100%;
     overflow-y: auto;
     padding-bottom: 10px;
-    margin-bottom: -1px;
     .message {
       display: flex;
       width: fit-content;
@@ -62,6 +62,7 @@
         &.bubble {
           --r: 10px;
           --t: 10px;
+          min-height: 18px;
           max-width: 280px;
           padding: calc(2*var(--r)/3) calc(2*var(--r)/2);
           -webkit-mask: 

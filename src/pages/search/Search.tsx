@@ -18,10 +18,8 @@ export default function Search() {
   }, []);
 
   return(
-    <>
-      <section className='search fullsize'>
-        <SearchInput value={value} resetValue={() => setValue('')} onChange={(e) => setValue(e.target.value)}/>
-      </section>
-    </>
+    <section className='search fullsize'>
+      <SearchInput value={value} resetValue={() => setValue('')} onChange={(e) => setValue(e.target.value)}/>
+    </section>
   )
 }

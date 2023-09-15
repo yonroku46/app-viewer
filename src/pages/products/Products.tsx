@@ -2,16 +2,18 @@ import { MouseEvent, useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { SearchArea } from 'components/input/SearchInput';
 import ProductCard from 'components/card/ProductCard';
-import ProductService, { ProductFilter, ProductInfo } from 'api/service/ProductService';
+import SectionTitle from 'components/text/SectionTitle';
 import ClothesSprite from 'components/sprite/ClothesSprite';
+import Modal from 'components/modal/Modal';
+import ProductService, { ProductFilter, ProductInfo } from 'api/service/ProductService';
 import './Products.scss';
 
-import TuneIcon from '@mui/icons-material/Tune';
-import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
 export default function Products() {
-  const search = useLocation().search;
+  const location = useLocation();
+  const search = location.search;
   const param = new URLSearchParams(search);
   
   const [load, setLoad] = useState<boolean>(true);
@@ -23,6 +25,9 @@ export default function Products() {
   const [selectedBrands, setSelectedBrands] = useState<Array<string>>([]);
   const [selectedCategory, setSelectedCategory] = useState<Array<number>>([]);
   const [selectedStatus, setSelectedStatus] = useState<Array<number>>([]);
+  const [modalType, setModalType] = useState<string>('');
+  const [modalData, setModalData] = useState<Record<string, string>>({});
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
   const priceMaximum: number = 1000000;
 
   const productService = ProductService();
@@ -39,14 +44,18 @@ export default function Products() {
 
   // ワードがない場合お勧め商品表示、ある場合、そのワードで検索を行う
   useEffect(() => {
-    if (value === '') {
+    if (location.state?.from === '/search') {
+      if (value !== '') {
+        getProductList();
+      }
+    } else {
+      if (value === '') {
       const recommendFilter: ProductFilter = {
-        // keyword: 'おしゃれ',
-        // status: [5, 4]
+        keyword: '',
+        status: [5, 4, 3, 2, 1]
       };
       getProductList(recommendFilter);
-    } else {
-      getProductList();
+      }
     }
   }, [value]);
 
@@ -130,7 +139,6 @@ export default function Products() {
     10502: 'suit-shirt', // ブーツ
     10503: 'sweater', //フリップフロップ
     10504: 'short-round',
-    10505: 'short-sleeve'
   }
 
   const statusMaster = [
@@ -186,19 +194,34 @@ export default function Products() {
     setSelectedStatus([]);
   };
 
+  function handleModalOpen(type: string) {
+    setModalType(type);
+    if (type === 'brand') {
+      setModalData(brandMaster);
+    } else if (type === 'category') {
+      setModalData(categoryMaster);
+    }
+    setModalOpen(true);
+  };
+
+  function handleModalClose() {
+    setModalOpen(false);
+  };
+
   return(
     <>
+    <Modal type={modalType} data={modalData} open={modalOpen} onClose={handleModalClose}/>
     <section className='products'>
       <SearchArea value={value}/>
        {/* フィルター */}
-      <div className='filter-area'>
-        <div className={filterOpen ? 'filter-toggle active' : 'filter-toggle'} onClick={handleClickFilter}>
+      {/* <div className='filter-area'>
+        <div className='filter-toggle' onClick={handleClickFilter}>
           <span className='title'>条件を追加</span>
           <ArrowDropDownIcon className={filterOpen ? 'icon active' : 'icon'}/>
         </div>
-      </div>
+      </div> */}
       {/* フィルター詳細 */}
-      <div className={filterOpen ? 'filter open' : 'filter'}>
+      {/* <div className={filterOpen ? 'filter open' : 'filter'}>
         <div className='sort'>
           <label>並び替え</label>
           <div className='sort-item'>
@@ -228,6 +251,10 @@ export default function Products() {
                 <img src={brandImg}/>
               </div>
             ))}
+            <div className='brand-img' key={'more'} onClick={() => handleModalOpen('brand')}>
+              <MoreHorizIcon className='icon'/>
+              <span className='value'>もっと見る</span>
+            </div>
           </div>
         </div>
 
@@ -236,10 +263,14 @@ export default function Products() {
           <div className='quick-map'>
             {Object.entries(categoryMaster).map(([categoryKey, categoryIcon]) => (
               <div className={selectedCategory.includes(parseInt(categoryKey)) ? 'category active' : 'category'} key={categoryKey} onClick={() => categoryClick(parseInt(categoryKey))}>
-                <span className='value'>{categoryKey}</span>
                 <ClothesSprite id={categoryIcon} key={categoryIcon}/>
+                <span className='value'>{categoryKey}</span>
               </div>
             ))}
+            <div className='category' key={'more'} onClick={() => handleModalOpen('category')}>
+              <MoreHorizIcon className='icon'/>
+              <span className='value'>もっと見る</span>
+            </div>
           </div>
         </div>
 
@@ -256,49 +287,20 @@ export default function Products() {
         
         <div className='buttons'>
           <button className='reset' onClick={() => filterReset()}>
-            <span className='title'>条件クリア</span>
-            <RestartAltIcon className='icon'/>
+            <span>リセット</span>
           </button>
           <button className='search' onClick={() => getProductList()}>
-            <span className='title'>検索する</span>
-            <TuneIcon className='icon'/>
+            <span>上記の条件で検索</span>
           </button>
         </div>
 
-      </div>
+      </div> */}
       {value ? 
-      <>
-        {/* 検索結果 */}
-        <div className='menu-title'>
-          <div className='sub'>Result</div>
-          <div className='main'>
-            <span className='key'>{value}</span> {!load && dataList.length}件
-          </div>
-        </div>
-        <ProductCard dataList={dataList} loading={load}/>
-      </>
-      :
-      <>
-        {/* 新着商品 */}
-        <div className='menu-title'>
-          <div className='sub'>New Arrivals</div>
-          <div className='main'>新着</div>
-        </div>
-        <ProductCard dataList={dataList} loading={load}/>
-        {/* ランキング商品 */}
-        <div className='menu-title'>
-          <div className='sub'>Ranking</div>
-          <div className='main'>人気アイテム</div>
-        </div>
-        <ProductCard dataList={dataList} loading={load}/>
-        {/* おすすめ商品 */}
-        <div className='menu-title'>
-          <div className='sub'>Recommends</div>
-          <div className='main'>おすすめアイテム</div>
-        </div>
-        <ProductCard dataList={dataList} loading={load}/>
-      </>
+        <SectionTitle main={value} count={dataList.length !== 0 ? dataList.length : 0}/>
+        :
+        <SectionTitle main={'おすすめアイテム'} sub={'Recommends'}/>
       }
+      <ProductCard dataList={dataList} loading={load}/>
     </section>
     </>
   )

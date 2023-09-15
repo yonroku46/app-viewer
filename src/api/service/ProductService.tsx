@@ -10,6 +10,7 @@ export interface ProductFilter {
   brands?: Array<string>;
   category?: Array<number>;
   status?: Array<number>;
+  limit?: number;
 }
 
 export interface ProductInfo {
@@ -58,7 +59,8 @@ export default function ProductService() {
         maxPrice: filter.maxPrice,
         brands: filter.brands?.join(','),
         category: filter.category?.join(','),
-        status: filter.status?.join(',')
+        status: filter.status?.join(','),
+        limit: filter.limit
       };
       const response = await axios.get<ApiResponse>(ApiRoutes.PRODUCT_FILTER, { params });
       if (response && !response.data?.hasErrors) {

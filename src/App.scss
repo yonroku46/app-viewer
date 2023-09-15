@@ -9,8 +9,6 @@ html {
 header {
   z-index: 9000;
   background-color: white;
-  // backdrop-filter: blur(6px);
-  // -webkit-backdrop-filter: blur(6px);
   position: fixed;
   height: var(--header-height);
   width: 100%;
@@ -50,8 +48,53 @@ header {
     }
   }
 }
+nav {
+  z-index: 8999;
+  background-color: white;
+  position: fixed;
+  height: var(--nav-height);
+  width: 100%;
+  left: 0;
+  top: calc(var(--header-height) - 1px);
+  box-shadow: 0px -2px 0px -1px inset var(--border-color);
+  ul {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    max-width: var(--app-max-width);
+    min-width: var(--app-min-width);
+    margin-left: auto;
+    margin-right: auto;
+    text-transform: uppercase;
+    background-color: white;
+    margin-top: -1px;
+    box-shadow: 0px -2px 0px -1px inset var(--border-color);
+    li {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4px 8px;
+      width: 100px;
+      font-size: 14px;
+      transition: box-shadow 0.25s, opacity 0.25s;
+      &.active {
+        font-weight: bold;
+        box-shadow: 0px -3px 0px -1px inset black;
+      }
+      &:hover {
+        cursor: pointer;
+        &:not(.active) {
+          opacity: 0.6;
+          box-shadow: 0px -3px 0px -1px inset var(--border-color);
+        }
+      }
+    }
+  }
+}
 body {
   margin: 0px;
+  overflow: auto !important;
+  padding-right: 0px !important;
   // color
   --scroll-bg-color: rgba(0, 0, 0, 0);
   --bg-color: rgb(244, 244, 244);
@@ -71,8 +114,8 @@ body {
   --warring-color: rgb(255, 165, 0);
   --like-color: rgb(255, 215, 0);
   --like-bg-color: rgba(255, 215, 0, 0.1);
-  --like-social-color: rgb(240, 42, 42);
-  --like-social-bg-color: rgba(240, 42, 42, 0.1);
+  --like-social-color: rgb(235, 40, 105);
+  --like-social-bg-color: rgba(235, 40, 105, 0.1);
   --buy-color: rgb(239, 98, 83);
   --buy-bg-color: rgba(239, 98, 83, 0.1);
   --offer-color: rgb(48, 178, 127);
@@ -88,6 +131,7 @@ body {
   --sns-google-color: rgb(66, 133 , 244);
   // size
   --header-height: 48px;
+  --nav-height: 27px;
   --footer-height: 16px;
   --app-max-width: 1280px;
   --app-min-width: 280px;
@@ -98,8 +142,9 @@ body {
   --search-nav-width: 188px;
   --sp-search-nav-width: 20px;
   --loading-height: 56px;
-  --full-height-margin: 88px;
+  --full-height-margin: 99px;
   --section-width: calc(var(--app-max-width) - var(--sp-search-nav-width));
+  --top-height: calc(var(--header-height) + var(--nav-height));
   // time
   --loading-purse: 750ms;
 }
@@ -124,26 +169,13 @@ footer {
     }
   }
 }
-::-webkit-scrollbar-track {
-  border-radius: 4px;
-  background-color: var(--scroll-bg-color);
-}
-::-webkit-scrollbar {
-  width: 4px;
-  height: 4px;
-  background-color: var(--scroll-bg-color);
-}
-::-webkit-scrollbar-thumb {
-  border-radius: 4px;
-  background-color: lightgray;
-}
 main {
   position: relative;
   max-width: var(--app-max-width);
   min-width: var(--app-min-width);
-  min-height: calc((var(--vh, 1vh) * 100) - var(--header-height) - var(--main-margin));
+  min-height: calc((var(--vh, 1vh) * 100) - var(--top-height) - var(--main-margin));
   border-radius: 4px;
-  margin-top: calc(var(--header-height) + var(--main-margin));
+  margin-top: calc(var(--top-height) + var(--main-margin));
   margin-left: auto;
   margin-right: auto;
 }
@@ -156,11 +188,12 @@ section {
     }
   }
 }
-input {
+input, textarea, select {
   font-family: inherit;
 }
-textarea {
-  font-family: inherit;
+ul, li {
+  list-style: none;
+  list-style-type: none;
 }
 img {
   -webkit-user-drag: none;
@@ -196,11 +229,36 @@ button {
     opacity: 0.5;
     pointer-events: none;
   }
+  &.more-btn {
+    display: flex;
+    font-size: 10px;
+    border: none;
+    color: gray;
+    .icon {
+      font-size: 15px;
+      margin: 0;
+    }
+  }
 }
 hr {
   width: -webkit-fill-available;
   margin-top: 16px;
   margin-bottom: 16px;
+}
+.scroll {
+  &::-webkit-scrollbar-track {
+    border-radius: 4px;
+    background-color: var(--scroll-bg-color);
+  }
+  &::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+    background-color: var(--scroll-bg-color);
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: var(--border-color);
+  }
 }
 .contents {
   background-color: var(--contents-color);

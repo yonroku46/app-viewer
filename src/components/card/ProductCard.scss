@@ -7,7 +7,6 @@
   margin: 0px 8px;
   padding: 40px 10px;
   background-color: var(--bg-color);
-  box-shadow: 0px 3px 4px 0 inset var(--shadow-color);
   img {
     width: 90px;
   }
@@ -22,7 +21,38 @@
   margin-top: -20px;
   margin-left: -20px;
   &.contents {
+    width: 100%;
     background-color: unset;
+  }
+  &.mini {
+    margin-top: -10px;
+    margin-left: -10px;
+    .product-card {
+      width: calc(20% - 10px);
+      margin-top: 10px;
+      margin-left: 10px;
+      .media {
+        padding: 50px;
+        img {
+          border-radius: 4px;
+        }
+      }
+      .content {
+        width: 100%;
+        padding: 0px;
+        .name {
+          line-height: 1.5;
+          font-size: 12px;
+          margin-top: 4px;
+        }
+        .sub-area {
+          line-height: 1;
+          .price {
+            font-size: 13px;
+          }
+        }
+      }
+    }
   }
   .product-card {
     z-index: 0;
@@ -44,13 +74,13 @@
       display: flex;
       position: absolute;
       z-index: 1;
-      bottom: 2px;
-      right: 2px;
+      bottom: -34px;
+      right: 0px;
       svg {
-        font-size: 24px;
+        font-size: 28px;
         transition: all 0.25s;
         transform: rotate(0deg);
-        color: white;
+        color: lightgray;
       }
       &.liked {
         svg {
@@ -75,7 +105,7 @@
       justify-content: center;
       padding: 0px 10px;
       color: white;
-      font-size: 13px;
+      font-size: 12px;
       font-weight: bold;
       text-transform: uppercase;
       background-color: var(--buy-color);
@@ -96,6 +126,7 @@
         background: linear-gradient(to bottom right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 70%, rgba(0, 0, 0, 0.15) 100%);
       }
       img {
+        left: 0px;
         top: 0px;
         width: 100%;
         height: 100%;
@@ -118,7 +149,7 @@
       position: relative;
       .name {
         font-family: 'Noto Sans JP', sans-serif;
-        width: 100%;
+        width: 90%;
         margin: 0px;
         line-height: 20px;
         font-size: 14px;
@@ -153,11 +184,21 @@
 /* sp */
 @media only screen and (max-width: 767px) {
   .cardbox {
-    margin-top: -8px;
-    margin-left: -8px;
+    margin-top: -4px;
+    margin-left: -4px;
     padding: 0;
     &.contents {
       padding: 0;
+    }
+    &.mini {
+      margin-top: -4px;
+      margin-left: -4px;
+      .product-card {
+        width: calc(33% - 8px);
+        margin-top: 4px;
+        margin-left: 4px;
+        margin-right: 4px;
+      }
     }
     .product-card {
       width: calc(50% - 8px);

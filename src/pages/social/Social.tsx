@@ -2,11 +2,13 @@ import { MouseEvent, useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { SearchArea } from 'components/input/SearchInput';
 import SocialCard from 'components/card/SocialCard';
+import SectionTitle from 'components/text/SectionTitle';
 import SocialService, { SocialFilter, SocialInfo } from 'api/service/SocialService';
 import './Social.scss';
 
 export default function Social() {
-  const search = useLocation().search;
+  const location = useLocation();
+  const search = location.search;
   const param = new URLSearchParams(search);
   
   const [load, setLoad] = useState<boolean>(true);
@@ -27,13 +29,17 @@ export default function Social() {
 
   // ワードがない場合お勧め商品表示、ある場合、そのワードで検索を行う
   useEffect(() => {
-    if (value === '') {
+    if (location.state?.from === '/search') {
+      if (value !== '') {
+        getSocialtList();
+      }
+    } else {
+      if (value === '') {
       const recommendFilter: SocialFilter = {
-        // keyword: 'おしゃれ',
+        keyword: 'Summer',
       };
       getSocialtList(recommendFilter);
-    } else {
-      getSocialtList();
+      }
     }
   }, [value]);
 
@@ -53,24 +59,12 @@ export default function Social() {
   }
 
   return(
-    <>
     <section className='social'>
       <SearchArea value={value}/>
-      {value ? 
-      <>
-        {/* 検索結果 */}
-        <div className='menu-title'>
-          <div className='sub'>Result</div>
-          <div className='main'>
-            <span style={{ color: 'var(--main-color)' }}>"{value}"</span> {dataList.length}件
-          </div>
-        </div>
-        <SocialCard dataList={dataList} loading={load} additional={true}/>
-      </>
-      :
-        <SocialCard dataList={dataList} loading={load} additional={true}/>
+      {value &&
+        <SectionTitle main={value} count={dataList.length !== 0 ? dataList.length : 0}/>
       }
+      <SocialCard dataList={dataList} loading={load} additional={true}/>
     </section>
-    </>
   )
 }

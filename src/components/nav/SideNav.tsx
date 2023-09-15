@@ -38,7 +38,7 @@ export default function SideNav({ menuItem, fold, setFold }: { menuItem: SideMen
   return(
     <>
     {/* サイドメニューコンポネント */}
-    <nav className='side-nav'>
+    <div className='side-nav'>
       <div className={fold ? 'side-menu sp' : 'side-menu'}>
         {/* メニュー要素エリア */}
         {menuItem.map((menus) => (
@@ -69,7 +69,7 @@ export default function SideNav({ menuItem, fold, setFold }: { menuItem: SideMen
         </Tooltip>
         }
       </div>
-    </nav>
+    </div>
     </>
   )
 }

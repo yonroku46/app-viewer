@@ -119,6 +119,17 @@ export default function useAuthService() {
     }
   }
 
+  function loginRequire(): boolean {
+    const currentUser = localStorage.getItem('currentUser');
+    if (currentUser) {
+      return true;
+    } else {
+      dispatch(showTopPopup('ログインが必要です'));
+      navigate('/login', { state: { prev: location.pathname } });
+      return false;
+    }
+  }
+
   function getCurrentUser(): UserState | undefined {
     const currentUser = localStorage.getItem('currentUser');
     if (currentUser) {
@@ -135,17 +146,6 @@ export default function useAuthService() {
     dispatch(userLogout());
   }
 
-  function loginRequire(): boolean {
-    const currentUser = localStorage.getItem('currentUser');
-    if (currentUser) {
-      return true;
-    } else {
-      dispatch(showTopPopup('ログインが必要です'));
-      navigate('/login', { state: { prev: location.pathname } });
-      return false;
-    }
-  }
-
   return {
     login,
     logout,
@@ -155,7 +155,7 @@ export default function useAuthService() {
     keyCheck,
     refreshToken,
     healthCheck,
-    getCurrentUser,
     loginRequire,
+    getCurrentUser,
   };
 }

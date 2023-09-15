@@ -22,6 +22,7 @@ import Divider from '@mui/material/Divider';
 
 export interface MenuItem {
   category: string;
+  categoryPath: string;
   categoryImg: string;
   items: {
     url: string,
@@ -64,6 +65,9 @@ export default function MenuNav({ menuItem, currentPath, userName, profileImg, m
     navigate(path, { state: { prev: location.pathname } });
   }
 
+  const settingData: Record<string, string> = {
+  }
+
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const openEl = Boolean(anchorEl);
   const accountMenuProps = {
@@ -102,7 +106,7 @@ export default function MenuNav({ menuItem, currentPath, userName, profileImg, m
   return(
     <>
     <Backdrop open={open} onClick={() => setOpen(false)}/>
-    <Modal open={modalOpen} onClose={handleModalClose}/>
+    <Modal type='app' data={settingData} open={modalOpen} onClose={handleModalClose}/>
     {/* 共通メニューコンポネント */}
     {(currentPath !== 'login') && userName ?
       <div className='user-badge' onClick={handleClick}>
@@ -158,8 +162,8 @@ export default function MenuNav({ menuItem, currentPath, userName, profileImg, m
       <span></span>
       <span></span>
     </div>
-    <nav className='menu-nav' role='navigation'>
-      <div className={open ? 'menu open' : 'menu'}>
+    <div className='menu-nav'>
+      <div className={open ? 'menu scroll open' : 'menu scroll'}>
         {userName ?
           <div className='userinfo'>
             <img className='profile' src={imgSrc(profileImg)} onError={handleImgError} onClick={() => link('/mypage')} alt='profile'/>
@@ -223,7 +227,7 @@ export default function MenuNav({ menuItem, currentPath, userName, profileImg, m
         </>
       }
       </div>
-    </nav>
+    </div>
     </>
   )
 }

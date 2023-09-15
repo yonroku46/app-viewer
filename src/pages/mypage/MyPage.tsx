@@ -81,7 +81,7 @@ export default function MyPage() {
       <div>{userInfo?.userName}</div>
       <div>{userInfo?.mail}</div>
       <input type="file" accept=".png,.jpg,.jpeg" ref={fileInputRef} onChange={handleFileChange} style={{ display: 'none' }} />
-      <button onClick={() => profileUpdate()}>プロフィール変更</button>
+      <button onClick={profileUpdate}>プロフィール変更</button>
       <button>会員退会</button>
       <div className='mypage contents'>
         <h3>sns data</h3>

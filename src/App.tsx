@@ -14,6 +14,7 @@ import Popup from 'components/popup/Popup';
 import MenuNav, { MenuItem } from 'components/nav/MenuNav';
 import { showCenterLinkPopup } from "store/actions/popupActions";
 import Home from 'pages/home/Home';
+import HomeHeader from 'pages/home/HomeHeader';
 import Search from 'pages/search/Search';
 import Empty from 'components/empty/Empty';
 import MyPage from 'pages/mypage/MyPage';
@@ -79,19 +80,27 @@ export default function App() {
 
   const menuItem: MenuItem[] = [
     {
-      category: 'メイン',
+      category: 'Products',
+      categoryPath: 'products',
       categoryImg: category1,
       items: [
         { url: 'products', icon: <CardGiftcardTwoToneIcon/>, title: '商品' },
-        { url: 'social', icon: <StyleTwoToneIcon/>, title: 'スタイル' },
-        { url: 'chat/2', icon: <QuestionAnswerTwoToneIcon/>, title: 'チャット' },
-        { url: 'contact', icon: <ContactSupportTwoToneIcon/>, title: 'お問い合わせ' },
       ]
     },{
-      category: 'ラボ',
+      category: 'Style',
+      categoryPath: 'social',
       categoryImg: category2,
       items: [
+        { url: 'social', icon: <StyleTwoToneIcon/>, title: 'スタイル' },
+      ]
+    },{
+      category: 'Labo',
+      categoryPath: 'labo',
+      categoryImg: category1,
+      items: [
         { url: 'labo', icon: <PsychologyTwoToneIcon/>, title: '実験室' },
+        { url: 'chat/2', icon: <QuestionAnswerTwoToneIcon/>, title: 'チャット' },
+        { url: 'contact', icon: <ContactSupportTwoToneIcon/>, title: 'お問い合わせ' },
       ]
     }
   ]
@@ -165,6 +174,28 @@ export default function App() {
       </header>
     )
   }
+  function NavMenu() {
+    if (currentPath === 'admin' || currentPath === 'shop') {
+      return(
+        <></>
+      )
+    } else {
+      return(
+        <nav role='navigation'>
+          <ul>
+            <li className={currentPath === '' ? 'active' : ''} onClick={() => navigate('/')} key={'home'}>
+              {'Home'}
+            </li>
+            {menuItem.map(menu => (
+              <li className={currentPath === menu.categoryPath ? 'active' : ''} onClick={() => navigate(menu.categoryPath)} key={menu.category}>
+                {menu.category}
+              </li>
+            ))}
+          </ul>
+        </nav>
+      )
+    }
+  }
 
   function Footer() {
     return(
@@ -183,6 +214,11 @@ export default function App() {
       <Loading dark={loading.isDark} show={loading.isShow}/>
       <Popup title={popup.title} contents={popup.contents} link={popup.link} center={popup.isCenter}/>
       <Header/>
+      <NavMenu/>
+      <Routes>
+        <Route path="/" element={<HomeHeader/>}/>
+        <Route path='/*' element={<></>}/>
+      </Routes>
       <main>
         <Routes>
           <Route path="/" element={<Home/>}/>

@@ -55,8 +55,16 @@
     z-index: 1;
     margin-left: auto;
     margin-right: auto;
+    height: 0;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s;
+    &.active {
+      height: auto;
+      pointer-events: auto;
+      opacity: 1;
+    }
     div {
-      list-style: none;
       padding: 0;
       background-color: white;
       border-radius: 0 0 4px 4px;

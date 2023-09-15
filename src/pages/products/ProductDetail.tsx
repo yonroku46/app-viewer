@@ -117,29 +117,23 @@ export default function ProductDetail() {
     });
   }
 
-  async function getProductList(recommendFilter?: ProductFilter) {
-    const filter: ProductFilter = recommendFilter || {
-      keyword: 'Nike'
+  async function getProductList() {
+    const filter: ProductFilter = {
+      keyword: 'Nike',
+      limit: 5
     };
     await productService.productList(filter).then(data => {
-      const productListWithDateConverted = data.responseData.productList.map((product: ProductInfo) => ({
-        ...product,
-        date: new Date(product.date),
-      }));
-      setProductList(productListWithDateConverted);
+      setProductList(data.responseData.productList);
     });
   }
 
-  async function getSocialList(recommendFilter?: SocialFilter) {
-    const filter: SocialFilter = recommendFilter || {
-      keyword: 'Summer'
+  async function getSocialList() {
+    const filter: SocialFilter = {
+      keyword: 'Summer',
+      limit: 5
     };
     await socialService.socialList(filter).then(data => {
-      const socialListWithDateConverted = data.responseData.socialList.map((social: SocialInfo) => ({
-        ...social,
-        date: new Date(social.date),
-      }));
-      setSocialList(socialListWithDateConverted);
+      setSocialList(data.responseData.socialList);
     });
   }
 
@@ -310,7 +304,7 @@ export default function ProductDetail() {
                 )}
               </div>
             </div>
-            <img className='thumbnail' src={product.imgs[0]} onClick={() => setHistoryShow(!historyShow)} onError={handleImgError}/>
+            <img className={productHistory?.length === 0 ? 'thumbnail disable' : 'thumbnail'} src={product.imgs[0]} onClick={() => setHistoryShow(!historyShow)} onError={handleImgError}/>
             <div className='top'>
               {productHistory?.length !== 0  &&
                 <button className={compMode ? buyStatus ? 'comp buy active' : 'comp offer active' : 'comp'} onClick={() => compToggle()}>

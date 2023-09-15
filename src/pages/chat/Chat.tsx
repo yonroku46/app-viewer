@@ -48,7 +48,7 @@ export default function ChatRoom() {
         const stompClient = new StompJs.Client({
           brokerURL: `${process.env.REACT_APP_WS_BROKER}`,
           debug: function (str: string) {
-            console.log(str);
+            // console.log(str);
           },
           connectHeaders: {
             Authorization: 'Bearer ' + user.token,
@@ -126,13 +126,13 @@ export default function ChatRoom() {
   return (
     <section className='fullsize'>
       <div className='chat-box'>
-        <div className='message-area' ref={chatViewRef}>
-          <div className='header-area'>
-            <div className='room-title'>Room:{roomId}</div>
-            <button className='back-btn'>
-              <MoreHorizRoundedIcon/>
-            </button>
-          </div>
+        <div className='header-area'>
+          <div className='room-title'>Room:{roomId}</div>
+          <button className='back-btn'>
+            <MoreHorizRoundedIcon/>
+          </button>
+        </div>
+        <div className='message-area scroll' ref={chatViewRef}>
           {chatList.map((item, idx) => {
             if (Number(item.writer) === user?.userId) {
               return (
@@ -164,7 +164,7 @@ export default function ChatRoom() {
             }
           })}
         </div>
-        <SendInput value={chat} placeholder={'メッセージを入力'} onChange={onChangeChat} submit={sendChat} />
+        <SendInput className='chat' value={chat} placeholder={'メッセージを入力'} onChange={onChangeChat} submit={sendChat} />
       </div>
     </section>
   );

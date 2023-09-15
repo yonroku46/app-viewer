@@ -44,7 +44,7 @@ export default function SearchInput({ value, resetValue, onChange }: { value: st
   const [trendList, setTrendList] = useState<string[]>(['人気アイテム', 'パーソナルカラー', '新商品']);
 
   const [selectedIndex, setSelectedIndex] = useState<number>(-1);
-  const [isFocused, setIsFocused] = useState(false);
+  const [isFocused, setIsFocused] = useState(true);
   const [isHover, setIsHover] = useState(false);
   const [isDelHover, setIsDelHover] = useState(false);
 
@@ -139,10 +139,10 @@ export default function SearchInput({ value, resetValue, onChange }: { value: st
   function search(clickedValue?: string) {
     if (clickedValue) {
       searchValueSave(clickedValue);
-      navigate(`${location.state?.from}?v=${clickedValue}`, { replace: true });
+      navigate(`${location.state?.from}?v=${clickedValue}`, { replace: true, state: { from: location.pathname }});
     } else if (value) {
       searchValueSave();
-      navigate(`${location.state?.from}?v=${value}`, { replace: true });
+      navigate(`${location.state?.from}?v=${value}`, { replace: true, state: { from: location.pathname }});
     }
   }
 
@@ -154,33 +154,31 @@ export default function SearchInput({ value, resetValue, onChange }: { value: st
           <SearchIcon className={isFocused ? 'icon focused' : 'icon'} onClick={() => search()} />
           <input type='text' inputMode='search' placeholder='検索' value={value} onChange={onChange} onKeyDown={handleKeyDown} onFocus={handleInputFocus} onBlur={handleInputBlur} autoFocus={true}/>
         </div>
-        {isFocused && (
-          <div className='history-area' onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
-            <div>
-              <div className='boundary'/>
-              {localHistory.length > 0 ?
-              <> 
-                {localHistory.map((history, index) => (
-                  <div className={selectedIndex === index ? 'history selected' : 'history'} key={history} onClick={() => search(history)} onMouseEnter={() => setSelectedIndex(-1)}>
-                    <SearchIcon className='icon'/>
-                    <span>{history}</span>
-                  </div>
-                ))}
-                <div className='del' onMouseDown={handleMouseDown}>
-                  <span onMouseDown={delAllHistory} onMouseEnter={() => setIsDelHover(true)} onMouseLeave={() => setIsDelHover(false)}>履歴削除</span>
+        <div className={isFocused ? 'history-area active' : 'history-area'} onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
+          <div>
+            <div className='boundary'/>
+            {localHistory.length > 0 ?
+            <> 
+              {localHistory.map((history, index) => (
+                <div className={selectedIndex === index ? 'history selected' : 'history'} key={history} onClick={() => search(history)} onMouseEnter={() => setSelectedIndex(-1)}>
+                  <SearchIcon className='icon'/>
+                  <span>{history}</span>
                 </div>
-              </>
-              :
-                trendList.map((trend, index) => (
-                  <div className={selectedIndex === index ? 'trend selected' : 'trend'} key={trend} onClick={() => search(trend)} onMouseEnter={() => setSelectedIndex(-1)}>
-                    <TrendingUpIcon className='icon'/>
-                    <span>{trend}</span>
-                  </div>
-                ))
-              }
-            </div>
+              ))}
+              <div className='del' onMouseDown={handleMouseDown}>
+                <span onMouseDown={delAllHistory} onMouseEnter={() => setIsDelHover(true)} onMouseLeave={() => setIsDelHover(false)}>履歴削除</span>
+              </div>
+            </>
+            :
+              trendList.map((trend, index) => (
+                <div className={selectedIndex === index ? 'trend selected' : 'trend'} key={trend} onClick={() => search(trend)} onMouseEnter={() => setSelectedIndex(-1)}>
+                  <TrendingUpIcon className='icon'/>
+                  <span>{trend}</span>
+                </div>
+              ))
+            }
           </div>
-        )}
+        </div>
       </div>
       <div className='category-area'>
         {categoryList.map((category) => (

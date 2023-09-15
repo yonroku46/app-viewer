@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from "react-redux";
+import { useMediaQuery } from 'react-responsive';
 import { useNavigate, useParams } from "react-router-dom";
 import ProductCard from 'components/card/ProductCard';
 import SocialCard from 'components/card/SocialCard';
+import { Helmet } from 'react-helmet-async';
 import { imgSrc, handleImgError } from "common/utils/ImgUtils";
 import AuthService from 'api/service/AuthService';
 import { UserState } from "store/types/UserActionTypes";
@@ -19,10 +21,12 @@ import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded';
 import ShareTwoToneIcon from '@mui/icons-material/ShareTwoTone';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import ReplyIcon from '@mui/icons-material/Reply';
+import KeyboardArrowLeftSharpIcon from '@mui/icons-material/KeyboardArrowLeftSharp';
 import KeyboardArrowRightSharpIcon from '@mui/icons-material/KeyboardArrowRightSharp';
 import SendInput from 'components/input/SendInput';
 
 export default function SocialDetail() {
+  const isSp = useMediaQuery({ maxWidth: 767 });
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -40,6 +44,8 @@ export default function SocialDetail() {
   const [commentList, setCommentList] = useState<Array<CommentInfo>>([]);
   const [reply, setReply] = useState<number|undefined>(undefined);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const [tagOffset, setTagOffset] = useState<number>(0);
+  const [tagOffsetLimit, setTagOffsetLimit] = useState<number>(0);
 
   useEffect(() => {
     if (id) {
@@ -52,6 +58,11 @@ export default function SocialDetail() {
       getSocialList();
     }
   }, [id]);
+
+  useEffect(() => {
+    setTagOffsetLimit(isSp ? 3 : 5);
+    setTagOffset(0)
+  }, [isSp]);
 
   async function getSocialInfo(socialId: number) {
     dispatch(loading(false, true));
@@ -85,39 +96,28 @@ export default function SocialDetail() {
     }
   }
 
-  async function getProductList(recommendFilter?: ProductFilter) {
-    const filter: ProductFilter = recommendFilter || {
-      keyword: 'Nike'
+  async function getProductList() {
+    const filter: ProductFilter = {
+      // keyword: 'Nike'
     };
     await productService.productList(filter).then(data => {
-      const productListWithDateConverted = data.responseData.productList.map((product: ProductInfo) => ({
-        ...product,
-        date: new Date(product.date),
-      }));
-      setProductList(productListWithDateConverted);
+      setProductList(data.responseData.productList);
     });
   }
 
-  async function getSocialList(recommendFilter?: SocialFilter) {
-    const filter: SocialFilter = recommendFilter || {
-      keyword: 'Summer'
+  async function getSocialList() {
+    const filter: SocialFilter = {
+      keyword: 'Summer',
+      limit: 5
     };
     await socialService.socialList(filter).then(data => {
-      const socialListWithDateConverted = data.responseData.socialList.map((social: SocialInfo) => ({
-        ...social,
-        date: new Date(social.date),
-      }));
-      setSocialList(socialListWithDateConverted);
+      setSocialList(data.responseData.socialList);
     });
   }
 
   async function getSocialCommentList(socialId: number) {
     await socialService.commentList(socialId).then(data => {
-      const commentListWithDateConverted = data.responseData.commentList.map((comment: CommentInfo) => ({
-        ...comment,
-        date: new Date(comment.date),
-      }));
-      setCommentList(commentListWithDateConverted);
+      setCommentList(data.responseData.commentList);
     });
   }
 
@@ -185,6 +185,18 @@ export default function SocialDetail() {
     }
   }
 
+  function handlePrevClick() {
+    if (tagOffset > 0) {
+      setTagOffset(tagOffset - tagOffsetLimit);
+    }
+  };
+  
+  function handleNextClick() {
+    if (tagOffset + tagOffsetLimit < productList.length) {
+      setTagOffset(tagOffset + tagOffsetLimit);
+    }
+  };
+
   if (load) {
     return(
       <section className='social-detail'/>
@@ -193,6 +205,8 @@ export default function SocialDetail() {
 
   if (social) {
     return(
+      <>
+      <Helmet title={social ? '@' + social.name + 'のスタイル - DadLabo' : 'DadLabo'}/>
       <section className='social-detail'>
         <div className='social-media'>
           {/* ソーシャルパーツ */}
@@ -201,7 +215,7 @@ export default function SocialDetail() {
               <div className='profile'>
                 <img src={imgSrc(social.profileImg)} onError={handleImgError}/>
                 <div className='name'>
-                  {social.name} / {social.profileHeight}cm
+                  {social.name} / {social.profileHeight ? social.profileHeight + 'cm' : '非公開'}
                   <div className='time'>{relativeTime(social.date)}</div>
                 </div>
               </div>
@@ -211,7 +225,7 @@ export default function SocialDetail() {
             </div>
             <Carousel
               showStatus={false} infiniteLoop={false} showThumbs={false} selectedItem={currentIndex}
-              emulateTouch={true} thumbWidth={50} onChange={handleChange}>
+              emulateTouch={true} showIndicators={social.imgs.length > 1} onChange={handleChange}>
               {social.imgs.map(img => (
                 <div key={img}>
                   <img src={img} loading='eager' onError={handleImgError}/>
@@ -220,6 +234,7 @@ export default function SocialDetail() {
             </Carousel>
             <div className='buttons'>
               <div className={social.liked ? 'like liked' : 'like'} onClick={(event) => likeClick()}>
+                <span className='count'>{social.likedCount}</span>
                 <FavoriteRoundedIcon className='icon'/>
               </div>
               <div className='share' onClick={() => share()}>
@@ -231,24 +246,42 @@ export default function SocialDetail() {
                 {social.contents}
               </p>
               {social.tags?.map(tag => (
-                <a className='tag' href={'#'} key={tag}>
+                <a className='hashtag' href={'#'} key={tag}>
                     {'#' + tag + ' '}
                 </a>
                 ))
               }
             </div>
           </div>
+          {/* タグ商品パーツ */}
+          {productList.length !== 0 &&
+            <div className='tagged-area'>
+              <div className='title'>
+                <label>
+                  <b>{productList.length}</b> 個のタグ商品
+                </label>
+                <div className='buttons'>
+                  <button className={tagOffset === 0 ? 'prev-btn void' : 'prev-btn'} onClick={handlePrevClick}>
+                    <KeyboardArrowLeftSharpIcon className='icon'/>
+                  </button>
+                  <button className={tagOffset + tagOffsetLimit >= productList.length ? 'next-btn void' : 'next-btn'} onClick={handleNextClick}>
+                    <KeyboardArrowRightSharpIcon className='icon'/>
+                  </button>
+                </div>
+              </div>
+              <div className='tagged'>
+                <ProductCard dataList={productList.slice(tagOffset, tagOffset + tagOffsetLimit)} mini={true} loading={load}/>
+              </div>
+            </div>
+          }
           {/* コメントパーツ */}
           <div className='comment-area'>
             <div className='additional'>
-              <label className='label comment'>
+              <label>
                 <b>{commentList.length}</b> コメント
               </label>
-              <label className='label liked'>
-                <b>{social.likedCount}</b> いいね
-              </label>
             </div>
-            <div className='view'>
+            <div className='view scroll'>
               {commentList.length === 0 ? 
                 <div className='comment-empty'>
                   まだコメントがありません
@@ -310,16 +343,12 @@ export default function SocialDetail() {
             <SendInput className='social' value={message} placeholder={'コメントを作成'} onChange={onChangeMessage} submit={sendMessage}/>
           </div>
         </div>
-        {/* タグ商品パーツ */}
-        <div className='recommends products'>
-          <div className='title'>
-            タグ付け商品
-          </div>
-          <ProductCard dataList={productList} loading={load}/>
-        </div>
+        {/* 投稿ユーザースタイルパーツ */}
         <div className='recommends style'>
           <div className='title'>
-            <span>@{social.name}のスタイルブック</span>
+            <span>
+              <b>@{social.name}</b>のスタイルブック
+            </span>
             <button className='more-btn'>
               もっと見る<KeyboardArrowRightSharpIcon className='icon'/>
             </button>
@@ -327,6 +356,7 @@ export default function SocialDetail() {
           <SocialCard dataList={socialList} loading={load} additional={false} owned={true}/>
         </div>
       </section>
+      </>
     )
   } else {
     return (
