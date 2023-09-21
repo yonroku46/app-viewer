@@ -74,13 +74,13 @@
       display: flex;
       position: absolute;
       z-index: 1;
-      bottom: -34px;
+      bottom: 0px;
       right: 0px;
       svg {
-        font-size: 28px;
+        font-size: 26px;
         transition: all 0.25s;
         transform: rotate(0deg);
-        color: lightgray;
+        color: white;
       }
       &.liked {
         svg {
@@ -94,7 +94,7 @@
       position: absolute;
       bottom: 0px;
       left: 0px;
-      height: 21px;
+      height: 17px;
       min-width: 22px;
       border-radius: 4px 4px 0px 0px;
       -webkit-box-align: center;
@@ -103,9 +103,9 @@
       display: inline-flex;
       -webkit-box-pack: center;
       justify-content: center;
-      padding: 0px 10px;
+      padding: 0px 8px;
       color: white;
-      font-size: 12px;
+      font-size: 10px;
       font-weight: bold;
       text-transform: uppercase;
       background-color: var(--buy-color);
@@ -123,6 +123,7 @@
         width: 100%;
         height: 100%;
         opacity: 0.5;
+        border-radius: 4px;
         background: linear-gradient(to bottom right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 70%, rgba(0, 0, 0, 0.15) 100%);
       }
       img {
@@ -132,6 +133,7 @@
         height: 100%;
         object-fit: cover;
         position: absolute;
+        border-radius: 4px;
         transform: scale(1.0);
         transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         &:hover {
@@ -144,15 +146,18 @@
       align-items: baseline;
       flex-direction: column;
       text-align: left;
-      padding: 10px 0px 20px 0px;
+      padding: 10px 0px;
       background: white;
       position: relative;
+      &.hide {
+        display: none;
+      }
       .name {
         font-family: 'Noto Sans JP', sans-serif;
-        width: 90%;
+        width: 100%;
         margin: 0px;
-        line-height: 20px;
-        font-size: 14px;
+        line-height: 10px;
+        font-size: 11px;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
@@ -162,15 +167,13 @@
         width: 100%;
         display: flex;
         align-items: center;
-        justify-content: space-between;
         .price {
-          font-size: 15px;
+          font-size: 13px;
           font-weight: bold;
           color: black;
         }
         .sale {
-          font-size: 15px;
-          font-weight: bold;
+          font-size: 13px;
           color: gray;
           opacity: 0.3;
           margin-left: 4px;
@@ -194,14 +197,14 @@
       margin-top: -4px;
       margin-left: -4px;
       .product-card {
-        width: calc(33% - 8px);
+        width: calc(33.3% - 8px);
         margin-top: 4px;
         margin-left: 4px;
         margin-right: 4px;
       }
     }
     .product-card {
-      width: calc(50% - 8px);
+      width: calc(33.3% - 8px);
       margin-top: 8px;
       margin-left: 8px;
       .sale-label {

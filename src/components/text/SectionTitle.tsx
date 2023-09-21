@@ -1,6 +1,6 @@
 import './SectionTitle.scss';
 
-export default function SectionTitle({ main, sub, count }: { main: string, sub?: string, count?: number }) {
+export default function SectionTitle({ main, sub, count }: { main?: string, sub?: string, count?: number }) {
 
   return(
     <div className='section-title'>
@@ -10,7 +10,8 @@ export default function SectionTitle({ main, sub, count }: { main: string, sub?:
           Result
         </div>
         <div className='main'>
-          <span className='key'>{main}</span> {count}件
+          {main && <span className='key'>{main}</span>}
+          {count}件
         </div>
       </>
       :

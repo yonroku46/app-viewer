@@ -215,7 +215,7 @@ export default function SocialDetail() {
               <div className='profile'>
                 <img src={imgSrc(social.profileImg)} onError={handleImgError}/>
                 <div className='name'>
-                  {social.name} / {social.profileHeight ? social.profileHeight + 'cm' : '非公開'}
+                  {social.name}
                   <div className='time'>{relativeTime(social.date)}</div>
                 </div>
               </div>
@@ -261,10 +261,10 @@ export default function SocialDetail() {
                   <b>{productList.length}</b> 個のタグ商品
                 </label>
                 <div className='buttons'>
-                  <button className={tagOffset === 0 ? 'prev-btn void' : 'prev-btn'} onClick={handlePrevClick}>
+                  <button className={tagOffset === 0 ? 'prev-btn hide' : 'prev-btn'} onClick={handlePrevClick}>
                     <KeyboardArrowLeftSharpIcon className='icon'/>
                   </button>
-                  <button className={tagOffset + tagOffsetLimit >= productList.length ? 'next-btn void' : 'next-btn'} onClick={handleNextClick}>
+                  <button className={tagOffset + tagOffsetLimit >= productList.length ? 'next-btn hide' : 'next-btn'} onClick={handleNextClick}>
                     <KeyboardArrowRightSharpIcon className='icon'/>
                   </button>
                 </div>

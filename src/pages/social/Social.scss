@@ -35,7 +35,7 @@
         .profile {
           display: flex;
           align-items: center;
-          font-size: 14px;
+          font-size: 12px;
           font-weight: bold;
           img {
             width: 36px;
@@ -47,7 +47,7 @@
           .name {
             .time {
               margin-top: -4px;
-              font-size: 11px;
+              font-size: 10px;
               color: var(--bg-active-color);
             }
           }
@@ -66,9 +66,11 @@
         .content {
           font-weight: bold;
           font-size: 18px;
+          margin-bottom: 4px;
         }
         .hashtag {
           font-size: 14px;
+          margin: 2px;
         }
       }
       .carousel-root {
@@ -127,12 +129,13 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+        border-top: 1px solid var(--border-color);
+        padding-top: 10px;
+        padding-bottom: 10px;
         label {
-          font-size: 14px;
+          font-size: 13px;
           letter-spacing: -1px;
           padding: 6px 10px;
-          border-bottom: 1px solid black;
-          margin-bottom: 10px;
           width: fit-content;
         }
         .buttons {
@@ -143,8 +146,7 @@
             border: none;
             color: gray;
             padding: 6px 10px;
-            margin-bottom: 10px;
-            &.void {
+            &.hide {
               pointer-events: none;
               opacity: 0;
             }
@@ -172,13 +174,14 @@
       border-radius: 4px;
       .additional {
         display: flex;
-        margin-bottom: 20px;
+        padding-bottom: 10px;
+        padding-top: 10px;
+        border-top: 1px solid var(--border-color);
         label {
-          font-size: 14px;
+          font-size: 13px;
           letter-spacing: -1px;
           padding: 6px 10px;
           margin-right: 12px;
-          border-bottom: 1px solid black;
         }
       }
       .view {
@@ -192,18 +195,14 @@
           text-align: center;
           margin: 48px 0;
           color: var(--bg-active-color);
-          font-size: 14px;
+          font-size: 13px;
         }
         .comment-box {
-          border-bottom: 1px solid var(--border-color);
-          &.replied, &:last-child {
-            border-bottom: none;
-          }
           .comment {
             display: flex;
             align-items: flex-start;
             flex-direction: row;
-            padding: 12px 8px;
+            padding: 12px 4px;
             background-color: white;
             transition: background-color 0.25s;
             &:hover {
@@ -211,10 +210,6 @@
             }
             &.reply {
               padding-left: 34px;
-              border-bottom: none;
-              &:last-child {
-                border-bottom: 1px solid var(--border-color);
-              }
             }
             &.selected {
               background-color: var(--menu-active-bg-color);
@@ -234,7 +229,7 @@
               .main {
                 display: flex;
                 flex-direction: row;
-                font-size: 13px;
+                font-size: 12px;
                 .name {
                   font-weight: bold;
                 }
@@ -249,7 +244,7 @@
               }
               .bottom {
                 display: flex;
-                font-size: 11px;
+                font-size: 8px;
                 color: var(--bg-active-color);
                 .time {
                   margin-right: 4px;

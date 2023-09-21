@@ -79,7 +79,7 @@
       margin-left: auto;
       margin-right: 16px;
     }
-    &:not(:hover) {
+    &:not(:hover), &:hover {
       background-color: transparent;
     }
   }
@@ -110,6 +110,7 @@
   .text {
     display: flex;
     margin-top: -4px;
+    font-size: 12px;
   }
 }
 

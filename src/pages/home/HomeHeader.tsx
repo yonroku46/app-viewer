@@ -57,7 +57,7 @@ export default function HomeHeader() {
     <section className='home-header' style={{ backgroundColor: banners[currentIndex].backgroundColor }}>
       <Carousel className='banner'
         showStatus={false} autoPlay={true} infiniteLoop={true} showArrows={false} showThumbs={false} selectedItem={currentIndex}
-        emulateTouch={true} showIndicators={false} interval={8000} transitionTime={1000} onChange={handleChange}>
+        emulateTouch={true} showIndicators={false} interval={7000} transitionTime={750} onChange={handleChange}>
         {banners.map(banner => (
           <div className='img-box' key={banner.img} onClick={() => navigate(banner.link)}>
             <img src={banner.img} loading='eager'/>
@@ -65,10 +65,10 @@ export default function HomeHeader() {
         ))}
       </Carousel>
       <div className='slider-text' onClick={() => navigate(banners[currentIndex].link)}>
-        <div className={indexChange ? 'title void' : 'title'}>
+        <div className={indexChange ? 'title hide' : 'title'}>
           {banners[currentIndex].title}
         </div>
-        <div className={indexChange ? 'sub-title void' : 'sub-title'}>
+        <div className={indexChange ? 'sub-title hide' : 'sub-title'}>
           {banners[currentIndex].subTitle}
         </div>
       </div>

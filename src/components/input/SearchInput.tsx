@@ -1,10 +1,12 @@
 import { KeyboardEventHandler, useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import Backdrop from "components/backdrop/Backdrop";
+import { format } from 'date-fns';
 import './SearchInput.scss';
 
 import SearchIcon from '@mui/icons-material/Search';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
-import Backdrop from "components/backdrop/Backdrop";
+import WhatshotTwoToneIcon from '@mui/icons-material/WhatshotTwoTone';
 
 interface CategoryData {
   categoryName: string;
@@ -35,7 +37,7 @@ export function SearchArea({ value }: { value: string }) {
   );
 }
 
-export default function SearchInput({ value, resetValue, onChange }: { value: string, resetValue: () => void, onChange: (e: any) => void }) {
+export default function SearchInput({ value, resetValue, ranking, onChange }: { value: string, resetValue: () => void, ranking: Array<string>, onChange: (e: any) => void }) {
   const navigate = useNavigate();
   const location = useLocation();
   const storage = window.localStorage;
@@ -44,6 +46,7 @@ export default function SearchInput({ value, resetValue, onChange }: { value: st
   const [trendList, setTrendList] = useState<string[]>(['人気アイテム', 'パーソナルカラー', '新商品']);
 
   const [selectedIndex, setSelectedIndex] = useState<number>(-1);
+  const [currentTime, setCurrentTime] = useState(new Date());
   const [isFocused, setIsFocused] = useState(true);
   const [isHover, setIsHover] = useState(false);
   const [isDelHover, setIsDelHover] = useState(false);
@@ -139,10 +142,10 @@ export default function SearchInput({ value, resetValue, onChange }: { value: st
   function search(clickedValue?: string) {
     if (clickedValue) {
       searchValueSave(clickedValue);
-      navigate(`${location.state?.from}?v=${clickedValue}`, { replace: true, state: { from: location.pathname }});
+      navigate(`${location.state?.from}?key=${clickedValue}`, { replace: true, state: { from: location.pathname }});
     } else if (value) {
       searchValueSave();
-      navigate(`${location.state?.from}?v=${value}`, { replace: true, state: { from: location.pathname }});
+      navigate(`${location.state?.from}?key=${value}`, { replace: true, state: { from: location.pathname }});
     }
   }
 
@@ -187,6 +190,22 @@ export default function SearchInput({ value, resetValue, onChange }: { value: st
             <div className='name'>{category.categoryName}</div>
           </div>
         ))}
+      </div>
+      <div className='ranking'>
+        <div className='top'>
+          <span className='title'>
+            <WhatshotTwoToneIcon className='icon'/>人気キーワード
+          </span>
+          <span className='time'>{format(currentTime, 'yyyy-MM-dd HH:00')}</span>
+        </div>
+        <ul>
+          {ranking.map((keyword, idx) => (
+            <li className='ranking-data' onClick={() => search(keyword)}>
+              <span className='idx'>{idx + 1}</span>
+              <span className='keyword'>{keyword}</span>
+            </li>
+          ))}
+        </ul>
       </div>
     </>
   );

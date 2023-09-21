@@ -11,7 +11,6 @@ export interface SocialInfo {
   owner: number;
   name: string;
   profileImg: string;
-  profileHeight: number;
   imgs: Array<string>;
   contents?: string;
   tags?: Array<string>;

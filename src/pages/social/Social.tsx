@@ -19,7 +19,7 @@ export default function Social() {
 
   // パラメータ設定
   useEffect(() => {
-    const getValue = param.get('v');
+    const getValue = param.get('key');
     if (getValue) {
       setValue(getValue);
     } else {

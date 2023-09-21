@@ -14,7 +14,7 @@ import Skeleton from '@mui/material/Skeleton';
 import Box from '@mui/material/Box';
 import { Card, Typography, CardActionArea } from '@mui/material';
 
-export default function ProductCard({ dataList, mini, loading }: { dataList: ProductInfo[], mini?: boolean, loading: boolean }) {
+export default function ProductCard({ dataList, mini, contentHide, loading }: { dataList: ProductInfo[], mini?: boolean, contentHide?: boolean, loading: boolean }) {
   const navigate = useNavigate();
   
   const authService = AuthService();
@@ -105,12 +105,11 @@ export default function ProductCard({ dataList, mini, loading }: { dataList: Pro
               </div>
             }
           </CardActionArea>
-          <CardContent className='content'>
+          <CardContent className={contentHide ? 'content hide' :'content'}>
             <Typography className='name' gutterBottom component='div'>
               {data.name}
             </Typography>
             <Typography className='sub-area' color='text.secondary' component='div'>
-              <div>
               {mini || !data.priceSale ? 
                 <span className='price'>{currency(data.priceSale || data.price)}</span>
               :
@@ -119,7 +118,6 @@ export default function ProductCard({ dataList, mini, loading }: { dataList: Pro
                 <span className='sale'>{currency(data.price)}</span>
               </>
               }
-              </div>
             </Typography>
           </CardContent>
         </Card>

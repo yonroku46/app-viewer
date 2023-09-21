@@ -7,9 +7,12 @@ export interface ProductFilter {
   keyword?: string;
   minPrice?: number;
   maxPrice?: number;
+  gender?: Array<string>;
   brands?: Array<string>;
   category?: Array<number>;
   status?: Array<number>;
+  colors?: Array<string>;
+  types?: Array<string>;
   limit?: number;
 }
 
@@ -57,9 +60,12 @@ export default function ProductService() {
         keyword: filter.keyword,
         minPrice: filter.minPrice,
         maxPrice: filter.maxPrice,
+        gender: filter.gender?.join(','),
         brands: filter.brands?.join(','),
         category: filter.category?.join(','),
         status: filter.status?.join(','),
+        colors: filter.colors?.join(','),
+        types: filter.types?.join(','),
         limit: filter.limit
       };
       const response = await axios.get<ApiResponse>(ApiRoutes.PRODUCT_FILTER, { params });

@@ -13,7 +13,7 @@ import Skeleton from '@mui/material/Skeleton';
 import Box from '@mui/material/Box';
 import { Card, Typography, CardActionArea } from '@mui/material';
 
-export default function SocialCard({ dataList, loading, additional, owned }: { dataList: SocialInfo[], loading: boolean, additional: boolean, owned?: boolean }) {
+export default function SocialCard({ dataList, contentHide, loading, additional, owned }: { dataList: SocialInfo[], contentHide?:boolean, loading: boolean, additional: boolean, owned?: boolean }) {
   const navigate = useNavigate();
 
   const authService = AuthService();
@@ -90,6 +90,7 @@ export default function SocialCard({ dataList, loading, additional, owned }: { d
   return(
     <div className='contents cardbox'>
       {social.map((data) => (
+        <>
         <Card className='social-card' key={data.socialId} onClick={() => navigate('/social/' + data.socialId)}>
           <CardActionArea className='media'>
             <CardMedia component='img' image={imgSrc(data.imgs[0])} onError={handleImgError} loading='lazy' alt={data.contents}/>
@@ -106,26 +107,24 @@ export default function SocialCard({ dataList, loading, additional, owned }: { d
             </div>
           </CardActionArea>
           {!owned &&
-          <CardContent className='content'>
+          <CardContent className={contentHide ? 'content hide' :'content'}>
             <div className='info'>
               <img className='profile' src={imgSrc(data.profileImg)} onError={handleImgError}/>
               <Typography className='sub-area' gutterBottom component='div'>
                 <div className='name'>
                   {data.name}
                 </div>
-                <div className='height'>
-                  {data.profileHeight ? data.profileHeight + 'cm' : '非公開'}
-                </div>
               </Typography>
             </div>
             {additional &&
               <div className='additional'>
-                {data.contents}
+                <span className='text'>{data.contents}</span>
               </div>
             }
           </CardContent>
           }
         </Card>
+        </>
       ))}
     </div>
   );

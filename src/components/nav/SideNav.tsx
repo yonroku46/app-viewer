@@ -43,22 +43,22 @@ export default function SideNav({ menuItem, fold, setFold }: { menuItem: SideMen
         {/* メニュー要素エリア */}
         {menuItem.map((menus) => (
           <div className='category' key={menus.category}>
-          <div className='title'>
-            {!fold && menus.category}
-          </div>
-          <ul>
-            {menus.items.map((menu) => (fold ?
-            <Tooltip title={menu.title} placement="right-end" arrow>
+            <div className='title'>
+              {!fold && menus.category}
+            </div>
+            <ul>
+              {menus.items.map((menu) => (fold ?
+              <Tooltip title={menu.title} placement="right-end" arrow>
+                <li className={activeMenu === menu.value ? 'active icon' : 'icon'} onClick={() => menuClick(menu.value, menu.link)} key={menu.value}>
+                  {menu.icon}{!fold && menu.title}
+                </li>
+              </Tooltip>
+              :
               <li className={activeMenu === menu.value ? 'active icon' : 'icon'} onClick={() => menuClick(menu.value, menu.link)} key={menu.value}>
                 {menu.icon}{!fold && menu.title}
               </li>
-            </Tooltip>
-            :
-            <li className={activeMenu === menu.value ? 'active icon' : 'icon'} onClick={() => menuClick(menu.value, menu.link)} key={menu.value}>
-              {menu.icon}{!fold && menu.title}
-            </li>
-            ))}
-          </ul>
+              ))}
+            </ul>
           </div>
         ))}
         {setFold && 

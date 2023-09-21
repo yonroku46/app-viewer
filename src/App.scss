@@ -43,7 +43,6 @@ header {
       display: flex;
       align-items: center;
       height: var(--header-height);
-      margin-right: 10px;
       margin-left: auto;
     }
   }
@@ -67,7 +66,7 @@ nav {
     margin-right: auto;
     text-transform: uppercase;
     background-color: white;
-    margin-top: -1px;
+    margin-top: -2px;
     box-shadow: 0px -2px 0px -1px inset var(--border-color);
     li {
       display: flex;
@@ -75,10 +74,11 @@ nav {
       justify-content: center;
       padding: 4px 8px;
       width: 100px;
-      font-size: 14px;
+      font-size: 12px;
       transition: box-shadow 0.25s, opacity 0.25s;
       &.active {
         font-weight: bold;
+        margin-bottom: -1px;
         box-shadow: 0px -3px 0px -1px inset black;
       }
       &:hover {
@@ -131,7 +131,7 @@ body {
   --sns-google-color: rgb(66, 133 , 244);
   // size
   --header-height: 48px;
-  --nav-height: 27px;
+  --nav-height: 24px;
   --footer-height: 16px;
   --app-max-width: 1280px;
   --app-min-width: 280px;

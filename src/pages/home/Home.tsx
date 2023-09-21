@@ -97,7 +97,7 @@ export default function Home() {
             </button>
           </div>
           <div className='right'>
-            <ProductCard dataList={productList.slice(0, offsetLimit)} loading={load}/>
+            <ProductCard dataList={productList.slice(0, offsetLimit)} contentHide={true} loading={load}/>
           </div>
         </div>
         <div className='item'>
@@ -108,7 +108,7 @@ export default function Home() {
             </button>
           </div>
           <div className='right'>
-            <SocialCard dataList={socialList.slice(0, offsetLimit)} loading={load} additional={true}/>
+            <SocialCard dataList={socialList.slice(0, offsetLimit)} contentHide={true} loading={load} additional={true}/>
           </div>
         </div>
       </div>

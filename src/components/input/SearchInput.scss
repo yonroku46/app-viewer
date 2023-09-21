@@ -28,7 +28,7 @@
     input {
       border-radius: 4px;
       width: 100%;
-      font-size: 14px;
+      font-size: 12px;
       padding: 10px 20px 10px 38px;
       border: none;
       outline: none;
@@ -68,11 +68,11 @@
       padding: 0;
       background-color: white;
       border-radius: 0 0 4px 4px;
-      font-size: 14px;
+      font-size: 12px;
       div {
         display: flex;
         align-items: center;
-        padding: 8px;
+        padding: 7px 9px;
         border-radius: 0;
         color: var(--bg-active-color);
         transition: background-color 0.25s, color 0.25s;
@@ -104,8 +104,8 @@
         }
         &.del {
           justify-content: flex-end;
-          font-size: 12px;
-          padding: 4px 8px 8px 8px;
+          font-size: 11px;
+          padding: 4px 9px 9px 9px;
           &:hover {
             cursor: default;
             background-color: unset;
@@ -163,6 +163,50 @@
     }
   }
 }
+.ranking {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  top: 230px;
+  z-index: 0;
+  margin-left: auto;
+  margin-right: auto;
+  width: 60%;
+  .top {
+    display: flex;
+    align-items: flex-end;
+    font-weight: bold;
+    text-align: left;
+    font-size: 16px;
+    .title {
+      display: flex;
+    }
+    .time {
+      margin-left: 4px;
+      color: lightgray;
+      font-size: 12px;
+      font-weight: 500;
+    }
+  }
+  ul {
+    column-count: 2;
+    padding-left: 0;
+    font-size: 13px;
+    .ranking-data {
+      padding: 8px 16px;
+      width: fit-content;
+      transition: color 0.25s;
+      .idx {
+        margin-right: 12px;
+        font-weight: bold;
+      }
+      &:hover {
+        cursor: pointer;
+        color: var(--main-color);
+      }
+    }
+  }
+}
 
 /* sp */
 @media only screen and (max-width: 767px) {
@@ -177,6 +221,11 @@
     .category {
       margin-left: 16px;
       margin-right: 16px;
+    }
+  }
+  .search {
+    .ranking {
+      width: 96%;
     }
   }
 }

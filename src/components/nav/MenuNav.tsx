@@ -8,7 +8,7 @@ import Backdrop from 'components/backdrop/Backdrop'
 import Modal from 'components/modal/Modal';
 import './MenuNav.scss';
 
-import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import StorefrontOutlinedIcon from '@mui/icons-material/StorefrontOutlined';
 import LockPersonOutlinedIcon from '@mui/icons-material/LockPersonOutlined';
 import Badge from '@mui/material/Badge';
@@ -112,6 +112,7 @@ export default function MenuNav({ menuItem, currentPath, userName, profileImg, m
       <div className='user-badge' onClick={handleClick}>
         <Menu anchorEl={anchorEl} open={openEl} PaperProps={accountMenuProps}
          transformOrigin={{ horizontal: 'right', vertical: 'top' }} anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}>
+          {role === 1 && <>
           <MenuItem className='account-menu' onClick={() => link('/mypage')}>
             <ListItemIcon>
               <PersonOutlineIcon/>
@@ -119,6 +120,14 @@ export default function MenuNav({ menuItem, currentPath, userName, profileImg, m
             マイページ
             <Badge className='badge' color="primary" badgeContent={100} max={99}/>
           </MenuItem>
+          <MenuItem className='account-menu' onClick={() => link('/cart')}>
+            <ListItemIcon>
+              <ShoppingCartOutlinedIcon/>
+            </ListItemIcon>
+            カート
+            <Badge className='badge' color="primary" badgeContent={1} max={99}/>
+          </MenuItem>
+          </>}
           {role === 2 &&
           <MenuItem className='account-menu' onClick={() => link('/shop/manage/main')}>
             <ListItemIcon>
@@ -156,7 +165,7 @@ export default function MenuNav({ menuItem, currentPath, userName, profileImg, m
         <span className='text'>ログイン</span>
       </button>
     }
-    <div className={open ? 'menu-btn open' : 'menu-btn'} onClick={() => {setOpen(!open); setAnchorEl(null);}}>
+    {/* <div className={open ? 'menu-btn open' : 'menu-btn'} onClick={() => {setOpen(!open); setAnchorEl(null);}}>
       <span></span>
       <span></span>
       <span></span>
@@ -181,8 +190,7 @@ export default function MenuNav({ menuItem, currentPath, userName, profileImg, m
             <img className='logo' src={logo} onClick={() => link('/')} alt='logo'/>
           </div>
         }
-        {isSp ?
-        menuItem.map((menus) => (
+        {isSp ? menuItem.map((menus) => (
           <div className='menu-sp' key={menus.category}>
             <div className='title'>
               {menus.category}
@@ -227,7 +235,7 @@ export default function MenuNav({ menuItem, currentPath, userName, profileImg, m
         </>
       }
       </div>
-    </div>
+    </div> */}
     </>
   )
 }

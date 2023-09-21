@@ -2,199 +2,55 @@
   background-color: var(--contents-color);
   padding: 8px;
   border-radius: 4px;
-  .filter {
-    height: 0px;
-    overflow: hidden;
-    border-radius: 4px;
-    transition: height 0.25s;
-    &.open {
-      padding: 20px 10px;
-      height: fit-content;
-    }
-    label {
-      display: block;
-      font-size: 13px;
-      font-weight: bold;
-    }
-    .sort {
-      .sort-item {
-        display: flex;
-        align-items: center;
-        margin: 10px;
-        select {
-          padding: 6px 12px;
-          border: 1px solid var(--border-color);
-          width: 140px;
-          height: 32px;
-          border-radius: 4px;
-          background-color: white;
-          font-size: 12px;
-          appearance: none;
-          -webkit-appearance: none;
-          &:hover {
-            cursor: pointer;
-          }
-        }
-        .icon {
-          margin-left: -30px;
-          pointer-events: none;
-        }
-      }
-    }
-    .price {
-      .price-range {
-        padding: 10px;
-        input {
-          padding: 6px 12px;
-          border: 1px solid var(--border-color);
-          border-radius: 4px;
-          width: 120px;
-        }
-      }
-    }
-    .brand {
-      .quick-map {
-        display: flex;
-        -ms-flex-wrap: wrap;
-        flex-wrap: wrap;
-        padding: 10px;
-        .brand-img {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          flex-direction: column;
-          width: 120px;
-          height: 60px;
-          border: 1px solid var(--border-color);
-          padding: 6px 0;
-          border-radius: 4px;
-          background-color: white;
-          transition: all 0.25s;
-          img {
-            width: 60%;
-          }
-          .value {
-            text-transform: uppercase;
-            font-size: 11px;
-          }
-          &:hover {
-            cursor: pointer;
-            opacity: 0.8;
-          }
-          &.active {
-            border-color: var(--menu-active-color);
-          }
-        }
-      }
-    }
-    .categorys {
-      .quick-map {
-        display: flex;
-        flex-wrap: wrap;
-        padding: 10px;
-        .category {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          flex-direction: column;
-          width: 120px;
-          height: 60px;
-          border: 1px solid var(--border-color);
-          padding: 6px 0;
-          border-radius: 4px;
-          background-color: white;
-          transition: all 0.25s;
-          .value {
-            text-transform: uppercase;
-            font-size: 11px;
-          }
-          &:hover {
-            cursor: pointer;
-          }
-          &.active {
-            border-color: var(--menu-active-color);
-          }
-        }
-      }
-    }
-    .status {
-      .quick-map {
-        display: flex;
-        padding: 10px;
-        .level {
-          text-align: center;
-          width: 20%;
-          max-width: 60px;
-          padding: 10px 22px;
-          border-radius: 4px;
-          border: 1px solid var(--border-color);
-          background-color: white;
-          transition: all 0.25s;
-          &:hover {
-            cursor: pointer;
-          }
-          &.active {
-            border-color: var(--menu-active-color);
-          }
-        }
-      }
-    }
-    .buttons {
-      display: flex;
-      justify-content: flex-end;
-      button {
-        display: flex;
-        align-items: center;
-        border-radius: 4px;
-        padding: 8px 24px;
-        transition: background-color 0.25s;
-        margin-top: 10px;
-        margin-left: 6px;
-        border: none;
-        &.reset {
-          background: var(--bg-active-color);
-          color: white;
-        }
-        &.search {
-          background: var(--main-color);
-          color: white;
-        }
-      }
+  .slider {
+    width: 90%;
+    .MuiSlider-root {
+      color: black;
     }
   }
-  .filter-area {
-    z-index: 1;
+  .product-view {
     display: flex;
-    justify-content: flex-end;
-    margin-top: -8px;
-    margin-bottom: -36px;
-    .filter-toggle {
+    flex-direction: row;
+    .left {
+      flex: 1;
+    }
+    .right {
+      flex: 5;
+      margin-left: 34px;
+    }
+    .view-header {
       display: flex;
-      align-items: center;
-      border-radius: 0 0 4px 4px;
-      padding: 8px 10px;
-      background-color: white;
-      transition: all 0.25s;
-      &:hover {
-        cursor: pointer;
+      justify-content: space-between;
+      .section-title {
+        margin-top: 0;
       }
-      .title {
-        font-weight: bold;
-        margin-right: 4px;
-        font-size: 13px;
-      }
-      .value {
-        font-size: 12px;
-        font-weight: 500;
-        width: 78px;
-        text-align: center;
-      }
-      .icon {
-        margin-left: 4px;
-        font-size: 18px;
-        transition: all 0.25s;
-        &.active {
-          transform: scaleY(-1);
+      .sort {
+        display: flex;
+        align-items: center;
+        margin-right: 28px;
+        .sort-item {
+          position: absolute;
+          right: 38px;
+          opacity: 0;
+          select {
+            width: 100px;
+            &:focus-visible {
+              outline: none;
+            }
+            &:hover {
+              cursor: pointer;
+            }
+          }
+        }
+        .sort-name {
+          margin-right: 8px;
+          font-size: 13px;
+          font-weight: bold;
+        }
+        .icon {
+          font-size: 18px;
+          rotate: 90deg;
+          pointer-events: none;
         }
       }
     }
@@ -449,7 +305,7 @@
     .img-area {
       position: sticky;
       top: calc(var(--header-height) + var(--nav-height) + 97px);
-      width: calc(50% - 40px);
+      width: calc(33.3% - 40px);
       height: fit-content;
       flex: 1;
       padding-right: 40px;
@@ -926,25 +782,15 @@
 /* sp */
 @media only screen and (max-width: 767px) {
   .products {
-    .filter {
-      .brand {
-        .quick-map {
-          .brand-img {
-            width: 31%;
+    .product-view {
+      flex-direction: column;
+      .view-header {
+        .sort {
+          margin-right: 0px;
+          .sort-item {
+            right: 12px;
           }
         }
-      }
-      .categorys {
-        .quick-map {
-          .category {
-            width: 31%;
-          }
-        }
-      }
-    }
-    .filter-area {
-      .filter-toggle {
-        padding: 8px;
       }
     }
   }
