@@ -57,7 +57,8 @@ export default function Home() {
   async function getProductList(recommendFilter?: ProductFilter) {
     setLoad(true);
     const filter: ProductFilter = recommendFilter || {
-      limit: 6
+      limit: 6,
+      sort: 'latest'
     };
     await productService.productList(filter).then(data => {
       setProductList(data.responseData.productList);
@@ -68,7 +69,8 @@ export default function Home() {
   async function getSocialtList(recommendFilter?: SocialFilter) {
     setLoad(true);
     const filter: SocialFilter = recommendFilter || {
-      limit: 6
+      limit: 6,
+      sort: 'rate'
     };
     await socialService.socialList(filter).then(data => {
       setSocialList(data.responseData.socialList);

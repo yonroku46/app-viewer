@@ -36,9 +36,9 @@ export default function Labo() {
       return;
     }
 
-    const apiGatewayEndpoint = 'https://bt7tec6lnc.execute-api.ap-northeast-1.amazonaws.com/api';
+    const apiGatewayEndpoint = 'https://bt7tec6lnc.execute-api.ap-northeast-1.amazonaws.com/v1';
     const bucketName = '/mk-tool/';
-    const fileName = pdfFile.name;
+    const fileName = 'labo/' + pdfFile.name;
     const url = apiGatewayEndpoint + bucketName + fileName;
 
     fetch(url, {

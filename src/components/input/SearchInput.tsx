@@ -200,7 +200,7 @@ export default function SearchInput({ value, resetValue, ranking, onChange }: { 
         </div>
         <ul>
           {ranking.map((keyword, idx) => (
-            <li className='ranking-data' onClick={() => search(keyword)}>
+            <li className='ranking-data' key={idx} onClick={() => search(keyword)}>
               <span className='idx'>{idx + 1}</span>
               <span className='keyword'>{keyword}</span>
             </li>

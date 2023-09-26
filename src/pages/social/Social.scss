@@ -2,6 +2,40 @@
   background-color: var(--contents-color);
   padding: 8px;
   border-radius: 4px;
+  .view-header {
+    display: flex;
+    justify-content: flex-end;
+    margin: 0 40px;
+    .sort {
+      display: flex;
+      align-items: center;
+      margin-bottom: 24px;
+      .sort-item {
+        position: absolute;
+        right: 10px;
+        opacity: 0;
+        select {
+          width: 100px;
+          &:focus-visible {
+            outline: none;
+          }
+          &:hover {
+            cursor: pointer;
+          }
+        }
+      }
+      .sort-name {
+        margin-right: 8px;
+        font-size: 13px;
+        font-weight: bold;
+      }
+      .icon {
+        font-size: 18px;
+        rotate: 90deg;
+        pointer-events: none;
+      }
+    }
+  }
 }
 
 .social-detail {
@@ -65,12 +99,12 @@
         line-height: 18px;
         .content {
           font-weight: bold;
-          font-size: 18px;
-          margin-bottom: 4px;
+          font-size: 14px;
+          margin-bottom: 8px;
         }
         .hashtag {
           font-size: 14px;
-          margin: 2px;
+          margin-right: 2px;
         }
       }
       .carousel-root {
@@ -338,6 +372,11 @@
 
 /* sp */
 @media only screen and (max-width: 767px) {
+  .social {
+    .view-header {
+      margin: 0;
+    }
+  }
   .social-detail {
     .social-media {
       .media-area {

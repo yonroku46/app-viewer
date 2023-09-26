@@ -13,6 +13,7 @@ export interface ProductFilter {
   status?: Array<number>;
   colors?: Array<string>;
   types?: Array<string>;
+  sort?: string;
   limit?: number;
 }
 
@@ -66,6 +67,7 @@ export default function ProductService() {
         status: filter.status?.join(','),
         colors: filter.colors?.join(','),
         types: filter.types?.join(','),
+        sort: filter.sort,
         limit: filter.limit
       };
       const response = await axios.get<ApiResponse>(ApiRoutes.PRODUCT_FILTER, { params });

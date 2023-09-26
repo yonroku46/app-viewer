@@ -6,6 +6,18 @@ import SectionTitle from 'components/text/SectionTitle';
 import SocialService, { SocialFilter, SocialInfo } from 'api/service/SocialService';
 import './Social.scss';
 
+import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
+
+export interface SortData {
+  sortName: string;
+  value: string;
+}
+
+const sortList: SortData[] = [
+  { sortName: '人気順', value: 'rate' },
+  { sortName: '新着順', value: 'latest' },
+]
+
 export default function Social() {
   const location = useLocation();
   const search = location.search;
@@ -14,6 +26,8 @@ export default function Social() {
   const [load, setLoad] = useState<boolean>(true);
   const [dataList, setDataList] = useState<SocialInfo[]>([]);
   const [value, setValue] = useState<string>('');
+  const [selectedSort, setSelectedSort] = useState<string>(sortList[0].value);
+  const [selectedSortName, setSelectedSortName] = useState<string>(sortList[0].sortName);
 
   const socialService = SocialService();
 
@@ -36,7 +50,7 @@ export default function Social() {
     } else {
       if (value === '') {
       const recommendFilter: SocialFilter = {
-        keyword: 'Summer',
+        keyword: ''
       };
       getSocialtList(recommendFilter);
       }
@@ -45,9 +59,10 @@ export default function Social() {
 
   async function getSocialtList(recommendFilter?: SocialFilter) {
     setLoad(true);
-    const filter: SocialFilter = recommendFilter || {
+    let filter: SocialFilter = recommendFilter || {
       keyword: value
     };
+    filter.sort = selectedSort;
     await socialService.socialList(filter).then(data => {
       const socialListWithDateConverted = data.responseData.socialList.map((social: SocialInfo) => ({
         ...social,
@@ -55,16 +70,51 @@ export default function Social() {
       }));
       setDataList(socialListWithDateConverted);
       setLoad(false);
-    });
+    })
+  }
+  
+  function handleSortItemClick(value: string) {
+    switch (value) {
+      case 'rate':
+        setDataList([...dataList].sort((a, b) => b.likedCount - a.likedCount));
+        break;
+      case 'latest':
+        setDataList([...dataList].sort((a, b) => b.date.getTime() - a.date.getTime()));
+        break;
+      default:
+        setDataList([...dataList]);
+        break;
+    }
+    setSelectedSort(value);
+    const selectedSortData = sortList.find((sort) => sort.value === value);
+    if (selectedSortData) {
+      setSelectedSortName(selectedSortData.sortName);
+    }
+  };
+
+  function ViewHeader({ sortHandle, sortList }: { sortHandle: (value: string) => void, sortList: SortData[] }) {
+    return (
+      <div className='view-header'>
+        <div className='sort'>
+          <div className='sort-item'>
+            <select value={selectedSort} onChange={(e) => sortHandle(e.target.value)}>
+              {sortList.map((sort) => (
+                <option value={sort.value} key={sort.value}>{sort.sortName}</option>
+              ))}
+            </select>
+          </div>
+          <div className='sort-name'>{selectedSortName}</div>
+          <CompareArrowsIcon className='icon'/>
+        </div>
+      </div>
+    );
   }
 
   return(
     <section className='social'>
       <SearchArea value={value}/>
-      {value &&
-        <SectionTitle main={value} count={dataList.length !== 0 ? dataList.length : 0}/>
-      }
-      <SocialCard dataList={dataList} loading={load} additional={true}/>
+      <ViewHeader sortHandle={handleSortItemClick} sortList={sortList}/>
+      <SocialCard dataList={dataList} loading={load} additional={true} grid={true}/>
     </section>
   )
 }

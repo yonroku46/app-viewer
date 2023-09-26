@@ -26,6 +26,14 @@ export interface FilterData {
   types: Array<string>
 }
 
+const sortList: SortData[] = [
+  { sortName: '人気順', value: 'rate' },
+  { sortName: '新着順', value: 'latest' },
+  { sortName: '古い商品順', value: 'oldest' },
+  { sortName: '価格が安い順', value: 'lowest' },
+  { sortName: '価格が高い順', value: 'highest' },
+]
+
 export default function Products() {
   const isSp = useMediaQuery({ maxWidth: 767 });
   const location = useLocation();
@@ -36,8 +44,8 @@ export default function Products() {
   const [dataList, setDataList] = useState<ProductInfo[]>([]);
   const [value, setValue] = useState<string>('');
   const [selectedItems, setSelectedItems] = useState<FilterData>();
-  const [selectedSort, setSelectedSort] = useState<string>('');
-  const [selectedSortName, setSelectedSortName] = useState<string>('');
+  const [selectedSort, setSelectedSort] = useState<string>(sortList[0].value);
+  const [selectedSortName, setSelectedSortName] = useState<string>(sortList[0].sortName);
 
   const priceMaximum: number = 50000;
   const [price, setPrice] = useState<number[]>([0, priceMaximum]);
@@ -47,11 +55,6 @@ export default function Products() {
   };
 
   const productService = ProductService();
-  
-  // 初期設定
-  useEffect(() => {
-    setSelectedSortName(sortList[0].sortName);
-  }, []);
 
   // パラメータ設定
   useEffect(() => {
@@ -89,7 +92,7 @@ export default function Products() {
 
   async function getProductList(recommendFilter?: ProductFilter) {
     setLoad(true);
-    const filter: ProductFilter = recommendFilter || {
+    let filter: ProductFilter = recommendFilter || {
       keyword: value,
       minPrice: price[0],
       maxPrice: price[1],
@@ -100,6 +103,7 @@ export default function Products() {
       colors: selectedItems?.colors,
       types: selectedItems?.types
     };
+    filter.sort = selectedSort;
     await productService.productList(filter).then(data => {
       const productListWithDateConverted = data.responseData.productList.map((product: ProductInfo) => ({
         ...product,
@@ -110,25 +114,28 @@ export default function Products() {
     });
   }
   
-  function handleSortItemClick (value: string) {
+  function handleSortItemClick(value: string) {
     switch (value) {
-      case 'newest':
+      case 'rate':
         setDataList([...dataList].sort((a, b) => b.date.getTime() - a.date.getTime()));
         break;
-      case 'lastest':
+      case 'latest':
+        setDataList([...dataList].sort((a, b) => b.date.getTime() - a.date.getTime()));
+        break;
+      case 'oldest':
         setDataList([...dataList].sort((a, b) => a.date.getTime() - b.date.getTime()));
         break;
       case 'lowest':
         setDataList([...dataList].sort((a, b) => {
-          const priceA = a.priceSale ? a.priceSale : a.price;
-          const priceB = b.priceSale ? b.priceSale : b.price;
+          const priceA = a.priceSale || a.price;
+          const priceB = b.priceSale || b.price;
           return priceA - priceB;
         }));
         break;
       case 'highest':
         setDataList([...dataList].sort((a, b) => {
-          const priceA = a.priceSale ? a.priceSale : a.price;
-          const priceB = b.priceSale ? b.priceSale : b.price;
+          const priceA = a.priceSale || a.price;
+          const priceB = b.priceSale || b.price;
           return priceB - priceA;
         }));
         break;
@@ -142,14 +149,6 @@ export default function Products() {
       setSelectedSortName(selectedSortData.sortName);
     }
   };
-  
-  const sortList: SortData[] = [
-    { sortName: '人気順', value: 'rate' },
-    { sortName: '新着順', value: 'newest' },
-    { sortName: '古い商品順', value: 'lastest' },
-    { sortName: '価格が安い順', value: 'lowest' },
-    { sortName: '価格が高い順', value: 'highest' },
-  ]
   
   const menuItem: FilterMenuItem[] = [
     {

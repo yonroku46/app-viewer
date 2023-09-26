@@ -201,6 +201,14 @@ export default function ProductDetail() {
     window.scrollTo({ top: 0 });
   }
 
+  function buyProduct() {
+    console.log('buy', offerPrice)
+  }
+
+  function offerProduct(owner: number) {
+    console.log(owner, 'with talk start', offerPrice)
+  }
+
   function ProductDefinition({ product }: { product: ProductInfo })  {
     return(
       <div className='definition'>
@@ -362,13 +370,13 @@ export default function ProductDetail() {
             {!compMode &&
               <div className='buy-area'>
                 {buyStatus ?
-                <button className='buy now'>
+                <button className='buy now' onClick={() => buyProduct()}>
                   <div className='title'>購入</div>
                   {product.priceSale && <div className='price'>{currency(product.priceSale)}</div>}
                   <div className={product.priceSale ? 'sale' : 'price'}>{currency(product.price)}</div>
                 </button>
                 :
-                <button className='buy offer'>
+                <button className='buy offer' onClick={() => offerProduct(product.owner)}>
                   <div className='title'>オファー</div>
                   <div className={buyStatus ? 'price' : 'price offer'}>
                     <input type='text' placeholder='金額を入力' value={'¥' + offerPrice.toLocaleString("ja-JP")} onChange={offerPriceHandler}/>

@@ -3,6 +3,7 @@ import axios from 'axios';
 
 export interface SocialFilter {
   keyword?: string;
+  sort?: string;
   limit?: number;
 }
 
@@ -16,7 +17,7 @@ export interface SocialInfo {
   tags?: Array<string>;
   date: Date;
   liked: boolean;
-  likedCount?: number;
+  likedCount: number;
 }
 
 export interface CommentInfo {
@@ -51,6 +52,7 @@ export default function SocialService() {
     try {
       const params = {
         keyword: filter.keyword,
+        sort: filter.sort,
         limit: filter.limit
       };
       const response = await axios.get<ApiResponse>(ApiRoutes.SOCIAL_FILTER, { params });
