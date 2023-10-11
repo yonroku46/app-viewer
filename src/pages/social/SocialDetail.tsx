@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from "react-redux";
 import { useMediaQuery } from 'react-responsive';
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import ProductCard from 'components/card/ProductCard';
 import SocialCard from 'components/card/SocialCard';
 import { Helmet } from 'react-helmet-async';
@@ -27,7 +27,6 @@ import SendInput from 'components/input/SendInput';
 
 export default function SocialDetail() {
   const isSp = useMediaQuery({ maxWidth: 767 });
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { id } = useParams();
 
@@ -350,7 +349,7 @@ export default function SocialDetail() {
               <b>@{social.name}</b>のスタイルブック
             </span>
             <button className='more-btn'>
-              もっと見る<KeyboardArrowRightSharpIcon className='icon'/>
+              <KeyboardArrowRightSharpIcon className='icon'/>
             </button>
           </div>
           <SocialCard dataList={socialList} loading={load} additional={false} owned={true}/>

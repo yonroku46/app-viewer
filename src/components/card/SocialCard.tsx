@@ -15,7 +15,7 @@ import Skeleton from '@mui/material/Skeleton';
 import Box from '@mui/material/Box';
 import { Card, Typography, CardActionArea } from '@mui/material';
 
-export default function SocialCard({ dataList, contentHide, loading, additional, owned, grid }: { dataList: SocialInfo[], contentHide?:boolean, loading: boolean, additional: boolean, owned?: boolean, grid?: boolean }) {
+export default function SocialCard({ dataList, loading, additional, owned, grid }: { dataList: SocialInfo[], loading: boolean, additional: boolean, owned?: boolean, grid?: boolean }) {
   const isSp = useMediaQuery({ maxWidth: 767 });
   const navigate = useNavigate();
 
@@ -24,17 +24,17 @@ export default function SocialCard({ dataList, contentHide, loading, additional,
 
   const [social, setSocial] = useState<SocialInfo[]>([]);
   const [cardWidth, setCardWidth] = useState<string>('');
-  const [gutter, setGutter] = useState<number>(8);
+  const [gutter, setGutter] = useState<number>(12);
   const [gridRef, setGridRef] = useState<Grid>();
-  const [gridUpdateFlg, setGridUpdateFlg] = useState<boolean>(false);
+  const [isGridUpdate, setIsGridUpdate] = useState<boolean>(false);
   const { fade } = transitions;
 
   useEffect(() => {
     setCardWidth(isSp ? '50%' : '25%');
-    setGutter(isSp ? 8 : 16);
-    setGridUpdateFlg(true);
+    setGutter(isSp ? 12 : 16);
+    setIsGridUpdate(true);
     const timer = setTimeout(() => {
-      setGridUpdateFlg(false);
+      setIsGridUpdate(false);
     }, 220);
     return () => clearTimeout(timer);
   }, [isSp]);
@@ -113,7 +113,7 @@ export default function SocialCard({ dataList, contentHide, loading, additional,
 
   if (grid) {
     return(
-      <StackGrid className={gridUpdateFlg ? 'cardbox grid load' : 'cardbox grid'} gridRef={ref => setGridRef(ref)} columnWidth={cardWidth} gutterWidth={gutter} gutterHeight={gutter} monitorImagesLoaded={true}
+      <StackGrid className={isGridUpdate ? 'cardbox grid load' : 'cardbox grid'} gridRef={ref => setGridRef(ref)} columnWidth={cardWidth} gutterWidth={gutter} gutterHeight={gutter} monitorImagesLoaded={true}
         easing={easings.expoOut} appear={fade.appear} appeared={fade.appeared} enter={fade.enter} entered={fade.entered} leaved={fade.leaved}>
         {social.map((data) => (
           <Card className='social-card' key={data.socialId} onClick={() => navigate('/social/' + data.socialId)}>
@@ -174,7 +174,7 @@ export default function SocialCard({ dataList, contentHide, loading, additional,
               </div>
             </CardActionArea>
             {!owned &&
-            <CardContent className={contentHide ? 'content hide' :'content'}>
+            <CardContent className='content'>
               <div className='info'>
                 <img className='profile' src={imgSrc(data.profileImg)} onError={handleImgError}/>
                 <Typography className='sub-area' component='div'>

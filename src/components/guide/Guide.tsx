@@ -10,7 +10,7 @@ export default function Guide() {
 
   return(
     <div className='guide'>
-      <div className='sub'>Guide</div>
+      <div className='sub'>Shopping Guide</div>
       <div className='main'>ショッピングガイド</div>
       <div className='links'>
         <div className='link'>

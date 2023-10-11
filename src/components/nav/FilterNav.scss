@@ -1,18 +1,30 @@
 .filter-nav-sp {
   width: 100%;
   height: 100%;
-  .filter-menu {
-    border-radius: 4px;
-    padding: 16px 0;
-    width: 100%;
-    height: 100%;
-    margin-top: -16px;
+  .fab {
+    position: fixed;
+    right: 10px;
+    bottom: 32px;
+    pointer-events: none;
+    opacity: 0;
+    background-color: black;
+    color: white;
+    box-shadow: 0px 1px 4px 0 white;
+    transition: all 0.25s;
+    &:hover {
+      background-color: black;
+      color: white;
+    }
+    &.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
   }
 }
 .filter-nav {
   position: sticky;
   height: 100%;
-  max-height: calc(100vh - var(--full-height-margin) - 100px);
+  max-height: calc(100vh - var(--full-height-margin) - 90px);
   overflow-x: hidden;
   top: calc(var(--full-height-margin) + 40px);
   margin-top: -36px;
@@ -32,53 +44,30 @@
     .additional {
       display: flex;
       justify-content: flex-end;
-      .filter-toggle {
-        display: flex;
-        align-items: center;
-        background-color: black;
-        color: white;
-        padding: 4px 8px;
-        border-radius: 4px;
-        width: fit-content;
+    }
+    .buttons {
+      display: flex;
+      justify-content: flex-end;
+      margin: 20px 0;
+      .reset {
         font-size: 12px;
-        margin-right: 4px;
-        .icon {
-          font-size: 16px;
-          margin-left: 8px;
-          &.active {
-            rotate: 180deg;
-          }
+        background-color: lightgray;
+        border: none;
+        opacity: 0.25;
+        transition: opacity 0.25s;
+        &.active {
+          background-color: var(--main-color);
+          color: white;
+          pointer-events: auto;
+          opacity: 1;
         }
       }
-    }
-    .reset {
-      display: flex;
-      align-items: center;
-      position: absolute;
-      top: 0;
-      left: 8px;
-      background-color: lightgray;
-      color: white;
-      padding: 4px 8px;
-      border-radius: 4px;
-      width: fit-content;
-      font-size: 12px;
-      opacity: 0;
-      pointer-events: none;
-      transition: all 0.25s;
-      &.sp {
-        position: inherit;
-        margin-right: 4px;
-      }
-      &.active {
-        cursor: pointer;
-        pointer-events: auto;
-        background-color: var(--main-color);
-        opacity: 1;
-      }
-      .icon {
-        font-size: 14px;
-        margin-left: 4px;
+      .ok {
+        font-size: 12px;
+        margin-left: 8px;
+        background-color: black;
+        color: white;
+        border: none;
       }
     }
     .category {

@@ -1,12 +1,11 @@
-import { MouseEvent, useState, useEffect } from 'react';
-import { useLocation, useNavigate } from "react-router-dom";
+import { useState, useEffect } from 'react';
 import { FilterData } from 'pages/products/Products';
 import './FilterNav.scss';
 
+import Fab from '@mui/material/Fab';
+import ManageSearchRoundedIcon from '@mui/icons-material/ManageSearchRounded';
 import AddSharpIcon from '@mui/icons-material/AddSharp';
 import RemoveSharpIcon from '@mui/icons-material/RemoveSharp';
-import ReplayIcon from '@mui/icons-material/Replay';
-import KeyboardArrowDownSharpIcon from '@mui/icons-material/KeyboardArrowDownSharp';
 
 export interface FilterMenuItem {
   category: string;
@@ -18,9 +17,7 @@ export interface FilterMenuItem {
   }[];
 }
 
-export default function FilterNav({ menuItem, handelMenu, isSp, reset }: { menuItem: FilterMenuItem[], handelMenu: (data: FilterData) => void, isSp: boolean, reset: () => void }) {
-  const navigate = useNavigate();
-  const location = useLocation();
+export default function FilterNav({ menuItem, handelMenu, handleOk, isSp, fabShow, reset }: { menuItem: FilterMenuItem[], handelMenu: (data: FilterData) => void, handleOk: () => void, isSp: boolean, fabShow?: boolean, reset: () => void }) {
   const [openState, setOpenState] = useState<{ [key: string]: boolean }>({});
   const [checkboxState, setCheckboxState] = useState<{ [key: string]: { [key: string]: boolean } }>({});
   const [changeFilter, setChangeFilter] = useState<boolean>(false);
@@ -83,22 +80,27 @@ export default function FilterNav({ menuItem, handelMenu, isSp, reset }: { menuI
     setChangeFilter(false);
   }
 
-  if (isSp) {
-    return(
-      <div className='filter-nav-sp'>
-        <div className='filter-menu'>
-          {/* イベント要素エリア */}
-          <div className='additional'>
-            <div className={changeFilter ? 'reset sp active' : 'reset sp'} onClick={resetClick}>
-              クリアー<ReplayIcon className='icon'/>
-            </div>
-            <div className='filter-toggle' onClick={() => setOpenFilter(!openFilter)}>
-              {openFilter ? 'フィルター非表示' : 'フィルター表示'}
-              <KeyboardArrowDownSharpIcon className={openFilter ? 'icon active' : 'icon'}/>
-            </div>
-          </div>
-          {/* メニュー要素エリア */}
-          {openFilter && menuItem.map((menus) => (
+  function okClick() {
+    handleOk();
+    if (isSp) {
+      setOpenFilter(false);
+    }
+  }
+
+  return(
+    <>
+    {/* サイドメニューコンポネント */}
+    <div className={isSp ? 'filter-nav-sp' : 'filter-nav'}>
+      {isSp &&
+        <Fab className={fabShow ? 'fab active' : 'fab'} size='small' onClick={() => setOpenFilter(!openFilter)}>
+          <ManageSearchRoundedIcon/>
+        </Fab>
+      }
+      <div className='filter-menu'>
+        {/* メニュー要素エリア */}
+        {(openFilter || !isSp) && 
+          <>
+          {menuItem.map((menus) => (
             <div className='category' key={menus.category}>
               <div className='title' onClick={() => toggleCategory(menus.category)}>
                 {menus.category}
@@ -126,48 +128,12 @@ export default function FilterNav({ menuItem, handelMenu, isSp, reset }: { menuI
               </ul>
             </div>
           ))}
-        </div>
-      </div>
-    )
-  }
-
-  return(
-    <>
-    {/* サイドメニューコンポネント */}
-    <div className='filter-nav'>
-      <div className='filter-menu'>
-        <div className={changeFilter ? 'reset active' : 'reset'} onClick={resetClick}>
-          クリアー<ReplayIcon className='icon'/>
-        </div>
-        {/* メニュー要素エリア */}
-        {menuItem.map((menus) => (
-          <div className='category' key={menus.category}>
-            <div className='title' onClick={() => toggleCategory(menus.category)}>
-              {menus.category}
-              {openState[menus.category] ?
-                <RemoveSharpIcon className='icon'/>
-                :
-                <AddSharpIcon className='icon'/>
-              }
-            </div>
-            <ul className={openState[menus.category] ? 'open scroll' : 'closed'}>
-              {menus.items.map((menu) => (
-                <li onClick={() => toggleCheckbox(menus.category, menu.value)} key={menu.value}>
-                  {menu.additional ?
-                    menu.additional
-                  :
-                  <>
-                    <input type='checkbox' checked={checkboxState[menus.category] && checkboxState[menus.category][menu.value] || false} onChange={() => {}}/>
-                    {menu.title}
-                    {menus.categoryValue === 'colors' && <span className='color' style={{background: menu.value === 'other' ? 
-                      'linear-gradient(to bottom right, #FF0000, #FF7F00, #FFFF00, #00FF00, #0000FF, #4B0082, #8A2BE2)' : menu.value}}></span>}
-                  </>
-                  }
-                </li>
-              ))}
-            </ul>
+          <div className='buttons'>
+            <button className={changeFilter ? 'reset active' : 'reset disable'} onClick={resetClick}>クリアー</button>
+            <button className='ok' onClick={okClick}>OK</button>
           </div>
-        ))}
+          </>
+        }
       </div>
     </div>
     </>

@@ -9,11 +9,11 @@ export default function Policy() {
   const searchParams = new URLSearchParams(location.search);
   const close = searchParams.get('close');
 
-  const [closeFlg, setCloseFlg] = useState<boolean>(false);
+  const [closed, setClosed] = useState<boolean>(false);
 
   useEffect(() => {
     if (close === 'true') {
-      setCloseFlg(true);
+      setClosed(true);
     }
   }, []);
 
@@ -123,7 +123,7 @@ export default function Policy() {
           </Fragment>
         ))}
       </div>
-      {closeFlg ?
+      {closed ?
         <button className="back-btn" onClick={() => window.close()}>確認</button>
         :
         <button className="back-btn" onClick={() => navigate(-1)}>戻る</button>

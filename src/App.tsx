@@ -76,6 +76,7 @@ export default function App() {
     policy: { title: '運用ポリシー', description: '運用ポリシーページ' },
     auth: { title: '認証', description: '認証ページ' },
     manage: { title: '管理者ページ', description: '管理者ページへようこそ' },
+    cart: { title: 'ショッピングカート', description: 'ショッピングカートページ' },
   };
 
   const menuItem: MenuItem[] = [
@@ -84,23 +85,23 @@ export default function App() {
       categoryPath: 'products',
       categoryImg: category1,
       items: [
-        { url: 'products', icon: <CardGiftcardTwoToneIcon/>, title: '商品' },
+        { path: 'products', icon: <CardGiftcardTwoToneIcon/>, title: '商品' },
       ]
     },{
       category: 'Style',
       categoryPath: 'social',
       categoryImg: category2,
       items: [
-        { url: 'social', icon: <StyleTwoToneIcon/>, title: 'スタイル' },
+        { path: 'social', icon: <StyleTwoToneIcon/>, title: 'スタイル' },
       ]
     },{
       category: 'Labo',
       categoryPath: 'labo',
       categoryImg: category1,
       items: [
-        { url: 'labo', icon: <PsychologyTwoToneIcon/>, title: '実験室' },
-        { url: 'chat/2', icon: <QuestionAnswerTwoToneIcon/>, title: 'チャット' },
-        { url: 'contact', icon: <ContactSupportTwoToneIcon/>, title: 'お問い合わせ' },
+        { path: 'labo', icon: <PsychologyTwoToneIcon/>, title: '実験室' },
+        { path: 'chat/2', icon: <QuestionAnswerTwoToneIcon/>, title: 'チャット' },
+        { path: 'contact', icon: <ContactSupportTwoToneIcon/>, title: 'お問い合わせ' },
       ]
     }
   ]
@@ -164,7 +165,7 @@ export default function App() {
         </Helmet>
         <div className='header-main'>
           <div className='logo' onClick={() => navigate('/')}>
-            <img src={logo} alt='logo'/>
+            <img src={logo} alt='logo' width={119} height={30}/>
             <RocketLaunchIcon className='labo'/>
           </div>
           <div className='side'>

@@ -70,6 +70,7 @@
     opacity: 0;
     background-color: black;
     color: white;
+    box-shadow: 0px 1px 4px 0 white;
     transition: all 0.25s;
     &:hover {
       background-color: black;
@@ -84,6 +85,7 @@
     z-index: 3;
     position: sticky;
     width: fit-content;
+    stroke: white;
     top: calc(var(--header-height) + var(--nav-height) + 4px);
     margin-bottom: -9px;
     margin-left: auto;
@@ -115,7 +117,6 @@
     padding: 10px 8px;
     margin-left: -8px;
     background-color: white;
-    border-bottom: 1px solid var(--border-color);
     box-shadow: 0px -1px 1px 0 white;
     transition: all 0.45s;
     &:not(.active) {
@@ -305,7 +306,7 @@
     .img-area {
       position: sticky;
       top: calc(var(--header-height) + var(--nav-height) + 97px);
-      width: calc(33.3% - 40px);
+      width: calc(50% - 40px);
       height: fit-content;
       flex: 1;
       padding-right: 40px;
@@ -770,10 +771,9 @@
       justify-content: space-between;
       font-weight: bold;
       font-size: 15px;
-      margin: 10px 0;
+      margin: 20px 8px;
       .icon {
         font-size: 18px;
-        margin-right: 4px;
       }
     }
   }

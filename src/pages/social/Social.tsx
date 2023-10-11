@@ -1,8 +1,7 @@
-import { MouseEvent, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { SearchArea } from 'components/input/SearchInput';
 import SocialCard from 'components/card/SocialCard';
-import SectionTitle from 'components/text/SectionTitle';
 import SocialService, { SocialFilter, SocialInfo } from 'api/service/SocialService';
 import './Social.scss';
 

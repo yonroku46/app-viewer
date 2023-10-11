@@ -23,7 +23,7 @@ export default function Popup({ title = '', contents, link, center, backdropClos
   const location = useLocation();
 
   const show = useSelector((state: RootState) => state.popup.isShow);
-  const [errFlg, setErrFlg] = useState<boolean>(false);
+  const [isErr, setIsErr] = useState<boolean>(false);
   const errKeyword = ['error','エラー','権限'];
 
   useEffect(() => {
@@ -32,7 +32,7 @@ export default function Popup({ title = '', contents, link, center, backdropClos
       const lowercaseErr = err.toLowerCase();
       return lowercaseContents.includes(lowercaseErr);
     });
-    setErrFlg(containsError);
+    setIsErr(containsError);
   }, [contents]);
 
   function popupClose() {
@@ -53,7 +53,7 @@ export default function Popup({ title = '', contents, link, center, backdropClos
     </div>
     {/* 中央ポップアップ */}
     <div className={'popup-center' + (show ? ' show' : ' hide') + (center ? '' : ' none')}>
-      {errFlg ? 
+      {isErr ? 
         <OfflineBoltIcon className='icon error' sx={{ fontSize: 35 }}/>
         :
         <CheckCircleIcon className='icon' sx={{ fontSize: 35 }}/>

@@ -1,9 +1,10 @@
 .send-input {
   z-index: 1;
   display: flex;
-  width: 100%;
+  width: inherit;
   &.social {
     margin: 12px 0;
+    padding: 4px;
   }
   &.chat {
     margin-top: 8px;

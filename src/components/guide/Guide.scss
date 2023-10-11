@@ -13,7 +13,7 @@
   .sub {
     font-size: 15px;
     color: gray;
-    margin-bottom: -8px;
+    margin-bottom: -4px;
   }
   .links {
     display: flex;
@@ -39,7 +39,7 @@
         color: var(--menu-active-color);
         background-color: var(--menu-active-bg-color);
         border-radius: 50%;
-        padding: 16px;
+        padding: 8px;
         margin-bottom: 8px;
         transition: all 0.25s;
       }

@@ -25,7 +25,7 @@ export interface MenuItem {
   categoryPath: string;
   categoryImg: string;
   items: {
-    url: string,
+    path: string,
     icon: ReactElement<any, any>,
     title: string
   }[];
@@ -44,7 +44,7 @@ export default function MenuNav({ menuItem, currentPath, userName, profileImg, m
   const [categoryImg, setCategoryImg] = useState<string>(menuItem[0].categoryImg);
 
   useEffect(() => {
-    const item = menuItem.find((item) => item.items.some((menu) => menu.url === currentPath));
+    const item = menuItem.find((item) => item.items.some((menu) => menu.path === currentPath));
     if (item) {
       setActiveCategory(item.category);
     }
@@ -197,7 +197,7 @@ export default function MenuNav({ menuItem, currentPath, userName, profileImg, m
             </div>
             <ul>
               {menus.items.map((menu) => (
-                <li className={currentPath === menu.url ? 'active' : ''} onClick={() => link(menu.url)} key={menu.title}>
+                <li className={currentPath === menu.path ? 'active' : ''} onClick={() => link(menu.path)} key={menu.title}>
                   {menu.icon}{menu.title}
                 </li>
               ))}
@@ -221,7 +221,7 @@ export default function MenuNav({ menuItem, currentPath, userName, profileImg, m
             activeCategory === menus.category && (
               <ul key={menus.category}>
                 {menus.items.map((menu) => (
-                  <li className={currentPath === menu.url ? 'active' : ''} onClick={() => link(menu.url)} key={menu.title}>
+                  <li className={currentPath === menu.path ? 'active' : ''} onClick={() => link(menu.path)} key={menu.title}>
                     {menu.icon}{menu.title}
                   </li>
                 ))}

@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate, useLocation } from "react-router-dom";
+import { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 import { Carousel } from "react-responsive-carousel";
-import mainBanner from "assets/img/main-banner.webp";
 import './Home.scss';
 
-import KeyboardArrowLeftRoundedIcon from '@mui/icons-material/KeyboardArrowLeftRounded';
 import KeyboardArrowRightRoundedIcon from '@mui/icons-material/KeyboardArrowRightRounded';
 
 export default function HomeHeader() {
@@ -12,6 +10,7 @@ export default function HomeHeader() {
 
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [indexChange, setIndexChange] = useState<boolean>(false);
+  const [swipe, setSwipe] = useState<boolean>(false);
 
   interface BannerProps {
     img: string;
@@ -19,29 +18,32 @@ export default function HomeHeader() {
     title: string;
     subTitle: string;
     link: string;
+    eventText?: string;
   }
 
   const banners: BannerProps[] = [
     {
-      img: mainBanner,
+      img: 'https://grepp-programmers.s3.amazonaws.com/production/file_resource/4793/KDT-clouding_application-main_banner_PC__1_.png',
       backgroundColor: 'cornflowerblue', 
       title: 'アプリ作成中',
-      subTitle: 'まもなく公開されます\n詳しくは担当者へ',
-      link: '/products'
+      subTitle: '詳しくは担当の方へ',
+      link: '/products',
     },
     {
       img: 'https://grepp-programmers.s3.amazonaws.com/production/file_resource/4352/KDT-Linux_System-main_banner_PC__1_.png',
       backgroundColor: 'orange',
       title: 'イベント開催',
-      subTitle: 'オープン記念イベント開催\n詳しくは詳細ページから',
-      link: '/products'
+      subTitle: '新着アイテムをゲット',
+      link: '/products',
+      eventText: '今すぐチェック'
     },
     {
-      img:'https://asset.programmers.co.kr/image/origin/production/banner/167969/6aad48a6-2f2e-45e8-9d73-794e8ca3aaba.png',
-      backgroundColor: 'mediumpurple',
+      img:'https://grepp-programmers.s3.amazonaws.com/production/file_resource/4796/KDT-DataAnalysis-main_banner_PC.png',
+      backgroundColor: '#e5b175',
       title: '管理スタッフ募集',
-      subTitle: 'OFFLINEショップの\n管理スタッフを募集します',
-      link: '/social'
+      subTitle: '一緒に働きましょう',
+      link: '/social',
+      eventText: '今すぐチェック'
     },
   ]
 
@@ -57,30 +59,27 @@ export default function HomeHeader() {
     <section className='home-header' style={{ backgroundColor: banners[currentIndex].backgroundColor }}>
       <Carousel className='banner'
         showStatus={false} autoPlay={true} infiniteLoop={true} showArrows={false} showThumbs={false} selectedItem={currentIndex}
-        emulateTouch={true} showIndicators={false} interval={7000} transitionTime={750} onChange={handleChange}>
+        emulateTouch={true} showIndicators={true} interval={7000} transitionTime={750} onChange={handleChange}
+        onSwipeStart={() => setSwipe(true)} onSwipeEnd={() => setSwipe(false)}>
         {banners.map(banner => (
           <div className='img-box' key={banner.img} onClick={() => navigate(banner.link)}>
             <img src={banner.img} loading='eager'/>
+            <div className='slider-text' onClick={() => navigate(banners[currentIndex].link)}>
+              <div className={indexChange || swipe ? 'sub-title hide' : 'sub-title'}>
+                {banners[currentIndex].subTitle}
+              </div>
+              <div className={indexChange || swipe ? 'title hide' : 'title'}>
+                {banners[currentIndex].title}
+              </div>
+              {banner.eventText &&
+                <button className={indexChange || swipe ? 'check-btn hide' : 'check-btn'}>
+                  {banner.eventText}<KeyboardArrowRightRoundedIcon/>
+                </button>
+              }
+            </div>
           </div>
         ))}
       </Carousel>
-      <div className='slider-text' onClick={() => navigate(banners[currentIndex].link)}>
-        <div className={indexChange ? 'title hide' : 'title'}>
-          {banners[currentIndex].title}
-        </div>
-        <div className={indexChange ? 'sub-title hide' : 'sub-title'}>
-          {banners[currentIndex].subTitle}
-        </div>
-      </div>
-      <div className='slider-btn'>
-        <div className='prev' onClick={() => setCurrentIndex(prev => (prev === 0 ? banners.length - 1 : prev - 1))}>
-          <KeyboardArrowLeftRoundedIcon className='icon'/>
-        </div>
-        {currentIndex + 1} / {banners.length}
-        <div className='next' onClick={() => setCurrentIndex(prev => (prev === banners.length - 1 ? 0 : prev + 1))}>
-          <KeyboardArrowRightRoundedIcon className='icon'/>
-        </div>
-      </div>
     </section>
   )
 }

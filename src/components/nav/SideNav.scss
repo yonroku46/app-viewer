@@ -8,7 +8,6 @@
     padding: 8px;
     width: var(--search-nav-width);
     height: calc((var(--vh, 1vh) * 100) - var(--full-height-margin) - var(--footer-height));
-    box-shadow: 0 0px 4px 1px var(--shadow-color);
     &.sp {
       width: var(--sp-search-nav-width);
       li {
@@ -16,21 +15,6 @@
         svg {
           margin-left: -8px
         }
-      }
-    }
-    .search-area {
-      margin-top: 12px;
-      .filter {
-        margin-bottom: 14px;
-        & input {
-          padding-left: 30px;
-        }
-      }
-      .icon {
-        cursor: pointer;
-        position: absolute;
-        margin-top: 9px;
-        left: 16px;
       }
     }
     .category {

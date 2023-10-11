@@ -88,13 +88,11 @@ export default function Labo() {
       <button onClick={() => dispatch(unloading())}>unLoading</button>
       <br/>
       <div>
-        <h1>PDFアップロード</h1>
         <input type="file" id="pdfFile" accept=".pdf" ref={pdfFileInputRef} />
         <button onClick={handleUploadClick}>アップロード</button>
         <a href="https://d3ldc4zez8gat7.cloudfront.net/配達（パン）.pdf" target="_blank" rel="noopener noreferrer">
           View PDF
         </a>
-        <iframe src='https://d3ldc4zez8gat7.cloudfront.net/配達（パン）.pdf#toolbar=0&navpanes=0'/>
       </div>
     </section>
     </>

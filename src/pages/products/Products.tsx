@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { SearchArea } from 'components/input/SearchInput';
 import ProductCard from 'components/card/ProductCard';
 import { useMediaQuery } from 'react-responsive';
+import { useWindowScroll } from 'react-use';
 import SectionTitle from 'components/text/SectionTitle';
 import ProductService, { ProductFilter, ProductInfo } from 'api/service/ProductService';
 import FilterNav, { FilterMenuItem } from 'components/nav/FilterNav';
@@ -41,11 +42,16 @@ export default function Products() {
   const param = new URLSearchParams(search);
   
   const [load, setLoad] = useState<boolean>(true);
+  const [fabShow, setFabShow] = useState<boolean>(false);
+  const [isRecommend, setIsRecommend] = useState<boolean>(false);
   const [dataList, setDataList] = useState<ProductInfo[]>([]);
   const [value, setValue] = useState<string>('');
   const [selectedItems, setSelectedItems] = useState<FilterData>();
   const [selectedSort, setSelectedSort] = useState<string>(sortList[0].value);
   const [selectedSortName, setSelectedSortName] = useState<string>(sortList[0].sortName);
+
+  const { y: windowY } = useWindowScroll();
+  const spareArea: number = 100;
 
   const priceMaximum: number = 50000;
   const [price, setPrice] = useState<number[]>([0, priceMaximum]);
@@ -55,6 +61,18 @@ export default function Products() {
   };
 
   const productService = ProductService();
+
+  useEffect(() => {
+    const initialSelectedItems: FilterData = {
+      gender: [],
+      brands: [],
+      category: [],
+      status: [],
+      colors: [],
+      types: [],
+    };
+    setSelectedItems(initialSelectedItems);
+  }, []);
 
   // パラメータ設定
   useEffect(() => {
@@ -83,15 +101,17 @@ export default function Products() {
     }
   }, [value]);
 
-  // フィルター変更で再検索
   useEffect(() => {
-    if (selectedItems) {
-      getProductList()
+    if (windowY < spareArea) {
+      setFabShow(true);
+    } else {
+      setFabShow(false);
     }
-  }, [selectedItems]);
+  }, [windowY]);
 
   async function getProductList(recommendFilter?: ProductFilter) {
     setLoad(true);
+    setIsRecommend(!!recommendFilter);
     let filter: ProductFilter = recommendFilter || {
       keyword: value,
       minPrice: price[0],
@@ -187,7 +207,7 @@ export default function Products() {
         { value: 'priceRange', title: '価格範囲', additional:
           <div className='slider'>
             <span>{currency(price[0] || 0)}</span> ~ <span>{currency(price[1] || priceMaximum)}</span>
-            <Slider size='small' min={0} max={priceMaximum} step={1000} value={price} valueLabelDisplay="auto" onChange={priceChange} onChangeCommitted={() => getProductList()} />
+            <Slider size='small' min={0} max={priceMaximum} step={1000} value={price} valueLabelDisplay="auto" onChange={priceChange}/>
           </div>
         }
       ]
@@ -244,10 +264,10 @@ export default function Products() {
         {value ? 
           <SectionTitle main={value} count={dataList.length !== 0 ? dataList.length : 0}/>
           :
-          selectedItems ?
-            <SectionTitle count={dataList.length !== 0 ? dataList.length : 0}/>
-            :
+          isRecommend ?
             <SectionTitle main={'おすすめアイテム'} sub={'Recommends'}/>
+          : selectedItems &&
+            <SectionTitle count={dataList.length !== 0 ? dataList.length : 0}/>
         }
         <div className='sort'>
           <div className='sort-item'>
@@ -270,14 +290,14 @@ export default function Products() {
       <div className='product-view'>
         {isSp ?
           <>
-            <FilterNav menuItem={menuItem} handelMenu={handelMenu} isSp={isSp} reset={reset}/>
+            <FilterNav menuItem={menuItem} handelMenu={handelMenu} handleOk={() => getProductList()} isSp={isSp} fabShow={fabShow} reset={reset}/>
             <ViewHeader value={value} dataList={dataList} sortHandle={handleSortItemClick} sortList={sortList}/>
             <ProductCard dataList={dataList} loading={load}/>
           </>
           :
           <>
             <div className='left'>
-              <FilterNav menuItem={menuItem} handelMenu={handelMenu} isSp={isSp} reset={reset}/>
+              <FilterNav menuItem={menuItem} handelMenu={handelMenu} handleOk={() => getProductList()} isSp={isSp} reset={reset}/>
             </div>
             <div className='right'>
               <ViewHeader value={value} dataList={dataList} sortHandle={handleSortItemClick} sortList={sortList}/>

@@ -84,10 +84,7 @@ export default function MyPage() {
       <button onClick={profileUpdate}>プロフィール変更</button>
       <button>会員退会</button>
       <div className='mypage contents'>
-        <h3>sns data</h3>
-      </div>
-      <div className='mypage contents'>
-        <h3>casting data</h3>
+        <button onClick={() => navigate('/chat/1')}>チャット</button>
       </div>
     </section>
   )

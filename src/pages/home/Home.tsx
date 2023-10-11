@@ -95,22 +95,22 @@ export default function Home() {
           <div className='left'>
             <SectionTitle main={'新着アイテム'} sub={'NewArrivals'}/>
             <button className='more-btn' onClick={() => navigate('/products')}>
-              もっと見る<KeyboardArrowRightSharpIcon className='icon'/>
+              <KeyboardArrowRightSharpIcon className='icon'/>
             </button>
           </div>
           <div className='right'>
-            <ProductCard dataList={productList.slice(0, offsetLimit)} contentHide={true} loading={load}/>
+            <ProductCard dataList={productList.slice(0, offsetLimit)} loading={load}/>
           </div>
         </div>
         <div className='item'>
           <div className='left'>
             <SectionTitle main={'人気スタイル'} sub={'Trend'}/>
             <button className='more-btn' onClick={() => navigate('/social')}>
-              もっと見る<KeyboardArrowRightSharpIcon className='icon'/>
+              <KeyboardArrowRightSharpIcon className='icon'/>
             </button>
           </div>
           <div className='right'>
-            <SocialCard dataList={socialList.slice(0, offsetLimit)} contentHide={true} loading={load} additional={true}/>
+            <SocialCard dataList={socialList.slice(0, offsetLimit)} loading={load} additional={false}/>
           </div>
         </div>
       </div>

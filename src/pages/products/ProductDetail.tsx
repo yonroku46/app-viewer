@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useMediaQuery } from 'react-responsive';
 import { useWindowScroll } from 'react-use';
 import { Helmet } from 'react-helmet-async';
@@ -36,7 +36,6 @@ import Fab from '@mui/material/Fab';
 import Tooltip from '@mui/material/Tooltip';
 
 export default function ProductDetail() {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const isSp = useMediaQuery({ maxWidth: 767 });
   const { id } = useParams();
@@ -198,7 +197,7 @@ export default function ProductDetail() {
   }
 
   function scrollToTop() {
-    window.scrollTo({ top: 0 });
+    window.scrollTo({ top: -100 });
   }
 
   function buyProduct() {
@@ -482,7 +481,7 @@ export default function ProductDetail() {
           <div className='title'>
             コディネート
             <button className='more-btn'>
-              もっと見る<KeyboardArrowRightSharpIcon className='icon'/>
+              <KeyboardArrowRightSharpIcon className='icon'/>
             </button>
           </div>
           <SocialCard dataList={socialList} loading={load} additional={false}/>
@@ -491,7 +490,7 @@ export default function ProductDetail() {
           <div className='title'>
             関連アイテム
             <button className='more-btn'>
-              もっと見る<KeyboardArrowRightSharpIcon className='icon'/>
+              <KeyboardArrowRightSharpIcon className='icon'/>
             </button>
           </div>
           <ProductCard dataList={productList} loading={load}/>

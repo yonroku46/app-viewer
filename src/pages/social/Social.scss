@@ -5,11 +5,10 @@
   .view-header {
     display: flex;
     justify-content: flex-end;
-    margin: 0 40px;
+    margin: 40px 40px 18px 40px;
     .sort {
       display: flex;
       align-items: center;
-      margin-bottom: 24px;
       .sort-item {
         position: absolute;
         right: 10px;
@@ -243,7 +242,9 @@
               background-color: var(--bg-color);
             }
             &.reply {
-              padding-left: 34px;
+              padding-left: 28px;
+              margin-left: 16px;
+              border-left: 2px dashed var(--border-color);
             }
             &.selected {
               background-color: var(--menu-active-bg-color);
@@ -316,10 +317,9 @@
       align-items: center;
       justify-content: space-between;
       font-size: 15px;
-      margin: 20px 0;
+      margin: 20px 8px;
       .icon {
         font-size: 18px;
-        margin-right: 4px;
       }
     }
   }
@@ -374,7 +374,7 @@
 @media only screen and (max-width: 767px) {
   .social {
     .view-header {
-      margin: 0;
+      margin: 42px 0 18px 0;
     }
   }
   .social-detail {
@@ -397,6 +397,9 @@
     }
     .recommends {
       padding: 0;
+      .title {
+        margin-right: 0;
+      }
     }
   }
 }

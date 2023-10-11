@@ -19,7 +19,7 @@
   display: flex;
   flex-flow: row wrap;
   margin-top: -20px;
-  margin-left: -20px;
+  margin-left: -14px;
   &.contents {
     width: 100%;
     background-color: unset;
@@ -149,9 +149,6 @@
       padding: 10px 0px;
       background: white;
       position: relative;
-      &.hide {
-        display: none;
-      }
       .name {
         font-family: 'Noto Sans JP', sans-serif;
         width: 100%;
@@ -204,9 +201,9 @@
       }
     }
     .product-card {
-      width: calc(33.3% - 8px);
-      margin-top: 8px;
-      margin-left: 8px;
+      width: calc(50% - 12px);
+      margin-top: 12px;
+      margin-left: 12px;
       .sale-label {
         font-size: 11px;
       }
