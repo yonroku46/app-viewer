@@ -11,7 +11,7 @@ export default function Contact() {
   const navigate = useNavigate();
   const authService = AuthService();
   
-  const categoryList: string[] = ['バグ対応', '商品注文・返品', 'その他']
+  const categoryList: Array<string> = ['バグ対応', '商品注文・返品', 'その他']
 
   const [user, setUser] = useState<UserState|undefined>(undefined);
   const [mail, setMail] = useState<string>("");

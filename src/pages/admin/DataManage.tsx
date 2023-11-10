@@ -40,7 +40,7 @@ export default function DataManage() {
   
   type Sample = [string, number, number, number, number];
   
-  const sample: readonly Sample[] = [
+  const sample: Array<Sample> = [
     ['Frozen yoghurt', 159, 6.0, 24, 4.0],
     ['Ice cream sandwich', 237, 9.0, 37, 4.3],
     ['Eclair', 262, 16.0, 24, 6.0],
@@ -59,7 +59,7 @@ export default function DataManage() {
     return { id, dessert, calories, fat, carbs, protein };
   }
   
-  const columns: ColumnData[] = [
+  const columns: Array<ColumnData> = [
     {
       width: 200,
       label: 'Dessert',
@@ -91,7 +91,7 @@ export default function DataManage() {
     },
   ];
   
-  const rows: Data[] = Array.from({ length: 200 }, (_, index) => {
+  const rows: Array<Data> = Array.from({ length: 200 }, (_, index) => {
     const randomSelection = sample[Math.floor(Math.random() * sample.length)];
     return createData(index, ...randomSelection);
   });

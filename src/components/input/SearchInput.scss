@@ -6,16 +6,29 @@
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 26px;
-  border-radius: 4px;
+  border-radius: 20px;
   border: 1px solid var(--bg-active-color);
   color: var(--bg-active-color);
+  &.mini {
+    width: auto;
+    max-width: 230px;
+    margin: 0 8px 0 40px;
+    .search-area {
+      input {
+        padding: 7px 38px 7px 20px;
+      }
+      .icon {
+        color: black;
+      }
+    }
+  }
   &.focused {
     z-index: 9999;
     border-color: white;
     box-shadow: 0px 11px 15px -7px rgba(0, 0, 0, 0.2), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 9px 46px 8px rgba(0, 0, 0, 0.12);
   }
   &.inpage {
-    margin-top: 16px;
+    margin-top: 24px;
   }
   .search-area {
     width: 100%;
@@ -25,10 +38,10 @@
     margin-left: auto;
     margin-right: auto;
     input {
-      border-radius: 4px;
+      border-radius: 20px;
       width: 100%;
       font-size: 12px;
-      padding: 10px 20px 10px 38px;
+      padding: 10px 38px 10px 20px;
       border: none;
       outline: none;
       color: var(--bg-active-color);
@@ -39,13 +52,51 @@
     }
     .icon {
       position: relative;
-      margin-right: -24px;
+      margin-left: -24px;
       width: 24px;
-      left: 8px;
+      right: 8px;
       color: var(--bg-active-color);
       &.focused {
         cursor: pointer;
         color: black;
+      }
+    }
+  }
+  .title-area {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 30px;
+    opacity: 0;
+    color: white;
+    font-size: 13px;
+    pointer-events: none;
+    transition: opacity 0.25s, top 0.25s;
+    &.active {
+      z-index: 2;
+      top: 4px;
+      opacity: 1;
+      pointer-events: auto;
+      text-shadow: black 1px 0 4px;
+      .icon {
+        font-size: 22px;
+        margin-top: 2px;
+        margin-right: 4px;
+        transition: transform 0.25s;
+        &:hover {
+          cursor: pointer;
+          transform: rotate(90deg);
+        }
+      }
+      .title {
+        font-size: 10px;
+        &:hover {
+          cursor: default;
+        }
+        .from {
+          font-size: 15px;
+          margin-right: 2px;
+        }
       }
     }
   }
@@ -66,7 +117,7 @@
     div {
       padding: 0;
       background-color: white;
-      border-radius: 0 0 4px 4px;
+      border-radius: 0 0 20px 20px;
       font-size: 12px;
       div {
         display: flex;
@@ -76,7 +127,7 @@
         color: var(--bg-active-color);
         transition: background-color 0.25s, color 0.25s;
         &:last-child {
-          border-radius: 0 0 4px 4px;
+          border-radius: 0 0 20px 20px;
         }
         &:hover {
           cursor: pointer;
@@ -84,7 +135,7 @@
           background-color: var(--bg-color);
         }
         &.boundary {
-          width: 98%;
+          width: 95%;
           border-bottom: 1px solid var(--bg-active-color);
           margin-left: auto;
           border-radius: 0;
@@ -166,14 +217,15 @@
   position: absolute;
   display: flex;
   flex-direction: column;
-  top: 230px;
+  top: 246px;
   z-index: 0;
   margin-left: auto;
   margin-right: auto;
   width: 60%;
   .top {
     display: flex;
-    align-items: flex-end;
+    align-items: flex-start;
+    flex-direction: column;
     font-weight: bold;
     text-align: left;
     font-size: 16px;
@@ -181,10 +233,11 @@
       display: flex;
     }
     .time {
-      margin-left: 4px;
-      color: lightgray;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 500;
+      margin-left: 24px;
+      margin-top: -4px;
+      color: lightgray;
     }
   }
   ul {

@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { SearchArea } from 'components/input/SearchInput';
 import ProductCard from 'components/card/ProductCard';
 import { useMediaQuery } from 'react-responsive';
 import { useWindowScroll } from 'react-use';
 import SectionTitle from 'components/text/SectionTitle';
 import ProductService, { ProductFilter, ProductInfo } from 'api/service/ProductService';
 import FilterNav, { FilterMenuItem } from 'components/nav/FilterNav';
+import Banner from 'components/banner/TopBanner';
 import { currency } from "common/utils/StringUtils";
 import './Products.scss';
 
@@ -27,7 +27,7 @@ export interface FilterData {
   types: Array<string>
 }
 
-const sortList: SortData[] = [
+const sortList: Array<SortData> = [
   { sortName: '人気順', value: 'rate' },
   { sortName: '新着順', value: 'latest' },
   { sortName: '古い商品順', value: 'oldest' },
@@ -56,7 +56,7 @@ export default function Products() {
   const priceMaximum: number = 50000;
   const [price, setPrice] = useState<number[]>([0, priceMaximum]);
   const priceChange = (e: Event, selectPrice: number | number[]) => {
-    const priceRange: number[] = selectPrice as number[];
+    const priceRange: Array<number> = selectPrice as number[];
     setPrice(priceRange);
   };
 
@@ -170,7 +170,7 @@ export default function Products() {
     }
   };
   
-  const menuItem: FilterMenuItem[] = [
+  const menuItem: Array<FilterMenuItem> = [
     {
       category: 'カテゴリー',
       categoryValue: 'category',
@@ -286,7 +286,7 @@ export default function Products() {
 
   return (
     <section className='products'>
-      <SearchArea value={value}/>
+      <Banner background='' url=''/>
       <div className='product-view'>
         {isSp ?
           <>

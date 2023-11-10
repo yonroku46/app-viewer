@@ -7,8 +7,6 @@ import { showPopup, hidePopup } from "store/actions/popupActions";
 import { UserState } from "store/types/UserActionTypes";
 import AuthService from 'api/service/AuthService';
 import logo from "assets/icon/logo.svg";
-import category1 from "assets/img/category1.avif";
-import category2 from "assets/img/category2.avif";
 import Loading from 'components/backdrop/Loading';
 import Popup from 'components/popup/Popup';
 import MenuNav, { MenuItem } from 'components/nav/MenuNav';
@@ -37,7 +35,6 @@ import Labo from 'pages/labo/Labo';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import './App.scss';
 
-import RocketLaunchIcon from '@mui/icons-material/RocketLaunch';
 import StyleTwoToneIcon from '@mui/icons-material/StyleTwoTone';
 import ContactSupportTwoToneIcon from '@mui/icons-material/ContactSupportTwoTone';
 import PsychologyTwoToneIcon from '@mui/icons-material/PsychologyTwoTone';
@@ -79,25 +76,22 @@ export default function App() {
     cart: { title: 'ショッピングカート', description: 'ショッピングカートページ' },
   };
 
-  const menuItem: MenuItem[] = [
+  const menuItem: Array<MenuItem> = [
     {
       category: 'Products',
       categoryPath: 'products',
-      categoryImg: category1,
       items: [
         { path: 'products', icon: <CardGiftcardTwoToneIcon/>, title: '商品' },
       ]
     },{
       category: 'Style',
       categoryPath: 'social',
-      categoryImg: category2,
       items: [
         { path: 'social', icon: <StyleTwoToneIcon/>, title: 'スタイル' },
       ]
     },{
       category: 'Labo',
       categoryPath: 'labo',
-      categoryImg: category1,
       items: [
         { path: 'labo', icon: <PsychologyTwoToneIcon/>, title: '実験室' },
         { path: 'chat/2', icon: <QuestionAnswerTwoToneIcon/>, title: 'チャット' },
@@ -166,7 +160,6 @@ export default function App() {
         <div className='header-main'>
           <div className='logo' onClick={() => navigate('/')}>
             <img src={logo} alt='logo' width={119} height={30}/>
-            <RocketLaunchIcon className='labo'/>
           </div>
           <div className='side'>
             <MenuNav menuItem={menuItem} currentPath={currentPath} userName={user?.userName} profileImg={user?.profileImg} mail={user?.mail} role={user?.role}/>

@@ -1,13 +1,14 @@
-import { useEffect, useState, ReactElement } from 'react';
+import { useState, ReactElement } from 'react';
 import { useNavigate, useLocation } from "react-router-dom";
 import { useMediaQuery } from 'react-responsive';
-import logo from "assets/icon/logo.svg";
 import AuthService from 'api/service/AuthService';
+import { SearchArea } from 'components/input/SearchInput';
 import { imgSrc, handleImgError } from "common/utils/ImgUtils";
 import Backdrop from 'components/backdrop/Backdrop'
 import Modal from 'components/modal/Modal';
 import './MenuNav.scss';
 
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import StorefrontOutlinedIcon from '@mui/icons-material/StorefrontOutlined';
 import LockPersonOutlinedIcon from '@mui/icons-material/LockPersonOutlined';
@@ -23,7 +24,6 @@ import Divider from '@mui/material/Divider';
 export interface MenuItem {
   category: string;
   categoryPath: string;
-  categoryImg: string;
   items: {
     path: string,
     icon: ReactElement<any, any>,
@@ -40,19 +40,6 @@ export default function MenuNav({ menuItem, currentPath, userName, profileImg, m
 
   const [open, setOpen] = useState<boolean>(false);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
-  const [activeCategory, setActiveCategory] = useState<string>(menuItem[0].category);
-  const [categoryImg, setCategoryImg] = useState<string>(menuItem[0].categoryImg);
-
-  useEffect(() => {
-    const item = menuItem.find((item) => item.items.some((menu) => menu.path === currentPath));
-    if (item) {
-      setActiveCategory(item.category);
-    }
-  }, [currentPath, menuItem]);
-
-  useEffect(() => {
-    setCategoryImg(menuItem.filter((menu) => menu.category === activeCategory)[0].categoryImg);
-  }, [activeCategory]);
 
   async function logout() {
     await authService.logout(true).then(data => {
@@ -107,6 +94,7 @@ export default function MenuNav({ menuItem, currentPath, userName, profileImg, m
     <>
     <Backdrop open={open} onClick={() => setOpen(false)}/>
     <Modal type='app' data={settingData} open={modalOpen} onClose={handleModalClose}/>
+    {(currentPath !== 'search') && <SearchArea/>}
     {/* 共通メニューコンポネント */}
     {(currentPath !== 'login') && userName ?
       <div className='user-badge' onClick={handleClick}>
@@ -160,82 +148,11 @@ export default function MenuNav({ menuItem, currentPath, userName, profileImg, m
         </Menu>
         <img className='profile' src={imgSrc(profileImg)} onError={handleImgError} onClick={() => {}} alt='profile'/>
       </div>
-    : (currentPath !== 'login') &&
+    :
       <button className='login-btn' onClick={() => link('/login')}>
-        <span className='text'>ログイン</span>
+        <AccountCircleIcon className='icon'/>
       </button>
     }
-    {/* <div className={open ? 'menu-btn open' : 'menu-btn'} onClick={() => {setOpen(!open); setAnchorEl(null);}}>
-      <span></span>
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
-    <div className='menu-nav'>
-      <div className={open ? 'menu scroll open' : 'menu scroll'}>
-        {userName ?
-          <div className='userinfo'>
-            <img className='profile' src={imgSrc(profileImg)} onError={handleImgError} onClick={() => link('/mypage')} alt='profile'/>
-            <div className='info'>
-              <div className='name' onClick={() => link('/mypage')}>
-                { userName }
-              </div>
-              <div className='mail'>
-                { mail }
-              </div>
-            </div>
-          </div>
-          :
-          <div className='userinfo'>
-            <img className='logo' src={logo} onClick={() => link('/')} alt='logo'/>
-          </div>
-        }
-        {isSp ? menuItem.map((menus) => (
-          <div className='menu-sp' key={menus.category}>
-            <div className='title'>
-              {menus.category}
-            </div>
-            <ul>
-              {menus.items.map((menu) => (
-                <li className={currentPath === menu.path ? 'active' : ''} onClick={() => link(menu.path)} key={menu.title}>
-                  {menu.icon}{menu.title}
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))
-        :
-        <>
-        <div className='menu-left'>
-          {menuItem.map((menus) => (
-            <div className='category' key={menus.category}>
-              <div className={activeCategory === menus.category ? 'title active' : 'title'} onClick={() => setActiveCategory(menus.category)}>
-                <span>{menus.category}</span>
-                {activeCategory === menus.category && <KeyboardArrowRightIcon className='icon'/>}
-              </div>
-            </div>
-          ))}
-        </div>
-        <div className='menu-right'>
-          {menuItem.map((menus) => (
-            activeCategory === menus.category && (
-              <ul key={menus.category}>
-                {menus.items.map((menu) => (
-                  <li className={currentPath === menu.path ? 'active' : ''} onClick={() => link(menu.path)} key={menu.title}>
-                    {menu.icon}{menu.title}
-                  </li>
-                ))}
-              </ul>
-            )
-          ))}
-        </div>
-        <div className='menu-img'>
-          <img className='thumbnail' src={categoryImg} alt='thumbnail'/>
-        </div>
-        </>
-      }
-      </div>
-    </div> */}
     </>
   )
 }

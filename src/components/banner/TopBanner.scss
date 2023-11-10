@@ -1,0 +1,22 @@
+.top-banner {
+  border-radius: 20px;
+  width: 94%;
+  height: 240px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 16px;
+  transition: opacity 0.25s;
+  box-shadow: 0px -2px 0px 10px inset var(--border-color);
+  &:hover {
+    cursor: pointer;
+    opacity: 0.85;
+  }
+}
+
+/* sp */
+@media only screen and (max-width: 767px) {
+  .top-banner {
+    width: 98%;
+    height: 180px;
+  }
+}

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { SearchArea } from 'components/input/SearchInput';
+import Banner from 'components/banner/TopBanner';
 import SocialCard from 'components/card/SocialCard';
 import SocialService, { SocialFilter, SocialInfo } from 'api/service/SocialService';
 import './Social.scss';
@@ -12,7 +12,7 @@ export interface SortData {
   value: string;
 }
 
-const sortList: SortData[] = [
+const sortList: Array<SortData> = [
   { sortName: '人気順', value: 'rate' },
   { sortName: '新着順', value: 'latest' },
 ]
@@ -111,7 +111,7 @@ export default function Social() {
 
   return(
     <section className='social'>
-      <SearchArea value={value}/>
+      <Banner background='' url=''/>
       <ViewHeader sortHandle={handleSortItemClick} sortList={sortList}/>
       <SocialCard dataList={dataList} loading={load} additional={true} grid={true}/>
     </section>

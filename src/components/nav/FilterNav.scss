@@ -27,10 +27,9 @@
   max-height: calc(100vh - var(--full-height-margin) - 90px);
   overflow-x: hidden;
   top: calc(var(--full-height-margin) + 40px);
-  margin-top: -36px;
   .filter-menu {
     border-radius: 4px;
-    padding: 36px 8px;
+    padding: 0px 16px;
     width: var(--search-nav-width);
     height: 100%;
   }
@@ -131,5 +130,13 @@
         }
       }
     }
+  }
+}
+
+/* sp */
+@media only screen and (max-width: 767px) {
+  .filter-nav-sp {
+    width: 96%;
+    margin: auto;
   }
 }

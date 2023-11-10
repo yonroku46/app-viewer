@@ -30,7 +30,7 @@ export default function AdminPage() {
     }
   }, []);
 
-  const menuItem: SideMenuItem[] = [
+  const menuItem: Array<SideMenuItem> = [
     {
       category: '全体',
       items: [

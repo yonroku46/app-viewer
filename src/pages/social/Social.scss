@@ -5,7 +5,7 @@
   .view-header {
     display: flex;
     justify-content: flex-end;
-    margin: 40px 40px 18px 40px;
+    margin: 18px 40px;
     .sort {
       display: flex;
       align-items: center;
@@ -244,7 +244,7 @@
             &.reply {
               padding-left: 28px;
               margin-left: 16px;
-              border-left: 2px dashed var(--border-color);
+              border-left: 1.5px dashed var(--border-color);
             }
             &.selected {
               background-color: var(--menu-active-bg-color);
@@ -374,7 +374,7 @@
 @media only screen and (max-width: 767px) {
   .social {
     .view-header {
-      margin: 42px 0 18px 0;
+      margin: 18px 0;
     }
   }
   .social-detail {

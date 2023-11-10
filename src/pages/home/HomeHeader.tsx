@@ -21,7 +21,7 @@ export default function HomeHeader() {
     eventText?: string;
   }
 
-  const banners: BannerProps[] = [
+  const banners: Array<BannerProps> = [
     {
       img: 'https://grepp-programmers.s3.amazonaws.com/production/file_resource/4793/KDT-clouding_application-main_banner_PC__1_.png',
       backgroundColor: 'cornflowerblue', 

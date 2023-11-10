@@ -28,7 +28,7 @@ export default function ShopPage() {
     }
   }, []);
 
-  const menuItem: SideMenuItem[] = [
+  const menuItem: Array<SideMenuItem> = [
     {
       category: '全体',
       items: [

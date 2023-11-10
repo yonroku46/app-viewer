@@ -24,19 +24,11 @@ header {
     align-items: center;
     .logo {
       cursor: pointer;
-      height: 30px;
-      margin: 10px;
+      height: 24px;
       filter: grayscale(1) brightness(0);
       img {
-        height: 30px;
+        height: 24px;
         margin-top: -1px;
-      }
-      .labo {
-        transform: rotate(316deg);
-        margin-left: -12px;
-        margin-top: -12px;
-        margin-bottom: 12px;
-        font-size: 16px;
       }
     }
     .side {
@@ -49,8 +41,10 @@ header {
 }
 nav {
   z-index: 8999;
-  background-color: white;
+  display: flex;
+  align-items: flex-end;
   position: fixed;
+  background-color: white;
   height: var(--nav-height);
   width: 100%;
   left: 0;
@@ -72,13 +66,13 @@ nav {
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 4px 8px;
+      padding: 6px 12px;
       width: 100px;
-      font-size: 12px;
+      font-size: 13px;
+      box-shadow: 0px -2px 0px -1px inset var(--border-color);
       transition: box-shadow 0.25s, opacity 0.25s;
       &.active {
         font-weight: bold;
-        margin-bottom: -1px;
         box-shadow: 0px -2px 0px -1px inset black;
       }
       &:hover {
@@ -127,7 +121,7 @@ body {
   --sns-google-color: rgb(66, 133 , 244);
   // size
   --header-height: 48px;
-  --nav-height: 24px;
+  --nav-height: 34px;
   --footer-height: 16px;
   --app-max-width: 1280px;
   --app-min-width: 280px;
@@ -138,7 +132,7 @@ body {
   --search-nav-width: 188px;
   --sp-search-nav-width: 20px;
   --loading-height: 56px;
-  --full-height-margin: 99px;
+  --full-height-margin: 106px;
   --section-width: calc(var(--app-max-width) - var(--sp-search-nav-width));
   --top-height: calc(var(--header-height) + var(--nav-height));
   // time
@@ -291,6 +285,14 @@ hr {
 
 /* sp */
 @media only screen and (max-width: 767px) {
+  nav {
+    ul {
+      li {
+        padding: 6px 8px;
+        font-size: 11px;
+      }
+    }
+  }
   section {
     &.nav-on {
       margin-left: calc(var(--nav-width) + var(--main-margin));

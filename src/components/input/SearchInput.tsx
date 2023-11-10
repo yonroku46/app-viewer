@@ -5,15 +5,17 @@ import { format } from 'date-fns';
 import './SearchInput.scss';
 
 import SearchIcon from '@mui/icons-material/Search';
+import RestoreIcon from '@mui/icons-material/Restore';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import WhatshotTwoToneIcon from '@mui/icons-material/WhatshotTwoTone';
+import LocationSearchingRoundedIcon from '@mui/icons-material/LocationSearchingRounded';
 
 interface CategoryData {
   categoryName: string;
   img: string;
 }
 
-const categoryList: CategoryData[] = [
+const categoryList: Array<CategoryData> = [
   { categoryName: 'AA', img: 'https://minimal-kit-react.vercel.app/assets/images/avatars/avatar_11.jpg' },
   { categoryName: 'BB', img: 'https://minimal-kit-react.vercel.app/assets/images/avatars/avatar_10.jpg' },
   { categoryName: 'CC', img: 'https://minimal-kit-react.vercel.app/assets/images/avatars/avatar_9.jpg' },
@@ -23,15 +25,15 @@ const categoryList: CategoryData[] = [
   { categoryName: '人気', img: 'https://minimal-kit-react.vercel.app/assets/images/avatars/avatar_5.jpg' }
 ]
 
-export function SearchArea({ value }: { value: string }) {
+export function SearchArea({ value }: { value?: string }) {
   const navigate = useNavigate();
   const location = useLocation();
 
   return(
-    <div className='search-box'>
+    <div className='search-box mini'>
       <div className='search-area' onClick={() => navigate('/search', { state: { from: location.pathname, value: value } })}>
+        <input type='text' value={value} readOnly/>
         <SearchIcon className='icon'/>
-        <input type='text' placeholder='検索' value={value} readOnly/>
       </div>
     </div>
   );
@@ -45,6 +47,7 @@ export default function SearchInput({ value, resetValue, ranking, onChange }: { 
   const [localHistory, setLocalHistory] = useState<string[]>([]);
   const [trendList, setTrendList] = useState<string[]>(['人気アイテム', 'パーソナルカラー', '新商品']);
 
+  const [pathFrom, setPathFrom] = useState<string>('');
   const [selectedIndex, setSelectedIndex] = useState<number>(-1);
   const [currentTime, setCurrentTime] = useState(new Date());
   const [isFocused, setIsFocused] = useState(true);
@@ -52,6 +55,12 @@ export default function SearchInput({ value, resetValue, ranking, onChange }: { 
   const [isDelHover, setIsDelHover] = useState(false);
 
   useEffect(() => {
+    const from = location.state?.from;
+    if (from === '/products' || from === '/social') {
+      setPathFrom(from);
+    } else {
+      setPathFrom('/products');
+    }
     const history = storage.getItem('localHistory');
     if (history !== null) {
       const historyList = history.split(',');
@@ -142,10 +151,10 @@ export default function SearchInput({ value, resetValue, ranking, onChange }: { 
   function search(clickedValue?: string) {
     if (clickedValue) {
       searchValueSave(clickedValue);
-      navigate(`${location.state?.from}?key=${clickedValue}`, { replace: true, state: { from: location.pathname }});
+      navigate(`${pathFrom}?key=${clickedValue}`, { replace: true, state: { from: location.pathname }});
     } else if (value) {
       searchValueSave();
-      navigate(`${location.state?.from}?key=${value}`, { replace: true, state: { from: location.pathname }});
+      navigate(`${pathFrom}?key=${value}`, { replace: true, state: { from: location.pathname }});
     }
   }
 
@@ -153,9 +162,16 @@ export default function SearchInput({ value, resetValue, ranking, onChange }: { 
     <>
       <Backdrop open={isFocused}/>
       <div className={isFocused ? 'search-box inpage focused' : 'search-box inpage'}>
+        <div className={isFocused ? 'title-area active' : 'title-area'}>
+          <LocationSearchingRoundedIcon className='icon' onMouseDown={() => setPathFrom(pathFrom === '/products' ? '/social' : '/products')}/>
+          <div className='title'>
+            <span className='from'>{pathFrom === '/products' ? '商品' : 'スタイル'}</span>
+            から検索
+          </div>
+        </div>
         <div className='search-area'>
+          <input type='text' inputMode='search' placeholder='商品、ブランドなどを入力' value={value} onChange={onChange} onKeyDown={handleKeyDown} onFocus={handleInputFocus} onBlur={handleInputBlur} autoFocus={true}/>
           <SearchIcon className={isFocused ? 'icon focused' : 'icon'} onClick={() => search()} />
-          <input type='text' inputMode='search' placeholder='検索' value={value} onChange={onChange} onKeyDown={handleKeyDown} onFocus={handleInputFocus} onBlur={handleInputBlur} autoFocus={true}/>
         </div>
         <div className={isFocused ? 'history-area active' : 'history-area'} onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
           <div>
@@ -164,7 +180,7 @@ export default function SearchInput({ value, resetValue, ranking, onChange }: { 
             <> 
               {localHistory.map((history, index) => (
                 <div className={selectedIndex === index ? 'history selected' : 'history'} key={history} onClick={() => search(history)} onMouseEnter={() => setSelectedIndex(-1)}>
-                  <SearchIcon className='icon'/>
+                  <RestoreIcon className='icon'/>
                   <span>{history}</span>
                 </div>
               ))}
