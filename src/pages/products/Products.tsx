@@ -286,7 +286,7 @@ export default function Products() {
 
   return (
     <section className='products'>
-      <Banner background='' url=''/>
+      {/* <Banner background='' url=''/> */}
       <div className='product-view'>
         {isSp ?
           <>

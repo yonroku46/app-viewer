@@ -290,7 +290,7 @@ export default function ProductDetail() {
   if (product) {
     return(
       <>
-      <Helmet title={product ? product.name + ' - DadLabo' : 'DadLabo'}/>
+      <Helmet title={product ? product.name : 'RE:USE'}/>
       <section className='product-detail'>
         <Fab className={fabShow ? 'fab active' : 'fab'} size='small' onClick={() => scrollToTop()}>
           <NavigationRoundedIcon/>

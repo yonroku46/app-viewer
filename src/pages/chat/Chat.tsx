@@ -154,7 +154,7 @@ export default function ChatRoom() {
             } else {
               return (
                 <div className='message' key={idx}>
-                  <img src={'https://img.dad-labo.com/user/6/profile/20230823053904.png'} alt="" className="profile"/>
+                  <img src={'https://img.smoothilab.com/user/6/profile/20230823053904.png'} alt="" className="profile"/>
                   <div className='contents bubble left'>
                     {item.message}
                   </div>

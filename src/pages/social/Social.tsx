@@ -111,7 +111,7 @@ export default function Social() {
 
   return(
     <section className='social'>
-      <Banner background='' url=''/>
+      {/* <Banner background='' url=''/> */}
       <ViewHeader sortHandle={handleSortItemClick} sortList={sortList}/>
       <SocialCard dataList={dataList} loading={load} additional={true} grid={true}/>
     </section>

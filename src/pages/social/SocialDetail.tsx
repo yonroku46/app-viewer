@@ -205,7 +205,7 @@ export default function SocialDetail() {
   if (social) {
     return(
       <>
-      <Helmet title={social ? '@' + social.name + 'のスタイル - DadLabo' : 'DadLabo'}/>
+      <Helmet title={social ? '@' + social.name + 'のスタイル' : 'RE:USE'}/>
       <section className='social-detail'>
         <div className='social-media'>
           {/* ソーシャルパーツ */}

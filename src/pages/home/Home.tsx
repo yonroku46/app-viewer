@@ -31,16 +31,16 @@ export default function Home() {
   const [offsetLimit, setOffsetLimit] = useState<number>(0);
 
   const shortcutList = [
-    {title:'男性お勧め', backgroundColor: '#D8D8D8', img: 'https://img.dad-labo.com/shortcut/man.webp'},
-    {title:'女性お勧め', backgroundColor: '#DADADA', img: 'https://img.dad-labo.com/shortcut/woman.webp'},
-    {title:'セール中', backgroundColor: '#E0E0E0', img: 'https://img.dad-labo.com/shortcut/sale.png'},
-    {title:'シーズン', backgroundColor: '#E8E8E8', img: 'https://img.dad-labo.com/shortcut/season.png'},
-    {title:'ランダム', backgroundColor: '#E1DCDC', img: 'https://img.dad-labo.com/shortcut/random.webp'},
-    {title:'帽子', backgroundColor: '#E8E8E8', img: 'https://img.dad-labo.com/shortcut/hats.webp'},
-    {title:'トップス', backgroundColor: '#E0E0E0', img: 'https://img.dad-labo.com/shortcut/tops.webp'},
-    {title:'パンツ', backgroundColor: '#E0E0E0', img: 'https://img.dad-labo.com/shortcut/pants.webp'},
-    {title:'アクセサリー', backgroundColor: '#CDD0D4', img: 'https://img.dad-labo.com/shortcut/accessories.webp'},
-    {title:'ブランド', backgroundColor: '#DFE5EB', img: 'https://img.dad-labo.com/shortcut/brand.webp'}
+    {title:'男性お勧め', backgroundColor: '#D8D8D8', img: 'https://img.smoothilab.com/shortcut/man.webp'},
+    {title:'女性お勧め', backgroundColor: '#DADADA', img: 'https://img.smoothilab.com/shortcut/woman.webp'},
+    {title:'セール中', backgroundColor: '#E0E0E0', img: 'https://img.smoothilab.com/shortcut/sale.png'},
+    {title:'シーズン', backgroundColor: '#E8E8E8', img: 'https://img.smoothilab.com/shortcut/season.png'},
+    {title:'ランダム', backgroundColor: '#E1DCDC', img: 'https://img.smoothilab.com/shortcut/random.webp'},
+    {title:'帽子', backgroundColor: '#E8E8E8', img: 'https://img.smoothilab.com/shortcut/hats.webp'},
+    {title:'トップス', backgroundColor: '#E0E0E0', img: 'https://img.smoothilab.com/shortcut/tops.webp'},
+    {title:'パンツ', backgroundColor: '#E0E0E0', img: 'https://img.smoothilab.com/shortcut/pants.webp'},
+    {title:'アクセサリー', backgroundColor: '#CDD0D4', img: 'https://img.smoothilab.com/shortcut/accessories.webp'},
+    {title:'ブランド', backgroundColor: '#DFE5EB', img: 'https://img.smoothilab.com/shortcut/brand.webp'}
   ]
 
   useEffect(() => {

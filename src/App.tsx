@@ -31,7 +31,6 @@ import Signup from 'pages/signup/Signup';
 import Contact from 'pages/contact/Contact';
 import Policy from 'pages/policy/Policy';
 import Chat from 'pages/chat/Chat';
-import Labo from 'pages/labo/Labo';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import './App.scss';
 
@@ -68,7 +67,6 @@ export default function App() {
     search: { title: '検索', description: '検索ページ' },
     social: { title: 'スタイル', description: 'スタイルページ' },
     products: { title: '商品', description: '商品ページ' },
-    labo: { title: '実験室', description: '実験室ページ' },
     contact: { title: 'お問い合わせ', description: 'お問い合わせページ' },
     policy: { title: '運用ポリシー', description: '運用ポリシーページ' },
     auth: { title: '認証', description: '認証ページ' },
@@ -88,14 +86,6 @@ export default function App() {
       categoryPath: 'social',
       items: [
         { path: 'social', icon: <StyleTwoToneIcon/>, title: 'スタイル' },
-      ]
-    },{
-      category: 'Labo',
-      categoryPath: 'labo',
-      items: [
-        { path: 'labo', icon: <PsychologyTwoToneIcon/>, title: '実験室' },
-        { path: 'chat/2', icon: <QuestionAnswerTwoToneIcon/>, title: 'チャット' },
-        { path: 'contact', icon: <ContactSupportTwoToneIcon/>, title: 'お問い合わせ' },
       ]
     }
   ]
@@ -151,15 +141,16 @@ export default function App() {
     return(
       <header>
         <Helmet>
-          <title>{currentPathData?.title ? currentPathData.title + ' - DadLabo' : 'DadLabo'}</title>
-          <meta property="og:title" content={currentPathData?.title ? currentPathData.title + ' - DadLabo' : 'DadLabo'}/>
-          <meta name="description" content={currentPathData?.description ? currentPathData.description : 'DadLabへようこそ'}/>
-          <meta property="og:description" content={currentPathData?.description ? currentPathData.description : 'DadLabへようこそ'}/>
-          <link rel="canonical" href={`https://dad-labo.com/${currentPath}`}/>
+          <title>{currentPathData?.title ? currentPathData.title : 'RE:USE'}</title>
+          <meta property="og:title" content={currentPathData?.title ? currentPathData.title : 'RE:USE'}/>
+          <meta name="description" content={currentPathData?.description ? currentPathData.description : ''}/>
+          <meta property="og:description" content={currentPathData?.description ? currentPathData.description : ''}/>
+          <link rel="canonical" href={`https://smoothilab.com/${currentPath}`}/>
         </Helmet>
         <div className='header-main'>
           <div className='logo' onClick={() => navigate('/')}>
-            <img src={logo} alt='logo' width={119} height={30}/>
+            <img src={logo} alt='logo' width={28} height={28}/>
+            <span className='title'>RE:USE</span>
           </div>
           <div className='side'>
             <MenuNav menuItem={menuItem} currentPath={currentPath} userName={user?.userName} profileImg={user?.profileImg} mail={user?.mail} role={user?.role}/>
@@ -196,7 +187,7 @@ export default function App() {
       <footer>
         <div className='footer-main'>
           <div className='side'>
-            Copyright © 2023 Dad Inc. All Rights Reserved.
+            Copyright © 2023 smoothilab Inc. All Rights Reserved.
           </div>
         </div>
       </footer>
@@ -226,7 +217,6 @@ export default function App() {
             <Route path="/products/:id" element={<ProductDetail/>}/>
           <Route path="/social" element={<Social/>}/>
             <Route path="/social/:id" element={<SocialDetail/>}/>
-          <Route path="/labo" element={<Labo/>}/>
           <Route path="/chat/:id" element={<Chat/>}/>
           <Route path="/contact" element={<Contact/>}/>
           <Route path="/policy" element={<Policy/>}/>
